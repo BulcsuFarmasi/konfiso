@@ -15,9 +15,13 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-        child: Center(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 42),
+        child: Form(
           child: Column(children: [
+            const SizedBox(
+              height: 168,
+            ),
             const Text(
               'K',
               style: TextStyle(
@@ -26,10 +30,35 @@ class _SignUpPageState extends State<SignUpPage> {
                   color: Color(AppColors.primaryColor),
                   fontWeight: FontWeight.w700),
             ),
-            TextFormField(),
-            TextFormField(),
+            const SizedBox(
+              height: 64,
+            ),
+            TextFormField(
+              decoration:
+                  InputDecoration(hintText: Intl.message('Email address')),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              decoration:
+                  InputDecoration(hintText: Intl.message('Password')),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              decoration:
+              InputDecoration(hintText: Intl.message('Password again')),
+            ),
+            const SizedBox(
+              height: 34,
+            ),
             ElevatedButton(
                 onPressed: () {}, child: Text(Intl.message('Signup'))),
+            const SizedBox(
+              height: 20,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
