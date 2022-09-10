@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -16,20 +19,23 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Center(
           child: Column(
             children: [
-              const Text(
-                'K',
-                style: TextStyle(
-                    fontSize: 100,
-                    color: Color(AppColors.primaryColor),
-                    fontWeight: FontWeight.w700),
-              ),
-              TextFormField(),
-              TextFormField(),
-
-            ],
+            const Text(
+            'K',
+            style: TextStyle(
+                fontSize: 100,
+                color: Color(AppColors.primaryColor),
+                fontWeight: FontWeight.w700),
           ),
+          TextFormField(),
+          TextFormField(),
+          ElevatedButton(onPressed: () {}, child: Text(Intl.message('Login'))),
+          RichText(text: TextSpan(children: [
+            TextSpan(text: Intl.message('If you have an account, ')),
+            TextSpan(text: Intl.message('log in')),
+          ]),)
+          ],
         ),
       ),
-    );
+    ),);
   }
 }
