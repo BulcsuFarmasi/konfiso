@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:konfiso/shared/app_colors.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -10,6 +11,25 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Form(
+        child: Center(
+          child: Column(
+            children: [
+              const Text(
+                'K',
+                style: TextStyle(
+                    fontSize: 100,
+                    color: Color(AppColors.primaryColor),
+                    fontWeight: FontWeight.w700),
+              ),
+              TextFormField(),
+              TextFormField(),
+
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
