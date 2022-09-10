@@ -28,7 +28,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           TextFormField(),
           TextFormField(),
-          ElevatedButton(onPressed: () {}, child: Text(Intl.message('Login'))),
+          ElevatedButton(onPressed: () {}, child: Text(Intl.message('Signup'))),
           RichText(text: TextSpan(children: [
             TextSpan(text: Intl.message('If you have an account, ')),
             TextSpan(text: Intl.message('log in')),
