@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:konfiso/shared/app_colors.dart';
@@ -13,7 +11,6 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-
   final _formKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
@@ -62,9 +59,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 validator: (String? value) {
                   String? errorMessage;
                   if (AppValidators.required(value)) {
-                    errorMessage = Intl.message('Please write an email address');
+                    errorMessage =
+                        Intl.message('Please write an email address');
                   } else if (AppValidators.email(value)) {
-                    errorMessage = Intl.message('Please put in a valid email address');
+                    errorMessage =
+                        Intl.message('Please put in a valid email address');
                   }
                   return errorMessage;
                 },
@@ -76,8 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 20,
               ),
               TextFormField(
-                decoration:
-                    InputDecoration(hintText: Intl.message('Password')),
+                decoration: InputDecoration(hintText: Intl.message('Password')),
                 controller: passwordController,
                 obscureText: true,
                 validator: (String? value) {
@@ -86,7 +84,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   if (AppValidators.required(value)) {
                     errorMessage = Intl.message('Please write a password');
                   } else if (AppValidators.minLength(value, minLength)) {
-                    errorMessage = Intl.message('Please write at least $minLength characters');
+                    errorMessage = Intl.message(
+                        'Please write at least $minLength characters');
                   }
                   return errorMessage;
                 },
@@ -99,12 +98,14 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               TextFormField(
                 decoration:
-                InputDecoration(hintText: Intl.message('Password again')),
+                    InputDecoration(hintText: Intl.message('Password again')),
                 obscureText: true,
                 validator: (String? value) {
                   String? errorMessage;
-                  if (AppValidators.passwordMatch(passwordController.text, value)) {
-                    errorMessage = Intl.message('Please write identical passwords');
+                  if (AppValidators.passwordMatch(
+                      passwordController.text, value)) {
+                    errorMessage =
+                        Intl.message('Please write identical passwords');
                   }
                   return errorMessage;
                 },
@@ -113,7 +114,14 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 34,
               ),
               ElevatedButton(
-                  onPressed: _submitForm, child: Text(Intl.message('Signup'))),
+                onPressed: _submitForm,
+                style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(120, 41),
+                ),
+                child: Text(
+                  Intl.message('Signup'),
+                ),
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -128,7 +136,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       print('login');
                     },
                     child: Text(Intl.message('log in'),
-                        style: const TextStyle(color: AppColors.greyDarkerColor)),
+                        style:
+                            const TextStyle(color: AppColors.greyDarkerColor)),
                   ),
                 ],
               ),

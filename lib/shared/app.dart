@@ -11,18 +11,25 @@ class App extends StatelessWidget {
       title: 'Konfiso',
       home: const SignUpPage(),
       theme: ThemeData(
-          scaffoldBackgroundColor: AppColors.backgroundColor,
-          primarySwatch: AppColors.primaryColorSwatch,
-          inputDecorationTheme: InputDecorationTheme(
-              border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(9)),
-              fillColor: AppColors.inputBackgroundColor,
-              filled: true,
-              errorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(AppColors.primaryColor))),
-              errorStyle:
-                  const TextStyle(color: Color(AppColors.primaryColor)))),
+        scaffoldBackgroundColor: AppColors.backgroundColor,
+        primarySwatch: AppColors.primaryColorSwatch,
+        inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(9)),
+            fillColor: AppColors.inputBackgroundColor,
+            filled: true,
+            errorBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Color(AppColors.primaryColor))),
+            errorStyle: const TextStyle(color: Color(AppColors.primaryColor))),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
+            elevation: 0
+          ),
+        ),
+      ),
     );
   }
 }
