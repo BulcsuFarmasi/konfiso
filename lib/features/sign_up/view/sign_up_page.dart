@@ -17,25 +17,37 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       body: Form(
         child: Center(
-          child: Column(
-            children: [
+          child: Column(children: [
             const Text(
-            'K',
-            style: TextStyle(
-                fontSize: 100,
-                color: Color(AppColors.primaryColor),
-                fontWeight: FontWeight.w700),
-          ),
-          TextFormField(),
-          TextFormField(),
-          ElevatedButton(onPressed: () {}, child: Text(Intl.message('Signup'))),
-          RichText(text: TextSpan(children: [
-            TextSpan(text: Intl.message('If you have an account, ')),
-            TextSpan(text: Intl.message('log in')),
-          ]),)
-          ],
+              'K',
+              style: TextStyle(
+                  fontSize: 100,
+                  fontFamily: 'Arial MT Rounded',
+                  color: Color(AppColors.primaryColor),
+                  fontWeight: FontWeight.w700),
+            ),
+            TextFormField(),
+            TextFormField(),
+            ElevatedButton(
+                onPressed: () {}, child: Text(Intl.message('Signup'))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(Intl.message('If you have an account, '),
+                    style: const TextStyle(
+                        color: AppColors.greyColor, fontSize: 14)),
+                GestureDetector(
+                  onTap: () {
+                    print('login');
+                  },
+                  child: Text(Intl.message('log in'),
+                      style: const TextStyle(color: AppColors.greyDarkerColor)),
+                ),
+              ],
+            ),
+          ]),
         ),
       ),
-    ),);
+    );
   }
 }

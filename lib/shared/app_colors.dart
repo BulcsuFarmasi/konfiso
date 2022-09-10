@@ -19,4 +19,8 @@ class AppColors {
   static const backgroundColor = Color(0xFFE5E5E5);
 
   static const inputBackgroundColor = Color(0xFFF7F7F7);
+
+  static const greyColor = Color(0xFF969696);
+
+  static const greyDarkerColor = Color(0xFF323232);
 }
