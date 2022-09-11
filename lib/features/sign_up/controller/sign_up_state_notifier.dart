@@ -1,10 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/sign_up/model/sign_up_repository.dart';
+
+final signUpStateNotifierProvider = StateNotifierProvider((Ref ref) => SignUpPageStateNotifier(ref.read(signUpRepositoryProvider)));
 
 class SignUpPageStateNotifier extends StateNotifier<SignUpPageState> {
-  SignUpPageStateNotifier() : super(SignUpPageInitial());
+  final SignUpRepository _signUpRepository;
+  SignUpPageStateNotifier(this._signUpRepository) : super(SignUpPageInitial());
   void signUp(String email, String password) {
     state = SignUpInProgress();
-
+    _signUpRepository.signUp(email, password);
+    state = SignUpSuccessful();
   }
 }
 
