@@ -6,9 +6,9 @@ final signUpStateNotifierProvider = StateNotifierProvider((Ref ref) => SignUpPag
 class SignUpPageStateNotifier extends StateNotifier<SignUpPageState> {
   final SignUpRepository _signUpRepository;
   SignUpPageStateNotifier(this._signUpRepository) : super(SignUpPageInitial());
-  void signUp(String email, String password) {
+  void signUp(String email, String password) async {
     state = SignUpInProgress();
-    _signUpRepository.signUp(email, password);
+    await _signUpRepository.signUp(email, password);
     state = SignUpSuccessful();
   }
 }

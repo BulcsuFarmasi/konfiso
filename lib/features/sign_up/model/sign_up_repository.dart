@@ -9,7 +9,7 @@ class SignUpRepository {
 
   SignUpRepository(this.signUpService);
 
-  void signUp(String email, String password) {
-    signUpService.signUp(email, password);
+  Future<void> signUp(String email, String password) async {
+    await signUpService.signUp(email, password);
   }
 }
