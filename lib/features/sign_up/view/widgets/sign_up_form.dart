@@ -19,6 +19,20 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
 
   final passwordController = TextEditingController();
 
+  @override
+  void dispose() {
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  void _saveEmail(String? email) {
+    _email = email;
+  }
+
+  void _savePassword(String? password) {
+    _password = password;
+  }
+
   void _submitForm() {
     final formIsValid = _formKey.currentState!.validate();
     if (formIsValid) {
@@ -28,10 +42,34 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     notifier.signUp(_email!, _password!);
   }
 
-  @override
-  void dispose() {
-    passwordController.dispose();
-    super.dispose();
+  String? _validateEmail(String? email) {
+    String? errorMessage;
+    if (AppValidators.required(email)) {
+      errorMessage = Intl.message('Please write an email address');
+    } else if (AppValidators.email(email)) {
+      errorMessage = Intl.message('Please put in a valid email address');
+    }
+    return errorMessage;
+  }
+
+  String? _validateOtherPassword(String? value) {
+    String? errorMessage;
+    if (AppValidators.passwordMatch(passwordController.text, value)) {
+      errorMessage = Intl.message('Please write identical passwords');
+    }
+    return errorMessage;
+  }
+
+  String? _validatePassword(String? password) {
+    String? errorMessage;
+    const minLength = 6;
+    if (AppValidators.required(password)) {
+      errorMessage = Intl.message('Please write a password');
+    } else if (AppValidators.minLength(password, minLength)) {
+      errorMessage =
+          Intl.message('Please write at least $minLength characters');
+    }
+    return errorMessage;
   }
 
   @override
@@ -43,19 +81,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           TextFormField(
             decoration:
                 InputDecoration(hintText: Intl.message('Email address')),
-            validator: (String? value) {
-              String? errorMessage;
-              if (AppValidators.required(value)) {
-                errorMessage = Intl.message('Please write an email address');
-              } else if (AppValidators.email(value)) {
-                errorMessage =
-                    Intl.message('Please put in a valid email address');
-              }
-              return errorMessage;
-            },
-            onSaved: (String? value) {
-              _email = value;
-            },
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            validator: _validateEmail,
+            onSaved: _saveEmail,
           ),
           const SizedBox(
             height: 20,
@@ -63,37 +92,20 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           TextFormField(
             decoration: InputDecoration(hintText: Intl.message('Password')),
             controller: passwordController,
+            textInputAction: TextInputAction.next,
             obscureText: true,
-            validator: (String? value) {
-              String? errorMessage;
-              const minLength = 6;
-              if (AppValidators.required(value)) {
-                errorMessage = Intl.message('Please write a password');
-              } else if (AppValidators.minLength(value, minLength)) {
-                errorMessage =
-                    Intl.message('Please write at least $minLength characters');
-              }
-              return errorMessage;
-            },
-            onSaved: (String? value) {
-              _password = value;
-            },
+            validator: _validatePassword,
+            onSaved: _savePassword,
           ),
           const SizedBox(
             height: 20,
           ),
           TextFormField(
-            decoration:
-                InputDecoration(hintText: Intl.message('Password again')),
-            obscureText: true,
-            validator: (String? value) {
-              String? errorMessage;
-              if (AppValidators.passwordMatch(passwordController.text, value)) {
-                errorMessage = Intl.message('Please write identical passwords');
-              }
-              return errorMessage;
-            },
-          ),
+              decoration:
+                  InputDecoration(hintText: Intl.message('Password again')),
+              obscureText: true,
+              textInputAction: TextInputAction.done,
+              validator: _validateOtherPassword),
           const SizedBox(
             height: 34,
           ),
