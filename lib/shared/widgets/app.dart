@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/sign_in/view/signin_page.dart';
 import 'package:konfiso/features/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
@@ -11,7 +12,6 @@ class App extends StatelessWidget {
     return ProviderScope(
       child: MaterialApp(
         title: 'Konfiso',
-        home: SignUpPage(),
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.backgroundColor,
           primarySwatch: AppColors.primaryColorSwatch,
@@ -32,6 +32,12 @@ class App extends StatelessWidget {
             ),
           ),
         ),
+        initialRoute: '/',
+        routes: {
+          '/': (BuildContext context) => const SignInPage(),
+          SignInPage.routeName: (BuildContext context) => const SignInPage(),
+          SignUpPage.routeName: (BuildContext context) => const SignUpPage(),
+        },
       ),
     );
   }

@@ -9,6 +9,8 @@ import 'package:konfiso/features/sign_up/view/widgets/sign_up_successful.dart';
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
 
+  static const routeName = '/sign-up';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
