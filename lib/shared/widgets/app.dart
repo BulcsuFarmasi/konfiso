@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/sign_in/view/signin_page.dart';
+import 'package:konfiso/features/sign_in/view/sign_in_page.dart';
 import 'package:konfiso/features/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
 

@@ -19,7 +19,6 @@ class SignUpPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 42),
           child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
             final state = ref.watch(signUpStateNotifierProvider);
-            print(state.runtimeType);
             if (state is SignUpPageInitial) {
               return const SignUpInitial();
             } else if (state is SignUpPageInProgress) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:konfiso/features/sign_in/view/sign_in_page.dart';
 import 'package:konfiso/features/sign_up/controller/sign_up_state_notifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/app_validators.dart';
@@ -23,6 +24,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
   void dispose() {
     passwordController.dispose();
     super.dispose();
+  }
+
+  void _navigateToSignIn() {
+    Navigator.of(context).pushReplacementNamed(SignInPage.routeName);
   }
 
   void _saveEmail(String? email) {
@@ -128,9 +133,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                   style: const TextStyle(
                       color: AppColors.greyColor, fontSize: 14)),
               GestureDetector(
-                onTap: () {
-                  print('login');
-                },
+                onTap: _navigateToSignIn,
                 child: Text(Intl.message('log in'),
                     style: const TextStyle(color: AppColors.greyDarkerColor)),
               ),
