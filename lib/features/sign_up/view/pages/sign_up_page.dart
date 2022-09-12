@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/sign_up/controller/sign_up_state_notifier.dart';
+import 'package:konfiso/features/sign_up/view/widgets/sign_up_error.dart';
 import 'package:konfiso/features/sign_up/view/widgets/sign_up_initial.dart';
 import 'package:konfiso/features/sign_up/view/widgets/sign_up_loading.dart';
+import 'package:konfiso/features/sign_up/view/widgets/sign_up_successful.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -18,8 +20,12 @@ class SignUpPage extends StatelessWidget {
             print(state.runtimeType);
             if (state is SignUpPageInitial) {
               return const SignUpInitial();
-            } else if (state is SignUpInProgress) {
-              return const SignUpLoading();
+            } else if (state is SignUpPageInProgress) {
+              return const SignUpInProgress();
+            } else if (state is  SignUpPageSuccessful) {
+              return const SignUpSuccessful();
+            } else if (state is SignUpPageError) {
+              return SignUpError(error: state.error);
             }
             else {
               return Container();

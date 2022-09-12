@@ -1,15 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/sign_up/model/sign_up_exception.dart';
 import 'package:konfiso/features/sign_up/model/sign_up_repository.dart';
+import 'package:konfiso/features/sign_up/model/sign_up_error.dart';
 
-final signUpStateNotifierProvider = StateNotifierProvider((Ref ref) => SignUpPageStateNotifier(ref.read(signUpRepositoryProvider)));
+final signUpStateNotifierProvider = StateNotifierProvider(
+    (Ref ref) => SignUpPageStateNotifier(ref.read(signUpRepositoryProvider)));
 
 class SignUpPageStateNotifier extends StateNotifier<SignUpPageState> {
   final SignUpRepository _signUpRepository;
+
   SignUpPageStateNotifier(this._signUpRepository) : super(SignUpPageInitial());
+
   void signUp(String email, String password) async {
-    state = SignUpInProgress();
+    state = SignUpPageInProgress();
+    try {
     await _signUpRepository.signUp(email, password);
-    state = SignUpSuccessful();
+    state = SignUpPageSuccessful();
+    } on SignUpException catch(e) {
+      state = SignUpPageError(e.error);
+    }
   }
 }
 
@@ -17,8 +26,12 @@ abstract class SignUpPageState {}
 
 class SignUpPageInitial extends SignUpPageState {}
 
-class SignUpInProgress extends SignUpPageState {}
+class SignUpPageInProgress extends SignUpPageState {}
 
-class SignUpError extends SignUpPageState {}
+class SignUpPageError extends SignUpPageState {
+  final SignUpError error;
 
-class SignUpSuccessful extends SignUpPageState {}
+  SignUpPageError(this.error);
+}
+
+class SignUpPageSuccessful extends SignUpPageState {}

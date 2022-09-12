@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/sign_up/model/sign_up_error.dart';
 import 'package:konfiso/features/sign_up/model/sign_up_service.dart';
 
 final signUpRepositoryProvider = Provider((Ref ref) => SignUpRepository(ref.read(signUpServiceProvider)));
@@ -10,6 +11,10 @@ class SignUpRepository {
   SignUpRepository(this.signUpService);
 
   Future<void> signUp(String email, String password) async {
-    await signUpService.signUp(email, password);
+    try {
+      await signUpService.signUp(email, password);
+    } on SignUpError {
+      rethrow;
+    }
   }
 }
