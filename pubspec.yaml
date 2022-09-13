@@ -83,6 +83,13 @@ flutter:
       fonts:
         - asset: assets/fonts/arial_mt_rounded/arial_mt_rounded_bold.ttf
           weight: 700
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins/poppins_regular.ttf
+        - asset: assets/fonts/poppins/poppins_medium.ttf
+          weight: 500
+        - asset: assets/fonts/poppins/poppins_regular.ttf
+          weight: 600
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf

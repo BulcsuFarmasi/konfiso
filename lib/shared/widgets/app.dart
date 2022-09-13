@@ -15,6 +15,7 @@ class App extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.backgroundColor,
           primarySwatch: AppColors.primaryColorSwatch,
+          fontFamily: 'Poppins',
           inputDecorationTheme: InputDecorationTheme(
               border: OutlineInputBorder(
                   borderSide: BorderSide.none,
