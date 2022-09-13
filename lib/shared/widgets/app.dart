@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/book/book_home/view/book_home_page.dart';
 import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
@@ -38,6 +39,7 @@ class App extends StatelessWidget {
           '/': (BuildContext context) => const SignInPage(),
           SignInPage.routeName: (BuildContext context) => const SignInPage(),
           SignUpPage.routeName: (BuildContext context) => const SignUpPage(),
+          BookHomePage.routeName: (BuildContext context) => const BookHomePage(),
         },
       ),
     );

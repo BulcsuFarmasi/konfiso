@@ -12,13 +12,13 @@ final authServiceProvider =
 
 class AuthService {
   final Dio _httpClient;
+  static const url = 'https://identitytoolkit.googleapis.com/v1/accounts:';
 
   AuthService(this._httpClient);
 
   Future<void> signUp(String email, String password) async {
     try {
-      await _httpClient.post(
-          'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$firebaseApiKey',
+      await _httpClient.post('${url}signUp?key=$firebaseApiKey',
           data: jsonEncode({
             'email': email,
             'password': password,
@@ -29,6 +29,15 @@ class AuthService {
           _convertMessageIntoError(e.response!.data["error"]["message"]);
       throw SignUpException(error);
     }
+  }
+
+  Future<void> signIn(String email, String password) async {
+    await _httpClient.post('${url}signInWithPassword?key=$firebaseApiKey',
+        data: jsonEncode({
+          'email': email,
+          'password': password,
+          'returnSecureToken': true,
+        }));
   }
 
   SignUpError _convertMessageIntoError(String message) {
