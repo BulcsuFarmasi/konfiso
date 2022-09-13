@@ -39,6 +39,22 @@ class _SignInFormState extends ConsumerState<SignInForm> {
     notifier.signIn(_email!, _password!);
   }
 
+  String? _validateEmail(String? email) {
+    String? errorMessage;
+    if (AppValidators.required(email)) {
+      errorMessage = Intl.message('Please write an email address');
+    }
+    return errorMessage;
+  }
+
+  String? _validatePassword(String? password) {
+    String? errorMessage;
+    if (AppValidators.required(password)) {
+      errorMessage = Intl.message('Please write a password');
+    }
+    return errorMessage;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -50,6 +66,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
                 InputDecoration(hintText: Intl.message('Email address')),
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
+            validator: _validateEmail,
             onSaved: _saveEmail,
           ),
           const SizedBox(
@@ -57,8 +74,9 @@ class _SignInFormState extends ConsumerState<SignInForm> {
           ),
           TextFormField(
             decoration: InputDecoration(hintText: Intl.message('Password')),
-            textInputAction: TextInputAction.next,
+            textInputAction: TextInputAction.done,
             obscureText: true,
+            validator: _validatePassword,
             onSaved: _savePassword,
           ),
           const SizedBox(
@@ -70,7 +88,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
               fixedSize: const Size(120, 41),
             ),
             child: Text(
-              Intl.message('Signup'),
+              Intl.message('Login'),
             ),
           ),
           const SizedBox(

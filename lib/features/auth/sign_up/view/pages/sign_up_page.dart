@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/sign_up/controller/sign_up_state_notifier.dart';
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_error.dart';
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_initial.dart';
-import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_loading.dart';
+import 'package:konfiso/shared/widgets/entry_in_progress.dart';
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_successful.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -22,7 +22,7 @@ class SignUpPage extends StatelessWidget {
             if (state is SignUpPageInitial) {
               return const SignUpInitial();
             } else if (state is SignUpPageInProgress) {
-              return const SignUpInProgress();
+              return const EntryInProgress();
             } else if (state is  SignUpPageSuccessful) {
               return const SignUpSuccessful();
             } else if (state is SignUpPageError) {

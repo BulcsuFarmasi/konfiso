@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:konfiso/shared/widgets/entry_logo.dart';
 
-class SignUpInProgress extends StatelessWidget {
-  const SignUpInProgress({super.key});
+class EntryInProgress extends StatelessWidget {
+  const EntryInProgress({super.key});
 
   @override
   Widget build(BuildContext context) {
