@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/sign_up/model/sign_up_exception.dart';
-import 'package:konfiso/features/sign_up/model/sign_up_error.dart';
+import 'package:konfiso/features/auth/sign_up/model/sign_up_exception.dart';
+import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
 import 'package:konfiso/shared/providers/http_client_provider.dart';
 import 'package:konfiso/shared/secret.dart';
 

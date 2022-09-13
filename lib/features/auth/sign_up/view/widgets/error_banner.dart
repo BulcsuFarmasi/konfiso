@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:konfiso/features/sign_up/model/sign_up_error.dart';
+import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
 class ErrorBanner extends StatelessWidget {

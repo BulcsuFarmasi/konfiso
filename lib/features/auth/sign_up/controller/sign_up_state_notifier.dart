@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/sign_up/model/sign_up_exception.dart';
-import 'package:konfiso/features/sign_up/model/sign_up_repository.dart';
-import 'package:konfiso/features/sign_up/model/sign_up_error.dart';
+import 'package:konfiso/features/auth/sign_up/model/sign_up_exception.dart';
+import 'package:konfiso/features/auth/sign_up/model/sign_up_repository.dart';
+import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
 
 final signUpStateNotifierProvider = StateNotifierProvider(
     (Ref ref) => SignUpPageStateNotifier(ref.read(signUpRepositoryProvider)));

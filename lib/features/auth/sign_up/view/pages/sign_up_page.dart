@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/sign_up/controller/sign_up_state_notifier.dart';
-import 'package:konfiso/features/sign_up/view/widgets/sign_up_error.dart';
-import 'package:konfiso/features/sign_up/view/widgets/sign_up_initial.dart';
-import 'package:konfiso/features/sign_up/view/widgets/sign_up_loading.dart';
-import 'package:konfiso/features/sign_up/view/widgets/sign_up_successful.dart';
+import 'package:konfiso/features/auth/sign_up/controller/sign_up_state_notifier.dart';
+import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_error.dart';
+import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_initial.dart';
+import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_loading.dart';
+import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_successful.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
