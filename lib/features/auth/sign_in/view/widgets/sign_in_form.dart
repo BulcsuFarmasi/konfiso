@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:konfiso/features/auth/sign_in/controller/sign_in_state_notifier.dart';
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/app_validators.dart';
@@ -34,30 +35,8 @@ class _SignInFormState extends ConsumerState<SignInForm> {
     if (formIsValid) {
       _formKey.currentState!.save();
     }
-    // final notifier = ref.read(signUpStateNotifierProvider.notifier);
-    // notifier.signUp(_email!, _password!);
-  }
-
-  String? _validateEmail(String? email) {
-    String? errorMessage;
-    if (AppValidators.required(email)) {
-      errorMessage = Intl.message('Please write an email address');
-    } else if (AppValidators.email(email)) {
-      errorMessage = Intl.message('Please put in a valid email address');
-    }
-    return errorMessage;
-  }
-
-  String? _validatePassword(String? password) {
-    String? errorMessage;
-    const minLength = 6;
-    if (AppValidators.required(password)) {
-      errorMessage = Intl.message('Please write a password');
-    } else if (AppValidators.minLength(password, minLength)) {
-      errorMessage =
-          Intl.message('Please write at least $minLength characters');
-    }
-    return errorMessage;
+    final notifier = ref.read(signInPageNotiferProvider.notifier);
+    notifier.signIn(_email!, _password!);
   }
 
   @override
@@ -71,7 +50,6 @@ class _SignInFormState extends ConsumerState<SignInForm> {
                 InputDecoration(hintText: Intl.message('Email address')),
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
-            validator: _validateEmail,
             onSaved: _saveEmail,
           ),
           const SizedBox(
@@ -81,7 +59,6 @@ class _SignInFormState extends ConsumerState<SignInForm> {
             decoration: InputDecoration(hintText: Intl.message('Password')),
             textInputAction: TextInputAction.next,
             obscureText: true,
-            validator: _validatePassword,
             onSaved: _savePassword,
           ),
           const SizedBox(
@@ -102,9 +79,11 @@ class _SignInFormState extends ConsumerState<SignInForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(Intl.message("If you don't have an account, "),
-                  style: const TextStyle(
-                      color: AppColors.greyColor, fontSize: 14)),
+              Text(
+                Intl.message("If you don't have an account, "),
+                style:
+                    const TextStyle(color: AppColors.greyColor, fontSize: 14),
+              ),
               GestureDetector(
                 onTap: _navigateToSignUp,
                 child: Text(Intl.message('sign up'),

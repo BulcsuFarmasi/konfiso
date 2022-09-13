@@ -4,6 +4,10 @@ final signInPageNotiferProvider = StateNotifierProvider((Ref ref) => SignInPageN
 
 class SignInPageNotifier extends StateNotifier {
   SignInPageNotifier() : super(SignInPageInitial());
+
+  void signIn (String email, String password) {
+
+  }
 }
 
 abstract class SignInPageState {}
