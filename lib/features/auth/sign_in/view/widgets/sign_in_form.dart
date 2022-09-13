@@ -1,33 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
-import 'package:konfiso/features/auth/sign_up/controller/sign_up_state_notifier.dart';
+import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/app_validators.dart';
 
-class SignUpForm extends ConsumerStatefulWidget {
-  const SignUpForm({super.key});
+class SignInForm extends ConsumerStatefulWidget {
+  const SignInForm({super.key});
 
   @override
-  ConsumerState<SignUpForm> createState() => _SignUpFormState();
+  ConsumerState<SignInForm> createState() => _SignInFormState();
 }
 
-class _SignUpFormState extends ConsumerState<SignUpForm> {
+class _SignInFormState extends ConsumerState<SignInForm> {
   final _formKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
 
-  final passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  void _navigateToSignIn() {
-    Navigator.of(context).pushReplacementNamed(SignInPage.routeName);
+  void _navigateToSignUp() {
+    Navigator.of(context).pushReplacementNamed(SignUpPage.routeName);
   }
 
   void _saveEmail(String? email) {
@@ -43,8 +34,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     if (formIsValid) {
       _formKey.currentState!.save();
     }
-    final notifier = ref.read(signUpStateNotifierProvider.notifier);
-    notifier.signUp(_email!, _password!);
+    // final notifier = ref.read(signUpStateNotifierProvider.notifier);
+    // notifier.signUp(_email!, _password!);
   }
 
   String? _validateEmail(String? email) {
@@ -53,14 +44,6 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       errorMessage = Intl.message('Please write an email address');
     } else if (AppValidators.email(email)) {
       errorMessage = Intl.message('Please put in a valid email address');
-    }
-    return errorMessage;
-  }
-
-  String? _validateOtherPassword(String? value) {
-    String? errorMessage;
-    if (AppValidators.passwordMatch(passwordController.text, value)) {
-      errorMessage = Intl.message('Please write identical passwords');
     }
     return errorMessage;
   }
@@ -96,21 +79,11 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           ),
           TextFormField(
             decoration: InputDecoration(hintText: Intl.message('Password')),
-            controller: passwordController,
             textInputAction: TextInputAction.next,
             obscureText: true,
             validator: _validatePassword,
             onSaved: _savePassword,
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextFormField(
-              decoration:
-                  InputDecoration(hintText: Intl.message('Password again')),
-              obscureText: true,
-              textInputAction: TextInputAction.done,
-              validator: _validateOtherPassword),
           const SizedBox(
             height: 34,
           ),
@@ -129,12 +102,12 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(Intl.message('If you have an account, '),
+              Text(Intl.message("If you don't have an account, "),
                   style: const TextStyle(
                       color: AppColors.greyColor, fontSize: 14)),
               GestureDetector(
-                onTap: _navigateToSignIn,
-                child: Text(Intl.message('log in'),
+                onTap: _navigateToSignUp,
+                child: Text(Intl.message('sign up'),
                     style: const TextStyle(color: AppColors.greyDarkerColor)),
               ),
             ],

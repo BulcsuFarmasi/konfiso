@@ -7,13 +7,13 @@ import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
 import 'package:konfiso/shared/providers/http_client_provider.dart';
 import 'package:konfiso/shared/secret.dart';
 
-final signUpServiceProvider =
-    Provider((Ref ref) => SignUpService(ref.read(httpClientProvider)));
+final authServiceProvider =
+    Provider((Ref ref) => AuthService(ref.read(httpClientProvider)));
 
-class SignUpService {
+class AuthService {
   final Dio _httpClient;
 
-  SignUpService(this._httpClient);
+  AuthService(this._httpClient);
 
   Future<void> signUp(String email, String password) async {
     try {

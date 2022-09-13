@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
-import 'package:konfiso/features/auth/sign_up/model/sign_up_service.dart';
+import 'package:konfiso/features/auth/services/auth_service.dart';
 
-final signUpRepositoryProvider = Provider((Ref ref) => SignUpRepository(ref.read(signUpServiceProvider)));
+final signUpRepositoryProvider = Provider((Ref ref) => SignUpRepository(ref.read(authServiceProvider)));
 
 class SignUpRepository {
 
-  final SignUpService signUpService;
+  final AuthService signUpService;
 
   SignUpRepository(this.signUpService);
 

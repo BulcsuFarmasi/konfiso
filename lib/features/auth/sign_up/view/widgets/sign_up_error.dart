@@ -24,7 +24,7 @@ class SignUpError extends StatelessWidget {
         const SizedBox(
           height: 32,
         ),
-        SignUpForm(),
+        const SignUpForm(),
       ],
     );
   }
