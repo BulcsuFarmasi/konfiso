@@ -26,9 +26,7 @@ class AuthService {
             'returnSecureToken': true
           }));
     } on DioError catch (e) {
-      final error =
-          _convertMessageIntoError(e.response!.data["error"]["message"]);
-      throw SignUpException(error);
+      throw NetworkException(e.response!.data["error"]["message"]);
     }
   }
 
@@ -42,18 +40,6 @@ class AuthService {
           }));
     } on DioError catch (e) {
       throw NetworkException(e.response!.data["error"]["message"]);
-    }
-  }
-
-  SignUpError _convertMessageIntoError(String message) {
-    if (message == 'EMAIL_EXISTS') {
-      return SignUpError.emailExits;
-    } else if (message == 'OPERATION_NOT_ALLOWED') {
-      return SignUpError.operationNotAllowed;
-    } else if (message == 'TOO_MANY_ATTEMPTS_TRY_LATER') {
-      return SignUpError.tooManyAttempts;
-    } else {
-      return SignUpError.other;
     }
   }
 }
