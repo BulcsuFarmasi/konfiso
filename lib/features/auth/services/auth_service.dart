@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:konfiso/features/auth/services/stored_user.dart';
 import 'package:konfiso/shared/expcetions/network_execption.dart';
 import 'package:konfiso/shared/providers/http_client_provider.dart';
 import 'package:konfiso/shared/providers/secure_storage_provider.dart';
@@ -54,20 +55,7 @@ class AuthService {
         refreshToken: userSignIn['refreshToken'],
         validUntil: DateTime.now()
             .add(Duration(seconds: int.parse(userSignIn['expiresIn']))));
-    _secureStorage.write(key: storedUserKey, value: value)
+    _secureStorage.write(
+        key: storedUserKey, value: jsonEncode(storedUser.toJson()));
   }
-}
-
-class StoredUser {
-  final String userId;
-  final String token;
-  final String refreshToken;
-  final DateTime validUntil;
-
-  StoredUser({
-    required this.userId,
-    required this.token,
-    required this.refreshToken,
-    required this.validUntil,
-  });
 }
