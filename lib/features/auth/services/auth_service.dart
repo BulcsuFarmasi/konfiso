@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_exception.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
+import 'package:konfiso/shared/expcetions/network_execption.dart';
 import 'package:konfiso/shared/providers/http_client_provider.dart';
 import 'package:konfiso/shared/secret.dart';
 
@@ -32,12 +33,16 @@ class AuthService {
   }
 
   Future<void> signIn(String email, String password) async {
-    await _httpClient.post('${url}signInWithPassword?key=$firebaseApiKey',
-        data: jsonEncode({
-          'email': email,
-          'password': password,
-          'returnSecureToken': true,
-        }));
+    try {
+      await _httpClient.post('${url}signInWithPassword?key=$firebaseApiKey',
+          data: jsonEncode({
+            'email': email,
+            'password': password,
+            'returnSecureToken': true,
+          }));
+    } on DioError catch (e) {
+      throw NetworkException(e.response!.data["error"]["message"]);
+    }
   }
 
   SignUpError _convertMessageIntoError(String message) {
