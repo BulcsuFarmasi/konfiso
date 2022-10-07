@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:konfiso/shared/widgets/app_drawer.dart';
 
 class BookHomePage extends StatelessWidget {
   const BookHomePage({super.key});
@@ -9,6 +10,8 @@ class BookHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
+      drawer: AppDrawer(),
       body: Center(
         child: Text(
           Intl.message('Books'),

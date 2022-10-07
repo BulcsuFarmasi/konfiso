@@ -14,32 +14,35 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'Konfiso',
         theme: ThemeData(
-          scaffoldBackgroundColor: AppColors.backgroundColor,
-          primarySwatch: AppColors.primaryColorSwatch,
-          fontFamily: 'Poppins',
-          inputDecorationTheme: InputDecorationTheme(
-              border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(9)),
-              fillColor: AppColors.inputBackgroundColor,
-              filled: true,
-              errorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(AppColors.primaryColor))),
-              errorStyle: const TextStyle(color: Color(AppColors.primaryColor))),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
-              elevation: 0
+            scaffoldBackgroundColor: AppColors.backgroundColor,
+            primarySwatch: AppColors.primaryColorSwatch,
+            fontFamily: 'Poppins',
+            inputDecorationTheme: InputDecorationTheme(
+                border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(9)),
+                fillColor: AppColors.inputBackgroundColor,
+                filled: true,
+                errorBorder: const OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Color(AppColors.primaryColor))),
+                errorStyle:
+                    const TextStyle(color: Color(AppColors.primaryColor))),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(9)),
+                  elevation: 0),
             ),
-          ),
-        ),
+            appBarTheme: AppBarTheme(
+                backgroundColor: AppColors.backgroundColor, elevation: 0)),
         initialRoute: '/',
         routes: {
           '/': (BuildContext context) => const SignInPage(),
           SignInPage.routeName: (BuildContext context) => const SignInPage(),
           SignUpPage.routeName: (BuildContext context) => const SignUpPage(),
-          BookHomePage.routeName: (BuildContext context) => const BookHomePage(),
+          BookHomePage.routeName: (BuildContext context) =>
+              const BookHomePage(),
         },
       ),
     );
