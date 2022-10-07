@@ -9,6 +9,7 @@ class AppDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final navigator = Navigator.of(context);
     return Drawer(
       child: ListView(
         children: [
@@ -27,6 +28,8 @@ class AppDrawer extends ConsumerWidget {
             title: Text(Intl.message('Logout')),
             onTap: () {
               ref.read(appDrawerStateNotifierProvider.notifier).signOut();
+              navigator.pop();
+              navigator.pushReplacementNamed('/');
             },
           )
         ],

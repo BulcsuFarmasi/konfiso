@@ -32,6 +32,8 @@ class SignInPage extends ConsumerWidget {
               return const EntryInProgress();
             } else if (state is SignInPageError) {
               return SignInError(error: state.error);
+            } else if (state is SignInPageSuccessful) {
+              return const SignInInitial();
             } else {
               return Container();
             }
