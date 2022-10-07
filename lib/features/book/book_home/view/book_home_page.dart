@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:konfiso/shared/widgets/app_drawer.dart';
+import 'package:konfiso/shared/widgets/app_drawer/view/app_drawer.dart';
 
 class BookHomePage extends StatelessWidget {
   const BookHomePage({super.key});

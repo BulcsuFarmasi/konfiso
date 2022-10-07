@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:konfiso/shared/app_colors.dart';
+import 'package:konfiso/shared/widgets/app_drawer/controller/app_drawer_state_notifier.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends ConsumerWidget {
   const AppDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Drawer(
       child: ListView(
         children: [
@@ -23,6 +25,9 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: Text(Intl.message('Logout')),
+            onTap: () {
+              ref.read(appDrawerStateNotifierProvider.notifier).signOut();
+            },
           )
         ],
       ),

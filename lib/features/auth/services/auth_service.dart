@@ -81,11 +81,27 @@ class AuthService {
     }
   }
 
+  void signOut() {
+    _cancelTimer();
+    _deleteUser();
+    user = null;
+  }
+
   void _saveUser() {
     _secureStorage.write(key: storedUserKey, value: jsonEncode(user!.toJson()));
   }
 
+  void _deleteUser () {
+    _secureStorage.delete(key: storedUserKey);
+  }
+
   void _startTimer(int seconds) {
     refreshTimer = Timer(Duration(seconds: seconds), refreshToken);
+  }
+
+  void _cancelTimer() {
+    if (refreshTimer != null && refreshTimer!.isActive) {
+      refreshTimer!.cancel();
+    }
   }
 }
