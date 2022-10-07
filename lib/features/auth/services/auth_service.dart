@@ -41,7 +41,7 @@ class AuthService {
         validUntil: DateTime.now()
             .add(Duration(seconds: int.parse(responseData['expires_in']))));
 
-    print(user!.validUntil);
+    _saveUser();
 
     _startTimer(int.parse(responseData['expires_in']));
   }
@@ -55,7 +55,13 @@ class AuthService {
                 'password': password,
                 'returnSecureToken': true,
               }));
-      _saveUserSignIn(response.data);
+      user = StoredUser(
+          userId: response.data['localId'],
+          token: response.data['idToken'],
+          refreshToken: response.data['refreshToken'],
+          validUntil: DateTime.now()
+              .add(Duration(seconds: int.parse(response.data['expiresIn']))));
+      _saveUser();
       _startTimer(int.parse(response.data['expiresIn']));
     } on DioError catch (e) {
       throw NetworkException(e.response!.data["error"]["message"]);
@@ -76,12 +82,10 @@ class AuthService {
   }
 
   void _saveUserSignIn(Map<String, dynamic> userSignIn) {
-    user = StoredUser(
-        userId: userSignIn['localId'],
-        token: userSignIn['idToken'],
-        refreshToken: userSignIn['refreshToken'],
-        validUntil: DateTime.now()
-            .add(Duration(seconds: int.parse(userSignIn['expiresIn']))));
+
+  }
+
+  void _saveUser() {
     _secureStorage.write(key: storedUserKey, value: jsonEncode(user!.toJson()));
   }
 
