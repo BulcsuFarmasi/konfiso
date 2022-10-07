@@ -17,18 +17,33 @@ final authServiceProvider = Provider((Ref ref) =>
 class AuthService {
   final Dio _httpClient;
   final FlutterSecureStorage _secureStorage;
+  Timer? refreshTimer;
   StoredUser? user;
   static const url = 'https://identitytoolkit.googleapis.com/v1/accounts:';
 
   AuthService(this._httpClient, this._secureStorage);
 
   void refreshToken() async {
+    print('token');
     final response = await _httpClient.post(
         'https://securetoken.googleapis.com/v1/token?key=$firebaseApiKey',
         data: jsonEncode({
           'grant_type': 'refresh_token',
           'refresh_token': user!.refreshToken
         }));
+
+    final responseData = response.data;
+
+    user = StoredUser(
+        userId: responseData['user_id'],
+        token: responseData['id_token'],
+        refreshToken: responseData['refresh_token'],
+        validUntil: DateTime.now()
+            .add(Duration(seconds: int.parse(responseData['expires_in']))));
+
+    print(user!.validUntil);
+
+    _startTimer(int.parse(responseData['expires_in']));
   }
 
   Future<void> signIn(String email, String password) async {
@@ -41,7 +56,7 @@ class AuthService {
                 'returnSecureToken': true,
               }));
       _saveUserSignIn(response.data);
-      Timer(const Duration(minutes: 1), refreshToken);
+      _startTimer(int.parse(response.data['expiresIn']));
     } on DioError catch (e) {
       throw NetworkException(e.response!.data["error"]["message"]);
     }
@@ -67,7 +82,10 @@ class AuthService {
         refreshToken: userSignIn['refreshToken'],
         validUntil: DateTime.now()
             .add(Duration(seconds: int.parse(userSignIn['expiresIn']))));
-    _secureStorage.write(
-        key: storedUserKey, value: jsonEncode(user!.toJson()));
+    _secureStorage.write(key: storedUserKey, value: jsonEncode(user!.toJson()));
+  }
+
+  void _startTimer(int seconds) {
+    refreshTimer = Timer(Duration(seconds: seconds), refreshToken);
   }
 }

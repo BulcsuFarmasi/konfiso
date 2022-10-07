@@ -1,1 +1,1 @@
-enum SignInError { emailNotFound, invalidPassword, userDisabled, other }
+enum SignInError { invalidEmail, invalidPassword, userDisabled, other }

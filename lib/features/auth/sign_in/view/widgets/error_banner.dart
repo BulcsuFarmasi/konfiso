@@ -12,7 +12,7 @@ class ErrorBanner extends StatelessWidget {
     switch (error) {
       case SignInError.other:
         return Intl.message('Something went wrong. Please try again later.');
-      case SignInError.emailNotFound:
+      case SignInError.invalidEmail:
       case SignInError.invalidPassword:
         return Intl.message(
             'Wrong email or password'); // TODO: Handle this case.
