@@ -81,10 +81,6 @@ class AuthService {
     }
   }
 
-  void _saveUserSignIn(Map<String, dynamic> userSignIn) {
-
-  }
-
   void _saveUser() {
     _secureStorage.write(key: storedUserKey, value: jsonEncode(user!.toJson()));
   }
