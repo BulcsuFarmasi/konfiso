@@ -14,7 +14,7 @@ class EntryLogo extends StatelessWidget {
       style: TextStyle(
           fontSize: 100,
           fontFamily: 'Arial MT Rounded',
-          color: Color(AppColors.primaryColor),
+          color: AppColors.primaryColor,
           fontWeight: FontWeight.w700),
     );
   }

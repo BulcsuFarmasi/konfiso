@@ -20,7 +20,7 @@ class AppDrawer extends ConsumerWidget {
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
-                  color: Color(AppColors.primaryColor)),
+                  color: AppColors.primaryColor),
             ),
           ),
           ListTile(

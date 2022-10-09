@@ -27,7 +27,7 @@ class ErrorBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       _convertErrorToText(error),
-      style: const TextStyle(color: Color(AppColors.primaryColor), fontSize: 20),
+      style: const TextStyle(color: AppColors.primaryColor, fontSize: 20),
       textAlign: TextAlign.center,
     );
   }
