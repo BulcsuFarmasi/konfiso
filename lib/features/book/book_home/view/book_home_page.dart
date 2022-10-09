@@ -11,7 +11,7 @@ class BookHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      drawer: AppDrawer(),
+      drawer: const AppDrawer(),
       body: Center(
         child: Text(
           Intl.message('Books'),

@@ -21,7 +21,6 @@ class SignInRepository {
   }
 
   SignInError _convertMessageIntoError(String message) {
-    print(message);
     switch (message) {
       case 'INVALID_EMAIL':
         return SignInError.invalidEmail;
