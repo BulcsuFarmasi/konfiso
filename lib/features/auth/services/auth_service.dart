@@ -51,7 +51,7 @@ class AuthService {
       _saveUser();
       _startTimer(int.parse(response.data['expiresIn']));
     } on DioError catch (e) {
-      throw NetworkException(e.response!.data["error"]["message"]);
+      throw NetworkException(e.response!.data['error']['message']);
     }
   }
 
@@ -64,7 +64,7 @@ class AuthService {
             'returnSecureToken': true
           }));
     } on DioError catch (e) {
-      throw NetworkException(e.response!.data["error"]["message"]);
+      throw NetworkException(e.response!.data['error']['message']);
     }
   }
 
