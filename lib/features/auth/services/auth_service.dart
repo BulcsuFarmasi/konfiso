@@ -75,7 +75,6 @@ class AuthService {
   }
 
   void _refreshToken() async {
-    print('token');
     final response = await _httpClient.post(
         'https://securetoken.googleapis.com/v1/token?key=$firebaseApiKey',
         data: jsonEncode({
