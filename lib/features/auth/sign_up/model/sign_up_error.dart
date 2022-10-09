@@ -1,0 +1,1 @@
+enum SignUpError { emailExits, operationNotAllowed, tooManyAttempts, other }
