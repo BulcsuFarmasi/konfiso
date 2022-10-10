@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:konfiso/features/auth/services/auth_payload.dart';
+import 'package:konfiso/features/auth/services/auth_request_payload.dart';
+import 'package:konfiso/features/auth/services/refresh_token_payload.dart';
 import 'package:konfiso/features/auth/services/stored_user.dart';
 import 'package:konfiso/shared/expcetions/network_execption.dart';
 import 'package:konfiso/shared/providers/http_client_provider.dart';
@@ -36,10 +37,10 @@ class AuthService {
 
   Future<void> signIn(String email, String password) async {
     try {
-      final authPayload = AuthPayload(email, password);
+      final authRequestPayload = AuthRequestPayload(email, password);
       final response = await _httpClient.post(
           '${url}signInWithPassword?key=$firebaseApiKey',
-          data: jsonEncode(authPayload.toJson()));
+          data: jsonEncode(authRequestPayload.toJson()));
       user = StoredUser(
           userId: response.data['localId'],
           token: response.data['idToken'],
@@ -55,9 +56,9 @@ class AuthService {
 
   Future<void> signUp(String email, String password) async {
     try {
-      final authPayload = AuthPayload(email, password);
+      final authRequestPayload = AuthRequestPayload(email, password);
       await _httpClient.post('${url}signUp?key=$firebaseApiKey',
-          data: jsonEncode(authPayload.toJson()));
+          data: jsonEncode(authRequestPayload.toJson()));
     } on DioError catch (e) {
       throw NetworkException(e.response!.data['error']['message']);
     }
@@ -70,12 +71,10 @@ class AuthService {
   }
 
   void _refreshToken() async {
+    final refreshTokenPayload = RefreshTokenPayload(user!.refreshToken);
     final response = await _httpClient.post(
         'https://securetoken.googleapis.com/v1/token?key=$firebaseApiKey',
-        data: jsonEncode({
-          'grant_type': 'refresh_token',
-          'refresh_token': user!.refreshToken
-        }));
+        data: jsonEncode(refreshTokenPayload.toJson()));
 
     final responseData = response.data;
 
