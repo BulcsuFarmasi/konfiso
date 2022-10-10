@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/auth/sign_in/model/sign_in_error.dart';
+import 'package:konfiso/features/auth/sign_in/controller/sing_in_page_state.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_in_repository.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_up_expection.dart';
 
@@ -10,29 +10,17 @@ final signInPageNotiferProvider =
 class SignInPageStateNotifier extends StateNotifier<SignInPageState> {
   final SignInRepository _signInRepository;
 
-  SignInPageStateNotifier(this._signInRepository) : super(SignInPageInitial());
+  SignInPageStateNotifier(this._signInRepository) : super(const SignInPageState.initial());
 
   void signIn(String email, String password) async {
-    state = SignInPageInProgress();
+    state = const SignInPageState.inProgress();
     try {
       await _signInRepository.signIn(email, password);
-      state = SignInPageSuccessful();
+      state = const SignInPageState.successful();
     } on SignInException catch (e) {
-      state = SignInPageError(e.error);
+      state = SignInPageState.error(e.error);
     }
   }
 }
 
-abstract class SignInPageState {}
 
-class SignInPageInitial extends SignInPageState {}
-
-class SignInPageInProgress extends SignInPageState {}
-
-class SignInPageSuccessful extends SignInPageState {}
-
-class SignInPageError extends SignInPageState {
-  final SignInError error;
-
-  SignInPageError(this.error);
-}
