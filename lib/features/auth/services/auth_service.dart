@@ -53,6 +53,7 @@ class AuthService {
       _saveUser();
       _startTimer(int.parse(authResponse.expiresIn));
     } on DioError catch (e) {
+      // TODO : deserialize it into a class
       throw NetworkException(e.response!.data['error']['message']);
     }
   }
@@ -63,6 +64,7 @@ class AuthService {
       await _httpClient.post('${url}signUp?key=$firebaseApiKey',
           data: jsonEncode(authRequestPayload.toJson()));
     } on DioError catch (e) {
+      // TODO : deserialize it into a class
       throw NetworkException(e.response!.data['error']['message']);
     }
   }
