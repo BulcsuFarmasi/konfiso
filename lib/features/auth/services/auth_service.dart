@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:konfiso/features/auth/services/auth_request_payload.dart';
+import 'package:konfiso/features/auth/services/auth_response_payload.dart';
 import 'package:konfiso/features/auth/services/refresh_token_payload.dart';
 import 'package:konfiso/features/auth/services/stored_user.dart';
 import 'package:konfiso/shared/expcetions/network_execption.dart';
@@ -41,14 +42,15 @@ class AuthService {
       final response = await _httpClient.post(
           '${url}signInWithPassword?key=$firebaseApiKey',
           data: jsonEncode(authRequestPayload.toJson()));
+      final authResponse = AuthResponsePayload.fromJson(response.data);
       user = StoredUser(
-          userId: response.data['localId'],
-          token: response.data['idToken'],
-          refreshToken: response.data['refreshToken'],
+          userId: authResponse.localId,
+          token: authResponse.idToken,
+          refreshToken: authResponse.refreshToken,
           validUntil: DateTime.now()
-              .add(Duration(seconds: int.parse(response.data['expiresIn']))));
+              .add(Duration(seconds: int.parse(authResponse.expiresIn))));
       _saveUser();
-      _startTimer(int.parse(response.data['expiresIn']));
+      _startTimer(int.parse(authResponse.expiresIn));
     } on DioError catch (e) {
       throw NetworkException(e.response!.data['error']['message']);
     }
