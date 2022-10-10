@@ -19,6 +19,5 @@ class RefreshTokenResponsePayload {
   );
 
   factory RefreshTokenResponsePayload.fromJson(Map<String, dynamic> json) =>
-      _$RefreshTokenResponsePayloadFromJson(json)
-      _$RefreshTokenResponsePayloadFromJson(json)
+      _$RefreshTokenResponsePayloadFromJson(json);
 }
