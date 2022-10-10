@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:konfiso/features/auth/services/auth_payload.dart';
 import 'package:konfiso/features/auth/services/stored_user.dart';
 import 'package:konfiso/shared/expcetions/network_execption.dart';
 import 'package:konfiso/shared/providers/http_client_provider.dart';
@@ -35,13 +36,10 @@ class AuthService {
 
   Future<void> signIn(String email, String password) async {
     try {
-      final response =
-          await _httpClient.post('${url}signInWithPassword?key=$firebaseApiKey',
-              data: jsonEncode({
-                'email': email,
-                'password': password,
-                'returnSecureToken': true,
-              }));
+      final authPayload = AuthPayload(email, password);
+      final response = await _httpClient.post(
+          '${url}signInWithPassword?key=$firebaseApiKey',
+          data: jsonEncode(authPayload.toJson()));
       user = StoredUser(
           userId: response.data['localId'],
           token: response.data['idToken'],
@@ -57,12 +55,9 @@ class AuthService {
 
   Future<void> signUp(String email, String password) async {
     try {
+      final authPayload = AuthPayload(email, password);
       await _httpClient.post('${url}signUp?key=$firebaseApiKey',
-          data: jsonEncode({
-            'email': email,
-            'password': password,
-            'returnSecureToken': true
-          }));
+          data: jsonEncode(authPayload.toJson()));
     } on DioError catch (e) {
       throw NetworkException(e.response!.data['error']['message']);
     }
@@ -107,7 +102,7 @@ class AuthService {
     _secureStorage.write(key: storedUserKey, value: jsonEncode(user!.toJson()));
   }
 
-  void _deleteUser () {
+  void _deleteUser() {
     _secureStorage.delete(key: storedUserKey);
   }
 
