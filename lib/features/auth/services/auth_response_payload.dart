@@ -1,5 +1,3 @@
-
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth_response_payload.g.dart';
@@ -11,7 +9,13 @@ class AuthResponsePayload {
   final String refreshToken;
   final String expiresIn;
 
-  AuthResponsePayload(this.localId, this.idToken, this.refreshToken, this.expiresIn);
+  AuthResponsePayload(
+    this.localId,
+    this.idToken,
+    this.refreshToken,
+    this.expiresIn,
+  );
 
-  factory AuthResponsePayload.fromJson(Map<String, dynamic> json) => _$AuthResponsePayloadFromJson(json);
+  factory AuthResponsePayload.fromJson(Map<String, dynamic> json) =>
+      _$AuthResponsePayloadFromJson(json);
 }
