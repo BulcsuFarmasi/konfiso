@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:konfiso/features/auth/services/auth_request_payload.dart';
 import 'package:konfiso/features/auth/services/auth_response_payload.dart';
 import 'package:konfiso/features/auth/services/refresh_token_request_payload.dart';
@@ -11,8 +10,8 @@ import 'package:konfiso/features/auth/services/refresh_token_response_payload.da
 import 'package:konfiso/features/auth/services/stored_user.dart';
 import 'package:konfiso/shared/expcetions/network_execption.dart';
 import 'package:konfiso/shared/providers/http_client_provider.dart';
-import 'package:konfiso/shared/providers/secure_storage_provider.dart';
 import 'package:konfiso/shared/secret.dart';
+import 'package:konfiso/shared/secure_storage.dart';
 import 'package:konfiso/shared/storage_keys.dart';
 
 final authServiceProvider = Provider((Ref ref) =>
@@ -20,7 +19,7 @@ final authServiceProvider = Provider((Ref ref) =>
 
 class AuthService {
   final Dio _httpClient;
-  final FlutterSecureStorage _secureStorage;
+  final SecureStorage _secureStorage;
   Timer? refreshTimer;
   StoredUser? user;
   static const url = 'https://identitytoolkit.googleapis.com/v1/accounts:';
@@ -96,18 +95,18 @@ class AuthService {
   }
 
   Future<void> _fetchUser() async {
-    final storedUser = await _secureStorage.read(key: storedUserKey);
+    final storedUser = await _secureStorage.read(storedUserKey);
     if (storedUser != null) {
       user = StoredUser.fromJson(jsonDecode(storedUser));
     }
   }
 
   void _saveUser() {
-    _secureStorage.write(key: storedUserKey, value: jsonEncode(user!.toJson()));
+    _secureStorage.write(storedUserKey, jsonEncode(user!.toJson()));
   }
 
   void _deleteUser() {
-    _secureStorage.delete(key: storedUserKey);
+    _secureStorage.delete(storedUserKey);
   }
 
   void _startTimer(int secondsUntilRefresh) {
