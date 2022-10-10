@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:konfiso/features/auth/sign_in/controller/sign_in_state_notifier.dart';
+import 'package:konfiso/features/auth/sign_in/controller/sign_in_page_state_notifier.dart';
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/app_validators.dart';

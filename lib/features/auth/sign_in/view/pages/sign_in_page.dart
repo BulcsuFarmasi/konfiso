@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/auth/sign_in/controller/sing_in_page_state.dart';
 import 'package:konfiso/features/book/book_home/view/book_home_page.dart';
-import 'package:konfiso/features/auth/sign_in/controller/sign_in_state_notifier.dart';
+import 'package:konfiso/features/auth/sign_in/controller/sign_in_page_state_notifier.dart';
 import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_error.dart';
 import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_initial.dart';
 import 'package:konfiso/shared/widgets/entry_in_progress.dart';
@@ -15,9 +16,11 @@ class SignInPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(signInPageNotiferProvider,
         (SignInPageState? previous, SignInPageState next) {
-      if (next is SignInPageSuccessful) {
-        Navigator.of(context).pushReplacementNamed(BookHomePage.routeName);
-      }
+      next.maybeMap(
+          successful: (_) {
+            Navigator.of(context).pushReplacementNamed(BookHomePage.routeName);
+          },
+          orElse: () => null);
     });
     return Scaffold(
       body: SingleChildScrollView(
@@ -26,17 +29,11 @@ class SignInPage extends ConsumerWidget {
           child: Consumer(
               builder: (BuildContext context, WidgetRef ref, Widget? child) {
             final state = ref.watch(signInPageNotiferProvider);
-            if (state is SignInPageInitial) {
-              return const SignInInitial();
-            } else if (state is SignInPageInProgress) {
-              return const EntryInProgress();
-            } else if (state is SignInPageError) {
-              return SignInError(error: state.error);
-            } else if (state is SignInPageSuccessful) {
-              return const SignInInitial();
-            } else {
-              return Container();
-            }
+            return state.map(
+                initial: (_) => const SignInInitial(),
+                inProgress: (_) => const EntryInProgress(),
+                successful: (_) => const SignInInitial(),
+                error: (error) => SignInError(error: error.error));
           }),
         ),
       ),

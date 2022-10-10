@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/widgets/entry_logo.dart';
 
@@ -25,10 +26,15 @@ class SignUpSuccessful extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Text(
-          Intl.message('Now you can login here'),
-          style:
-              const TextStyle(color: AppColors.greyDarkerColor, fontSize: 20),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushReplacementNamed(SignInPage.routeName);
+          },
+          child: Text(
+            Intl.message('Now you can login here'),
+            style:
+                const TextStyle(color: AppColors.greyDarkerColor, fontSize: 20),
+          ),
         ),
       ],
     );
