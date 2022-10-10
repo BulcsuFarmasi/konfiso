@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/auth/sign_up/controller/sign_up_state_notifier.dart';
+import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state_notifier.dart';
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_error.dart';
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_initial.dart';
 import 'package:konfiso/shared/widgets/entry_in_progress.dart';
@@ -17,20 +17,14 @@ class SignUpPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 42),
-          child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          child: Consumer(
+              builder: (BuildContext context, WidgetRef ref, Widget? child) {
             final state = ref.watch(signUpStateNotifierProvider);
-            if (state is SignUpPageInitial) {
-              return const SignUpInitial();
-            } else if (state is SignUpPageInProgress) {
-              return const EntryInProgress();
-            } else if (state is  SignUpPageSuccessful) {
-              return const SignUpSuccessful();
-            } else if (state is SignUpPageError) {
-              return SignUpError(error: state.error);
-            }
-            else {
-              return Container();
-            }
+            return state.map(
+                initial: (_) => const SignUpInitial(),
+                inProgress: (_) => const EntryInProgress(),
+                successful: (_) => const SignUpSuccessful(),
+                error: (error) => SignUpError(error: error.error));
           }),
         ),
       ),
