@@ -108,8 +108,8 @@ class AuthService {
     _secureStorage.delete(key: storedUserKey);
   }
 
-  void _startTimer(int seconds) {
-    refreshTimer = Timer(Duration(seconds: seconds), _refreshToken);
+  void _startTimer(int secondsUntilRefresh) {
+    refreshTimer = Timer(Duration(seconds: secondsUntilRefresh), _refreshToken);
   }
 
   void _cancelTimer() {
