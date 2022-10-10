@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:konfiso/shared/providers/secure_storage_provider.dart';
+import 'package:konfiso/shared/providers/flutter_secure_storage_provider.dart';
 
 final secureStorageProvider = Provider((Ref ref) => SecureStorage(ref.read(flutterSecureStorageProvider)));
 class SecureStorage {

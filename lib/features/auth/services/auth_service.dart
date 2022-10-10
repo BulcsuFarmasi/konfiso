@@ -9,7 +9,7 @@ import 'package:konfiso/features/auth/services/refresh_token_request_payload.dar
 import 'package:konfiso/features/auth/services/refresh_token_response_payload.dart';
 import 'package:konfiso/features/auth/services/stored_user.dart';
 import 'package:konfiso/shared/expcetions/network_execption.dart';
-import 'package:konfiso/shared/providers/http_client_provider.dart';
+import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/secret.dart';
 import 'package:konfiso/shared/secure_storage.dart';
 import 'package:konfiso/shared/storage_keys.dart';
@@ -18,7 +18,7 @@ final authServiceProvider = Provider((Ref ref) =>
     AuthService(ref.read(httpClientProvider), ref.read(secureStorageProvider)));
 
 class AuthService {
-  final Dio _httpClient;
+  final HttpClient _httpClient;
   final SecureStorage _secureStorage;
   Timer? refreshTimer;
   StoredUser? user;
@@ -40,7 +40,7 @@ class AuthService {
     try {
       final authRequestPayload = AuthRequestPayload(email, password);
       final response = await _httpClient.post(
-          '${url}signInWithPassword?key=$firebaseApiKey',
+          url: '${url}signInWithPassword?key=$firebaseApiKey',
           data: jsonEncode(authRequestPayload.toJson()));
       final authResponse = AuthResponsePayload.fromJson(response.data);
       user = StoredUser(
@@ -51,6 +51,7 @@ class AuthService {
               .add(Duration(seconds: int.parse(authResponse.expiresIn))));
       _saveUser();
       _startTimer(int.parse(authResponse.expiresIn));
+      // TODO: own error
     } on DioError catch (e) {
       // TODO : deserialize it into a class
       throw NetworkException(e.response!.data['error']['message']);
@@ -60,8 +61,10 @@ class AuthService {
   Future<void> signUp(String email, String password) async {
     try {
       final authRequestPayload = AuthRequestPayload(email, password);
-      await _httpClient.post('${url}signUp?key=$firebaseApiKey',
+      await _httpClient.post(
+          url: '${url}signUp?key=$firebaseApiKey',
           data: jsonEncode(authRequestPayload.toJson()));
+      // TODO: own error
     } on DioError catch (e) {
       // TODO : deserialize it into a class
       throw NetworkException(e.response!.data['error']['message']);
@@ -77,7 +80,7 @@ class AuthService {
   void _refreshToken() async {
     final refreshTokenPayload = RefreshTokenRequestPayload(user!.refreshToken);
     final response = await _httpClient.post(
-        'https://securetoken.googleapis.com/v1/token?key=$firebaseApiKey',
+        url: 'https://securetoken.googleapis.com/v1/token?key=$firebaseApiKey',
         data: jsonEncode(refreshTokenPayload.toJson()));
 
     final responsePayload = RefreshTokenResponsePayload.fromJson(response.data);
