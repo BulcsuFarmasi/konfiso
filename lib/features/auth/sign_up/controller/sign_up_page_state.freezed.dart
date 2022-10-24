@@ -26,10 +26,10 @@ mixin _$SignUpPageState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? inProgress,
-    TResult Function()? successful,
-    TResult Function(SignUpError error)? error,
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function()? successful,
+    TResult? Function(SignUpError error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$SignUpPageState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_InProgress value)? inProgress,
-    TResult Function(_Succesful value)? successful,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_InProgress value)? inProgress,
+    TResult? Function(_Succesful value)? successful,
+    TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,17 +72,18 @@ mixin _$SignUpPageState {
 abstract class $SignUpPageStateCopyWith<$Res> {
   factory $SignUpPageStateCopyWith(
           SignUpPageState value, $Res Function(SignUpPageState) then) =
-      _$SignUpPageStateCopyWithImpl<$Res>;
+      _$SignUpPageStateCopyWithImpl<$Res, SignUpPageState>;
 }
 
 /// @nodoc
-class _$SignUpPageStateCopyWithImpl<$Res>
+class _$SignUpPageStateCopyWithImpl<$Res, $Val extends SignUpPageState>
     implements $SignUpPageStateCopyWith<$Res> {
   _$SignUpPageStateCopyWithImpl(this._value, this._then);
 
-  final SignUpPageState _value;
   // ignore: unused_field
-  final $Res Function(SignUpPageState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -93,13 +94,11 @@ abstract class _$$_InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res> extends _$SignUpPageStateCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$SignUpPageStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
-
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -135,10 +134,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? inProgress,
-    TResult Function()? successful,
-    TResult Function(SignUpError error)? error,
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function()? successful,
+    TResult? Function(SignUpError error)? error,
   }) {
     return initial?.call();
   }
@@ -172,10 +171,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_InProgress value)? inProgress,
-    TResult Function(_Succesful value)? successful,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_InProgress value)? inProgress,
+    TResult? Function(_Succesful value)? successful,
+    TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
   }
@@ -209,14 +208,11 @@ abstract class _$$_InProgressCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InProgressCopyWithImpl<$Res>
-    extends _$SignUpPageStateCopyWithImpl<$Res>
+    extends _$SignUpPageStateCopyWithImpl<$Res, _$_InProgress>
     implements _$$_InProgressCopyWith<$Res> {
   __$$_InProgressCopyWithImpl(
       _$_InProgress _value, $Res Function(_$_InProgress) _then)
-      : super(_value, (v) => _then(v as _$_InProgress));
-
-  @override
-  _$_InProgress get _value => super._value as _$_InProgress;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -252,10 +248,10 @@ class _$_InProgress implements _InProgress {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? inProgress,
-    TResult Function()? successful,
-    TResult Function(SignUpError error)? error,
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function()? successful,
+    TResult? Function(SignUpError error)? error,
   }) {
     return inProgress?.call();
   }
@@ -289,10 +285,10 @@ class _$_InProgress implements _InProgress {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_InProgress value)? inProgress,
-    TResult Function(_Succesful value)? successful,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_InProgress value)? inProgress,
+    TResult? Function(_Succesful value)? successful,
+    TResult? Function(_Error value)? error,
   }) {
     return inProgress?.call(this);
   }
@@ -326,14 +322,11 @@ abstract class _$$_SuccesfulCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SuccesfulCopyWithImpl<$Res>
-    extends _$SignUpPageStateCopyWithImpl<$Res>
+    extends _$SignUpPageStateCopyWithImpl<$Res, _$_Succesful>
     implements _$$_SuccesfulCopyWith<$Res> {
   __$$_SuccesfulCopyWithImpl(
       _$_Succesful _value, $Res Function(_$_Succesful) _then)
-      : super(_value, (v) => _then(v as _$_Succesful));
-
-  @override
-  _$_Succesful get _value => super._value as _$_Succesful;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -369,10 +362,10 @@ class _$_Succesful implements _Succesful {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? inProgress,
-    TResult Function()? successful,
-    TResult Function(SignUpError error)? error,
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function()? successful,
+    TResult? Function(SignUpError error)? error,
   }) {
     return successful?.call();
   }
@@ -406,10 +399,10 @@ class _$_Succesful implements _Succesful {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_InProgress value)? inProgress,
-    TResult Function(_Succesful value)? successful,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_InProgress value)? inProgress,
+    TResult? Function(_Succesful value)? successful,
+    TResult? Function(_Error value)? error,
   }) {
     return successful?.call(this);
   }
@@ -438,24 +431,24 @@ abstract class _Succesful implements SignUpPageState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({SignUpError error});
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res> extends _$SignUpPageStateCopyWithImpl<$Res>
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$SignUpPageStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, (v) => _then(v as _$_Error));
+      : super(_value, _then);
 
-  @override
-  _$_Error get _value => super._value as _$_Error;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = freezed,
+    Object? error = null,
   }) {
     return _then(_$_Error(
-      error == freezed
+      null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as SignUpError,
@@ -481,15 +474,15 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
-            const DeepCollectionEquality().equals(other.error, error));
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
+  int get hashCode => Object.hash(runtimeType, error);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
@@ -507,10 +500,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? inProgress,
-    TResult Function()? successful,
-    TResult Function(SignUpError error)? error,
+    TResult? Function()? initial,
+    TResult? Function()? inProgress,
+    TResult? Function()? successful,
+    TResult? Function(SignUpError error)? error,
   }) {
     return error?.call(this.error);
   }
@@ -544,10 +537,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_InProgress value)? inProgress,
-    TResult Function(_Succesful value)? successful,
-    TResult Function(_Error value)? error,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_InProgress value)? inProgress,
+    TResult? Function(_Succesful value)? successful,
+    TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
   }
