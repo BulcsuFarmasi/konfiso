@@ -1,3 +1,4 @@
+@TestOn('vm')
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/auth/sign_in/controller/sign_in_page_state_notifier.dart';
 import 'package:konfiso/features/auth/sign_in/controller/sing_in_page_state.dart';

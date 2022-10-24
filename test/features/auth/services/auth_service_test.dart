@@ -1,3 +1,4 @@
+@TestOn('vm')
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
