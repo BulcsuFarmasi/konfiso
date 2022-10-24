@@ -3,11 +3,10 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 
-import 'package:konfiso/features/auth/services/auth_service.dart' as _i2;
 import 'package:konfiso/features/auth/sign_up/model/sign_up_repository.dart'
-    as _i3;
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -21,34 +20,12 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeAuthService_0 extends _i1.SmartFake implements _i2.AuthService {
-  _FakeAuthService_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [SignUpRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSignUpRepository extends _i1.Mock implements _i3.SignUpRepository {
+class MockSignUpRepository extends _i1.Mock implements _i2.SignUpRepository {
   @override
-  _i2.AuthService get signUpService => (super.noSuchMethod(
-        Invocation.getter(#signUpService),
-        returnValue: _FakeAuthService_0(
-          this,
-          Invocation.getter(#signUpService),
-        ),
-        returnValueForMissingStub: _FakeAuthService_0(
-          this,
-          Invocation.getter(#signUpService),
-        ),
-      ) as _i2.AuthService);
-  @override
-  _i4.Future<void> signUp(
+  _i3.Future<void> signUp(
     String? email,
     String? password,
   ) =>
@@ -60,7 +37,7 @@ class MockSignUpRepository extends _i1.Mock implements _i3.SignUpRepository {
             password,
           ],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 }
