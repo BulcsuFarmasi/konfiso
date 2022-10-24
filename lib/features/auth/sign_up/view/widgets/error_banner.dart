@@ -10,7 +10,7 @@ class ErrorBanner extends StatelessWidget {
 
   String _convertErrorToText(SignUpError error) {
     switch (error) {
-      case SignUpError.emailExits:
+      case SignUpError.emailExists:
         return Intl.message(
             'This email address is already registred. Please try an another.');
       case SignUpError.operationNotAllowed:

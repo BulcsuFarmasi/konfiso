@@ -23,7 +23,7 @@ class SignUpRepository {
   SignUpError _convertMessageIntoError(String message) {
     switch (message) {
       case 'EMAIL_EXISTS':
-        return SignUpError.emailExits;
+        return SignUpError.emailExists;
       case 'OPERATION_NOT_ALLOWED':
         return SignUpError.operationNotAllowed;
       case 'TOO_MANY_ATTEMPTS_TRY_LATER':
