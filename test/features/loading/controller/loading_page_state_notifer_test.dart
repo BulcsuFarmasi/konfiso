@@ -17,12 +17,11 @@ void main() {
       loadingRepository = MockLoadingRepository();
       loadingPageStateNotifier = LoadingPageStateNotifier(loadingRepository);
     });
+    test('should emit the laoding state', () {
+      expect(loadingPageStateNotifier.state, const LoadingPageState());
+    });
 
     group('autoSignIn', () {
-      test('should emit the laoding state', () {
-        expect(loadingPageStateNotifier.state, const LoadingPageState());
-      });
-
       test('should call repository\'s autoSignIn', () {
         loadingPageStateNotifier.autoSignIn();
         verify(loadingRepository.autoSignIn());

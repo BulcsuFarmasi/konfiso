@@ -25,10 +25,11 @@ void main() {
       password = '123456';
     });
 
+    test('should emit initial state', () {
+      expect(signUpPageStateNotifier.state, const SignUpPageState.initial());
+    });
+
     group('signUp', () {
-      test('should emit initial state', ()  {
-        expect(signUpPageStateNotifier.state, const SignUpPageState.initial());
-      });
       test('should call repository\'s signUp method', () {
         signUpPageStateNotifier.signUp(email, password);
         verify(signUpRepository.signUp(email, password));
@@ -41,7 +42,8 @@ void main() {
         ]);
       });
       test('should emit loading and error state in case of error', () {
-        when(signUpRepository.signUp(email, password)).thenThrow(SignUpException(SignUpError.other));
+        when(signUpRepository.signUp(email, password))
+            .thenThrow(SignUpException(SignUpError.other));
         signUpPageStateNotifier.signUp(email, password);
         emitsInOrder([
           const SignUpPageState.inProgress(),
