@@ -51,7 +51,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     String? errorMessage;
     if (AppValidators.required(email)) {
       errorMessage = Intl.message('Please write an email address');
-    } else if (AppValidators.email(email)) {
+    } else if (AppValidators.email(email!)) {
       errorMessage = Intl.message('Please put in a valid email address');
     }
     return errorMessage;
@@ -70,7 +70,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     const minLength = 6;
     if (AppValidators.required(password)) {
       errorMessage = Intl.message('Please write a password');
-    } else if (AppValidators.minLength(password, minLength)) {
+    } else if (AppValidators.minLength(password!, minLength)) {
       errorMessage =
           Intl.message('Please write at least $minLength characters');
     }

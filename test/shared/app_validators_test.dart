@@ -19,9 +19,6 @@ void main() {
       test('should return true if the input is NOT an email address',() {
         expect(AppValidators.email('baba'), true);
       });
-      test('should return false if the input is null',() {
-        expect(AppValidators.email(null), false);
-      });
       test('should return false if the input is an email address',() {
         expect(AppValidators.email('test@test.com'), false);
       });
@@ -29,9 +26,6 @@ void main() {
     group('minLength', () {
       test('should return true if the input is shorter then required',() {
         expect(AppValidators.minLength('baba', 5), true);
-      });
-      test('should return false if the input is null',() {
-        expect(AppValidators.minLength(null, 1), false);
       });
       test('should return false if the input is longer then required',() {
         expect(AppValidators.minLength('babok', 5), false);
