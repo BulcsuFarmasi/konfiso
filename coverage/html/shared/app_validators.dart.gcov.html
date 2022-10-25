@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">0</td>
             <td class="headerCovTableEntry">8</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntry">8</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-10-25 11:12:43</td>
+            <td class="headerValue">2022-10-25 13:31:23</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -61,20 +61,20 @@
 <pre class="sourceHeading">          Line data    Source code</pre>
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>            : class AppValidators {</a>
-<a name="2"><span class="lineNum">       2 </span><span class="lineNoCov">          0 :   static bool required(String? value) {</span></a>
-<a name="3"><span class="lineNum">       3 </span><span class="lineNoCov">          0 :     return value == null || value.isEmpty;</span></a>
+<a name="2"><span class="lineNum">       2 </span><span class="lineCov">          1 :   static bool required(String? value) {</span></a>
+<a name="3"><span class="lineNum">       3 </span><span class="lineCov">          1 :     return value == null || value.isEmpty;</span></a>
 <a name="4"><span class="lineNum">       4 </span>            :   }</a>
 <a name="5"><span class="lineNum">       5 </span>            : </a>
-<a name="6"><span class="lineNum">       6 </span><span class="lineNoCov">          0 :   static bool email(String? value) {</span></a>
-<a name="7"><span class="lineNum">       7 </span><span class="lineNoCov">          0 :     return value != null &amp;&amp; !RegExp(r&quot;^[a-zA-Z0-9.a-zA-Z0-9.!#$%&amp;\'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+&quot;).hasMatch(value);</span></a>
+<a name="6"><span class="lineNum">       6 </span><span class="lineCov">          1 :   static bool email(String value) {</span></a>
+<a name="7"><span class="lineNum">       7 </span><span class="lineCov">          2 :     return !RegExp(r&quot;^[a-zA-Z0-9.a-zA-Z0-9.!#$%&amp;\'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+&quot;).hasMatch(value);</span></a>
 <a name="8"><span class="lineNum">       8 </span>            :   }</a>
 <a name="9"><span class="lineNum">       9 </span>            : </a>
-<a name="10"><span class="lineNum">      10 </span><span class="lineNoCov">          0 :   static bool minLength(String? value, int minLength) {</span></a>
-<a name="11"><span class="lineNum">      11 </span><span class="lineNoCov">          0 :     return value != null &amp;&amp; value.length &lt; minLength;</span></a>
+<a name="10"><span class="lineNum">      10 </span><span class="lineCov">          1 :   static bool minLength(String value, int minLength) {</span></a>
+<a name="11"><span class="lineNum">      11 </span><span class="lineCov">          2 :     return value.length &lt; minLength;</span></a>
 <a name="12"><span class="lineNum">      12 </span>            :   }</a>
 <a name="13"><span class="lineNum">      13 </span>            : </a>
-<a name="14"><span class="lineNum">      14 </span><span class="lineNoCov">          0 :   static bool passwordMatch(String? value, String? otherValue) {</span></a>
-<a name="15"><span class="lineNum">      15 </span><span class="lineNoCov">          0 :     return value != otherValue;</span></a>
+<a name="14"><span class="lineNum">      14 </span><span class="lineCov">          1 :   static bool passwordMatch(String? value, String? otherValue) {</span></a>
+<a name="15"><span class="lineNum">      15 </span><span class="lineCov">          1 :     return value != otherValue;</span></a>
 <a name="16"><span class="lineNum">      16 </span>            :   }</a>
 <a name="17"><span class="lineNum">      17 </span>            : }</a>
 </pre>

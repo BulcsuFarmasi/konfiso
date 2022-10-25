@@ -1,7 +1,4 @@
 @TestOn('vm')
-
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/shared/http_client.dart';
