@@ -8,7 +8,7 @@ final loadingPageStateNotifierProvider = StateNotifierProvider(
 class LoadingPageStateNotifier extends StateNotifier<LoadingPageState> {
   final LoadingRepository _loadingRepository;
 
-  LoadingPageStateNotifier(this._loadingRepository) : super(const LoadingPageState.initial());
+  LoadingPageStateNotifier(this._loadingRepository) : super(const LoadingPageState());
 
   Future<bool> autoSignIn() {
     return _loadingRepository.autoSignIn();

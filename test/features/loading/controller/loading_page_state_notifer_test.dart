@@ -19,8 +19,8 @@ void main() {
     });
 
     group('autoSignIn', () {
-      test('should emit the initial state', () {
-        expect(loadingPageStateNotifier.state, const LoadingPageState.initial());
+      test('should emit the laoding state', () {
+        expect(loadingPageStateNotifier.state, const LoadingPageState());
       });
 
       test('should call repository\'s autoSignIn', () {
