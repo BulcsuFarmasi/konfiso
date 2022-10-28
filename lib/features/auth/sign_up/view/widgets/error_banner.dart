@@ -12,7 +12,7 @@ class ErrorBanner extends StatelessWidget {
     switch (error) {
       case SignUpError.emailExists:
         return Intl.message(
-            'This email address is already registred. Please try an another.');
+            'This email address is already registered. Please try an another.');
       case SignUpError.operationNotAllowed:
         return Intl.message('This operation is not allowed.');
       case SignUpError.tooManyAttempts:
