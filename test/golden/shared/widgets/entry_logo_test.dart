@@ -9,7 +9,7 @@ void main() {
     group('EntryLogo', () {
 
       Widget createWidgetUnderTest() {
-        return const ProviderScope(child: MaterialApp(home: SignInPage(),));
+        return const MaterialApp(home: EntryLogo(),);
       }
 
       testWidgets('should match golden image', (WidgetTester widgetTester) async {
