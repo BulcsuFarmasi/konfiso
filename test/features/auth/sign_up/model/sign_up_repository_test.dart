@@ -64,6 +64,15 @@ void main() {
                 e is SignUpException &&
                 e.error == SignUpError.tooManyAttempts)));
       });
+      test('should throw other if error is unknown', () {
+        arrangeServiceThrowsException('b');
+
+        expect(
+            signUpRepository.signUp(email, password),
+            throwsA(predicate((e) =>
+            e is SignUpException &&
+                e.error == SignUpError.other)));
+      });
     });
   });
 }
