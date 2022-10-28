@@ -6,10 +6,14 @@ import 'package:konfiso/shared/widgets/entry_in_progress.dart';
 
 void main() {
 
-  group('EntryInProgress', skip: 'TODO to figure out how test separatly', () {
+  group('EntryInProgress', () {
+
+    void createWidgetUnderTest() {
+
+    }
 
     testWidgets('should match golden image', (WidgetTester widgetTester) async {
-      await widgetTester.pumpWidget(const EntryInProgress());
+      await widgetTester.pumpWidget(const MaterialApp(home: EntryInProgress(),));
 
       expect(find.byType(EntryInProgress), matchesGoldenFile('entry_in_progress_test.png'));
     });
