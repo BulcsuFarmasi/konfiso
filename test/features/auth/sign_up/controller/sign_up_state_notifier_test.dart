@@ -18,6 +18,12 @@ void main() {
     late SignUpRepository signUpRepository;
     late String email;
     late String password;
+
+    void arrangeRepositoryThrowsException() {
+      when(signUpRepository.signUp(email, password))
+          .thenThrow(SignUpException(SignUpError.other));
+    }
+
     setUp(() {
       signUpRepository = MockSignUpRepository();
       signUpPageStateNotifier = SignUpPageStateNotifier(signUpRepository);
@@ -42,8 +48,7 @@ void main() {
         ]);
       });
       test('should emit loading and error state in case of error', () {
-        when(signUpRepository.signUp(email, password))
-            .thenThrow(SignUpException(SignUpError.other));
+        arrangeRepositoryThrowsException();
         signUpPageStateNotifier.signUp(email, password);
         emitsInOrder([
           const SignUpPageState.inProgress(),

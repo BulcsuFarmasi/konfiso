@@ -18,6 +18,11 @@ void main() {
       late SignInRepository signInRepository;
       late String email;
       late String password;
+
+      void arrangeRepositoryThrowsException() {
+        when(signInRepository.signIn(email, password)).thenThrow(SignInException(SignInError.other));
+      }
+
       setUp(() {
         signInRepository = MockSignInRepository();
         signInPageStateNotifier = SignInPageStateNotifier(signInRepository);
@@ -39,7 +44,7 @@ void main() {
         ]);
       });
       test('should emit inProgress and error states in case of error', () {
-        when(signInRepository.signIn(email, password)).thenThrow(SignInException(SignInError.other));
+        arrangeRepositoryThrowsException();
         signInPageStateNotifier.signIn(email, password);
         emitsInOrder([
           const SignInPageState.inProgress(),

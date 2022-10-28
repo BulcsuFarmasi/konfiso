@@ -16,6 +16,10 @@ void main() {
     late String key;
     late String value;
 
+    void arrangeFlutterSecureStorageReturnWithValue() {
+      when(flutterSecureStorage.read(key: key)).thenAnswer((_) => Future.value(value));
+    }
+
     setUp(()  {
       flutterSecureStorage = MockFlutterSecureStorage();
       secureStorage = SecureStorage(flutterSecureStorage);
@@ -31,7 +35,7 @@ void main() {
     });
     group('read', () {
       test('should call give back the value which flutter secure storage gave it to it', () async {
-        when(flutterSecureStorage.read(key: key)).thenAnswer((_) => Future.value(value));
+        arrangeFlutterSecureStorageReturnWithValue();
         expectLater(await secureStorage.read(key), value);
       });
     });

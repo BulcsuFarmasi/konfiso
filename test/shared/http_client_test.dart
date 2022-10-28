@@ -16,6 +16,10 @@ void main() {
     late Response response;
     late String path;
 
+    void arrangeDioReturnsWithResponse() {
+      when(dio.post(path)).thenAnswer((_) => Future.value(response));
+    }
+
     setUp(() {
       dio = MockDio();
       httpClient = HttpClient(dio);
@@ -23,11 +27,10 @@ void main() {
       response = Response(requestOptions: RequestOptions(path: path));
     });
 
-    group('post', ()  {
+    group('post', () {
       test('should return with the provided response', () async {
-
-      when(dio.post(path)).thenAnswer((_) => Future.value(response));
-      expectLater(await httpClient.post(url: path), response);
+        arrangeDioReturnsWithResponse();
+        expectLater(await httpClient.post(url: path), response);
       });
     });
   });

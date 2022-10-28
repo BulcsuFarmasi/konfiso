@@ -18,10 +18,15 @@ void main() {
     late AuthService authService;
     late String email;
     late String password;
+
+    void arrangeServiceThrowsException(String message) {
+      when(authService.signUp(email, password))
+          .thenThrow(NetworkException(message));
+    }
+
     setUp(() {
       authService = MockAuthService();
       signUpRepository = SignUpRepository(authService);
-
       email = 'test@test.com';
       password = '123456';
     });
@@ -33,31 +38,31 @@ void main() {
       });
 
       test('should throw email exists exception if email exists', () {
-        when(authService.signUp(email, password))
-            .thenThrow(NetworkException('EMAIL_EXISTS'));
+        arrangeServiceThrowsException('EMAIL_EXISTS');
 
         expect(
             signUpRepository.signUp(email, password),
             throwsA(predicate((e) =>
-            e is SignUpException && e.error == SignUpError.emailExists)));
+                e is SignUpException && e.error == SignUpError.emailExists)));
       });
-      test('should throw email operation not allowed if operation is not allowed', () {
-        when(authService.signUp(email, password))
-            .thenThrow(NetworkException('OPERATION_NOT_ALLOWED'));
-
+      test(
+          'should throw email operation not allowed if operation is not allowed',
+          () {
+        arrangeServiceThrowsException('OPERATION_NOT_ALLOWED');
         expect(
             signUpRepository.signUp(email, password),
             throwsA(predicate((e) =>
-            e is SignUpException && e.error == SignUpError.operationNotAllowed)));
+                e is SignUpException &&
+                e.error == SignUpError.operationNotAllowed)));
       });
       test('should throw too many attempts if too many attempts were made', () {
-        when(authService.signUp(email, password))
-            .thenThrow(NetworkException('TOO_MANY_ATTEMPTS_TRY_LATER'));
+        arrangeServiceThrowsException('TOO_MANY_ATTEMPTS_TRY_LATER');
 
         expect(
             signUpRepository.signUp(email, password),
             throwsA(predicate((e) =>
-            e is SignUpException && e.error == SignUpError.tooManyAttempts)));
+                e is SignUpException &&
+                e.error == SignUpError.tooManyAttempts)));
       });
     });
   });
