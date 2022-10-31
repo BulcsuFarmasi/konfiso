@@ -20,9 +20,21 @@ void main() {
 
     group('autoSignIn', () {
       test('should call repository\'s autoSignIn', () {
-        when(() => loadingRepository.autoSignIn()).thenAnswer((_) => Future.value(true));
+        when(() => loadingRepository.autoSignIn())
+            .thenAnswer((_) => Future.value(true));
         loadingPageStateNotifier.autoSignIn();
         verify(() => loadingRepository.autoSignIn());
+      });
+      test('should return with true if repository returns with true', () async {
+        when(() => loadingRepository.autoSignIn())
+            .thenAnswer((_) => Future.value(true));
+        expect(await loadingPageStateNotifier.autoSignIn(), true);
+      });
+      test('should return with true if repository returns with true', () async {
+        when(() => loadingRepository.autoSignIn())
+            .thenAnswer((_) => Future.value(false));
+        loadingPageStateNotifier.autoSignIn();
+        expect(await loadingPageStateNotifier.autoSignIn(), false);
       });
     });
   });
