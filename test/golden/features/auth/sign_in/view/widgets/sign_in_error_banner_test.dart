@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_in_error.dart';
-import 'package:konfiso/features/auth/sign_in/view/widgets/error_banner.dart';
+import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_error_banner.dart';
 
 void main() {
-  group('ErrorBanner', () {
+  group('SignInErrorBanner', () {
     Widget createWidgetUnderTest() {
       return const MaterialApp(
-        home: ErrorBanner(error: SignInError.other),
+        home: SignInErrorBanner(error: SignInError.other),
       );
     }
 
@@ -15,7 +15,7 @@ void main() {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       expect(
-          find.byType(ErrorBanner), matchesGoldenFile('error_banner_test.png'));
+          find.byType(SignInErrorBanner), matchesGoldenFile('sign_in_error_banner_test.png'));
     });
   });
 }

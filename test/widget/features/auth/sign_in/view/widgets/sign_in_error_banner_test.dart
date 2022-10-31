@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_in_error.dart';
-import 'package:konfiso/features/auth/sign_in/view/widgets/error_banner.dart';
+import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_error_banner.dart';
 
 void main() {
-  group('ErrorBanner', () {
+  group('SignInErrorBanner', () {
     Widget createWidgetUnderTest(SignInError signInError) {
       return MaterialApp(
-        home: ErrorBanner(error: signInError),
+        home: SignInErrorBanner(error: signInError),
       );
     }
 

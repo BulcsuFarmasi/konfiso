@@ -3,10 +3,10 @@ import 'package:intl/intl.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_in_error.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
-class ErrorBanner extends StatelessWidget {
+class SignInErrorBanner extends StatelessWidget {
   final SignInError error;
 
-  const ErrorBanner({super.key, required this.error});
+  const SignInErrorBanner({super.key, required this.error});
 
   String _convertErrorToText(SignInError error) {
     switch (error) {
