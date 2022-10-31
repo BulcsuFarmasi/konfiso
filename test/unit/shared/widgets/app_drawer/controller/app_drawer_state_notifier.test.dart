@@ -5,12 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/shared/widgets/app_drawer/controller/app_drawer_state.dart';
 import 'package:konfiso/shared/widgets/app_drawer/controller/app_drawer_state_notifier.dart';
 import 'package:konfiso/shared/widgets/app_drawer/model/app_drawer_repository.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
-@GenerateNiceMocks([MockSpec<AppDrawerRepository>()])
-import 'app_drawer_state_notifier.test.mocks.dart';
-
+class MockAppDrawerRepository extends Mock implements AppDrawerRepository {}
 
 void main() {
   group('AppDrawerStateNotifier', () {
@@ -27,9 +24,10 @@ void main() {
     });
 
     group('signOut', () {
-      test('should call repository\'s signOut method',() {
+      test('should call repository\'s signOut method', () {
+        when(() => appDrawerRepository.signOut()).thenAnswer((_) { Future.value(null); });
         appDrawerStateNotifier.signOut();
-        verify(appDrawerRepository.signOut());
+        verify(() => appDrawerRepository.signOut());
       });
     });
   });

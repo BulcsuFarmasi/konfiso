@@ -5,11 +5,9 @@ import 'package:konfiso/features/auth/sign_in/model/sign_in_error.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_in_repository.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_up_expection.dart';
 import 'package:konfiso/shared/expcetions/network_execption.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
-@GenerateNiceMocks([MockSpec<AuthService>()])
-import 'sign_in_repository_test.mocks.dart';
+class MockAuthService extends Mock implements AuthService {}
 
 void main() {
   group('SignInRepository', () {
@@ -20,7 +18,7 @@ void main() {
       late String password;
 
       void arrangeServiceThrowsException(String message) {
-        when(authService.signIn(email, password))
+        when(() => authService.signIn(email, password))
             .thenThrow(NetworkException(message));
       }
 
@@ -31,9 +29,10 @@ void main() {
         password = '123456';
       });
       test('should call authService signIn', () {
+        when(() => authService.signIn(email, password)).thenAnswer((_) => Future.value(null));
         signInRepository.signIn(email, password);
 
-        verify(authService.signIn(email, password));
+        verify(() => authService.signIn(email, password));
       });
       test('should throw invalid email exception if email is invalid', () {
         arrangeServiceThrowsException('INVALID_EMAIL');

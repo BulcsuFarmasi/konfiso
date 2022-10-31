@@ -6,11 +6,9 @@ import 'package:konfiso/features/auth/sign_up/model/sign_up_exception.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_repository.dart';
 import 'package:konfiso/shared/expcetions/network_execption.dart';
 
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
-@GenerateNiceMocks([MockSpec<AuthService>()])
-import 'sign_up_repository_test.mocks.dart';
+class MockAuthService extends Mock implements AuthService {}
 
 void main() {
   group('SignUpRepository', () {
@@ -20,7 +18,7 @@ void main() {
     late String password;
 
     void arrangeServiceThrowsException(String message) {
-      when(authService.signUp(email, password))
+      when(() => authService.signUp(email, password))
           .thenThrow(NetworkException(message));
     }
 
@@ -33,8 +31,9 @@ void main() {
 
     group('signUp', () {
       test('should call auth service\'s signUp method', () {
+        when(() => authService.signUp(email, password)).thenAnswer((_) => Future.value(null));
         signUpRepository.signUp(email, password);
-        verify(authService.signUp(email, password));
+        verify(() => authService.signUp(email, password));
       });
 
       test('should throw email exists exception if email exists', () {
@@ -69,9 +68,8 @@ void main() {
 
         expect(
             signUpRepository.signUp(email, password),
-            throwsA(predicate((e) =>
-            e is SignUpException &&
-                e.error == SignUpError.other)));
+            throwsA(predicate(
+                (e) => e is SignUpException && e.error == SignUpError.other)));
       });
     });
   });

@@ -7,14 +7,13 @@ import 'package:konfiso/features/auth/services/stored_user.dart';
 import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/secret.dart';
 import 'package:konfiso/shared/secure_storage.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
-@GenerateNiceMocks([
-  MockSpec<SecureStorage>(),
-  MockSpec<HttpClient>(),
-])
-import 'auth_service_test.mocks.dart';
+
+
+
+class MockHttpClient extends Mock implements HttpClient {}
+class MockSecureStorage extends Mock implements SecureStorage {}
 
 void main() {
   group('AuthService', () {
@@ -40,7 +39,7 @@ void main() {
             validUntil: DateTime.now());
         const url =
             'https://securetoken.googleapis.com/v1/token?key=$firebaseApiKey';
-        when(httpClient.post(
+        when(() => httpClient.post(
                 url: url,
                 data:
                     RefreshTokenRequestPayload(authService.user!.refreshToken)))

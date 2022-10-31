@@ -4,11 +4,9 @@ import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/shared/widgets/app.dart';
 import 'package:konfiso/shared/widgets/app_drawer/model/app_drawer_repository.dart';
 
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
-@GenerateNiceMocks([MockSpec<AuthService>()])
-import 'app_drawer_repository_test.mocks.dart';
+class MockAuthService extends Mock implements AuthService {}
 
 void main() {
   group('AppDrawerRepository', () {
@@ -22,8 +20,9 @@ void main() {
 
     group('signOut', () {
       test('should service\'s signOut method', () {
+        when(() => authService.signOut()).thenAnswer((_) => Future.value(null));
         appDrawerRepository.signOut();
-        verify(authService.signOut());
+        verify(() => authService.signOut());
       });
     });
   });

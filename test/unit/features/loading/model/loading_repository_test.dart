@@ -2,12 +2,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/loading/model/loading_repository.dart';
 
-import 'package:mockito/annotations.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
-@GenerateNiceMocks([MockSpec<AuthService>()])
-import 'loading_repository_test.mocks.dart';
+class MockAuthService extends Mock implements AuthService {}
 
 void main() {
   group('LoadingRepository', () {
@@ -17,10 +15,11 @@ void main() {
       authService = MockAuthService();
       loadingRepository = LoadingRepository(authService);
     });
-    group('autoSignIN', () {
+    group('autoSignIn', () {
       test('should call auth service\'s autoSignUp', () {
-       loadingRepository.autoSignIn();
-       verify(authService.autoSignIn());
+        when(() => loadingRepository.autoSignIn()).thenAnswer((_) => Future.value(true));
+        loadingRepository.autoSignIn();
+        verify(() => authService.autoSignIn());
       });
     });
   });

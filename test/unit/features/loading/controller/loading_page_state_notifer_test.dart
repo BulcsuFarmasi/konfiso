@@ -1,13 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/loading/controller/loading_page_state_notifier.dart';
 import 'package:konfiso/features/loading/controller/loading_state.dart';
-
-import 'package:mockito/annotations.dart';
 import 'package:konfiso/features/loading/model/loading_repository.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
-@GenerateNiceMocks([MockSpec<LoadingRepository>()])
-import 'loading_page_state_notifer_test.mocks.dart';
+class MockLoadingRepository extends Mock implements LoadingRepository {}
 
 void main() {
   group('LoadingPageStateNotifier', () {
@@ -23,8 +20,9 @@ void main() {
 
     group('autoSignIn', () {
       test('should call repository\'s autoSignIn', () {
+        when(() => loadingRepository.autoSignIn()).thenAnswer((_) => Future.value(true));
         loadingPageStateNotifier.autoSignIn();
-        verify(loadingRepository.autoSignIn());
+        verify(() => loadingRepository.autoSignIn());
       });
     });
   });

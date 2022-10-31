@@ -3,11 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/shared/http_client.dart';
 
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
-@GenerateNiceMocks([MockSpec<Dio>()])
-import 'http_client_test.mocks.dart';
+class MockDio extends Mock implements Dio {}
 
 void main() {
   group('HttpClient', () {
@@ -17,7 +15,7 @@ void main() {
     late String path;
 
     void arrangeDioReturnsWithResponse() {
-      when(dio.post(path)).thenAnswer((_) => Future.value(response));
+      when(() => dio.post(path)).thenAnswer((_) => Future.value(response));
     }
 
     setUp(() {

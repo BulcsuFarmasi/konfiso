@@ -5,14 +5,12 @@ import 'package:konfiso/features/auth/sign_in/controller/sing_in_page_state.dart
 import 'package:konfiso/features/auth/sign_in/model/sign_in_error.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_in_repository.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_up_expection.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
-@GenerateNiceMocks([MockSpec<SignInRepository>()])
-import 'sign_in_page_state_notifier_test.mocks.dart';
+class MockSignInRepository extends Mock implements SignInRepository {}
 
 void main() {
-  group('SignInStateNotifier', () {
+  group('SignInPageStateNotifier', () {
     group('signIn', () {
       late SignInPageStateNotifier signInPageStateNotifier;
       late SignInRepository signInRepository;
@@ -20,7 +18,8 @@ void main() {
       late String password;
 
       void arrangeRepositoryThrowsException() {
-        when(signInRepository.signIn(email, password)).thenThrow(SignInException(SignInError.other));
+        when(() => signInRepository.signIn(email, password))
+            .thenThrow(SignInException(SignInError.other));
       }
 
       setUp(() {
@@ -33,10 +32,13 @@ void main() {
         expect(signInPageStateNotifier.state, const SignInPageState.initial());
       });
       test("should call repository's signIn method", () {
+        when(() => signInRepository.signIn(email, password)).thenAnswer((_) => Future.value(null));
         signInPageStateNotifier.signIn(email, password);
-        verify(signInRepository.signIn(email, password));
+        verify(() => signInRepository.signIn(email, password)).called(1);
       });
-      test('should emit inProgress and successful states in case of success', () {
+      test('should emit inProgress and successful states in case of success',
+          () {
+        when(() => signInRepository.signIn(email, password)).thenAnswer((_) => Future.value(null));
         signInPageStateNotifier.signIn(email, password);
         emitsInOrder([
           const SignInPageState.inProgress(),

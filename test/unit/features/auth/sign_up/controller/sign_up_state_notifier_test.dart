@@ -1,16 +1,15 @@
 @TestOn('vm')
 import 'package:flutter_test/flutter_test.dart';
+import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state.dart';
 import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state_notifier.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_exception.dart';
-
-import 'package:mockito/annotations.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_repository.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
-@GenerateNiceMocks([MockSpec<SignUpRepository>()])
-import 'sign_up_state_notifier_test.mocks.dart';
+class MockSignUpRepository extends Mock implements SignUpRepository{}
+class MockAuthService extends Mock implements AuthService{}
 
 void main() {
   group('SignUpPageStateNotifier', () {
@@ -20,7 +19,7 @@ void main() {
     late String password;
 
     void arrangeRepositoryThrowsException() {
-      when(signUpRepository.signUp(email, password))
+      when(() => signUpRepository.signUp(email, password))
           .thenThrow(SignUpException(SignUpError.other));
     }
 
@@ -37,10 +36,12 @@ void main() {
 
     group('signUp', () {
       test('should call repository\'s signUp method', () {
+        when(() => signUpRepository.signUp(email, password)).thenAnswer((_) => Future.value(null));
         signUpPageStateNotifier.signUp(email, password);
-        verify(signUpRepository.signUp(email, password));
+        verify(() => signUpRepository.signUp(email, password));
       });
       test('should emit loading and success state in case of success', () {
+        when(() => signUpRepository.signUp(email, password)).thenAnswer((_) => Future.value(null));
         signUpPageStateNotifier.signUp(email, password);
         emitsInOrder([
           const SignUpPageState.inProgress(),

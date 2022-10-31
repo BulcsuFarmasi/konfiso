@@ -2,12 +2,10 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/shared/secure_storage.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
 
-@GenerateNiceMocks([MockSpec<FlutterSecureStorage>()])
-import 'secure_storage_test.mocks.dart';
+class MockFlutterSecureStorage extends Mock implements FlutterSecureStorage{}
 
 void main() {
   group('SecureStorage', () {
@@ -17,7 +15,7 @@ void main() {
     late String value;
 
     void arrangeFlutterSecureStorageReturnWithValue() {
-      when(flutterSecureStorage.read(key: key)).thenAnswer((_) => Future.value(value));
+      when(() => flutterSecureStorage.read(key: key)).thenAnswer((_) => Future.value(value));
     }
 
     setUp(()  {
@@ -29,8 +27,9 @@ void main() {
 
     group('write', () {
       test('should call flutter secure storage\'s write method', () {
+        when(() => flutterSecureStorage.write(key: key, value: value)).thenAnswer((invocation) => Future.value(null));
         secureStorage.write(key, value);
-        verify(flutterSecureStorage.write(key: key, value: value));
+        verify(() => flutterSecureStorage.write(key: key, value: value));
       });
     });
     group('read', () {
@@ -41,8 +40,9 @@ void main() {
     });
     group('delete', () {
       test('should call flutter secure storage\'s delete method', () {
+        when(() => flutterSecureStorage.delete(key: key)).thenAnswer((invocation) => Future.value(null));
         secureStorage.delete(key);
-        verify(flutterSecureStorage.delete(key: key));
+        verify(() => flutterSecureStorage.delete(key: key));
       });
     });
   });
