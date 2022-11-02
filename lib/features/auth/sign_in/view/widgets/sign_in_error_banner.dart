@@ -1,14 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_in_error.dart';
-import 'package:konfiso/shared/app_colors.dart';
+import 'package:konfiso/shared/error_banner.dart';
 
-class SignInErrorBanner extends StatelessWidget {
-  final SignInError error;
+class SignInErrorBanner extends ErrorBanner<SignInError> {
+  const SignInErrorBanner({super.key, super.error = SignInError.other});
 
-  const SignInErrorBanner({super.key, required this.error});
-
-  String _convertErrorToText(SignInError error) {
+  @override
+  String convertErrorToText() {
     switch (error) {
       case SignInError.other:
         return Intl.message('Something went wrong. Please try again later.');
@@ -19,15 +17,5 @@ class SignInErrorBanner extends StatelessWidget {
       case SignInError.userDisabled:
         return Intl.message('Your account has been disabled.');
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      _convertErrorToText(error),
-      style:
-          const TextStyle(color: AppColors.primaryColor, fontSize: 20),
-      textAlign: TextAlign.center,
-    );
   }
 }

@@ -1,14 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
-import 'package:konfiso/shared/app_colors.dart';
+import 'package:konfiso/shared/error_banner.dart';
 
-class SignUpErrorBanner extends StatelessWidget {
-  final SignUpError error;
+class SignUpErrorBanner extends ErrorBanner<SignUpError> {
+  const SignUpErrorBanner({super.key, super.error = SignUpError.other});
 
-  const SignUpErrorBanner({super.key, required this.error});
-
-  String _convertErrorToText(SignUpError error) {
+  @override
+  String convertErrorToText() {
     switch (error) {
       case SignUpError.emailExists:
         return Intl.message(
@@ -21,14 +19,5 @@ class SignUpErrorBanner extends StatelessWidget {
       case SignUpError.other:
         return Intl.message('Something went wrong. Please try again later.');
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      _convertErrorToText(error),
-      style: const TextStyle(color: AppColors.primaryColor, fontSize: 20),
-      textAlign: TextAlign.center,
-    );
   }
 }
