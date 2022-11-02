@@ -16,8 +16,8 @@ void main() {
     testWidgets('should match golden image', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      expect(find.byType(LoadingPage),
-          matchesGoldenFile('loading_page_test.png'));
+      expect(
+          find.byType(LoadingPage), matchesGoldenFile('loading_page_test.png'));
     });
   });
 }

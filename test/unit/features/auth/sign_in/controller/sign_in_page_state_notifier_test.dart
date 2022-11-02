@@ -32,13 +32,15 @@ void main() {
         expect(signInPageStateNotifier.state, const SignInPageState.initial());
       });
       test("should call repository's signIn method", () {
-        when(() => signInRepository.signIn(email, password)).thenAnswer((_) => Future.value(null));
+        when(() => signInRepository.signIn(email, password))
+            .thenAnswer((_) => Future.value(null));
         signInPageStateNotifier.signIn(email, password);
         verify(() => signInRepository.signIn(email, password)).called(1);
       });
       test('should emit inProgress and successful states in case of success',
           () {
-        when(() => signInRepository.signIn(email, password)).thenAnswer((_) => Future.value(null));
+        when(() => signInRepository.signIn(email, password))
+            .thenAnswer((_) => Future.value(null));
         signInPageStateNotifier.signIn(email, password);
         emitsInOrder([
           const SignInPageState.inProgress(),

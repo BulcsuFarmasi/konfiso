@@ -11,10 +11,10 @@ void main() {
     }
 
     testWidgets('should a text with a K in it',
-            (WidgetTester widgetTester) async {
-          await widgetTester.pumpWidget(createWidgetUnderTest());
+        (WidgetTester widgetTester) async {
+      await widgetTester.pumpWidget(createWidgetUnderTest());
 
-          expect(find.text('K'), findsOneWidget);
-        });
+      expect(find.text('K'), findsOneWidget);
+    });
   });
 }

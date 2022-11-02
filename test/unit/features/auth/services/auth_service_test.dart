@@ -9,10 +9,8 @@ import 'package:konfiso/shared/secret.dart';
 import 'package:konfiso/shared/secure_storage.dart';
 import 'package:mocktail/mocktail.dart';
 
-
-
-
 class MockHttpClient extends Mock implements HttpClient {}
+
 class MockSecureStorage extends Mock implements SecureStorage {}
 
 void main() {
@@ -43,18 +41,17 @@ void main() {
                 url: url,
                 data:
                     RefreshTokenRequestPayload(authService.user!.refreshToken)))
-            .thenAnswer(
-          (realInvocation) {
-            print(realInvocation.namedArguments);
-            return Future.value(
+            .thenAnswer((realInvocation) {
+          print(realInvocation.namedArguments);
+          return Future.value(
             Response(requestOptions: RequestOptions(path: url), data: {
               'user_id': '',
               'id_token': '',
               'refresh_token': '',
               'expires_in': '3600'
             }),
-          );}
-        );
+          );
+        });
         print(await authService.autoSignIn());
         logInvocations([httpClient as MockHttpClient]);
         // expectLater(authService.autoSignIn(), Future.value(true));

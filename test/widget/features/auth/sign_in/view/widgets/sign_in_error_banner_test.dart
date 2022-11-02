@@ -34,8 +34,7 @@ void main() {
     });
     testWidgets('should contain the approiate text for unknown errors',
         (WidgetTester widgetTester) async {
-      await widgetTester
-          .pumpWidget(createWidgetUnderTest(SignInError.other));
+      await widgetTester.pumpWidget(createWidgetUnderTest(SignInError.other));
 
       expect(find.text('Something went wrong. Please try again later.'),
           findsOneWidget);

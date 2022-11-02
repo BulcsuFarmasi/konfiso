@@ -8,8 +8,9 @@ import 'package:konfiso/features/auth/sign_up/model/sign_up_exception.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_repository.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockSignUpRepository extends Mock implements SignUpRepository{}
-class MockAuthService extends Mock implements AuthService{}
+class MockSignUpRepository extends Mock implements SignUpRepository {}
+
+class MockAuthService extends Mock implements AuthService {}
 
 void main() {
   group('SignUpPageStateNotifier', () {
@@ -36,12 +37,14 @@ void main() {
 
     group('signUp', () {
       test('should call repository\'s signUp method', () {
-        when(() => signUpRepository.signUp(email, password)).thenAnswer((_) => Future.value(null));
+        when(() => signUpRepository.signUp(email, password))
+            .thenAnswer((_) => Future.value(null));
         signUpPageStateNotifier.signUp(email, password);
         verify(() => signUpRepository.signUp(email, password));
       });
       test('should emit loading and success state in case of success', () {
-        when(() => signUpRepository.signUp(email, password)).thenAnswer((_) => Future.value(null));
+        when(() => signUpRepository.signUp(email, password))
+            .thenAnswer((_) => Future.value(null));
         signUpPageStateNotifier.signUp(email, password);
         emitsInOrder([
           const SignUpPageState.inProgress(),

@@ -29,7 +29,8 @@ void main() {
         password = '123456';
       });
       test('should call authService signIn', () {
-        when(() => authService.signIn(email, password)).thenAnswer((_) => Future.value(null));
+        when(() => authService.signIn(email, password))
+            .thenAnswer((_) => Future.value(null));
         signInRepository.signIn(email, password);
 
         verify(() => authService.signIn(email, password));

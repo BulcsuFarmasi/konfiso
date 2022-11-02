@@ -33,7 +33,10 @@ void main() {
       await widgetTester
           .pumpWidget(createWidgetUnderTest(SignUpError.tooManyAttempts));
 
-      expect(find.text('You were trying too many times, please try again some time later.'), findsOneWidget);
+      expect(
+          find.text(
+              'You were trying too many times, please try again some time later.'),
+          findsOneWidget);
     });
     testWidgets('should contain the approiate text for unknown errors',
         (WidgetTester widgetTester) async {

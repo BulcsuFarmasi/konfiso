@@ -31,7 +31,8 @@ void main() {
 
     group('signUp', () {
       test('should call auth service\'s signUp method', () {
-        when(() => authService.signUp(email, password)).thenAnswer((_) => Future.value(null));
+        when(() => authService.signUp(email, password))
+            .thenAnswer((_) => Future.value(null));
         signUpRepository.signUp(email, password);
         verify(() => authService.signUp(email, password));
       });

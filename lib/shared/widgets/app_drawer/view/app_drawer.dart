@@ -27,7 +27,7 @@ class AppDrawer extends ConsumerWidget {
             leading: const Icon(Icons.exit_to_app),
             title: Text(Intl.message('Logout')),
             onTap: () {
-              ref.read(appDrawerStateNotifierProvider.notifier).signOut();
+              ref.read(appDrawerControllerProvider).signOut();
               navigator.pop();
               navigator.pushReplacementNamed('/');
             },

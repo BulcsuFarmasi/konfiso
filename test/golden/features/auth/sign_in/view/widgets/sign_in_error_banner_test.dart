@@ -14,8 +14,8 @@ void main() {
     testWidgets('should match golden image', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      expect(
-          find.byType(SignInErrorBanner), matchesGoldenFile('sign_in_error_banner_test.png'));
+      expect(find.byType(SignInErrorBanner),
+          matchesGoldenFile('sign_in_error_banner_test.png'));
     });
   });
 }

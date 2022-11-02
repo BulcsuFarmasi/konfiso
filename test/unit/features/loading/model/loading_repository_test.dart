@@ -18,17 +18,22 @@ void main() {
     });
     group('autoSignIn', () {
       test('should call auth service\'s autoSignUp', () {
-        when(() => loadingRepository.autoSignIn()).thenAnswer((_) => Future.value(true));
+        when(() => loadingRepository.autoSignIn())
+            .thenAnswer((_) => Future.value(true));
         loadingRepository.autoSignIn();
         verify(() => authService.autoSignIn());
       });
-      test('should return true when the auth service returns with true', () async {
-        when(() => loadingRepository.autoSignIn()).thenAnswer((_) => Future.value(true));
+      test('should return true when the auth service returns with true',
+          () async {
+        when(() => loadingRepository.autoSignIn())
+            .thenAnswer((_) => Future.value(true));
         loadingRepository.autoSignIn();
         expectLater(await loadingRepository.autoSignIn(), true);
       });
-      test('should return false when the auth service returns with false', () async {
-        when(() => loadingRepository.autoSignIn()).thenAnswer((_) => Future.value(false));
+      test('should return false when the auth service returns with false',
+          () async {
+        when(() => loadingRepository.autoSignIn())
+            .thenAnswer((_) => Future.value(false));
         loadingRepository.autoSignIn();
         expectLater(await loadingRepository.autoSignIn(), false);
       });

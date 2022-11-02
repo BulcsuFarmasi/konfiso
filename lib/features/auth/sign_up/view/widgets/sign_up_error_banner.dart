@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
-import 'package:konfiso/shared/error_banner.dart';
+import 'package:konfiso/shared/widgets/error_banner.dart';
 
 class SignUpErrorBanner extends ErrorBanner<SignUpError> {
   const SignUpErrorBanner({super.key, super.error = SignUpError.other});
