@@ -18,12 +18,13 @@ void main() {
       print(loadingPageStateNotifier);
       return ProviderScope(
           overrides: [
-            loadingPageStateNotifierProvider.overrideWithProvider(
-                StateNotifierProvider((_) => loadingPageStateNotifier))
+            loadingPageStateNotifierProvider
+                .overrideWith((_) => loadingPageStateNotifier),
           ],
           child: MaterialApp(home: const LoadingPage(), routes: {
             SignInPage.routeName: (BuildContext context) => const SignInPage(),
-            BookHomePage.routeName: (BuildContext context) => const BookHomePage(),
+            BookHomePage.routeName: (BuildContext context) =>
+                const BookHomePage(),
           }));
     }
 
@@ -41,14 +42,15 @@ void main() {
       expect(find.byType(SignInPage), findsOneWidget);
     });
 
-    testWidgets('should navigate to books home page when auto login returns true',
-            (WidgetTester widgetTester) async {
-          when(() => loadingPageStateNotifier.autoSignIn())
-              .thenAnswer((_) => Future.value(true));
-          await widgetTester.pumpWidget(createWidgetUinderTest());
-          expect(find.byType(LoadingPage), findsOneWidget);
-          await widgetTester.pumpAndSettle();
-          expect(find.byType(BookHomePage), findsOneWidget);
-        });
+    testWidgets(
+        'should navigate to books home page when auto login returns true',
+        (WidgetTester widgetTester) async {
+      when(() => loadingPageStateNotifier.autoSignIn())
+          .thenAnswer((_) => Future.value(true));
+      await widgetTester.pumpWidget(createWidgetUinderTest());
+      expect(find.byType(LoadingPage), findsOneWidget);
+      await widgetTester.pumpAndSettle();
+      expect(find.byType(BookHomePage), findsOneWidget);
+    });
   });
 }

@@ -12,7 +12,6 @@ import 'package:mocktail/mocktail.dart';
 class MockSignInPageStateNotifier extends Mock
     implements SignInPageStateNotifier {}
 
-
 void main() {
   group('SignInPageStateNotifier', () {
     late SignInPageStateNotifier signInPageStateNotifier;
@@ -20,13 +19,14 @@ void main() {
     late String password;
 
     Widget createWidgetUnderTest() {
-      return ProviderScope(overrides: [
-        signInPageNotiferProvider.overrideWithProvider(
-            StateNotifierProvider((_) => signInPageStateNotifier))
-      ], child: MaterialApp(home: const SignInPage(),
-          routes: {
-            BookHomePage.routeName: (
-                BuildContext context) => const BookHomePage()
+      return ProviderScope(
+          overrides: [
+            signInPageNotiferProvider
+                .overrideWith((_) => signInPageStateNotifier),
+          ],
+          child: MaterialApp(home: const SignInPage(), routes: {
+            BookHomePage.routeName: (BuildContext context) =>
+                const BookHomePage()
           }));
     }
 
@@ -36,8 +36,11 @@ void main() {
       password = '123456';
     });
 
-    testWidgets('should navigate to books home when the correct sign in data was provided', (WidgetTester widgetTester) async {
-      when(() => signInPageStateNotifier.state).thenAnswer((_) => const SignInPageState.initial());
+    testWidgets(
+        'should navigate to books home when the correct sign in data was provided',
+        (WidgetTester widgetTester) async {
+      when(() => signInPageStateNotifier.state)
+          .thenAnswer((_) => const SignInPageState.initial());
       await widgetTester.pumpWidget(createWidgetUnderTest());
       expect(find.byType(SignInInitial), findsOneWidget);
     });
