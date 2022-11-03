@@ -62,6 +62,8 @@ void main() {
     testWidgets(
         'should navigate to books home page when the correct sign in data was provided',
         (WidgetTester widgetTester) async {
+       await widgetTester.pumpWidget(createWidgetUnderTest());
+
       final emailField = find.byKey(SignInForm.emailKey);
       final passwordField = find.byKey(SignInForm.passwordKey);
       final button = find.byType(ElevatedButton);
@@ -86,6 +88,8 @@ void main() {
 
     testWidgets('should display error and error bannner widgets',
         (WidgetTester widgetTester) async {
+      await widgetTester.pumpWidget(createWidgetUnderTest());
+
       final emailField = find.byKey(SignInForm.emailKey);
       final passwordField = find.byKey(SignInForm.passwordKey);
       final button = find.byType(ElevatedButton);
@@ -146,23 +150,6 @@ void main() {
       });
       group('password', () {
         testWidgets(
-            'should check if password is put in, validation message is NOT displayed',
-            (WidgetTester widgetTester) async {
-          await widgetTester.pumpWidget(createWidgetUnderTest());
-
-          final passwordField = find.byKey(SignInForm.passwordKey);
-
-          final button = find.byType(ElevatedButton);
-
-          await widgetTester.enterText(passwordField, password);
-
-          await widgetTester.tap(button);
-
-          await widgetTester.pumpAndSettle();
-
-          expect(find.text('Please write an password'), findsNothing);
-        });
-        testWidgets(
             'should check if password is not not put in, validation message is displayed',
             (WidgetTester widgetTester) async {
           await widgetTester.pumpWidget(createWidgetUnderTest());
@@ -176,6 +163,23 @@ void main() {
           expect(find.text('Please write a password'), findsOneWidget);
         });
       });
+      testWidgets(
+          'should check if password is put in, validation message is NOT displayed',
+              (WidgetTester widgetTester) async {
+            await widgetTester.pumpWidget(createWidgetUnderTest());
+
+            final passwordField = find.byKey(SignInForm.passwordKey);
+
+            final button = find.byType(ElevatedButton);
+
+            await widgetTester.enterText(passwordField, password);
+
+            await widgetTester.tap(button);
+
+            await widgetTester.pumpAndSettle();
+
+            expect(find.text('Please write an password'), findsNothing);
+          });
     });
   });
 }

@@ -9,6 +9,10 @@ import 'package:konfiso/shared/app_validators.dart';
 class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({super.key});
 
+  static const emailKey = Key('signUpEmail');
+  static const passwordKey = Key('signUpPassword');
+  static const otherPasswordKey = Key('signUpOtherPassword');
+
   @override
   ConsumerState<SignUpForm> createState() => _SignUpFormState();
 }
@@ -84,6 +88,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       child: Column(
         children: [
           TextFormField(
+            key: SignUpForm.emailKey,
             decoration:
                 InputDecoration(hintText: Intl.message('Email address')),
             keyboardType: TextInputType.emailAddress,
@@ -95,6 +100,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
             height: 20,
           ),
           TextFormField(
+            key: SignUpForm.passwordKey,
             decoration: InputDecoration(hintText: Intl.message('Password')),
             controller: passwordController,
             textInputAction: TextInputAction.next,
@@ -106,6 +112,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
             height: 20,
           ),
           TextFormField(
+              key: SignUpForm.otherPasswordKey,
               decoration:
                   InputDecoration(hintText: Intl.message('Password again')),
               obscureText: true,
