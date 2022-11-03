@@ -51,11 +51,17 @@ void main() {
       password = '123456';
     });
 
+    testWidgets('initially should be in initial state',
+            (WidgetTester widgetTester) async {
+          await widgetTester.pumpWidget(createWidgetUnderTest());
+
+          expect(find.byType(SignInInitial), findsOneWidget);
+        });
+
+
     testWidgets(
         'should navigate to books home page when the correct sign in data was provided',
         (WidgetTester widgetTester) async {
-      await widgetTester.pumpWidget(createWidgetUnderTest());
-      expect(find.byType(SignInInitial), findsOneWidget);
       final emailField = find.byKey(SignInForm.emailKey);
       final passwordField = find.byKey(SignInForm.passwordKey);
       final button = find.byType(ElevatedButton);
@@ -80,8 +86,6 @@ void main() {
 
     testWidgets('should display error and error bannner widgets',
         (WidgetTester widgetTester) async {
-      await widgetTester.pumpWidget(createWidgetUnderTest());
-      expect(find.byType(SignInInitial), findsOneWidget);
       final emailField = find.byKey(SignInForm.emailKey);
       final passwordField = find.byKey(SignInForm.passwordKey);
       final button = find.byType(ElevatedButton);

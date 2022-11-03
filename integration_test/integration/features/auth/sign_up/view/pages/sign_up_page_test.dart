@@ -40,7 +40,7 @@ void main() {
       password = '123456';
     });
 
-    testWidgets('initiialy should be in initial state',
+    testWidgets('initially should be in initial state',
         (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
