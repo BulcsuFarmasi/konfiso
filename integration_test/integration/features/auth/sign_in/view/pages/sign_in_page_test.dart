@@ -70,6 +70,8 @@ void main() {
 
       await widgetTester.enterText(emailField, email);
       await widgetTester.enterText(passwordField, password);
+       await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+       await widgetTester.pumpAndSettle();
 
       await widgetTester.tap(button);
 
@@ -96,6 +98,8 @@ void main() {
 
       await widgetTester.enterText(emailField, email);
       await widgetTester.enterText(passwordField, password);
+      await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+      await widgetTester.pumpAndSettle();
 
       await widgetTester.tap(button);
 
@@ -140,6 +144,8 @@ void main() {
           final button = find.byType(ElevatedButton);
 
           await widgetTester.enterText(emailField, email);
+          await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+          await widgetTester.pumpAndSettle();
 
           await widgetTester.tap(button);
 
@@ -173,6 +179,8 @@ void main() {
             final button = find.byType(ElevatedButton);
 
             await widgetTester.enterText(passwordField, password);
+            await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+            await widgetTester.pumpAndSettle();
 
             await widgetTester.tap(button);
 
