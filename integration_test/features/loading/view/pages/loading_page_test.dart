@@ -14,7 +14,6 @@ class MockLoadingPageController extends Mock
 void main() {
 
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
   group('LoadingPage', () {
     late LoadingPageController loadingPageController;
 
