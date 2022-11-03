@@ -36,9 +36,10 @@ class _SignInFormState extends ConsumerState<SignInForm> {
 
   void _submitForm() {
     final formIsValid = _formKey.currentState!.validate();
-    if (formIsValid) {
-      _formKey.currentState!.save();
+    if (!formIsValid) {
+      return;
     }
+    _formKey.currentState!.save();
     final notifier = ref.read(signInPageNotiferProvider.notifier);
     notifier.signIn(_email!, _password!);
   }
