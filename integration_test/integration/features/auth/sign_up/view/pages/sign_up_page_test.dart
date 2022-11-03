@@ -68,33 +68,169 @@ void main() {
     });
 
     testWidgets('initially should be in initial state',
-        (WidgetTester widgetTester) async {
-      await widgetTester.pumpWidget(createWidgetUnderTest());
+            (WidgetTester widgetTester) async {
+          await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      expect(find.byType(SignUpInitial), findsOneWidget);
-    });
+          expect(find.byType(SignUpInitial), findsOneWidget);
+        });
 
     testWidgets('should reach success state when the sign up is successful',
-        (WidgetTester widgetTester) async {
+            (WidgetTester widgetTester) async {
+          await testUntilInProgress(widgetTester);
 
-      await testUntilInProgress(widgetTester);
+          signUpPageStateNotifier.state = const SignUpPageState.successful();
 
-      signUpPageStateNotifier.state = const SignUpPageState.successful();
+          await widgetTester.pump();
 
-      await widgetTester.pump();
-
-      expect(find.byType(SignUpSuccessful), findsOneWidget);
-    });
+          expect(find.byType(SignUpSuccessful), findsOneWidget);
+        });
 
     testWidgets('should reach error state when the sign up is not successful',
-        (WidgetTester widgetTester) async {
+            (WidgetTester widgetTester) async {
+          await testUntilInProgress(widgetTester);
+          signUpPageStateNotifier.state = const SignUpPageState.successful();
 
-      await testUntilInProgress(widgetTester);
-      signUpPageStateNotifier.state = const SignUpPageState.successful();
+          await widgetTester.pump();
 
-      await widgetTester.pump();
+          expect(find.byType(SignUpSuccessful), findsOneWidget);
+        });
 
-      expect(find.byType(SignUpSuccessful), findsOneWidget);
+    group('validation', () {
+      group('email', () {
+        testWidgets('should display error message if email was not put in', (
+            WidgetTester widgetTester) async {
+          await widgetTester.pumpWidget(createWidgetUnderTest());
+
+          final button = find.byType(ElevatedButton);
+
+          await widgetTester.tap(button);
+
+          await widgetTester.pumpAndSettle();
+
+          expect(find.text('Please write an email address'), findsOneWidget);
+        });
+      });
+      testWidgets(
+          'should display error message if an invalid email was put in', (
+          WidgetTester widgetTester) async {
+        await widgetTester.pumpWidget(createWidgetUnderTest());
+
+        final emailField = find.byKey(SignUpForm.emailKey);
+        await widgetTester.enterText(emailField, 'test');
+        await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+
+        final button = find.byType(ElevatedButton);
+        await widgetTester.tap(button);
+        await widgetTester.pumpAndSettle();
+
+        expect(
+            find.text('Please put in a valid email address'), findsOneWidget);
+      });
+      testWidgets(
+          'should not display error message if a valid email was put in',
+              (WidgetTester widgetTester) async {
+            await widgetTester.pumpWidget(createWidgetUnderTest());
+
+            final emailField = find.byKey(SignUpForm.emailKey);
+            await widgetTester.enterText(emailField, email);
+            await widgetTester.testTextInput.receiveAction(
+                TextInputAction.done);
+
+            final button = find.byType(ElevatedButton);
+            await widgetTester.tap(button);
+            await widgetTester.pumpAndSettle();
+
+            expect(find.text('Please write an email address'), findsNothing);
+            expect(
+                find.text('Please put in a valid email address'), findsNothing);
+          });
+      group('password', () {
+        testWidgets('should display error message if password was not put in', (
+            WidgetTester widgetTester) async {
+          await widgetTester.pumpWidget(createWidgetUnderTest());
+
+          final button = find.byType(ElevatedButton);
+
+          await widgetTester.tap(button);
+
+          await widgetTester.pumpAndSettle();
+
+          expect(find.text('Please write a password'), findsOneWidget);
+        });
+      });
+      testWidgets(
+          'should display error message if a too short password was put in', (
+          WidgetTester widgetTester) async {
+        await widgetTester.pumpWidget(createWidgetUnderTest());
+
+        final passwordField = find.byKey(SignUpForm.passwordKey);
+        await widgetTester.enterText(passwordField, '12345');
+        await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+
+        final button = find.byType(ElevatedButton);
+        await widgetTester.tap(button);
+        await widgetTester.pumpAndSettle();
+
+        expect(
+            find.text('Please write at least 6 characters'), findsOneWidget);
+      });
+      testWidgets(
+          'should not display error message if a valid password was put in',
+              (WidgetTester widgetTester) async {
+            await widgetTester.pumpWidget(createWidgetUnderTest());
+
+            final passwordField = find.byKey(SignUpForm.passwordKey);
+            await widgetTester.enterText(passwordField, password);
+            await widgetTester.testTextInput.receiveAction(
+                TextInputAction.done);
+
+            final button = find.byType(ElevatedButton);
+            await widgetTester.tap(button);
+            await widgetTester.pumpAndSettle();
+
+            expect(find.text('Please write a password'), findsNothing);
+            expect(
+                find.text('Please write at least 6 characters'), findsNothing);
+          });
+    });
+    group('other password', () {
+      testWidgets('should display an error message if the passwords don\'t match', (WidgetTester widgetTester) async {
+        await widgetTester.pumpWidget(createWidgetUnderTest());
+
+        final passwordField = find.byKey(SignUpForm.passwordKey);
+        final otherPasswordField = find.byKey(SignUpForm.otherPasswordKey);
+        final button = find.byType(ElevatedButton);
+
+        await widgetTester.enterText(passwordField, password);
+        await widgetTester.enterText(otherPasswordField, '$password-');
+        await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+        await widgetTester.pumpAndSettle();
+
+        await widgetTester.tap(button);
+
+        await widgetTester.pumpAndSettle();
+
+        expect(find.text('Please write identical passwords'), findsOneWidget);
+      });
+
+      testWidgets('should display an error message if the passwords don\'t match', (WidgetTester widgetTester) async {
+        await widgetTester.pumpWidget(createWidgetUnderTest());
+
+        final passwordField = find.byKey(SignUpForm.passwordKey);
+        final otherPasswordField = find.byKey(SignUpForm.otherPasswordKey);
+        final button = find.byType(ElevatedButton);
+
+        await widgetTester.enterText(passwordField, password);
+        await widgetTester.enterText(otherPasswordField, password);
+        await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+        await widgetTester.pumpAndSettle();
+
+        await widgetTester.tap(button);
+
+        await widgetTester.pumpAndSettle();
+
+        expect(find.text('Please write identical passwords'), findsNothing);
+      });
     });
   });
 }

@@ -44,9 +44,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
 
   void _submitForm() {
     final formIsValid = _formKey.currentState!.validate();
-    if (formIsValid) {
-      _formKey.currentState!.save();
+    if (!formIsValid) {
+      return;
     }
+    _formKey.currentState!.save();
     final notifier = ref.read(signUpStateNotifierProvider.notifier);
     notifier.signUp(_email!, _password!);
   }
