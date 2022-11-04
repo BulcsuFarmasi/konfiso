@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-03 15:01:13</td>
+            <td class="headerValue">2022-11-04 13:57:52</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -76,8 +76,8 @@
 <a name="14"><span class="lineNum">      14 </span>            : import 'package:konfiso/shared/secure_storage.dart';</a>
 <a name="15"><span class="lineNum">      15 </span>            : import 'package:konfiso/shared/storage_keys.dart';</a>
 <a name="16"><span class="lineNum">      16 </span>            : </a>
-<a name="17"><span class="lineNum">      17 </span><span class="lineCov">          4 : final authServiceProvider = Provider((Ref ref) =&gt;</span></a>
-<a name="18"><span class="lineNum">      18 </span><span class="lineCov">          5 :     AuthService(ref.read(httpClientProvider), ref.read(secureStorageProvider)));</span></a>
+<a name="17"><span class="lineNum">      17 </span><span class="lineCov">         12 : final authServiceProvider = Provider((Ref ref) =&gt;</span></a>
+<a name="18"><span class="lineNum">      18 </span><span class="lineCov">         15 :     AuthService(ref.read(httpClientProvider), ref.read(secureStorageProvider)));</span></a>
 <a name="19"><span class="lineNum">      19 </span>            : </a>
 <a name="20"><span class="lineNum">      20 </span>            : class AuthService {</a>
 <a name="21"><span class="lineNum">      21 </span>            :   final HttpClient _httpClient;</a>
@@ -86,7 +86,7 @@
 <a name="24"><span class="lineNum">      24 </span>            :   StoredUser? user;</a>
 <a name="25"><span class="lineNum">      25 </span>            :   static const url = 'https://identitytoolkit.googleapis.com/v1/accounts:';</a>
 <a name="26"><span class="lineNum">      26 </span>            : </a>
-<a name="27"><span class="lineNum">      27 </span><span class="lineCov">          1 :   AuthService(this._httpClient, this._secureStorage);</span></a>
+<a name="27"><span class="lineNum">      27 </span><span class="lineCov">          3 :   AuthService(this._httpClient, this._secureStorage);</span></a>
 <a name="28"><span class="lineNum">      28 </span>            : </a>
 <a name="29"><span class="lineNum">      29 </span><span class="lineNoCov">          0 :   Future&lt;bool&gt; autoSignIn() async {</span></a>
 <a name="30"><span class="lineNum">      30 </span><span class="lineNoCov">          0 :     await _fetchUser();</span></a>

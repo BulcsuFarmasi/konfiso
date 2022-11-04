@@ -12,6 +12,7 @@ import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_error.dart'
 import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_error_banner.dart';
 import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_form.dart';
 import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_initial.dart';
+import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/features/book/book_home/view/book_home_page.dart';
 import 'package:konfiso/shared/widgets/entry_in_progress.dart';
 
@@ -39,7 +40,8 @@ void main() {
           ],
           child: MaterialApp(home: const SignInPage(), routes: {
             BookHomePage.routeName: (BuildContext context) =>
-                const BookHomePage()
+                const BookHomePage(),
+            SignUpPage.routeName: (BuildContext context) => const SignUpPage(),
           }));
     }
 
@@ -103,6 +105,19 @@ void main() {
       expect(find.byType(view_sign_in_error.SignInError), findsOneWidget);
 
       expect(find.byType(SignInErrorBanner), findsOneWidget);
+    });
+
+    testWidgets('should navigate to sign up by clicking the link',
+        (WidgetTester widgetTester) async {
+      await widgetTester.pumpWidget(createWidgetUnderTest());
+
+      final link = find.text('sign up');
+
+      await widgetTester.tap(link);
+
+      await widgetTester.pumpAndSettle();
+
+      expect(find.byType(SignUpPage), findsOneWidget);
     });
 
     group('validation', () {

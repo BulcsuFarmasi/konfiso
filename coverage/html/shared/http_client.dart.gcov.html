@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-03 15:01:13</td>
+            <td class="headerValue">2022-11-04 13:57:52</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -64,12 +64,12 @@
 <a name="2"><span class="lineNum">       2 </span>            : import 'package:flutter_riverpod/flutter_riverpod.dart';</a>
 <a name="3"><span class="lineNum">       3 </span>            : import 'package:konfiso/shared/providers/dio_provider.dart';</a>
 <a name="4"><span class="lineNum">       4 </span>            : </a>
-<a name="5"><span class="lineNum">       5 </span><span class="lineCov">          7 : final httpClientProvider = Provider((Ref ref) =&gt; HttpClient(ref.read(dioProvider)));</span></a>
+<a name="5"><span class="lineNum">       5 </span><span class="lineCov">         21 : final httpClientProvider = Provider((Ref ref) =&gt; HttpClient(ref.read(dioProvider)));</span></a>
 <a name="6"><span class="lineNum">       6 </span>            : </a>
 <a name="7"><span class="lineNum">       7 </span>            : class HttpClient {</a>
 <a name="8"><span class="lineNum">       8 </span>            :   final Dio _dio;</a>
 <a name="9"><span class="lineNum">       9 </span>            : </a>
-<a name="10"><span class="lineNum">      10 </span><span class="lineCov">          1 :   HttpClient(this._dio);</span></a>
+<a name="10"><span class="lineNum">      10 </span><span class="lineCov">          3 :   HttpClient(this._dio);</span></a>
 <a name="11"><span class="lineNum">      11 </span>            : </a>
 <a name="12"><span class="lineNum">      12 </span><span class="lineNoCov">          0 :   Future&lt;Response&gt; post({required String url, dynamic data}) {</span></a>
 <a name="13"><span class="lineNum">      13 </span><span class="lineNoCov">          0 :     return _dio.post(url, data: data);</span></a>

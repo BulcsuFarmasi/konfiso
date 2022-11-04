@@ -18,7 +18,6 @@ void main() {
     late LoadingPageController loadingPageController;
 
     Widget createWidgetUinderTest() {
-      print(loadingPageController);
       return ProviderScope(
           overrides: [
             loadingPageControllerProvider.overrideWith((_) => loadingPageController),
