@@ -1,12 +1,16 @@
 @TestOn('vm')
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/auth/services/refresh_token_request_payload.dart';
+import 'package:konfiso/features/auth/services/refresh_token_response_payload.dart';
 import 'package:konfiso/features/auth/services/stored_user.dart';
 import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/secret.dart';
 import 'package:konfiso/shared/secure_storage.dart';
+import 'package:konfiso/shared/storage_keys.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockHttpClient extends Mock implements HttpClient {}
@@ -28,33 +32,31 @@ void main() {
       password = '123456';
     });
 
-    group('autoSignIn', skip: 'TODO auth service later', () {
+    group('autoSignIn', () {
       test('should return with true is user is defined', () async {
-        authService.user = StoredUser(
+        final user = StoredUser(
             userId: '',
             token: '',
             refreshToken: '',
             validUntil: DateTime.now());
+        when(() => secureStorage.read(storedUserKey))
+            .thenAnswer((_) => Future.value(jsonEncode(user.toJson())));
+
         const url =
             'https://securetoken.googleapis.com/v1/token?key=$firebaseApiKey';
+
+        print(httpClient.runtimeType);
+
         when(() => httpClient.post(
-                url: url,
-                data:
-                    RefreshTokenRequestPayload(authService.user!.refreshToken)))
-            .thenAnswer((realInvocation) {
-          print(realInvocation.namedArguments);
-          return Future.value(
-            Response(requestOptions: RequestOptions(path: url), data: {
-              'user_id': '',
-              'id_token': '',
-              'refresh_token': '',
-              'expires_in': '3600'
-            }),
-          );
+            url: url,
+            data: jsonEncode(RefreshTokenRequestPayload(
+                authService.user!.refreshToken)))).thenAnswer((invocation) {
+          return Future.value(Response(
+              requestOptions: RequestOptions(path: url),
+              data: RefreshTokenResponsePayload('', '', '', '3600')));
         });
-        print(await authService.autoSignIn());
-        logInvocations([httpClient as MockHttpClient]);
-        // expectLater(authService.autoSignIn(), Future.value(true));
+
+        await authService.autoSignIn();
       });
     });
   });

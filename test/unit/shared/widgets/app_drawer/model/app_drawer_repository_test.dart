@@ -1,9 +1,7 @@
 @TestOn('vm')
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
-import 'package:konfiso/shared/widgets/app.dart';
 import 'package:konfiso/shared/widgets/app_drawer/model/app_drawer_repository.dart';
-
 import 'package:mocktail/mocktail.dart';
 
 class MockAuthService extends Mock implements AuthService {}
