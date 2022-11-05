@@ -1,4 +1,5 @@
 @TestOn('vm')
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/features/auth/services/auth_response_payload.dart';
@@ -6,30 +7,34 @@ import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
 import 'package:konfiso/features/auth/services/refresh_token_response_payload.dart';
 import 'package:konfiso/features/auth/services/stored_user.dart';
+import 'package:konfiso/shared/secret.dart';
+import 'package:konfiso/shared/services/time_service.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAuthRemote extends Mock implements AuthRemote {}
 
 class MockAuthStorage extends Mock implements AuthStorage {}
 
+class MockTimeService extends Mock implements TimeService {}
+
 void main() {
   group('AuthService', () {
     late AuthRemote authRemote;
     late AuthStorage authStorage;
+    late TimeService timeService;
     late AuthService authService;
     late String email;
     late String password;
+    late DateTime now;
     setUp(() {
       authRemote = MockAuthRemote();
       authStorage = MockAuthStorage();
-      authService = AuthService(authStorage, authRemote);
+      timeService = MockTimeService();
+      authService = AuthService(authStorage, authRemote, timeService);
       email = 'test@test.com';
       password = '123456';
-      registerFallbackValue(StoredUser(
-          userId: '',
-          token: '',
-          refreshToken: '',
-          validUntil: DateTime.now().add(const Duration(seconds: 3600))));
+      now = DateTime.now();
+      when(() => timeService.now()).thenReturn(now);
     });
 
     group('autoSignIn', () {
@@ -40,7 +45,7 @@ void main() {
                 userId: '',
                 token: '',
                 refreshToken: refreshToken,
-                validUntil: DateTime.now())));
+                validUntil: now)));
         when(() => authRemote.refreshToken(refreshToken)).thenAnswer(
             (invocation) =>
                 Future.value(RefreshTokenResponsePayload('', '', '', '3600')));
@@ -54,18 +59,70 @@ void main() {
     });
 
     group('sign in', () {
-      test(
-          'should call auth remote sign in method and auth remote save user method',
-          () {
-        int expiresIn = 3600;
-        DateTime validUntil = DateTime.now().add(Duration(seconds: expiresIn));
+      test('should call auth remote sign in method', () {
+        const expiresIn = 3600;
+
         when(() => authRemote.signIn(email, password)).thenAnswer((_) =>
             Future.value(
                 AuthResponsePayload('', '', '', expiresIn.toString())));
-        when(() => authStorage.saveUser(StoredUser(
-            userId: '', token: '', refreshToken: '', validUntil: validUntil)));
+
         authService.signIn(email, password);
-        verify(() => authStorage.saveUser(any()));
+
+        verify(() => authRemote.signIn(email, password));
+
+        // TODO verify authStorage saveUser
+      });;
+      test('should throw network exception if network call is failed', () {
+        final requestOptions = RequestOptions(
+          path:
+              '${AuthRemote.accountUrl}signInWithPassword?key=$firebaseApiKey',
+        );
+        final response = Response(requestOptions: requestOptions, data: {
+          'error': {'message': 'INVALID_EMAIL'}
+        });
+
+        when(() => authRemote.signIn(email, password)).thenThrow(
+            DioError(requestOptions: requestOptions, response: response));
+
+        expect(authService.signIn(email, password), throwsException);
+      });
+    });
+    group('sign up', () {
+      test('should call auth remote sign up method', () {
+        when(() => authRemote.signUp(email, password))
+            .thenAnswer((_) => Future.value(null));
+
+        authService.signUp(email, password);
+
+        verify(() => authRemote.signUp(email, password));
+      });
+      test('should throw network exception if network call is failed', () {
+        final requestOptions = RequestOptions(
+          path: '${AuthRemote.accountUrl}signUp?key=$firebaseApiKey',
+        );
+        final response = Response(requestOptions: requestOptions, data: {
+          'error': {'message': 'EMAIL_EXISTS'}
+        });
+
+        when(() => authRemote.signUp(email, password)).thenThrow(
+            DioError(requestOptions: requestOptions, response: response));
+
+        expect(authService.signUp(email, password), throwsException);
+      });
+    });
+    group('signOut', () {
+      test('should call auth remote delete user', () {
+        when(() => authStorage.deleteUser())
+            .thenAnswer((_) => Future.value(null));
+        authService.signOut();
+        verify(() => authStorage.deleteUser());
+      });
+      test('should set user to null', () {
+        authService.user = StoredUser(
+            userId: '', token: '', refreshToken: '', validUntil: now);
+        authService.signOut();
+
+        expect(authService.user, isNull);
       });
     });
   });

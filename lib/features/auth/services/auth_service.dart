@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
@@ -48,9 +47,7 @@ class AuthService {
           validUntil: _timeService
               .now()
               .add(Duration(seconds: int.parse(authResponse.expiresIn))));
-      print('user 1');
       _authStorage.saveUser(user!);
-      print('user 2');
       _startTimer(int.parse(authResponse.expiresIn));
       // TODO: own error
     } on DioError catch (e) {
@@ -64,7 +61,7 @@ class AuthService {
       _authRemote.signUp(email, password);
       // TODO: own error
     } on DioError catch (e) {
-      // TODO : deserialize it into a classbulcsu
+      // TODO : deserialize it into a class
       throw NetworkException(e.response!.data['error']['message']);
     }
   }
@@ -85,15 +82,12 @@ class AuthService {
             .now()
             .add(Duration(seconds: int.parse(responsePayload.expires_in))));
 
-    debugPrint(user!.validUntil.toString());
-
     _authStorage.saveUser(user!);
 
     _startTimer(int.parse(responsePayload.expires_in));
   }
 
   void _startTimer(int secondsUntilRefresh) {
-    debugPrint(secondsUntilRefresh.toString());
     refreshTimer = Timer(Duration(seconds: secondsUntilRefresh), _refreshToken);
   }
 
