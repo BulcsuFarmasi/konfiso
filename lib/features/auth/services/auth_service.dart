@@ -39,7 +39,9 @@ class AuthService {
           refreshToken: authResponse.refreshToken,
           validUntil: DateTime.now()
               .add(Duration(seconds: int.parse(authResponse.expiresIn))));
+      print('user 1');
       _authStorage.saveUser(user!);
+      print('user 2');
       _startTimer(int.parse(authResponse.expiresIn));
       // TODO: own error
     } on DioError catch (e) {
