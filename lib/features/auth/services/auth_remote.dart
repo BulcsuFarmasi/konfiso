@@ -9,12 +9,14 @@ import 'package:konfiso/features/auth/services/refresh_token_response_payload.da
 import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/secret.dart';
 
-final authRemoteProvider = Provider((Ref ref) => AuthRemote(ref.read(httpClientProvider)));
+final authRemoteProvider =
+    Provider((Ref ref) => AuthRemote(ref.read(httpClientProvider)));
 
 class AuthRemote {
   final HttpClient _httpClient;
 
-  static const accountUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
+  static const accountUrl =
+      'https://identitytoolkit.googleapis.com/v1/accounts:';
   static const tokenUrl = 'https://securetoken.googleapis.com/v1/token';
 
   AuthRemote(this._httpClient);
@@ -32,7 +34,6 @@ class AuthRemote {
     await _httpClient.post(
         url: '${accountUrl}signUp?key=$firebaseApiKey',
         data: jsonEncode(authRequestPayload.toJson()));
-
   }
 
   Future<RefreshTokenResponsePayload> refreshToken(String refreshToken) async {
