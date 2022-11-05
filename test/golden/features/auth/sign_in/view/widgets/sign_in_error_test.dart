@@ -8,9 +8,9 @@ import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_error.dart';
 void main() {
   group('SignInError', () {
     Widget createWidgetUnderTest() {
-      return  ProviderScope(
+      return  const ProviderScope(
         child: MaterialApp(
-          home: const Scaffold(
+          home: Scaffold(
             body: SingleChildScrollView(
               child: SignInError(error: sign_in_error.SignInError.other),
             ),
