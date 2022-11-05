@@ -36,10 +36,9 @@ class AuthRemote {
   }
 
   Future<RefreshTokenResponsePayload> refreshToken(String refreshToken) async {
-    debugPrint('refrehstoek');
     final refreshTokenPayload = RefreshTokenRequestPayload(refreshToken);
     final response = await _httpClient.post(
-        url: 'https://securetoken.googleapis.com/v1/token?key=$firebaseApiKey',
+        url: '$tokenUrl?key=$firebaseApiKey',
         data: jsonEncode(refreshTokenPayload.toJson()));
 
     return RefreshTokenResponsePayload.fromJson(response.data);

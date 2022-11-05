@@ -32,12 +32,12 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">2</td>
             <td class="headerCovTableEntryLo">0.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-05 13:58:35</td>
+            <td class="headerValue">2022-11-05 15:23:19</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -62,25 +62,22 @@
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>            : import 'package:freezed_annotation/freezed_annotation.dart';</a>
 <a name="2"><span class="lineNum">       2 </span>            : </a>
-<a name="3"><span class="lineNum">       3 </span>            : part 'auth_response_payload.g.dart';</a>
-<a name="4"><span class="lineNum">       4 </span>            : </a>
-<a name="5"><span class="lineNum">       5 </span>            : @JsonSerializable()</a>
-<a name="6"><span class="lineNum">       6 </span>            : class AuthResponsePayload {</a>
-<a name="7"><span class="lineNum">       7 </span>            :   final String localId;</a>
-<a name="8"><span class="lineNum">       8 </span>            :   final String idToken;</a>
-<a name="9"><span class="lineNum">       9 </span>            :   final String refreshToken;</a>
-<a name="10"><span class="lineNum">      10 </span>            :   final String expiresIn;</a>
-<a name="11"><span class="lineNum">      11 </span>            : </a>
-<a name="12"><span class="lineNum">      12 </span><span class="lineNoCov">          0 :   AuthResponsePayload(</span></a>
-<a name="13"><span class="lineNum">      13 </span>            :     this.localId,</a>
-<a name="14"><span class="lineNum">      14 </span>            :     this.idToken,</a>
-<a name="15"><span class="lineNum">      15 </span>            :     this.refreshToken,</a>
-<a name="16"><span class="lineNum">      16 </span>            :     this.expiresIn,</a>
-<a name="17"><span class="lineNum">      17 </span>            :   );</a>
-<a name="18"><span class="lineNum">      18 </span>            : </a>
-<a name="19"><span class="lineNum">      19 </span><span class="lineNoCov">          0 :   factory AuthResponsePayload.fromJson(Map&lt;String, dynamic&gt; json) =&gt;</span></a>
-<a name="20"><span class="lineNum">      20 </span><span class="lineNoCov">          0 :       _$AuthResponsePayloadFromJson(json);</span></a>
-<a name="21"><span class="lineNum">      21 </span>            : }</a>
+<a name="3"><span class="lineNum">       3 </span>            : part 'auth_response_payload.freezed.dart';</a>
+<a name="4"><span class="lineNum">       4 </span>            : part 'auth_response_payload.g.dart';</a>
+<a name="5"><span class="lineNum">       5 </span>            : </a>
+<a name="6"><span class="lineNum">       6 </span>            : @freezed</a>
+<a name="7"><span class="lineNum">       7 </span>            : class AuthResponsePayload with _$AuthResponsePayload {</a>
+<a name="8"><span class="lineNum">       8 </span>            : </a>
+<a name="9"><span class="lineNum">       9 </span>            :   const factory AuthResponsePayload(</a>
+<a name="10"><span class="lineNum">      10 </span>            :     String localId,</a>
+<a name="11"><span class="lineNum">      11 </span>            :     String idToken,</a>
+<a name="12"><span class="lineNum">      12 </span>            :     String refreshToken,</a>
+<a name="13"><span class="lineNum">      13 </span>            :     String expiresIn,</a>
+<a name="14"><span class="lineNum">      14 </span>            :   ) = _AuthResponePayload;</a>
+<a name="15"><span class="lineNum">      15 </span>            : </a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineNoCov">          0 :   factory AuthResponsePayload.fromJson(Map&lt;String, Object?&gt; json) =&gt;</span></a>
+<a name="17"><span class="lineNum">      17 </span><span class="lineNoCov">          0 :       _$AuthResponsePayloadFromJson(json);</span></a>
+<a name="18"><span class="lineNum">      18 </span>            : }</a>
 </pre>
       </td>
     </tr>
