@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/loading/view/pages/loading_page.dart';
 
 void main() {
-  group('LoadingPage', skip: 'TODO missing plugin', () {
+  group('LoadingPage', () {
     Widget createWidgetUnderTest() {
       return const ProviderScope(
         child: MaterialApp(

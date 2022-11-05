@@ -10,19 +10,11 @@ void main() {
       );
     }
 
-    testWidgets('should contain the app\'s name',
-        (WidgetTester widgetTester) async {
+    testWidgets('should match golden image', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      expect(find.text('Konfiso'), findsOneWidget);
-    });
-
-    testWidgets('shold contain menu items', (WidgetTester widgetTester) async {
-      await widgetTester.pumpWidget(createWidgetUnderTest());
-
-      // Logout
-      expect(find.byIcon(Icons.exit_to_app), findsOneWidget);
-      expect(find.text('Logout'), findsOneWidget);
+      expect(find.byType(AppDrawer),
+          matchesGoldenFile('app_drawer_test.png'));
     });
   });
 }
