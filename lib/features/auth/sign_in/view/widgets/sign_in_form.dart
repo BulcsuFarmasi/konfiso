@@ -114,7 +114,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
                 child: Text(Intl.message('sign up'),
                     style: const TextStyle(color: AppColors.greyDarkerColor)),
               ),
-            ],
+          ],
           ),
         ],
       ),
