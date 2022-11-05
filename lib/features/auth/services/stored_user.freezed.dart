@@ -35,44 +35,48 @@ mixin _$StoredUser {
 abstract class $StoredUserCopyWith<$Res> {
   factory $StoredUserCopyWith(
           StoredUser value, $Res Function(StoredUser) then) =
-      _$StoredUserCopyWithImpl<$Res>;
+      _$StoredUserCopyWithImpl<$Res, StoredUser>;
+  @useResult
   $Res call(
       {String userId, String token, String refreshToken, DateTime validUntil});
 }
 
 /// @nodoc
-class _$StoredUserCopyWithImpl<$Res> implements $StoredUserCopyWith<$Res> {
+class _$StoredUserCopyWithImpl<$Res, $Val extends StoredUser>
+    implements $StoredUserCopyWith<$Res> {
   _$StoredUserCopyWithImpl(this._value, this._then);
 
-  final StoredUser _value;
   // ignore: unused_field
-  final $Res Function(StoredUser) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = freezed,
-    Object? token = freezed,
-    Object? refreshToken = freezed,
-    Object? validUntil = freezed,
+    Object? userId = null,
+    Object? token = null,
+    Object? refreshToken = null,
+    Object? validUntil = null,
   }) {
     return _then(_value.copyWith(
-      userId: userId == freezed
+      userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      token: token == freezed
+      token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
-      refreshToken: refreshToken == freezed
+      refreshToken: null == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
-      validUntil: validUntil == freezed
+      validUntil: null == validUntil
           ? _value.validUntil
           : validUntil // ignore: cast_nullable_to_non_nullable
               as DateTime,
-    ));
+    ) as $Val);
   }
 }
 
@@ -83,41 +87,41 @@ abstract class _$$_StoredUserCopyWith<$Res>
           _$_StoredUser value, $Res Function(_$_StoredUser) then) =
       __$$_StoredUserCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String userId, String token, String refreshToken, DateTime validUntil});
 }
 
 /// @nodoc
-class __$$_StoredUserCopyWithImpl<$Res> extends _$StoredUserCopyWithImpl<$Res>
+class __$$_StoredUserCopyWithImpl<$Res>
+    extends _$StoredUserCopyWithImpl<$Res, _$_StoredUser>
     implements _$$_StoredUserCopyWith<$Res> {
   __$$_StoredUserCopyWithImpl(
       _$_StoredUser _value, $Res Function(_$_StoredUser) _then)
-      : super(_value, (v) => _then(v as _$_StoredUser));
+      : super(_value, _then);
 
-  @override
-  _$_StoredUser get _value => super._value as _$_StoredUser;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = freezed,
-    Object? token = freezed,
-    Object? refreshToken = freezed,
-    Object? validUntil = freezed,
+    Object? userId = null,
+    Object? token = null,
+    Object? refreshToken = null,
+    Object? validUntil = null,
   }) {
     return _then(_$_StoredUser(
-      userId: userId == freezed
+      userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      token: token == freezed
+      token: null == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String,
-      refreshToken: refreshToken == freezed
+      refreshToken: null == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String,
-      validUntil: validUntil == freezed
+      validUntil: null == validUntil
           ? _value.validUntil
           : validUntil // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -156,25 +160,22 @@ class _$_StoredUser implements _StoredUser {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_StoredUser &&
-            const DeepCollectionEquality().equals(other.userId, userId) &&
-            const DeepCollectionEquality().equals(other.token, token) &&
-            const DeepCollectionEquality()
-                .equals(other.refreshToken, refreshToken) &&
-            const DeepCollectionEquality()
-                .equals(other.validUntil, validUntil));
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken) &&
+            (identical(other.validUntil, validUntil) ||
+                other.validUntil == validUntil));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(userId),
-      const DeepCollectionEquality().hash(token),
-      const DeepCollectionEquality().hash(refreshToken),
-      const DeepCollectionEquality().hash(validUntil));
+  int get hashCode =>
+      Object.hash(runtimeType, userId, token, refreshToken, validUntil);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_StoredUserCopyWith<_$_StoredUser> get copyWith =>
       __$$_StoredUserCopyWithImpl<_$_StoredUser>(this, _$identity);
 

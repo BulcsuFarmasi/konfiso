@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:konfiso/features/auth/sign_up/view/widgets/error_banner.dart';
+import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_error_banner.dart';
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_form.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart' as sign_up_error;
 import 'package:konfiso/shared/widgets/entry_logo.dart';
@@ -20,7 +20,7 @@ class SignUpError extends StatelessWidget {
         const SizedBox(
           height: 32,
         ),
-        ErrorBanner(error: error),
+        SignUpErrorBanner(error: error),
         const SizedBox(
           height: 32,
         ),

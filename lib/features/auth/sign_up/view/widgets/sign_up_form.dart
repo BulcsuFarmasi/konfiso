@@ -9,6 +9,10 @@ import 'package:konfiso/shared/app_validators.dart';
 class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({super.key});
 
+  static const emailKey = Key('signUpEmail');
+  static const passwordKey = Key('signUpPassword');
+  static const otherPasswordKey = Key('signUpOtherPassword');
+
   @override
   ConsumerState<SignUpForm> createState() => _SignUpFormState();
 }
@@ -40,9 +44,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
 
   void _submitForm() {
     final formIsValid = _formKey.currentState!.validate();
-    if (formIsValid) {
-      _formKey.currentState!.save();
+    if (!formIsValid) {
+      return;
     }
+    _formKey.currentState!.save();
     final notifier = ref.read(signUpStateNotifierProvider.notifier);
     notifier.signUp(_email!, _password!);
   }
@@ -51,7 +56,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     String? errorMessage;
     if (AppValidators.required(email)) {
       errorMessage = Intl.message('Please write an email address');
-    } else if (AppValidators.email(email)) {
+    } else if (AppValidators.email(email!)) {
       errorMessage = Intl.message('Please put in a valid email address');
     }
     return errorMessage;
@@ -70,7 +75,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     const minLength = 6;
     if (AppValidators.required(password)) {
       errorMessage = Intl.message('Please write a password');
-    } else if (AppValidators.minLength(password, minLength)) {
+    } else if (AppValidators.minLength(password!, minLength)) {
       errorMessage =
           Intl.message('Please write at least $minLength characters');
     }
@@ -84,6 +89,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       child: Column(
         children: [
           TextFormField(
+            key: SignUpForm.emailKey,
             decoration:
                 InputDecoration(hintText: Intl.message('Email address')),
             keyboardType: TextInputType.emailAddress,
@@ -95,6 +101,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
             height: 20,
           ),
           TextFormField(
+            key: SignUpForm.passwordKey,
             decoration: InputDecoration(hintText: Intl.message('Password')),
             controller: passwordController,
             textInputAction: TextInputAction.next,
@@ -106,6 +113,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
             height: 20,
           ),
           TextFormField(
+              key: SignUpForm.otherPasswordKey,
               decoration:
                   InputDecoration(hintText: Intl.message('Password again')),
               obscureText: true,

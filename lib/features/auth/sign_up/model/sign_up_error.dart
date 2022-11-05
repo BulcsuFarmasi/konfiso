@@ -1,1 +1,1 @@
-enum SignUpError { emailExits, operationNotAllowed, tooManyAttempts, other }
+enum SignUpError { emailExists, operationNotAllowed, tooManyAttempts, other }

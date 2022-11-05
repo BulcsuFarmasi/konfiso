@@ -9,11 +9,15 @@ import 'package:konfiso/shared/app_validators.dart';
 class SignInForm extends ConsumerStatefulWidget {
   const SignInForm({super.key});
 
+  static const emailKey = Key('signInEmail');
+  static const passwordKey = Key('signInPassword');
+
   @override
   ConsumerState<SignInForm> createState() => _SignInFormState();
 }
 
 class _SignInFormState extends ConsumerState<SignInForm> {
+
   final _formKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
@@ -32,9 +36,10 @@ class _SignInFormState extends ConsumerState<SignInForm> {
 
   void _submitForm() {
     final formIsValid = _formKey.currentState!.validate();
-    if (formIsValid) {
-      _formKey.currentState!.save();
+    if (!formIsValid) {
+      return;
     }
+    _formKey.currentState!.save();
     final notifier = ref.read(signInPageNotiferProvider.notifier);
     notifier.signIn(_email!, _password!);
   }
@@ -62,6 +67,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
       child: Column(
         children: [
           TextFormField(
+            key: SignInForm.emailKey,
             decoration:
                 InputDecoration(hintText: Intl.message('Email address')),
             keyboardType: TextInputType.emailAddress,
@@ -73,6 +79,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
             height: 20,
           ),
           TextFormField(
+            key: SignInForm.passwordKey,
             decoration: InputDecoration(hintText: Intl.message('Password')),
             textInputAction: TextInputAction.done,
             obscureText: true,
@@ -107,7 +114,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
                 child: Text(Intl.message('sign up'),
                     style: const TextStyle(color: AppColors.greyDarkerColor)),
               ),
-            ],
+          ],
           ),
         ],
       ),

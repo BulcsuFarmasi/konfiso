@@ -1,21 +1,18 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'auth_response_payload.freezed.dart';
 part 'auth_response_payload.g.dart';
 
-@JsonSerializable()
-class AuthResponsePayload {
-  final String localId;
-  final String idToken;
-  final String refreshToken;
-  final String expiresIn;
+@freezed
+class AuthResponsePayload with _$AuthResponsePayload {
 
-  AuthResponsePayload(
-    this.localId,
-    this.idToken,
-    this.refreshToken,
-    this.expiresIn,
-  );
+  const factory AuthResponsePayload(
+    String localId,
+    String idToken,
+    String refreshToken,
+    String expiresIn,
+  ) = _AuthResponePayload;
 
-  factory AuthResponsePayload.fromJson(Map<String, dynamic> json) =>
+  factory AuthResponsePayload.fromJson(Map<String, Object?> json) =>
       _$AuthResponsePayloadFromJson(json);
 }

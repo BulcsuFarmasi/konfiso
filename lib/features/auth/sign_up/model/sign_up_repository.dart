@@ -8,13 +8,13 @@ final signUpRepositoryProvider = Provider((Ref ref) => SignUpRepository(ref.read
 
 class SignUpRepository {
 
-  final AuthService signUpService;
+  final AuthService _authService;
 
-  SignUpRepository(this.signUpService);
+  SignUpRepository(this._authService);
 
   Future<void> signUp(String email, String password) async {
     try {
-      await signUpService.signUp(email, password);
+      await _authService.signUp(email, password);
     } on NetworkException catch(e) {
       throw SignUpException(_convertMessageIntoError(e.message));
     }
@@ -23,7 +23,7 @@ class SignUpRepository {
   SignUpError _convertMessageIntoError(String message) {
     switch (message) {
       case 'EMAIL_EXISTS':
-        return SignUpError.emailExits;
+        return SignUpError.emailExists;
       case 'OPERATION_NOT_ALLOWED':
         return SignUpError.operationNotAllowed;
       case 'TOO_MANY_ATTEMPTS_TRY_LATER':

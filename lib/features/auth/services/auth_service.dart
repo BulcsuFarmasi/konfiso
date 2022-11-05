@@ -1,33 +1,34 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/auth/services/auth_request_payload.dart';
-import 'package:konfiso/features/auth/services/auth_response_payload.dart';
-import 'package:konfiso/features/auth/services/refresh_token_request_payload.dart';
-import 'package:konfiso/features/auth/services/refresh_token_response_payload.dart';
+import 'package:konfiso/features/auth/services/auth_remote.dart';
+import 'package:konfiso/features/auth/services/auth_storage.dart';
 import 'package:konfiso/features/auth/services/stored_user.dart';
 import 'package:konfiso/shared/expcetions/network_execption.dart';
-import 'package:konfiso/shared/http_client.dart';
-import 'package:konfiso/shared/secret.dart';
-import 'package:konfiso/shared/secure_storage.dart';
-import 'package:konfiso/shared/storage_keys.dart';
+import 'package:konfiso/shared/services/time_service.dart';
 
-final authServiceProvider = Provider((Ref ref) =>
-    AuthService(ref.read(httpClientProvider), ref.read(secureStorageProvider)));
+final authServiceProvider = Provider((Ref ref) => AuthService(
+    ref.read(authStorageProvider),
+    ref.read(authRemoteProvider),
+    ref.read(timeServiceProvider)));
 
 class AuthService {
-  final HttpClient _httpClient;
-  final SecureStorage _secureStorage;
+  final AuthStorage _authStorage;
+  final AuthRemote _authRemote;
+  final TimeService _timeService;
   Timer? refreshTimer;
   StoredUser? user;
   static const url = 'https://identitytoolkit.googleapis.com/v1/accounts:';
 
-  AuthService(this._httpClient, this._secureStorage);
+  AuthService(
+    this._authStorage,
+    this._authRemote,
+    this._timeService,
+  );
 
   Future<bool> autoSignIn() async {
-    await _fetchUser();
+    user = await _authStorage.fetchUser();
     if (user != null) {
       _refreshToken();
       return true;
@@ -38,18 +39,15 @@ class AuthService {
 
   Future<void> signIn(String email, String password) async {
     try {
-      final authRequestPayload = AuthRequestPayload(email, password);
-      final response = await _httpClient.post(
-          url: '${url}signInWithPassword?key=$firebaseApiKey',
-          data: jsonEncode(authRequestPayload.toJson()));
-      final authResponse = AuthResponsePayload.fromJson(response.data);
+      final authResponse = await _authRemote.signIn(email, password);
       user = StoredUser(
           userId: authResponse.localId,
           token: authResponse.idToken,
           refreshToken: authResponse.refreshToken,
-          validUntil: DateTime.now()
+          validUntil: _timeService
+              .now()
               .add(Duration(seconds: int.parse(authResponse.expiresIn))));
-      _saveUser();
+      _authStorage.saveUser(user!);
       _startTimer(int.parse(authResponse.expiresIn));
       // TODO: own error
     } on DioError catch (e) {
@@ -60,10 +58,7 @@ class AuthService {
 
   Future<void> signUp(String email, String password) async {
     try {
-      final authRequestPayload = AuthRequestPayload(email, password);
-      await _httpClient.post(
-          url: '${url}signUp?key=$firebaseApiKey',
-          data: jsonEncode(authRequestPayload.toJson()));
+      _authRemote.signUp(email, password);
       // TODO: own error
     } on DioError catch (e) {
       // TODO : deserialize it into a class
@@ -73,43 +68,23 @@ class AuthService {
 
   void signOut() {
     _cancelTimer();
-    _deleteUser();
+    _authStorage.deleteUser();
     user = null;
   }
 
   void _refreshToken() async {
-    final refreshTokenPayload = RefreshTokenRequestPayload(user!.refreshToken);
-    final response = await _httpClient.post(
-        url: 'https://securetoken.googleapis.com/v1/token?key=$firebaseApiKey',
-        data: jsonEncode(refreshTokenPayload.toJson()));
-
-    final responsePayload = RefreshTokenResponsePayload.fromJson(response.data);
-
+    final responsePayload = await _authRemote.refreshToken(user!.refreshToken);
     user = StoredUser(
         userId: responsePayload.user_id,
         token: responsePayload.id_token,
         refreshToken: responsePayload.refresh_token,
-        validUntil: DateTime.now()
+        validUntil: _timeService
+            .now()
             .add(Duration(seconds: int.parse(responsePayload.expires_in))));
 
-    _saveUser();
+    _authStorage.saveUser(user!);
 
     _startTimer(int.parse(responsePayload.expires_in));
-  }
-
-  Future<void> _fetchUser() async {
-    final storedUser = await _secureStorage.read(storedUserKey);
-    if (storedUser != null) {
-      user = StoredUser.fromJson(jsonDecode(storedUser));
-    }
-  }
-
-  void _saveUser() {
-    _secureStorage.write(storedUserKey, jsonEncode(user!.toJson()));
-  }
-
-  void _deleteUser() {
-    _secureStorage.delete(storedUserKey);
   }
 
   void _startTimer(int secondsUntilRefresh) {
