@@ -11,11 +11,15 @@ void main() {
       );
     }
 
-    testWidgets('should contain entry logo and a circular progress indicator',
-        (WidgetTester widgetTester) async {
+    testWidgets('should contain entry logo', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       expect(find.byType(EntryLogo), findsOneWidget);
+    });
+
+    testWidgets('should contain a circular progress indicator',
+        (WidgetTester widgetTester) async {
+      await widgetTester.pumpWidget(createWidgetUnderTest());
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
   });
