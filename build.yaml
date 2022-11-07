@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      konfiso|flavor_builder:
+        enabled: true
+builders:
+  konfiso|flavor_builder:
+    import: "package:konfiso/builders/flavor_builder.dart"
+    build_extensions: {"pubspec.yaml": ["lib/shared/flavor.dart"]}
+    builder_factories: ["buildFlavor"]
+    defaults:
+      options:
+        output: "lib/shared/flavor.dart"
+    build_to: source
+    auto_apply: root_package

@@ -75,7 +75,7 @@ void main() {
       test('should throw network exception if network call is failed', () {
         final requestOptions = RequestOptions(
           path:
-              '${AuthRemote.accountUrl}signInWithPassword?key=$firebaseApiKey',
+              '${AuthRemote.accountUrl}signInWithPassword',
         );
         final response = Response(requestOptions: requestOptions, data: {
           'error': {'message': 'INVALID_EMAIL'}
@@ -98,7 +98,7 @@ void main() {
       });
       test('should throw network exception if network call is failed', () {
         final requestOptions = RequestOptions(
-          path: '${AuthRemote.accountUrl}signUp?key=$firebaseApiKey',
+          path: '${AuthRemote.accountUrl}signUp',
         );
         final response = Response(requestOptions: requestOptions, data: {
           'error': {'message': 'EMAIL_EXISTS'}

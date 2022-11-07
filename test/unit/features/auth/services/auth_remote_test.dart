@@ -9,6 +9,7 @@ import 'package:konfiso/features/auth/services/refresh_token_request_payload.dar
 import 'package:konfiso/features/auth/services/refresh_token_response_payload.dart';
 import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/secret.dart';
+import 'package:konfiso/shared/services/flavor_service.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockHttpClient extends Mock implements HttpClient {}
@@ -27,6 +28,7 @@ void main() {
     late RefreshTokenRequestPayload refreshTokenRequestPayload;
     late RefreshTokenResponsePayload refreshTokenResponsePayload;
     late String refreshTokenUrl;
+    late String apiKey;
 
     setUp(() {
       httpClient = MockHttpClient();
@@ -36,13 +38,13 @@ void main() {
       authRequestPayload = AuthRequestPayload(email, password);
       authResponsePayload = const AuthResponsePayload('', '', '', '3600');
       signInUrl =
-          '${AuthRemote.accountUrl}signInWithPassword?key=$firebaseApiKey';
-      signUpUrl = '${AuthRemote.accountUrl}signUp?key=$firebaseApiKey';
+          '${AuthRemote.accountUrl}signInWithPassword';
+      signUpUrl = '${AuthRemote.accountUrl}signUp';
       refreshToken = 'token';
       refreshTokenRequestPayload = RefreshTokenRequestPayload(refreshToken);
       refreshTokenResponsePayload =
           RefreshTokenResponsePayload(refreshToken, '', '', '3600');
-      refreshTokenUrl = '${AuthRemote.tokenUrl}?key=$firebaseApiKey';
+      refreshTokenUrl = AuthRemote.tokenUrl;
     });
 
     void arrangeAuthReturnsWithAuthResponsePayload(String authUrl) {
@@ -67,6 +69,7 @@ void main() {
           'should call http client\'s post method with the appropriate parameters',
           () {
         arrangeAuthReturnsWithAuthResponsePayload(signInUrl);
+
         authRemote.signIn(email, password);
 
         verify(() => httpClient.post(
@@ -86,6 +89,7 @@ void main() {
           'should call http client\'s post method with the appropriate parameters',
           () {
         arrangeAuthReturnsWithAuthResponsePayload(signUpUrl);
+
         authRemote.signUp(email, password);
 
         verify(() => httpClient.post(
