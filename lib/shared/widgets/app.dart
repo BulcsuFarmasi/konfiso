@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/book/book_home/view/book_home_page.dart';
+import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/features/loading/view/pages/loading_page.dart';
@@ -15,28 +15,31 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'Konfiso',
         theme: ThemeData(
-            scaffoldBackgroundColor: AppColors.backgroundColor,
-            primarySwatch: AppColors.primaryColorSwatch,
-            fontFamily: 'Poppins',
-            inputDecorationTheme: InputDecorationTheme(
-                border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
+          scaffoldBackgroundColor: AppColors.backgroundColor,
+          primarySwatch: AppColors.primaryColorSwatch,
+          fontFamily: 'Poppins',
+          inputDecorationTheme: InputDecorationTheme(
+              border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(9)),
+              fillColor: AppColors.inputBackgroundColor,
+              filled: true,
+              errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: AppColors.primaryColor)),
+              errorStyle: const TextStyle(color: AppColors.primaryColor)),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(9)),
-                fillColor: AppColors.inputBackgroundColor,
-                filled: true,
-                errorBorder: const OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: AppColors.primaryColor)),
-                errorStyle:
-                    const TextStyle(color: AppColors.primaryColor)),
-            elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(9)),
-                  elevation: 0),
-            ),
-            appBarTheme: const AppBarTheme(
-                backgroundColor: AppColors.backgroundColor, elevation: 0)),
+                elevation: 0),
+          ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: AppColors.backgroundColor,
+            elevation: 0,
+            foregroundColor: AppColors.greyDarkerColor,
+            iconTheme: IconThemeData(color: AppColors.greyDarkerColor),
+          ),
+        ),
         initialRoute: '/',
         routes: {
           '/': (BuildContext context) => const LoadingPage(),

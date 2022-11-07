@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
-import 'package:konfiso/features/book/book_home/view/book_home_page.dart';
+import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/features/loading/controller/loading_page_controller.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
