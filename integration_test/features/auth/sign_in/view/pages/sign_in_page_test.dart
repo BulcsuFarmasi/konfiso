@@ -13,7 +13,7 @@ import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_error_banner.
 import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_form.dart';
 import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_initial.dart';
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
-import 'package:konfiso/features/book/book_home/view/book_home_page.dart';
+import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/shared/widgets/entry_in_progress.dart';
 
 import 'package:mocktail/mocktail.dart';
