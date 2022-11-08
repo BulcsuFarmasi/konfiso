@@ -1,4 +1,4 @@
-package com.example.konfiso
+package com.konfiso.konfiso
 
 import io.flutter.embedding.android.FlutterActivity
 
