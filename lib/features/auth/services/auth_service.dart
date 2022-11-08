@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
-import 'package:konfiso/features/auth/services/stored_user.dart';
+import 'package:konfiso/features/auth/model/stored_user.dart';
 import 'package:konfiso/shared/expcetions/network_execption.dart';
 import 'package:konfiso/shared/services/time_service.dart';
 

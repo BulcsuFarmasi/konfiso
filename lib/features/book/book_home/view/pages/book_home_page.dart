@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:konfiso/features/book/%20model/book_reading_status.dart';
+import 'package:konfiso/features/book/model/book_reading_status.dart';
 import 'package:konfiso/features/book/add_book/view/pages/add_book_page.dart';
 import 'package:konfiso/features/book/book_home/view/widgets/book_home_menu_item.dart';
 import 'package:konfiso/shared/widgets/app_drawer/view/app_drawer.dart';

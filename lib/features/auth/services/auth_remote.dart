@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/auth/services/auth_request_payload.dart';
-import 'package:konfiso/features/auth/services/auth_response_payload.dart';
-import 'package:konfiso/features/auth/services/refresh_token_request_payload.dart';
-import 'package:konfiso/features/auth/services/refresh_token_response_payload.dart';
+import 'package:konfiso/features/auth/model/auth_request_payload.dart';
+import 'package:konfiso/features/auth/model/auth_response_payload.dart';
+import 'package:konfiso/features/auth/model/refresh_token_request_payload.dart';
+import 'package:konfiso/features/auth/model/refresh_token_response_payload.dart';
 import 'package:konfiso/shared/http_client.dart';
 
 final authRemoteProvider = Provider((Ref ref) => AuthRemote(

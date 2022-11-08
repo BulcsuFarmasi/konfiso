@@ -5,7 +5,7 @@ import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/features/auth/services/auth_response_payload.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
-import 'package:konfiso/features/auth/services/refresh_token_response_payload.dart';
+import 'package:konfiso/features/auth/model/refresh_token_response_payload.dart';
 import 'package:konfiso/features/auth/services/stored_user.dart';
 import 'package:konfiso/shared/secret.dart';
 import 'package:konfiso/shared/services/time_service.dart';

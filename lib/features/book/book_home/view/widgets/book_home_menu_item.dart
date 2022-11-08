@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:konfiso/features/book/%20model/book_reading_status.dart';
 import 'package:konfiso/features/book/book_category/view/pages/book_category_page.dart';
+import 'package:konfiso/features/book/model/book_reading_status.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
 class BookHomeMenuItem extends StatelessWidget {
