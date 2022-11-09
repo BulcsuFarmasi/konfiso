@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
+import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state_notifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/widgets/entry_logo.dart';
 
-class SignUpSuccessful extends StatelessWidget {
+class SignUpSuccessful extends ConsumerWidget {
   const SignUpSuccessful({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -28,6 +30,7 @@ class SignUpSuccessful extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
+            ref.read(signUpStateNotifierProvider.notifier).goBackToInitial();
             Navigator.of(context).pushReplacementNamed(SignInPage.routeName);
           },
           child: Text(

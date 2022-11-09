@@ -14,7 +14,7 @@ class AuthStorage {
   AuthStorage(this._secureStorage);
 
   void saveUser(StoredUser user) {
-    _secureStorage.write(storedUserKey, jsonEncode(user.toJson()));
+    _secureStorage.write(storedUserKey, json.encode(user.toJson()));
   }
 
   void deleteUser() {

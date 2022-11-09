@@ -6,6 +6,7 @@ import 'package:konfiso/features/auth/model/auth_response_payload.dart';
 import 'package:konfiso/features/auth/model/refresh_token_request_payload.dart';
 import 'package:konfiso/features/auth/model/refresh_token_response_payload.dart';
 import 'package:konfiso/features/auth/model/remote_user.dart';
+import 'package:konfiso/features/auth/model/update_user_request_payload.dart';
 import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/services/flavor_service.dart';
 import 'package:konfiso/shared/services/time_service.dart';
@@ -34,17 +35,24 @@ class AuthRemote {
     final authRequestPayload = AuthRequestPayload(email, password);
     final response = await _httpClient.post(
         url: '${accountUrl}signInWithPassword',
-        data: jsonEncode(authRequestPayload.toJson()));
-    return AuthResponsePayload.fromJson(response.data);
+        data: json.encode(authRequestPayload.toJson()));
+
+    final authResponse = AuthResponsePayload.fromJson(response.data);
+
+    _updateUser(authResponse.localId);
+
+    return authResponse;
   }
 
   Future<void> signUp(String email, String password) async {
     final authRequestPayload = AuthRequestPayload(email, password);
     final response = await _httpClient.post(
         url: '${accountUrl}signUp',
-        data: jsonEncode(authRequestPayload.toJson()));
+        data: json.encode(authRequestPayload.toJson()));
 
     final authResponse = AuthResponsePayload.fromJson(response.data);
+
+
 
     _saveUser(authResponse, email);
   }
@@ -52,7 +60,7 @@ class AuthRemote {
   Future<RefreshTokenResponsePayload> refreshToken(String refreshToken) async {
     final refreshTokenPayload = RefreshTokenRequestPayload(refreshToken);
     final response = await _httpClient.post(
-        url: tokenUrl, data: jsonEncode(refreshTokenPayload.toJson()));
+        url: tokenUrl, data: json.encode(refreshTokenPayload.toJson()));
 
     return RefreshTokenResponsePayload.fromJson(response.data);
   }
@@ -66,13 +74,24 @@ class AuthRemote {
         consented: true,
         consentUrl: 'privacy-policy');
 
-    print('$dbUrl.json');
-    print(jsonEncode(user.toJson()));
+    await _httpClient.post(
+        url: '$dbUrl.json', data: json.encode(user.toJson()));
+  }
 
-    final response = await _httpClient.post(url: '$dbUrl.json', data: jsonEncode(user.toJson()));
+  Future<void> _updateUser(String authId) async {
+    
+    final response = await _httpClient.get(url: '$dbUrl.json?orderBy="authId"&equalTo="$authId"');
 
-    print(response.statusCode);
     print(response.data);
+    print(response.data.keys);
+    print(response.data.keys.first);
 
+
+    final userId = response.data.keys.first;
+
+
+    await _httpClient.patch(
+        url: '$dbUrl/$userId.json',
+        data: json.encode(UpdateUserRequestPayload(_timeService.now())));
   }
 }

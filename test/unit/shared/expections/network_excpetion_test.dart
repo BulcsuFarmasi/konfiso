@@ -1,6 +1,6 @@
 @TestOn('vm')
 import 'package:flutter_test/flutter_test.dart';
-import 'package:konfiso/shared/expcetions/network_execption.dart';
+import 'package:konfiso/shared/exceptions/network_execption.dart';
 
 void main() {
   group('NetworkException', () {

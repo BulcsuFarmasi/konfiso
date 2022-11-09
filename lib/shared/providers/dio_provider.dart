@@ -9,6 +9,8 @@ final dioProvider = Provider((Ref ref) {
     if (options.path.contains('googleapis')) {
       options.path = '${options.path}?key=${flavorService.currentConfig.values.firebaseApiKey}';
       handler.next(options);
+    } else {
+      handler.next(options);
     }
   }));
   return dio;
