@@ -2,9 +2,8 @@ import 'package:intl/intl.dart';
 
 enum BookReadingStatus {
   reading('Reading'),
-  wantToRead('Want To Read'),
+  wantToRead('Want to Read'),
   alreadyRead('Already Read');
-
 
   final String displayText;
 
