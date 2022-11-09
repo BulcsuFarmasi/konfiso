@@ -1,10 +1,10 @@
 enum Flavor { dev, staging, prod }
 
 class FlavorValues {
-  final String firebaseApiKey;
+  final String googleApiKey;
   final String firebaseDBUrl;
 
-  FlavorValues(this.firebaseApiKey, this.firebaseDBUrl);
+  FlavorValues(this.googleApiKey, this.firebaseDBUrl);
 }
 
 class FlavorConfig {

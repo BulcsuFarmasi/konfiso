@@ -10,13 +10,13 @@ class FlavorService {
     switch (flavor) {
       case Flavor.dev:
         return FlavorConfig(
-            Flavor.dev, FlavorValues(devFirebaseApiKey, devFirebaseDBUrl));
+            Flavor.dev, FlavorValues(devGoogleApiKey, devFirebaseDBUrl));
       case Flavor.staging:
         return FlavorConfig(Flavor.staging,
-            FlavorValues(prodFirebaseApiKey, prodFirebaseDBUrl));
+            FlavorValues(prodGoogleApiKey, prodFirebaseDBUrl));
       case Flavor.prod:
         return FlavorConfig(
-            Flavor.prod, FlavorValues(prodFirebaseApiKey, prodFirebaseDBUrl));
+            Flavor.prod, FlavorValues(prodGoogleApiKey, prodFirebaseDBUrl));
     }
   }
 }

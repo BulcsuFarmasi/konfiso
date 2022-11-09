@@ -16,13 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Book {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get externalId => throw _privateConstructorUsedError;
   List<String>? get authors => throw _privateConstructorUsedError;
   int? get publicationYear => throw _privateConstructorUsedError;
   int? get isbn => throw _privateConstructorUsedError;
-  String? get coverImage => throw _privateConstructorUsedError;
+  String? get coverImageSmall => throw _privateConstructorUsedError;
+  String? get coverImageLarge => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $BookCopyWith<Book> get copyWith => throw _privateConstructorUsedError;
@@ -34,13 +35,14 @@ abstract class $BookCopyWith<$Res> {
       _$BookCopyWithImpl<$Res, Book>;
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String title,
       String externalId,
       List<String>? authors,
       int? publicationYear,
       int? isbn,
-      String? coverImage});
+      String? coverImageSmall,
+      String? coverImageLarge});
 }
 
 /// @nodoc
@@ -56,19 +58,20 @@ class _$BookCopyWithImpl<$Res, $Val extends Book>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? title = null,
     Object? externalId = null,
     Object? authors = freezed,
     Object? publicationYear = freezed,
     Object? isbn = freezed,
-    Object? coverImage = freezed,
+    Object? coverImageSmall = freezed,
+    Object? coverImageLarge = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -89,9 +92,13 @@ class _$BookCopyWithImpl<$Res, $Val extends Book>
           ? _value.isbn
           : isbn // ignore: cast_nullable_to_non_nullable
               as int?,
-      coverImage: freezed == coverImage
-          ? _value.coverImage
-          : coverImage // ignore: cast_nullable_to_non_nullable
+      coverImageSmall: freezed == coverImageSmall
+          ? _value.coverImageSmall
+          : coverImageSmall // ignore: cast_nullable_to_non_nullable
+              as String?,
+      coverImageLarge: freezed == coverImageLarge
+          ? _value.coverImageLarge
+          : coverImageLarge // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -104,13 +111,14 @@ abstract class _$$_BookCopyWith<$Res> implements $BookCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String title,
       String externalId,
       List<String>? authors,
       int? publicationYear,
       int? isbn,
-      String? coverImage});
+      String? coverImageSmall,
+      String? coverImageLarge});
 }
 
 /// @nodoc
@@ -122,19 +130,20 @@ class __$$_BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res, _$_Book>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? title = null,
     Object? externalId = null,
     Object? authors = freezed,
     Object? publicationYear = freezed,
     Object? isbn = freezed,
-    Object? coverImage = freezed,
+    Object? coverImageSmall = freezed,
+    Object? coverImageLarge = freezed,
   }) {
     return _then(_$_Book(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -155,9 +164,13 @@ class __$$_BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res, _$_Book>
           ? _value.isbn
           : isbn // ignore: cast_nullable_to_non_nullable
               as int?,
-      coverImage: freezed == coverImage
-          ? _value.coverImage
-          : coverImage // ignore: cast_nullable_to_non_nullable
+      coverImageSmall: freezed == coverImageSmall
+          ? _value.coverImageSmall
+          : coverImageSmall // ignore: cast_nullable_to_non_nullable
+              as String?,
+      coverImageLarge: freezed == coverImageLarge
+          ? _value.coverImageLarge
+          : coverImageLarge // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -167,17 +180,18 @@ class __$$_BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res, _$_Book>
 
 class _$_Book implements _Book {
   const _$_Book(
-      {required this.id,
+      {this.id,
       required this.title,
       required this.externalId,
       final List<String>? authors,
       this.publicationYear,
       this.isbn,
-      this.coverImage})
+      this.coverImageSmall,
+      this.coverImageLarge})
       : _authors = authors;
 
   @override
-  final String id;
+  final String? id;
   @override
   final String title;
   @override
@@ -196,11 +210,13 @@ class _$_Book implements _Book {
   @override
   final int? isbn;
   @override
-  final String? coverImage;
+  final String? coverImageSmall;
+  @override
+  final String? coverImageLarge;
 
   @override
   String toString() {
-    return 'Book(id: $id, title: $title, externalId: $externalId, authors: $authors, publicationYear: $publicationYear, isbn: $isbn, coverImage: $coverImage)';
+    return 'Book(id: $id, title: $title, externalId: $externalId, authors: $authors, publicationYear: $publicationYear, isbn: $isbn, coverImageSmall: $coverImageSmall, coverImageLarge: $coverImageLarge)';
   }
 
   @override
@@ -216,8 +232,10 @@ class _$_Book implements _Book {
             (identical(other.publicationYear, publicationYear) ||
                 other.publicationYear == publicationYear) &&
             (identical(other.isbn, isbn) || other.isbn == isbn) &&
-            (identical(other.coverImage, coverImage) ||
-                other.coverImage == coverImage));
+            (identical(other.coverImageSmall, coverImageSmall) ||
+                other.coverImageSmall == coverImageSmall) &&
+            (identical(other.coverImageLarge, coverImageLarge) ||
+                other.coverImageLarge == coverImageLarge));
   }
 
   @override
@@ -229,7 +247,8 @@ class _$_Book implements _Book {
       const DeepCollectionEquality().hash(_authors),
       publicationYear,
       isbn,
-      coverImage);
+      coverImageSmall,
+      coverImageLarge);
 
   @JsonKey(ignore: true)
   @override
@@ -240,16 +259,17 @@ class _$_Book implements _Book {
 
 abstract class _Book implements Book {
   const factory _Book(
-      {required final String id,
+      {final String? id,
       required final String title,
       required final String externalId,
       final List<String>? authors,
       final int? publicationYear,
       final int? isbn,
-      final String? coverImage}) = _$_Book;
+      final String? coverImageSmall,
+      final String? coverImageLarge}) = _$_Book;
 
   @override
-  String get id;
+  String? get id;
   @override
   String get title;
   @override
@@ -261,7 +281,9 @@ abstract class _Book implements Book {
   @override
   int? get isbn;
   @override
-  String? get coverImage;
+  String? get coverImageSmall;
+  @override
+  String? get coverImageLarge;
   @override
   @JsonKey(ignore: true)
   _$$_BookCopyWith<_$_Book> get copyWith => throw _privateConstructorUsedError;

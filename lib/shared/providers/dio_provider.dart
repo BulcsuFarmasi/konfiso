@@ -5,9 +5,11 @@ import 'package:konfiso/shared/services/flavor_service.dart';
 final dioProvider = Provider((Ref ref) {
   final flavorService = ref.read(flavorServiceProvider);
   final dio = Dio();
-  dio.interceptors.add(InterceptorsWrapper(onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
+  dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
     if (options.path.contains('googleapis')) {
-      options.path = '${options.path}?key=${flavorService.currentConfig.values.firebaseApiKey}';
+      options.path =
+          '${options.path}?key=${flavorService.currentConfig.values.googleApiKey}';
       handler.next(options);
     } else {
       handler.next(options);
@@ -15,4 +17,3 @@ final dioProvider = Provider((Ref ref) {
   }));
   return dio;
 });
-

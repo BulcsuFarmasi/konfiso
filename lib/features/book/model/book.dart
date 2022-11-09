@@ -5,12 +5,13 @@ part 'book.freezed.dart';
 @freezed
 class Book with _$Book {
   const factory Book({
-    required String id,
+    String? id,
     required String title,
     required String externalId,
     List<String>? authors,
     int? publicationYear,
     int? isbn,
-    String? coverImage,
+    String? coverImageSmall,
+    String? coverImageLarge,
   }) = _Book;
 }

@@ -52,8 +52,6 @@ class AuthRemote {
 
     final authResponse = AuthResponsePayload.fromJson(response.data);
 
-
-
     _saveUser(authResponse, email);
   }
 
@@ -79,16 +77,10 @@ class AuthRemote {
   }
 
   Future<void> _updateUser(String authId) async {
-    
-    final response = await _httpClient.get(url: '$dbUrl.json?orderBy="authId"&equalTo="$authId"');
-
-    print(response.data);
-    print(response.data.keys);
-    print(response.data.keys.first);
-
+    final response = await _httpClient.get(
+        url: '$dbUrl.json?orderBy="authId"&equalTo="$authId"');
 
     final userId = response.data.keys.first;
-
 
     await _httpClient.patch(
         url: '$dbUrl/$userId.json',
