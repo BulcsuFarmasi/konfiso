@@ -7,8 +7,9 @@ part 'remote_user.g.dart';
 @freezed
 class RemoteUser with _$RemoteUser {
   const factory RemoteUser({
-    required String id,
+    String? id,
     required String authId,
+    required String email,
     required DateTime registrationDate,
     required bool consented,
     required String consentUrl,

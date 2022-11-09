@@ -20,8 +20,9 @@ RemoteUser _$RemoteUserFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RemoteUser {
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String get authId => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
   DateTime get registrationDate => throw _privateConstructorUsedError;
   bool get consented => throw _privateConstructorUsedError;
   String get consentUrl => throw _privateConstructorUsedError;
@@ -40,8 +41,9 @@ abstract class $RemoteUserCopyWith<$Res> {
       _$RemoteUserCopyWithImpl<$Res, RemoteUser>;
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String authId,
+      String email,
       DateTime registrationDate,
       bool consented,
       String consentUrl,
@@ -61,21 +63,26 @@ class _$RemoteUserCopyWithImpl<$Res, $Val extends RemoteUser>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? authId = null,
+    Object? email = null,
     Object? registrationDate = null,
     Object? consented = null,
     Object? consentUrl = null,
     Object? latestLogin = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       authId: null == authId
           ? _value.authId
           : authId // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String,
       registrationDate: null == registrationDate
           ? _value.registrationDate
@@ -106,8 +113,9 @@ abstract class _$$_RemoteUserCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String authId,
+      String email,
       DateTime registrationDate,
       bool consented,
       String consentUrl,
@@ -125,21 +133,26 @@ class __$$_RemoteUserCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? authId = null,
+    Object? email = null,
     Object? registrationDate = null,
     Object? consented = null,
     Object? consentUrl = null,
     Object? latestLogin = freezed,
   }) {
     return _then(_$_RemoteUser(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       authId: null == authId
           ? _value.authId
           : authId // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
               as String,
       registrationDate: null == registrationDate
           ? _value.registrationDate
@@ -165,8 +178,9 @@ class __$$_RemoteUserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_RemoteUser implements _RemoteUser {
   const _$_RemoteUser(
-      {required this.id,
+      {this.id,
       required this.authId,
+      required this.email,
       required this.registrationDate,
       required this.consented,
       required this.consentUrl,
@@ -176,9 +190,11 @@ class _$_RemoteUser implements _RemoteUser {
       _$$_RemoteUserFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
   final String authId;
+  @override
+  final String email;
   @override
   final DateTime registrationDate;
   @override
@@ -190,7 +206,7 @@ class _$_RemoteUser implements _RemoteUser {
 
   @override
   String toString() {
-    return 'RemoteUser(id: $id, authId: $authId, registrationDate: $registrationDate, consented: $consented, consentUrl: $consentUrl, latestLogin: $latestLogin)';
+    return 'RemoteUser(id: $id, authId: $authId, email: $email, registrationDate: $registrationDate, consented: $consented, consentUrl: $consentUrl, latestLogin: $latestLogin)';
   }
 
   @override
@@ -200,6 +216,7 @@ class _$_RemoteUser implements _RemoteUser {
             other is _$_RemoteUser &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.authId, authId) || other.authId == authId) &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.registrationDate, registrationDate) ||
                 other.registrationDate == registrationDate) &&
             (identical(other.consented, consented) ||
@@ -212,8 +229,8 @@ class _$_RemoteUser implements _RemoteUser {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, authId, registrationDate,
-      consented, consentUrl, latestLogin);
+  int get hashCode => Object.hash(runtimeType, id, authId, email,
+      registrationDate, consented, consentUrl, latestLogin);
 
   @JsonKey(ignore: true)
   @override
@@ -231,8 +248,9 @@ class _$_RemoteUser implements _RemoteUser {
 
 abstract class _RemoteUser implements RemoteUser {
   const factory _RemoteUser(
-      {required final String id,
+      {final String? id,
       required final String authId,
+      required final String email,
       required final DateTime registrationDate,
       required final bool consented,
       required final String consentUrl,
@@ -242,9 +260,11 @@ abstract class _RemoteUser implements RemoteUser {
       _$_RemoteUser.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
   String get authId;
+  @override
+  String get email;
   @override
   DateTime get registrationDate;
   @override

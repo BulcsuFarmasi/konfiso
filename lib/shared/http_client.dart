@@ -12,8 +12,4 @@ class HttpClient {
   Future<Response> post({required String url, dynamic data}) {
     return _dio.post(url, data: data);
   }
-
-  Future<Response> put({required String url, dynamic data}) {
-    return _dio.put(url, data: data);
-  }
 }
