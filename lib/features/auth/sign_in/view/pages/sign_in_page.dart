@@ -15,7 +15,7 @@ class SignInPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(signInPageNotiferProvider,
-        (SignInPageState? previous, SignInPageState next) {
+        (_, SignInPageState next) {
       next.maybeMap(
           successful: (_) {
             Navigator.of(context).pushReplacementNamed(BookHomePage.routeName);

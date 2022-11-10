@@ -5,7 +5,13 @@ import 'package:konfiso/features/book/add_book/controller/add_book_page_state_no
 import 'package:rxdart/rxdart.dart';
 
 class AddBookSearch extends ConsumerStatefulWidget {
-  const AddBookSearch({super.key});
+  const AddBookSearch(
+      {required this.keyBoardDisappeared,
+      required this.startedTyping,
+      super.key});
+
+  final VoidCallback startedTyping;
+  final VoidCallback keyBoardDisappeared;
 
   @override
   ConsumerState<AddBookSearch> createState() => _AddBookInputSearch();
@@ -13,6 +19,7 @@ class AddBookSearch extends ConsumerStatefulWidget {
 
 class _AddBookInputSearch extends ConsumerState<AddBookSearch> {
   final searchSubject = PublishSubject<String>();
+  bool isTypingYet = false;
 
   @override
   void initState() {
@@ -26,21 +33,26 @@ class _AddBookInputSearch extends ConsumerState<AddBookSearch> {
     });
     searchSubject.debounceTime(const Duration(seconds: 2)).listen((_) {
       FocusManager.instance.primaryFocus?.unfocus();
+      widget.keyBoardDisappeared();
     });
   }
 
   void _addToSubject(String searchTerm) {
     searchSubject.add(searchTerm);
+    if (!isTypingYet) {
+      widget.startedTyping();
+      isTypingYet = true;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-        decoration: InputDecoration(
-            hintText: Intl.message('Search book by title'),
-            suffixIcon: const Icon(Icons.search)),
-        onChanged: _addToSubject,
-        textInputAction: TextInputAction.done,
-      );
+      decoration: InputDecoration(
+          hintText: Intl.message('Search book by title'),
+          suffixIcon: const Icon(Icons.search)),
+      onChanged: _addToSubject,
+      textInputAction: TextInputAction.done,
+    );
   }
 }

@@ -3,17 +3,13 @@ import 'package:konfiso/features/book/add_book/view/widgets/book_tile.dart';
 import 'package:konfiso/features/book/model/book.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
-
-
 class AddBookSuccess extends StatelessWidget {
   const AddBookSuccess({super.key, required this.books});
 
   final List<Book> books;
 
   @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
+  Widget build(BuildContext context) => Container(
         decoration: BoxDecoration(
             color: AppColors.inputBackgroundColor,
             borderRadius: BorderRadius.circular(9)),
@@ -22,8 +18,5 @@ class AddBookSuccess extends StatelessWidget {
             itemBuilder: (_, int index) {
               return BookTile(book: books[index]);
             }),
-      ),
-    );
-  }
+      );
 }
-
