@@ -11,8 +11,6 @@ class AddBookPage extends StatelessWidget {
 
   static const routeName = '/add-book';
 
-  final search = const AddBookSearch();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,31 +18,27 @@ class AddBookPage extends StatelessWidget {
         title: Text(Intl.message('Add a Book')),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 42),
-          child: Consumer(
-            builder: (_, WidgetRef ref, __) {
-              final state = ref.watch(addBookPageStateNotifierProvider);
-              return Column(
-                children: [
-                  const AddBookSearch(),
-                  state.maybeMap(
-                      inProgress: (_) => AddBookInProgress(
-                            search: search,
-                          ),
-                      successful: (success) => Expanded(
-                        child: AddBookSuccess(
-                              books: success.books,
-                              search: search,
-                            ),
-                      ),
-                      error: (_) => Container(),
-                      orElse: () => Container())
-                ],
-              );
-            },
-          ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Column(
+          children: [
+            const AddBookSearch(),
+            const SizedBox(
+              height: 20,
+            ),
+            Consumer(
+              builder: (_, WidgetRef ref, __) {
+                final state = ref.watch(addBookPageStateNotifierProvider);
+                return state.maybeMap(
+                    inProgress: (_) => const AddBookInProgress(),
+                    successful: (success) => AddBookSuccess(
+                          books: success.books,
+                        ),
+                    error: (_) => Container(),
+                    orElse: () => Container());
+              },
+            ),
+          ],
         ),
       ),
     );

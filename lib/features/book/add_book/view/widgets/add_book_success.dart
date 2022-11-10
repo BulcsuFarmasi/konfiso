@@ -1,31 +1,49 @@
 import 'package:flutter/material.dart';
-
-import 'package:konfiso/features/book/add_book/view/widgets/add_book_search.dart';
 import 'package:konfiso/features/book/model/book.dart';
+import 'package:konfiso/shared/app_colors.dart';
 
 class AddBookSuccess extends StatelessWidget {
-  const AddBookSuccess({super.key, required this.books, required this.search});
+  const AddBookSuccess({super.key, required this.books});
 
   final List<Book> books;
-  final AddBookSearch search;
 
   @override
   Widget build(BuildContext context) {
-    print(books);
-    return Column(
-      children: [
-        const SizedBox(
-          height: 10,
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(leading: Image.network(books[index].coverImageSmall!),);
-            },
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+            color: AppColors.inputBackgroundColor,
+            borderRadius: BorderRadius.circular(9)),
+        child: ListView.builder(
             itemCount: books.length,
-          ),
-        ),
-      ],
+            itemBuilder: (_, int index) {
+              return ListTile(
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(3),
+                  child:
+                      Image.network(books[index].coverImageSmall!, width: 40),
+                ),
+                title: Text(
+                  books[index].title,
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.greyDarkestColor),
+                ),
+                subtitle: Text(
+                  books[index].authors?.join(', ') ?? '',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.greyDarkestWithHalfOpacity),
+                ),
+                trailing: ElevatedButton(
+                  child: const Text('Details'),
+                  onPressed: () {},
+                ),
+              );
+            }),
+      ),
     );
   }
 }

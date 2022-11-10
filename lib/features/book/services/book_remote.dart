@@ -15,10 +15,8 @@ class BookRemote {
   Future<List<Volume>> search(String searchTerm) async {
     searchTerm = searchTerm.replaceAll(' ', '+');
     final url = '$apiUrl?q=$searchTerm';
-    print(url);
     final response =
         await _httpClient.get(url: url);
-    print(response.data);
 
     return [
       Volume('', VolumeInfo('', [''], ImageLinks('x')))

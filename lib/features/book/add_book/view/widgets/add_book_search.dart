@@ -36,11 +36,11 @@ class _AddBookInputSearch extends ConsumerState<AddBookSearch> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      decoration: InputDecoration(
-          hintText: Intl.message('Search book by title'),
-          suffixIcon: const Icon(Icons.search)),
-      onChanged: _addToSubject,
-      textInputAction: TextInputAction.done,
-    );
+        decoration: InputDecoration(
+            hintText: Intl.message('Search book by title'),
+            suffixIcon: const Icon(Icons.search)),
+        onChanged: _addToSubject,
+        textInputAction: TextInputAction.done,
+      );
   }
 }
