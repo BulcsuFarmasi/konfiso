@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:konfiso/features/book/add_book/view/widgets/book_tile.dart';
 import 'package:konfiso/features/book/model/book.dart';
 import 'package:konfiso/shared/app_colors.dart';
+
+
 
 class AddBookSuccess extends StatelessWidget {
   const AddBookSuccess({super.key, required this.books});
@@ -17,33 +20,10 @@ class AddBookSuccess extends StatelessWidget {
         child: ListView.builder(
             itemCount: books.length,
             itemBuilder: (_, int index) {
-              return ListTile(
-                leading: ClipRRect(
-                  borderRadius: BorderRadius.circular(3),
-                  child:
-                      Image.network(books[index].coverImageSmall!, width: 40),
-                ),
-                title: Text(
-                  books[index].title,
-                  style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.greyDarkestColor),
-                ),
-                subtitle: Text(
-                  books[index].authors?.join(', ') ?? '',
-                  style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.greyDarkestWithHalfOpacity),
-                ),
-                trailing: ElevatedButton(
-                  child: const Text('Details'),
-                  onPressed: () {},
-                ),
-              );
+              return BookTile(book: books[index]);
             }),
       ),
     );
   }
 }
+
