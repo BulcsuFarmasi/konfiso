@@ -9,14 +9,16 @@ class AddBookSuccess extends StatelessWidget {
   final List<Book> books;
 
   @override
-  Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(
-            color: AppColors.inputBackgroundColor,
-            borderRadius: BorderRadius.circular(9)),
-        child: ListView.builder(
-            itemCount: books.length,
-            itemBuilder: (_, int index) {
-              return BookTile(book: books[index]);
-            }),
+  Widget build(BuildContext context) => Expanded(
+        child: Container(
+          decoration: BoxDecoration(
+              color: AppColors.inputBackgroundColor,
+              borderRadius: BorderRadius.circular(9)),
+          child: ListView.builder(
+              itemCount: books.length,
+              itemBuilder: (_, int index) {
+                return BookTile(book: books[index]);
+              }),
+        ),
       );
 }

@@ -5,13 +5,9 @@ import 'package:konfiso/features/book/add_book/controller/add_book_page_state_no
 import 'package:rxdart/rxdart.dart';
 
 class AddBookSearch extends ConsumerStatefulWidget {
-  const AddBookSearch(
-      {required this.keyBoardDisappeared,
-      required this.startedTyping,
-      super.key});
+  const AddBookSearch({required this.startedTyping, super.key});
 
   final VoidCallback startedTyping;
-  final VoidCallback keyBoardDisappeared;
 
   @override
   ConsumerState<AddBookSearch> createState() => _AddBookInputSearch();
@@ -33,7 +29,6 @@ class _AddBookInputSearch extends ConsumerState<AddBookSearch> {
     });
     searchSubject.debounceTime(const Duration(seconds: 2)).listen((_) {
       FocusManager.instance.primaryFocus?.unfocus();
-      widget.keyBoardDisappeared();
     });
   }
 
