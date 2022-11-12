@@ -37,7 +37,7 @@ class BookTile extends StatelessWidget {
             color: AppColors.greyDarkestWithHalfOpacity),
       ),
       trailing: ElevatedButton(
-        child: const Text('Details'),
+        child: const Text('Add'),
         onPressed: () {},
       ),
     );

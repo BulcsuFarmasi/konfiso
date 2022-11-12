@@ -27,9 +27,6 @@ class _AddBookInputSearch extends ConsumerState<AddBookSearch> {
         .listen((String searchTerm) {
       addBookStateNotifier.search(searchTerm);
     });
-    searchSubject.debounceTime(const Duration(seconds: 2)).listen((_) {
-      FocusManager.instance.primaryFocus?.unfocus();
-    });
   }
 
   void _addToSubject(String searchTerm) {
@@ -44,7 +41,7 @@ class _AddBookInputSearch extends ConsumerState<AddBookSearch> {
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-          hintText: Intl.message('Search book by title'),
+          hintText: Intl.message('Search a book'),
           suffixIcon: const Icon(Icons.search)),
       onChanged: _addToSubject,
       textInputAction: TextInputAction.done,
