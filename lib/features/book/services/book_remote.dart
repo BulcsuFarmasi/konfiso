@@ -1,5 +1,5 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/book/model/volume.dart';
 import 'package:konfiso/shared/http_client.dart';
 
 final bookRemoteProvider =
@@ -12,14 +12,10 @@ class BookRemote {
 
   BookRemote(this._httpClient);
 
-  Future<List<Volume>> search(String searchTerm) async {
-    searchTerm = searchTerm.replaceAll(' ', '+');
-    final url = '$apiUrl?q=$searchTerm';
-    final response =
-        await _httpClient.get(url: url);
+  Future<Response> search(String searchTerm) async {
+    searchTerm = searchTerm.trim().replaceAll(' ', '+');
+    final url = '$apiUrl?q="$searchTerm"&maxResults=10&startIndex=0';
 
-    return [
-      Volume('', VolumeInfo('', [''], ImageLinks('x')))
-    ];
+    return _httpClient.get(url: url);
   }
 }

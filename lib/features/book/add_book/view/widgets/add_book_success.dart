@@ -14,11 +14,11 @@ class AddBookSuccess extends StatelessWidget {
           decoration: BoxDecoration(
               color: AppColors.inputBackgroundColor,
               borderRadius: BorderRadius.circular(9)),
-          child: ListView.builder(
+          child: books.isNotEmpty ? ListView.builder(
               itemCount: books.length,
               itemBuilder: (_, int index) {
                 return BookTile(book: books[index]);
-              }),
+              }) : Text('No Books Found'),
         ),
       );
 }

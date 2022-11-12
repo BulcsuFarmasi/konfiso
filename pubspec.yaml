@@ -44,6 +44,7 @@ dependencies:
   json_annotation: ^4.7.0
   firebase_core: ^2.1.1
   rxdart: ^0.27.5
+  books_finder: ^4.3.0
 
 dev_dependencies:
   flutter_test:

@@ -16,10 +16,10 @@ class Volume {
 @JsonSerializable()
 class VolumeInfo {
   final String title;
-  final List<String> authors;
-  final ImageLinks imageLinks;
+  final List<String>? authors;
+  final ImageLinks? imageLinks;
 
-  VolumeInfo(this.title, this.authors, this.imageLinks);
+  VolumeInfo({required this.title, this.authors, this.imageLinks});
 
   factory VolumeInfo.fromJson(Map<String,dynamic> json) => _$VolumeInfoFromJson(json);
 
