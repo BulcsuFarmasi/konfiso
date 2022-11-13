@@ -58,7 +58,7 @@ class BookDetailSuccess extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              Intl.message('Publication Year:'),
+              Intl.message('Publication Year: '),
               style: const TextStyle(
                   fontSize: 14,
                   color: AppColors.greyDarkestColor,
@@ -74,7 +74,7 @@ class BookDetailSuccess extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              Intl.message('Industry Identifiers:'),
+              Intl.message('Industry Identifiers: '),
               style: const TextStyle(
                   fontSize: 14,
                   color: AppColors.greyDarkestColor,
