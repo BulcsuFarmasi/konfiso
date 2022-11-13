@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_status_form.dart';
 import 'package:konfiso/features/book/model/book.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
@@ -82,6 +83,7 @@ class BookDetailSuccess extends StatelessWidget {
             Text(book.industryIds!.join(', ')),
           ],
         ),
+        const BookDetailStatusForm(),
       ],
     );
   }
