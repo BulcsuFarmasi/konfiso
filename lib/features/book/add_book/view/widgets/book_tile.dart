@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
 import 'package:konfiso/features/book/model/book.dart';
+import 'package:konfiso/features/book/model/book_ids.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
 class BookTile extends StatelessWidget {
@@ -10,6 +12,11 @@ class BookTile extends StatelessWidget {
 
   final Book book;
 
+  void _navigateToDetailPage(BuildContext context, String externalId) {
+    Navigator.of(context).pushNamed(
+        BookDetailPage.routeName, arguments: BookIds(externalId: externalId));
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -18,9 +25,9 @@ class BookTile extends StatelessWidget {
         child: (book.coverImageSmall != null)
             ? Image.network(book.coverImageSmall!, width: 40)
             : Image.asset(
-                'assets/images/no_book_cover.gif',
-                width: 40,
-              ),
+          'assets/images/no_book_cover.gif',
+          width: 40,
+        ),
       ),
       title: Text(
         book.title,
@@ -38,7 +45,9 @@ class BookTile extends StatelessWidget {
       ),
       trailing: ElevatedButton(
         child: const Text('Add'),
-        onPressed: () {},
+        onPressed: () {
+          _navigateToDetailPage(context, book.externalId);
+        },
       ),
     );
   }

@@ -17,7 +17,6 @@ class BookService {
     List<Volume> volumes = [];
     try {
       final response = await _bookRemote.search(searchTerm);
-      print(response.data);
       final payload = BookResponsePayload.fromJson(response.data);
       if (payload.totalItems != 0) {
         volumes = payload.items!;
