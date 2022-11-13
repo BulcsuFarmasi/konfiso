@@ -10,7 +10,7 @@ class Book with _$Book {
     required String externalId,
     List<String>? authors,
     int? publicationYear,
-    int? isbn,
+    List<String>? industryIds,
     String? coverImageSmall,
     String? coverImageLarge,
   }) = _Book;

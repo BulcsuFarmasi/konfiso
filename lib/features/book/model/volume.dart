@@ -8,9 +8,9 @@ class Volume {
   final String id;
   final VolumeInfo volumeInfo;
 
-  Volume(this.id, this.volumeInfo);
+  const Volume(this.id, this.volumeInfo);
 
-  factory Volume.fromJson(Map<String,dynamic> json) => _$VolumeFromJson(json);
+  factory Volume.fromJson(Map<String, dynamic> json) => _$VolumeFromJson(json);
 }
 
 @JsonSerializable()
@@ -18,18 +18,42 @@ class VolumeInfo {
   final String title;
   final List<String>? authors;
   final ImageLinks? imageLinks;
+  final String? publishedDate;
+  final List<IndustryIdentifier>? industryIdentifiers;
 
-  VolumeInfo({required this.title, this.authors, this.imageLinks});
+  const VolumeInfo({
+    required this.title,
+    this.authors,
+    this.imageLinks,
+    this.publishedDate,
+    this.industryIdentifiers,
+  });
 
-  factory VolumeInfo.fromJson(Map<String,dynamic> json) => _$VolumeInfoFromJson(json);
-
+  factory VolumeInfo.fromJson(Map<String, dynamic> json) =>
+      _$VolumeInfoFromJson(json);
 }
 
 @JsonSerializable()
 class ImageLinks {
-  final String thumbnail;
+  final String? thumbnail;
+  final String? small;
 
-  ImageLinks(this.thumbnail);
+  const ImageLinks(this.thumbnail, this.small);
 
-  factory ImageLinks.fromJson(Map<String,dynamic> json) => _$ImageLinksFromJson(json);
+  factory ImageLinks.fromJson(Map<String, dynamic> json) =>
+      _$ImageLinksFromJson(json);
+}
+
+@JsonSerializable()
+class IndustryIdentifier {
+  final String type;
+  final String identifier;
+
+  const IndustryIdentifier(
+    this.type,
+    this.identifier,
+  );
+
+  factory IndustryIdentifier.fromJson(Map<String, dynamic> json) =>
+      _$IndustryIdentifierFromJson(json);
 }

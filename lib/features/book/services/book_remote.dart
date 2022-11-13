@@ -18,4 +18,9 @@ class BookRemote {
 
     return _httpClient.get(url: url);
   }
+
+  Future<Response> loadBookByExternalId(String externalId) async {
+    final url = '$apiUrl/$externalId';
+    return _httpClient.get(url: url);
+  }
 }

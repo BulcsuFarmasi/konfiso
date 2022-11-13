@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_in_progress.dart';
+import 'package:konfiso/features/book/book_detail/view/widgets/book_detal_success.dart';
 import 'package:konfiso/features/book/model/book_ids.dart';
 
 class BookDetailPage extends ConsumerStatefulWidget {
@@ -26,7 +27,11 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
       final bookIds = ModalRoute.of(context)!.settings.arguments as BookIds;
       bookExternalId = bookIds.externalId;
       _isInit = false;
-    //  ref.read(bookDetailPageStateNotifierProvider.notifier).loadBookByExternalId(bookExternalId!);
+      Future(() {
+        final bookDetailStateNotifier =
+            ref.read(bookDetailPageStateNotifierProvider.notifier);
+        bookDetailStateNotifier.loadBookByExternalId(bookExternalId!);
+      });
     }
   }
 
@@ -38,7 +43,7 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
       body: state.map(
           initial: (_) => Container(),
           inProgress: (_) => const BookDetailInProgress(),
-          success: (success) => Container(),
+          success: (success) => BookDetailSuccess(book: success.book),
           error: (_) => Container()),
     );
   }
