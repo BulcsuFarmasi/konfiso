@@ -1,7 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/book/model/add_book_exception.dart';
 import 'package:konfiso/features/book/model/book.dart';
 import 'package:konfiso/features/book/model/volume.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
+import 'package:konfiso/shared/exceptions/network_execption.dart';
 
 final addBookRepositoryProvider =
     Provider((Ref ref) => AddBookRepository(ref.read(bookServiceProvider)));
@@ -16,6 +18,8 @@ class AddBookRepository {
       return [];
     }
 
+    try {
+
     final volumes = await _bookService.search(searchTerm);
 
     return volumes
@@ -25,5 +29,10 @@ class AddBookRepository {
             authors: volume.volumeInfo.authors,
             coverImageSmall: volume.volumeInfo.imageLinks?.thumbnail))
         .toList();
+    } on NetworkException catch (e) {
+      print(e);
+      throw AddBookException();
+    }
+
   }
 }

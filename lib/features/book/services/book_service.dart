@@ -21,9 +21,9 @@ class BookService {
       if (payload.totalItems != 0) {
         volumes = payload.items!;
       }
+      return volumes;
     } on DioError catch (e) {
-      NetworkException(e.message);
+      throw NetworkException(e.message);
     }
-    return volumes;
   }
 }

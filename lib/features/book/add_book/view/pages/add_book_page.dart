@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:konfiso/features/book/add_book/controller/add_book_page_state_notifier.dart';
+import 'package:konfiso/features/book/add_book/view/widgets/add_book_error.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_in_progress.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_search.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_success.dart';
@@ -79,7 +80,7 @@ class _AddBookPageState extends ConsumerState<AddBookPage>
                         successful: (success) => AddBookSuccess(
                               books: success.books,
                             ),
-                        error: (_) => Container(),
+                        error: (_) => const AddBookError(),
                         orElse: () => Container());
                   },
                 ),
