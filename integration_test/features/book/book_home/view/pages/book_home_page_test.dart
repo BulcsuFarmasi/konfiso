@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:konfiso/features/book/%20model/book_reading_status.dart';
+import 'package:konfiso/features/book/model/book_reading_status.dart';
 import 'package:konfiso/features/book/add_book/view/pages/add_book_page.dart';
 import 'package:konfiso/features/book/book_category/view/pages/book_category_page.dart';
 import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
@@ -34,7 +34,7 @@ void main() {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       final menuItem = find
-          .byKey(const ValueKey<BookReadingStatus>(BookReadingStatus.reading));
+          .byKey(const ValueKey<BookReadingStatus>(BookReadingStatus.currentlyReading));
 
       await widgetTester.tap(menuItem);
 
@@ -42,7 +42,7 @@ void main() {
 
       expect(find.byType(BookCategoryPage), findsOneWidget);
 
-      expect(find.text(BookReadingStatus.reading.toString()), findsOneWidget);
+      expect(find.text(BookReadingStatus.currentlyReading.toString()), findsOneWidget);
     });
 
     testWidgets(

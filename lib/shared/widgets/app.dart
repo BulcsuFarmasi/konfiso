@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/add_book/view/pages/add_book_page.dart';
 import 'package:konfiso/features/book/book_category/view/pages/book_category_page.dart';
+import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
 import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
@@ -40,6 +41,7 @@ class App extends StatelessWidget {
             elevation: 0,
             foregroundColor: AppColors.greyDarkerColor,
             iconTheme: IconThemeData(color: AppColors.greyDarkerColor),
+
           ),
         ),
         initialRoute: '/',
@@ -52,6 +54,7 @@ class App extends StatelessWidget {
           BookCategoryPage.routeName: (BuildContext context) =>
               const BookCategoryPage(),
           AddBookPage.routeName: (BuildContext context) => const AddBookPage(),
+          BookDetailPage.routeName: (BuildContext context) => const BookDetailPage(),
         },
       ),
     );

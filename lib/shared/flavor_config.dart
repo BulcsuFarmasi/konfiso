@@ -1,9 +1,10 @@
-enum Flavor {dev, staging, prod}
+enum Flavor { dev, staging, prod }
 
 class FlavorValues {
-  final String firebaseApiKey;
+  final String googleApiKey;
+  final String firebaseDBUrl;
 
-  FlavorValues(this.firebaseApiKey);
+  FlavorValues(this.googleApiKey, this.firebaseDBUrl);
 }
 
 class FlavorConfig {
@@ -13,6 +14,8 @@ class FlavorConfig {
   FlavorConfig(this.flavor, this.values);
 
   bool isDev() => flavor == Flavor.dev;
+
   bool isStaging() => flavor == Flavor.staging;
+
   bool isProd() => flavor == Flavor.prod;
 }

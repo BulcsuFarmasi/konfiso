@@ -4,7 +4,7 @@ import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_exception.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_repository.dart';
-import 'package:konfiso/shared/expcetions/network_execption.dart';
+import 'package:konfiso/shared/exceptions/network_execption.dart';
 
 import 'package:mocktail/mocktail.dart';
 

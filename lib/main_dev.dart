@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:konfiso/shared/widgets/app.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const App());
 }

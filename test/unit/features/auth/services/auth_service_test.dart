@@ -1,13 +1,12 @@
 @TestOn('vm')
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:konfiso/features/auth/model/auth_response_payload.dart';
+import 'package:konfiso/features/auth/model/refresh_token_response_payload.dart';
+import 'package:konfiso/features/auth/model/stored_user.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
-import 'package:konfiso/features/auth/services/auth_response_payload.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
-import 'package:konfiso/features/auth/services/refresh_token_response_payload.dart';
-import 'package:konfiso/features/auth/services/stored_user.dart';
-import 'package:konfiso/shared/secret.dart';
 import 'package:konfiso/shared/services/time_service.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -47,8 +46,8 @@ void main() {
                 refreshToken: refreshToken,
                 validUntil: now)));
         when(() => authRemote.refreshToken(refreshToken)).thenAnswer(
-            (invocation) =>
-                Future.value(RefreshTokenResponsePayload('', '', '', '3600')));
+            (invocation) => Future.value(
+                const RefreshTokenResponsePayload('', '', '', '3600')));
         expectLater(await authService.autoSignIn(), true);
       });
       test('should return with false if user is not stored', () async {
@@ -71,11 +70,10 @@ void main() {
         verify(() => authRemote.signIn(email, password));
 
         // TODO verify authStorage saveUser
-      });;
+      });
       test('should throw network exception if network call is failed', () {
         final requestOptions = RequestOptions(
-          path:
-              '${AuthRemote.accountUrl}signInWithPassword',
+          path: '${AuthRemote.accountUrl}signInWithPassword',
         );
         final response = Response(requestOptions: requestOptions, data: {
           'error': {'message': 'INVALID_EMAIL'}

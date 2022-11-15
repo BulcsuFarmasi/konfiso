@@ -20,4 +20,8 @@ class SignUpPageStateNotifier extends StateNotifier<SignUpPageState> {
       state = SignUpPageState.error(e.error);
     }
   }
+
+  void goBackToInitial() {
+    state = const SignUpPageState.initial();
+  }
 }
