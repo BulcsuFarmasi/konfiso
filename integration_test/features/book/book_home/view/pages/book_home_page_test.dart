@@ -34,7 +34,7 @@ void main() {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       final menuItem = find
-          .byKey(const ValueKey<BookReadingStatus>(BookReadingStatus.reading));
+          .byKey(const ValueKey<BookReadingStatus>(BookReadingStatus.currentlyReading));
 
       await widgetTester.tap(menuItem);
 
@@ -42,7 +42,7 @@ void main() {
 
       expect(find.byType(BookCategoryPage), findsOneWidget);
 
-      expect(find.text(BookReadingStatus.reading.toString()), findsOneWidget);
+      expect(find.text(BookReadingStatus.currentlyReading.toString()), findsOneWidget);
     });
 
     testWidgets(

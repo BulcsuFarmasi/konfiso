@@ -13,6 +13,7 @@ class AddBookPageStateNotifier extends StateNotifier<AddBookPageState> {
   final AddBookRepository _addBookRepository;
 
   void search(String searchTerm) async {
+
     state = const AddBookPageState.inProgress();
 
     try {

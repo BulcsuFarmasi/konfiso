@@ -1,14 +1,24 @@
 import 'package:intl/intl.dart';
 
 enum BookReadingStatus {
-  reading('Reading'),
-  wantToRead('Want to Read'),
-  alreadyRead('Already Read');
+  currentlyReading,
+  wantToRead,
+  alreadyRead;
+}
 
-  final String displayText;
+String currentlyReadingMessage() => Intl.message('Currently Reading');
 
-  const BookReadingStatus(this.displayText);
+String wantToReadMessage() => Intl.message('Want to Read');
 
-  @override
-  String toString() => Intl.message(displayText);
+String alreadyReadMessage() => Intl.message('Already Read');
+
+String getReadingStatusDisplayText(BookReadingStatus readingStatus) {
+  switch (readingStatus) {
+    case BookReadingStatus.currentlyReading:
+      return currentlyReadingMessage();
+    case BookReadingStatus.wantToRead:
+      return wantToReadMessage();
+    case BookReadingStatus.alreadyRead:
+      return alreadyReadMessage();
+  }
 }

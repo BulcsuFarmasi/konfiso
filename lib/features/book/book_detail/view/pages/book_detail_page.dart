@@ -40,11 +40,16 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
     final state = ref.watch(bookDetailPageStateNotifierProvider);
     return Scaffold(
       appBar: AppBar(),
-      body: state.map(
-          initial: (_) => Container(),
-          inProgress: (_) => const BookDetailInProgress(),
-          success: (success) => BookDetailSuccess(book: success.book),
-          error: (_) => Container()),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: state.map(
+              initial: (_) => Container(),
+              inProgress: (_) => const BookDetailInProgress(),
+              success: (success) => BookDetailSuccess(book: success.book),
+              error: (_) => Container()),
+        ),
+      ),
     );
   }
 }

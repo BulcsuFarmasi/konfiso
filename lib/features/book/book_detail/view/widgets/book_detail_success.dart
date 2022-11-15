@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_status_form.dart';
+import 'package:konfiso/features/book/book_detail/view/widgets/book_reading_detail_form.dart';
 import 'package:konfiso/features/book/model/book.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
@@ -37,6 +37,7 @@ class BookDetailSuccess extends StatelessWidget {
               fontSize: 24,
               color: AppColors.greyDarkestColor,
               fontWeight: FontWeight.w600),
+          textAlign: TextAlign.center,
         ),
         const SizedBox(
           height: 10,
@@ -44,7 +45,7 @@ class BookDetailSuccess extends StatelessWidget {
         Visibility(
           visible: book.authors != null,
           child: Text(
-            book.authors!.join(', '),
+            book.authors?.join(', ') ?? '',
             style: const TextStyle(
                 fontSize: 14,
                 color: AppColors.greyDarkestWithHalfOpacity,
@@ -80,7 +81,7 @@ class BookDetailSuccess extends StatelessWidget {
                   color: AppColors.greyDarkestColor,
                   fontWeight: FontWeight.w600),
             ),
-            Text(book.industryIds!.join(', ')),
+            Text(book.industryIds?.join(', ') ?? ''),
           ],
         ),
         const BookDetailStatusForm(),

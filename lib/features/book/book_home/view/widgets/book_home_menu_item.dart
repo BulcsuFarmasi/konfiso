@@ -27,7 +27,7 @@ class BookHomeMenuItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 30),
             width: 310,
             child: Text(
-              '$readingStatus',
+              getReadingStatusDisplayText(readingStatus),
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 20,
