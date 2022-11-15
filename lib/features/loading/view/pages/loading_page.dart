@@ -47,7 +47,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
               height: 15,
             ),
             Text(
-              Intl.message('Loading'),
+              ,
               style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -58,4 +58,6 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
       ),
     );
   }
+
+  String loadinMessage() => Intl.message('Loading');
 }

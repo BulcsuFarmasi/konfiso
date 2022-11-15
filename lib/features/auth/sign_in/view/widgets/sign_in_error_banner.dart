@@ -13,7 +13,7 @@ class SignInErrorBanner extends ErrorBanner<SignInError> {
       case SignInError.invalidEmail:
       case SignInError.invalidPassword:
         return Intl.message(
-            'Wrong email or password'); // TODO: Handle this case.
+            'Wrong email or password');
       case SignInError.userDisabled:
         return Intl.message('Your account has been disabled.');
     }
