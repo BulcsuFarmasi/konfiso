@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:konfiso/features/book/add_book/controller/add_book_page_state_notifier.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -41,7 +41,7 @@ class _AddBookInputSearch extends ConsumerState<AddBookSearch> {
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-          hintText: Intl.message('Search a book'),
+          hintText: AppLocalizations.of(context)!.searchAbook,
           suffixIcon: const Icon(Icons.search)),
       onChanged: _addToSubject,
       textInputAction: TextInputAction.done,

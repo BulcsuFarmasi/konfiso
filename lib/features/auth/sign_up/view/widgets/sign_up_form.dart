@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state_notifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
@@ -55,9 +55,9 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
   String? _validateEmail(String? email) {
     String? errorMessage;
     if (AppValidators.required(email)) {
-      errorMessage = Intl.message('Please write an email address');
+      errorMessage = AppLocalizations.of(context)!.pleaseProvideAnEmailAddress;
     } else if (AppValidators.email(email!)) {
-      errorMessage = Intl.message('Please put in a valid email address');
+      errorMessage = AppLocalizations.of(context)!.pleaseProvideAnEmailAddress;
     }
     return errorMessage;
   }
@@ -65,7 +65,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
   String? _validateOtherPassword(String? value) {
     String? errorMessage;
     if (AppValidators.passwordMatch(passwordController.text, value)) {
-      errorMessage = Intl.message('Please write identical passwords');
+      errorMessage =
+          AppLocalizations.of(context)!.pleaseWriteIdenticalPasswords;
     }
     return errorMessage;
   }
@@ -74,10 +75,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     String? errorMessage;
     const minLength = 6;
     if (AppValidators.required(password)) {
-      errorMessage = Intl.message('Please write a password');
+      errorMessage = AppLocalizations.of(context)!.pleaseProvideAPassword;
     } else if (AppValidators.minLength(password!, minLength)) {
       errorMessage =
-          Intl.message('Please write at least $minLength characters');
+          AppLocalizations.of(context)!.shortPasswordMessage(minLength);
     }
     return errorMessage;
   }
@@ -90,8 +91,9 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
         children: [
           TextFormField(
             key: SignUpForm.emailKey,
-            decoration:
-                InputDecoration(hintText: Intl.message('Email address')),
+            decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.emailAddress,
+            ),
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             validator: _validateEmail,
@@ -102,7 +104,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           ),
           TextFormField(
             key: SignUpForm.passwordKey,
-            decoration: InputDecoration(hintText: Intl.message('Password')),
+            decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.password),
             controller: passwordController,
             textInputAction: TextInputAction.next,
             obscureText: true,
@@ -114,8 +117,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           ),
           TextFormField(
               key: SignUpForm.otherPasswordKey,
-              decoration:
-                  InputDecoration(hintText: Intl.message('Password again')),
+              decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.passwordAgain),
               obscureText: true,
               textInputAction: TextInputAction.done,
               validator: _validateOtherPassword),
@@ -125,11 +128,9 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           ElevatedButton(
             onPressed: _submitForm,
             style: ElevatedButton.styleFrom(
-              fixedSize: const Size(120, 41),
+              fixedSize: const Size(150, 41),
             ),
-            child: Text(
-              Intl.message('Signup'),
-            ),
+            child: Text(AppLocalizations.of(context)!.signup),
           ),
           const SizedBox(
             height: 20,
@@ -137,12 +138,12 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(Intl.message('If you have an account, '),
+              Text(AppLocalizations.of(context)!.ifYouHaveAnAccount,
                   style: const TextStyle(
                       color: AppColors.greyColor, fontSize: 14)),
               GestureDetector(
                 onTap: _navigateToSignIn,
-                child: Text(Intl.message('log in'),
+                child: Text(AppLocalizations.of(context)!.logIn,
                     style: const TextStyle(color: AppColors.greyDarkerColor)),
               ),
             ],

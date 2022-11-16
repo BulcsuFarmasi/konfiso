@@ -1,0 +1,201 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2022-11-15T22:13:14.288865",
+  "somethingWentWrongPleaseTryAgainLater": "Something went wrong. Please try again later.",
+  "@somethingWentWrongPleaseTryAgainLater": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "wrongEmailOrPassword": "Wrong email or password",
+  "@wrongEmailOrPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "yourAccountHasBeenDisabled": "Your account has been disabled.",
+  "@yourAccountHasBeenDisabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideAnEmailAddress": "Please provide an Email Address",
+  "@pleaseProvideAnEmailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideAPassword": "Please provide a password",
+  "@pleaseProvideAPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "emailAddress": "Email address",
+  "@emailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "password": "Password",
+  "@password": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "login": "Login",
+  "@login": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ifYouDontHaveAnAccount": "If you don't have an account, ",
+  "@ifYouDontHaveAnAccount": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "signUp": "sign up",
+  "@signUp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "thisEmailAddressIsAlreadyRegisteredPleaseTryAnAnother": "This email address is already registered. Please try an another.",
+  "@hisEmailAddressIsAlreadyRegisteredPleaseTryAnAnother\"": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "thisOperationIsNotAllowed": "This operation is not allowed.",
+  "@thisOperationIsNotAllowed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "youWereTryingTooManyTimesPleaseTryAgainSomeTimeLater": "You were trying too many times, please try again some time later.",
+  "@youWereTryingTooManyTimesPleaseTryAgainSomeTimeLater": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideAValidEmailAddress": "Please put in a valid email address",
+  "@pleaseProvideAValidEmailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseWriteIdenticalPasswords": "Please write identical passwords",
+  "@pleaseWriteIdenticalPasswords": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "shortPasswordMessage": "Please write at least {minLength} characters",
+  "@shortPasswordMessage": {
+    "type": "text",
+    "placeholders": {
+      "minLength": {}
+    }
+  },
+  "passwordAgain": "Password again",
+  "@passwordAgain": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "signup": "Signup",
+  "@signup": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ifYouHaveAnAccount": "If you have an account, ",
+  "@ifYouHaveAnAccount": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "logIn": "log in",
+  "@logIn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "successfulRegistration": "Successful registration!",
+  "@successfulRegistration": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "nowYouCanLoginHere": "Now you can login here",
+  "@nowYouCanLoginHere": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addABook": "Add a Book",
+  "@addABook": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "anErrorOccuredCouldntLoadBooks": "An error occured, couldn't load books",
+  "@anErrorOccuredCouldntLoadBooks": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchAbook": "Search a book",
+  "@Search a book": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noBooksFound": "No Books Found",
+  "@No Books Found": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "isbn": "ISBN: ",
+  "@isbm": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "publicationYear": "Publication Year: ",
+  "@publicationYear": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comment": "Comment",
+  "@comment": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "reading": "Reading",
+  "@reading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "save": "Save",
+  "@save": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "currentPage": "Current Page",
+  "@currentPage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "books": "Books",
+  "@books": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "currentlyReading": "Currently Reading",
+  "@currentlyReading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "wantToRead": "Want to Read",
+  "@wantToRead": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "alreadyRead": "Already Read",
+  "@alreadyRead": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "loading": "Loading",
+  "@loading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "logout": "Logout",
+  "@logout": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "add": "Add",
+  "@add": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

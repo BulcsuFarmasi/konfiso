@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state_notifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
@@ -22,7 +22,7 @@ class SignUpSuccessful extends ConsumerWidget {
           height: 64,
         ),
         Text(
-          Intl.message('Successful registration!'),
+          AppLocalizations.of(context)!.successfulRegistration,
           style: const TextStyle(color: AppColors.greyColor, fontSize: 20),
         ),
         const SizedBox(
@@ -34,7 +34,7 @@ class SignUpSuccessful extends ConsumerWidget {
             Navigator.of(context).pushReplacementNamed(SignInPage.routeName);
           },
           child: Text(
-            Intl.message('Now you can login here'),
+            AppLocalizations.of(context)!.nowYouCanLoginHere,
             style:
                 const TextStyle(color: AppColors.greyDarkerColor, fontSize: 20),
           ),

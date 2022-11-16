@@ -1,0 +1,201 @@
+{
+  "@@locale": "de",
+  "@@last_modified": "2022-11-15T22:13:14.288865",
+  "somethingWentWrongPleaseTryAgainLater": "Etwas ist schief gelaufen. Bitte versuch es später erneut.",
+  "@somethingWentWrongPleaseTryAgainLater": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "wrongEmailOrPassword": "E-Mail oder Passwort ist falsch",
+  "@wrongEmailOrPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "yourAccountHasBeenDisabled": "Dein Konto wurde gesperrt.",
+  "@yourAccountHasBeenDisabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideAnEmailAddress": "Bitte gib eine Email-Adresse ein",
+  "@pleaseProvideAnEmailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideAPassword": "Bitte gib ein Passwort ein",
+  "@pleaseProvideAPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "emailAddress": "E-Mail Adresse",
+  "@emailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "password": "Passwort",
+  "@password": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "login": "Anmelden",
+  "@login": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ifYouDontHaveAnAccount": "Wenn du kein Konto hast, ",
+  "@ifYouDontHaveAnAccount": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "signUp": "meldet du dich an",
+  "@signUp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "thisEmailAddressIsAlreadyRegisteredPleaseTryAnAnother": "Diese E-Mail-Adresse ist bereits registriert. Bitte versuchen Sie eine andere.",
+  "@hisEmailAddressIsAlreadyRegisteredPleaseTryAnAnother\"": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "thisOperationIsNotAllowed": "Dieser Vorgang ist nicht zulässig.",
+  "@thisOperationIsNotAllowed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "youWereTryingTooManyTimesPleaseTryAgainSomeTimeLater": "Du hast zu oft versucht, bitte versuche es später noch einmal.",
+  "@youWereTryingTooManyTimesPleaseTryAgainSomeTimeLater": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideAValidEmailAddress": "Bitte gebe eine gültige E-Mail Adresse an",
+  "@pleaseProvideAValidEmailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseWriteIdenticalPasswords": "Bitte gebe identische Passwörter ein",
+  "@pleaseWriteIdenticalPasswords": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "shortPasswordMessage": "Muss mindestens {minLength} Zeichen enthalten",
+  "@shortPasswordMessage": {
+    "type": "text",
+    "placeholders": {
+      "minLength": {}
+    }
+  },
+  "passwordAgain": "Passwort wiederholen",
+  "@passwordAgain": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "signup": "Registrieren",
+  "@signup": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ifYouHaveAnAccount": "Wenn du ein Konto hast, ",
+  "@ifYouHaveAnAccount": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "logIn": "loggst du ein",
+  "@logIn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "successfulRegistration": "Erfolgreiche Registrierung!",
+  "@successfulRegistration": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "nowYouCanLoginHere": "Jetzt kannst du dich hier anmelden",
+  "@nowYouCanLoginHere": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addABook": "Buch hinzufügen",
+  "@addABook": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "anErrorOccuredCouldntLoadBooks": "Ein Fehler ist aufgetreten, Bücher konnten nicht geladen werden",
+  "@anErrorOccuredCouldntLoadBooks": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchAbook": "Nach Buch suchen",
+  "@Search a book": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noBooksFound": "Keine Bücher gefunden",
+  "@No Books Found": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "isbn": "ISBN: ",
+  "@isbm": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "publicationYear": "Jahr der Veröffentlichung: ",
+  "@publicationYear": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comment": "Kommentar",
+  "@comment": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "reading": "Lesen",
+  "@reading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "save": "Speichern",
+  "@save": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "currentPage": "Aktuelle Seite",
+  "@currentPage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "books": "Bücher",
+  "@books": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "currentlyReading": "Aktuell gelesen",
+  "@currentlyReading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "wantToRead": "Will ich lesen",
+  "@wantToRead": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "alreadyRead": "Bereits gelesen",
+  "@alreadyRead": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "loading": "Wird geladen",
+  "@loading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "logout": "Abmelden",
+  "@logout": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "add": "Hinzufügen",
+  "@add": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

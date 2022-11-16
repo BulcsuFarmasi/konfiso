@@ -29,7 +29,7 @@ class _BookCategoryPageState extends State<BookCategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('$readingStatus',),
+        title: Text(getReadingStatusDisplayText(readingStatus, context)),
         centerTitle: true,
       ),
     );
