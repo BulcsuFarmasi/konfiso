@@ -24,4 +24,8 @@ class AddBookPageStateNotifier extends StateNotifier<AddBookPageState> {
     }
 
   }
+
+  void restoreToInitial() {
+    state = const AddBookPageState.initial();
+  }
 }

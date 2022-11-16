@@ -52,6 +52,10 @@ class _AddBookPageState extends ConsumerState<AddBookPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(onPressed: () {
+          ref.read(addBookPageStateNotifierProvider.notifier).restoreToInitial();
+          Navigator.of(context).pop();
+        },),
         title: Text(AppLocalizations.of(context)!.addABook),
         centerTitle: true,
       ),
