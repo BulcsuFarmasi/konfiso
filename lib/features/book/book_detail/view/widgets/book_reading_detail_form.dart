@@ -5,15 +5,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/model/book_reading_status.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
-class BookDetailStatusForm extends ConsumerStatefulWidget {
-  const BookDetailStatusForm({super.key});
+class BookReadingDetailForm extends ConsumerStatefulWidget {
+  const BookReadingDetailForm({super.key});
 
   @override
-  ConsumerState<BookDetailStatusForm> createState() =>
-      _BookDetailStatusFormState();
+  ConsumerState<BookReadingDetailForm> createState() =>
+      _BookReadingDetailFormState();
 }
 
-class _BookDetailStatusFormState extends ConsumerState<BookDetailStatusForm> {
+class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
   BookReadingStatus? _readingStatus = BookReadingStatus.wantToRead;
   double _rating = 0;
 

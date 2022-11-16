@@ -84,7 +84,7 @@ class BookDetailSuccess extends StatelessWidget {
             Text(book.industryIds?.join(', ') ?? ''),
           ],
         ),
-        const BookDetailStatusForm(),
+        const BookReadingDetailForm(),
       ],
     );
   }

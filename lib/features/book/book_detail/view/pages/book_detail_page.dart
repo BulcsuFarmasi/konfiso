@@ -24,14 +24,16 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
     super.didChangeDependencies();
 
     if (_isInit) {
-      final bookIds = ModalRoute.of(context)!.settings.arguments as BookIds;
-      bookExternalId = bookIds.externalId;
-      _isInit = false;
-      Future(() {
-        final bookDetailStateNotifier =
-            ref.read(bookDetailPageStateNotifierProvider.notifier);
-        bookDetailStateNotifier.loadBookByExternalId(bookExternalId!);
-      });
+      final bookIds = ModalRoute.of(context)!.settings.arguments as BookIds?;
+      if (bookIds != null) {
+        bookExternalId = bookIds.externalId!;
+        _isInit = false;
+        Future(() {
+          final bookDetailStateNotifier =
+              ref.read(bookDetailPageStateNotifierProvider.notifier);
+          bookDetailStateNotifier.loadBookByExternalId(bookExternalId!);
+        });
+      }
     }
   }
 
