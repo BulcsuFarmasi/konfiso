@@ -2,10 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_in_error.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_up_expection.dart';
-import 'package:konfiso/shared/exceptions//network_execption.dart';
+import 'package:konfiso/shared/exceptions/network_execption.dart';
 
-final signInRepositoryProvider = Provider((Ref ref) =>
-    SignInRepository(ref.read(authServiceProvider)));
+final signInRepositoryProvider =
+    Provider((Ref ref) => SignInRepository(ref.read(authServiceProvider)));
 
 class SignInRepository {
   final AuthService _authService;
@@ -16,6 +16,7 @@ class SignInRepository {
     try {
       await _authService.signIn(email, password);
     } on NetworkException catch (e) {
+      print(e.message);
       throw SignInException(_convertMessageIntoError(e.message));
     }
   }

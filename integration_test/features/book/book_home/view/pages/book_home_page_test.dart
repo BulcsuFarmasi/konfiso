@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:konfiso/features/book/model/book_reading_status.dart';
 import 'package:konfiso/features/book/add_book/view/pages/add_book_page.dart';
 import 'package:konfiso/features/book/book_category/view/pages/book_category_page.dart';
 import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   group('BookHomePage', () {
     IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
     Widget createWidgetUnderTest() {
-      return MaterialApp(
-        home: const BookHomePage(),
-        routes: {
-          BookCategoryPage.routeName: (BuildContext context) =>
-              const BookCategoryPage(),
-          AddBookPage.routeName: (BuildContext context) => const AddBookPage(),
-        },
+      return ProviderScope(
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: const BookHomePage(),
+          routes: {
+            BookCategoryPage.routeName: (BuildContext context) =>
+                const BookCategoryPage(),
+            AddBookPage.routeName: (BuildContext context) =>
+                const AddBookPage(),
+          },
+        ),
       );
     }
 
@@ -33,8 +40,8 @@ void main() {
         (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      final menuItem = find
-          .byKey(const ValueKey<BookReadingStatus>(BookReadingStatus.currentlyReading));
+      final menuItem = find.byKey(const ValueKey<BookReadingStatus>(
+          BookReadingStatus.currentlyReading));
 
       await widgetTester.tap(menuItem);
 
@@ -42,7 +49,8 @@ void main() {
 
       expect(find.byType(BookCategoryPage), findsOneWidget);
 
-      expect(find.text(BookReadingStatus.currentlyReading.toString()), findsOneWidget);
+      expect(find.text('Currently Reading'),
+          findsOneWidget);
     });
 
     testWidgets(
@@ -60,7 +68,7 @@ void main() {
       expect(find.byType(BookCategoryPage), findsOneWidget);
 
       expect(
-          find.text(BookReadingStatus.wantToRead.toString()), findsOneWidget);
+          find.text('Want to Read'), findsOneWidget);
     });
 
     testWidgets(
@@ -78,7 +86,7 @@ void main() {
       expect(find.byType(BookCategoryPage), findsOneWidget);
 
       expect(
-          find.text(BookReadingStatus.alreadyRead.toString()), findsOneWidget);
+          find.text('Already Read'), findsOneWidget);
     });
 
     testWidgets('should go to add book page if fab is pressed',

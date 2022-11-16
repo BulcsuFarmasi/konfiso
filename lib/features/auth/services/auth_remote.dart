@@ -11,7 +11,8 @@ import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/services/flavor_service.dart';
 import 'package:konfiso/shared/services/time_service.dart';
 
-final authRemoteProvider = Provider((Ref ref) => AuthRemote(
+final authRemoteProvider = Provider((Ref ref) =>
+    AuthRemote(
       ref.read(httpClientProvider),
       ref.read(flavorServiceProvider),
       ref.read(timeServiceProvider),
@@ -63,8 +64,8 @@ class AuthRemote {
     return RefreshTokenResponsePayload.fromJson(response.data);
   }
 
-  Future<void> _saveUser(
-      AuthResponsePayload authResponsePayload, String email) async {
+  Future<void> _saveUser(AuthResponsePayload authResponsePayload,
+      String email) async {
     final user = RemoteUser(
         authId: authResponsePayload.localId,
         email: email,
@@ -72,18 +73,26 @@ class AuthRemote {
         consented: true,
         consentUrl: 'privacy-policy');
 
+    final data = json.encode(user.toJson());
+    print('code: $data');
+    print(data.hashCode);
+
     await _httpClient.post(
-        url: '$dbUrl.json', data: json.encode(user.toJson()));
+        url: '$dbUrl.json', data: data);
   }
 
   Future<void> _updateUser(String authId) async {
-    final response = await _httpClient.get(
-        url: '$dbUrl.json?orderBy="authId"&equalTo="$authId"');
+    final queryUrl = '$dbUrl.json?orderBy="authId"&equalTo="$authId"';
+    final response = await _httpClient.get(url: queryUrl);
 
     final userId = response.data.keys.first;
 
+    final updateUrl = '$dbUrl/$userId.json';
+
+    print(updateUrl);
+
     await _httpClient.patch(
-        url: '$dbUrl/$userId.json',
+        url: updateUrl,
         data: json.encode(UpdateUserRequestPayload(_timeService.now())));
   }
 }

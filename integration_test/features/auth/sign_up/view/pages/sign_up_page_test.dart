@@ -11,6 +11,7 @@ import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_initial.dart'
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_successful.dart';
 import 'package:konfiso/shared/widgets/entry_in_progress.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MockSignUpPageStateNotifier extends StateNotifier<SignUpPageState>
     with Mock
@@ -33,6 +34,8 @@ void main() {
               .overrideWith((_) => signUpPageStateNotifier),
         ],
         child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: const SignUpPage(),
           routes: {
             SignInPage.routeName: (BuildContext context) => const SignInPage(),
@@ -124,39 +127,41 @@ void main() {
 
           await widgetTester.pumpAndSettle();
 
-          expect(find.text('Please write an email address'), findsOneWidget);
+          expect(find.text('Please provide an Email Address'), findsOneWidget);
         });
-      });
-      testWidgets('should display error message if an invalid email was put in',
-          (WidgetTester widgetTester) async {
-        await widgetTester.pumpWidget(createWidgetUnderTest());
+        testWidgets(
+            'should display error message if an invalid email was put in',
+            (WidgetTester widgetTester) async {
+          await widgetTester.pumpWidget(createWidgetUnderTest());
 
-        final emailField = find.byKey(SignUpForm.emailKey);
-        await widgetTester.enterText(emailField, 'test');
-        await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+          final emailField = find.byKey(SignUpForm.emailKey);
+          await widgetTester.enterText(emailField, 'test');
+          await widgetTester.testTextInput.receiveAction(TextInputAction.done);
 
-        final button = find.byType(ElevatedButton);
-        await widgetTester.tap(button);
-        await widgetTester.pumpAndSettle();
+          final button = find.byType(ElevatedButton);
+          await widgetTester.tap(button);
+          await widgetTester.pumpAndSettle();
 
-        expect(
-            find.text('Please put in a valid email address'), findsOneWidget);
-      });
-      testWidgets(
-          'should not display error message if a valid email was put in',
-          (WidgetTester widgetTester) async {
-        await widgetTester.pumpWidget(createWidgetUnderTest());
+          expect(find.text('Please put in a valid email address'),
+              findsOneWidget);
+        });
+        testWidgets(
+            'should not display error message if a valid email was put in',
+            (WidgetTester widgetTester) async {
+          await widgetTester.pumpWidget(createWidgetUnderTest());
 
-        final emailField = find.byKey(SignUpForm.emailKey);
-        await widgetTester.enterText(emailField, email);
-        await widgetTester.testTextInput.receiveAction(TextInputAction.done);
+          final emailField = find.byKey(SignUpForm.emailKey);
+          await widgetTester.enterText(emailField, email);
+          await widgetTester.testTextInput.receiveAction(TextInputAction.done);
 
-        final button = find.byType(ElevatedButton);
-        await widgetTester.tap(button);
-        await widgetTester.pumpAndSettle();
+          final button = find.byType(ElevatedButton);
+          await widgetTester.tap(button);
+          await widgetTester.pumpAndSettle();
 
-        expect(find.text('Please write an email address'), findsNothing);
-        expect(find.text('Please put in a valid email address'), findsNothing);
+          expect(find.text('Please provide an Email Address'), findsNothing);
+          expect(
+              find.text('Please provide a valid email address'), findsNothing);
+        });
       });
       group('password', () {
         testWidgets('should display error message if password was not put in',
@@ -169,7 +174,7 @@ void main() {
 
           await widgetTester.pumpAndSettle();
 
-          expect(find.text('Please write a password'), findsOneWidget);
+          expect(find.text('Please provide a password'), findsOneWidget);
         });
       });
       testWidgets(

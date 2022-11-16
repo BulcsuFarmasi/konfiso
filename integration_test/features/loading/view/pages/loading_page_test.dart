@@ -7,12 +7,11 @@ import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/features/loading/controller/loading_page_controller.dart';
 import 'package:konfiso/features/loading/view/pages/loading_page.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MockLoadingPageController extends Mock
-    implements LoadingPageController {}
+class MockLoadingPageController extends Mock implements LoadingPageController {}
 
 void main() {
-
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   group('LoadingPage', () {
     late LoadingPageController loadingPageController;
@@ -20,13 +19,19 @@ void main() {
     Widget createWidgetUinderTest() {
       return ProviderScope(
           overrides: [
-            loadingPageControllerProvider.overrideWith((_) => loadingPageController),
+            loadingPageControllerProvider
+                .overrideWith((_) => loadingPageController),
           ],
-          child: MaterialApp(home: const LoadingPage(), routes: {
-            SignInPage.routeName: (BuildContext context) => const SignInPage(),
-            BookHomePage.routeName: (BuildContext context) =>
-                const BookHomePage(),
-          }));
+          child: MaterialApp(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              home: const LoadingPage(),
+              routes: {
+                SignInPage.routeName: (BuildContext context) =>
+                    const SignInPage(),
+                BookHomePage.routeName: (BuildContext context) =>
+                    const BookHomePage(),
+              }));
     }
 
     setUp(() {

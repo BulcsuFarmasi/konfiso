@@ -19,18 +19,8 @@ class App extends StatelessWidget {
     return ProviderScope(
       child: MaterialApp(
         title: 'Konfiso',
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en', ''),
-          Locale('de', ''),
-          Locale('fr', ''),
-          Locale('hu', ''),
-        ],
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.backgroundColor,
           primarySwatch: AppColors.primaryColorSwatch,

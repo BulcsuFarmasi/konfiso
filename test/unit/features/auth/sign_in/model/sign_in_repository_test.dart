@@ -53,7 +53,7 @@ void main() {
                 e is SignInException &&
                 e.error == SignInError.invalidPassword)));
       });
-      test('should throw iuser disabled exception if user is disabled', () {
+      test('should throw user disabled exception if user is disabled', () {
         arrangeServiceThrowsException('USER_DISABLED');
 
         expect(

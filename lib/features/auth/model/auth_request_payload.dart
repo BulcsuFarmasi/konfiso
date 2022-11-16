@@ -1,18 +1,18 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'auth_request_payload.freezed.dart';
+
 part 'auth_request_payload.g.dart';
 
-@JsonSerializable()
-class AuthRequestPayload {
-  final String email;
-  final String password;
-  final bool returnSecureToken;
+@freezed
+class AuthRequestPayload with _$AuthRequestPayload {
 
-  AuthRequestPayload(
-    this.email,
-    this.password, [
-    this.returnSecureToken = true,
-  ]);
+  const factory AuthRequestPayload(
+    String email,
+    String password, [
+    @Default(true ) bool returnSecureToken,
+  ]) = _AuthRequestPayload;
 
-  Map<String, dynamic> toJson() => _$AuthRequestPayloadToJson(this);
+  factory AuthRequestPayload.fromJson(Map<String, Object?> json) =>
+      _$AuthRequestPayloadFromJson(json);
 }

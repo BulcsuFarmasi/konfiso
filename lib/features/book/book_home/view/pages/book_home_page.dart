@@ -24,14 +24,16 @@ class BookHomePage extends StatelessWidget {
         ),
       ),
       drawer: const AppDrawer(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: BookReadingStatus.values
-              .map((BookReadingStatus readingStatus) => BookHomeMenuItem(
-                  key: ValueKey<BookReadingStatus>(readingStatus),
-                  readingStatus: readingStatus))
-              .toList(),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: BookReadingStatus.values
+                .map((BookReadingStatus readingStatus) => BookHomeMenuItem(
+                    key: ValueKey<BookReadingStatus>(readingStatus),
+                    readingStatus: readingStatus))
+                .toList(),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

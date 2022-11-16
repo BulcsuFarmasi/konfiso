@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2022-11-08 12:13:31</td>
+            <td class="headerValue">2022-11-16 17:06:45</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -61,8 +61,8 @@
 <pre class="sourceHeading">          Line data    Source code</pre>
 <pre class="source">
 <a name="1"><span class="lineNum">       1 </span>            : import 'package:flutter/material.dart';</a>
-<a name="2"><span class="lineNum">       2 </span>            : import 'package:konfiso/features/book/%20model/book_reading_status.dart';</a>
-<a name="3"><span class="lineNum">       3 </span>            : import 'package:konfiso/features/book/book_category/view/pages/book_category_page.dart';</a>
+<a name="2"><span class="lineNum">       2 </span>            : import 'package:konfiso/features/book/book_category/view/pages/book_category_page.dart';</a>
+<a name="3"><span class="lineNum">       3 </span>            : import 'package:konfiso/features/book/model/book_reading_status.dart';</a>
 <a name="4"><span class="lineNum">       4 </span>            : import 'package:konfiso/shared/app_colors.dart';</a>
 <a name="5"><span class="lineNum">       5 </span>            : </a>
 <a name="6"><span class="lineNum">       6 </span>            : class BookHomeMenuItem extends StatelessWidget {</a>
@@ -89,7 +89,7 @@
 <a name="27"><span class="lineNum">      27 </span>            :             padding: const EdgeInsets.symmetric(vertical: 30),</a>
 <a name="28"><span class="lineNum">      28 </span>            :             width: 310,</a>
 <a name="29"><span class="lineNum">      29 </span><span class="lineCov">          3 :             child: Text(</span></a>
-<a name="30"><span class="lineNum">      30 </span><span class="lineCov">          6 :               '$readingStatus',</span></a>
+<a name="30"><span class="lineNum">      30 </span><span class="lineCov">          6 :               getReadingStatusDisplayText(readingStatus, context),</span></a>
 <a name="31"><span class="lineNum">      31 </span>            :               textAlign: TextAlign.center,</a>
 <a name="32"><span class="lineNum">      32 </span>            :               style: const TextStyle(</a>
 <a name="33"><span class="lineNum">      33 </span>            :                 fontSize: 20,</a>

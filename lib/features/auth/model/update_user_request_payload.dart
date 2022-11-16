@@ -1,12 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'update_user_request_payload.freezed.dart';
+
 part 'update_user_request_payload.g.dart';
 
-@JsonSerializable()
-class UpdateUserRequestPayload {
-  final DateTime latestLogin;
+@freezed
+class UpdateUserRequestPayload with _$UpdateUserRequestPayload {
+  const factory UpdateUserRequestPayload(DateTime latestLogin) =
+      _UpdateUserPayload;
 
-  UpdateUserRequestPayload(this.latestLogin);
-
-  Map<String, dynamic> toJson() => _$UpdateUserRequestPayloadToJson(this);
+  factory UpdateUserRequestPayload.fromJson(Map<String, Object?> json) =>
+      _$UpdateUserRequestPayloadFromJson(json);
 }
