@@ -1,4 +1,5 @@
-import 'package:intl/intl.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 enum BookReadingStatus {
   currentlyReading,
@@ -6,19 +7,14 @@ enum BookReadingStatus {
   alreadyRead;
 }
 
-String currentlyReadingMessage() => Intl.message('Currently Reading');
-
-String wantToReadMessage() => Intl.message('Want to Read');
-
-String alreadyReadMessage() => Intl.message('Already Read');
-
-String getReadingStatusDisplayText(BookReadingStatus readingStatus) {
+String getReadingStatusDisplayText(
+    BookReadingStatus readingStatus, BuildContext context) {
   switch (readingStatus) {
     case BookReadingStatus.currentlyReading:
-      return currentlyReadingMessage();
+      return AppLocalizations.of(context)!.currentlyReading;
     case BookReadingStatus.wantToRead:
-      return wantToReadMessage();
+      return AppLocalizations.of(context)!.wantToRead;
     case BookReadingStatus.alreadyRead:
-      return alreadyReadMessage();
+      return AppLocalizations.of(context)!.alreadyRead;
   }
 }

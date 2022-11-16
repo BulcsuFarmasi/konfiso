@@ -29,8 +29,7 @@ class AddBookRepository {
             authors: volume.volumeInfo.authors,
             coverImageSmall: volume.volumeInfo.imageLinks?.thumbnail))
         .toList();
-    } on NetworkException catch (e) {
-      print(e);
+    } on NetworkException  {
       throw AddBookException();
     }
 

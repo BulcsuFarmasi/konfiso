@@ -3,6 +3,7 @@ import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.da
 import 'package:konfiso/features/book/model/book.dart';
 import 'package:konfiso/features/book/model/book_ids.dart';
 import 'package:konfiso/shared/app_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookTile extends StatelessWidget {
   const BookTile({
@@ -44,7 +45,7 @@ class BookTile extends StatelessWidget {
             color: AppColors.greyDarkestWithHalfOpacity),
       ),
       trailing: ElevatedButton(
-        child: const Text('Add'),
+        child: Text(AppLocalizations.of(context)!.add),
         onPressed: () {
           _navigateToDetailPage(context, book.externalId);
         },

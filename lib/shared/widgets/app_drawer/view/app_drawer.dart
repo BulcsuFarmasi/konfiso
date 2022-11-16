@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/widgets/app_drawer/controller/app_drawer_state_notifier.dart';
 
@@ -25,7 +25,7 @@ class AppDrawer extends ConsumerWidget {
           ),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
-            title: Text(Intl.message('Logout')),
+            title: Text(AppLocalizations.of(context)!.logout),
             onTap: () {
               ref.read(appDrawerControllerProvider).signOut();
               navigator.pop();

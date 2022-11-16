@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:konfiso/features/book/add_book/controller/add_book_page_state_notifier.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_error.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_in_progress.dart';
@@ -52,7 +52,7 @@ class _AddBookPageState extends ConsumerState<AddBookPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Intl.message('Add a Book')),
+        title: Text(AppLocalizations.of(context)!.addABook),
         centerTitle: true,
       ),
       body: LayoutBuilder(

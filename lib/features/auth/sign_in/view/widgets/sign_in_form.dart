@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:konfiso/features/auth/sign_in/controller/sign_in_page_state_notifier.dart';
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
@@ -17,7 +17,6 @@ class SignInForm extends ConsumerStatefulWidget {
 }
 
 class _SignInFormState extends ConsumerState<SignInForm> {
-
   final _formKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
@@ -47,7 +46,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
   String? _validateEmail(String? email) {
     String? errorMessage;
     if (AppValidators.required(email)) {
-      errorMessage = Intl.message('Please write an email address');
+      errorMessage = AppLocalizations.of(context)!.pleaseProvideAnEmailAddress;
     }
     return errorMessage;
   }
@@ -55,7 +54,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
   String? _validatePassword(String? password) {
     String? errorMessage;
     if (AppValidators.required(password)) {
-      errorMessage = Intl.message('Please write a password');
+      errorMessage = AppLocalizations.of(context)!.pleaseProvideAPassword;
     }
     return errorMessage;
   }
@@ -68,8 +67,8 @@ class _SignInFormState extends ConsumerState<SignInForm> {
         children: [
           TextFormField(
             key: SignInForm.emailKey,
-            decoration:
-                InputDecoration(hintText: Intl.message('Email address')),
+            decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.emailAddress),
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             validator: _validateEmail,
@@ -80,7 +79,8 @@ class _SignInFormState extends ConsumerState<SignInForm> {
           ),
           TextFormField(
             key: SignInForm.passwordKey,
-            decoration: InputDecoration(hintText: Intl.message('Password')),
+            decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.password),
             textInputAction: TextInputAction.done,
             obscureText: true,
             validator: _validatePassword,
@@ -92,10 +92,10 @@ class _SignInFormState extends ConsumerState<SignInForm> {
           ElevatedButton(
             onPressed: _submitForm,
             style: ElevatedButton.styleFrom(
-              fixedSize: const Size(120, 41),
+              fixedSize: const Size(150, 41),
             ),
             child: Text(
-              Intl.message('Login'),
+              AppLocalizations.of(context)!.login,
             ),
           ),
           const SizedBox(
@@ -105,16 +105,16 @@ class _SignInFormState extends ConsumerState<SignInForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                Intl.message("If you don't have an account, "),
+                AppLocalizations.of(context)!.ifYouDontHaveAnAccount,
                 style:
                     const TextStyle(color: AppColors.greyColor, fontSize: 14),
               ),
               GestureDetector(
                 onTap: _navigateToSignUp,
-                child: Text(Intl.message('sign up'),
+                child: Text(AppLocalizations.of(context)!.signUp,
                     style: const TextStyle(color: AppColors.greyDarkerColor)),
               ),
-          ],
+            ],
           ),
         ],
       ),

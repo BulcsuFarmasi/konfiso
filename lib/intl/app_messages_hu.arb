@@ -1,0 +1,201 @@
+{
+  "@@locale": "hu",
+  "@@last_modified": "2022-11-15T22:13:14.288865",
+  "somethingWentWrongPleaseTryAgainLater": "Valami hiba történt. Kérjük, próbálkozz később.",
+  "@somethingWentWrongPleaseTryAgainLater": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "wrongEmailOrPassword": "Rossz e-mail cím vagy jelszó",
+  "@wrongEmailOrPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "yourAccountHasBeenDisabled": "A fiókod le van tiltva.",
+  "@yourAccountHasBeenDisabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideAnEmailAddress": "Kérjük, add meg e-mail címed",
+  "@pleaseProvideAnEmailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideAPassword": "Kérjük adj meg egy jelszót",
+  "@pleaseProvideAPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "emailAddress": "E-mail cím",
+  "@emailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "password": "Jelszó",
+  "@password": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "login": "Belépés",
+  "@login": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ifYouDontHaveAnAccount": "Ha még nincs fiókod, ",
+  "@ifYouDontHaveAnAccount": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "signUp": "regisztrálj",
+  "@signUp": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "thisEmailAddressIsAlreadyRegisteredPleaseTryAnAnother": "Az e-mail-cím már használatban van. Próbálj meg egy másikat.",
+  "@hisEmailAddressIsAlreadyRegisteredPleaseTryAnAnother\"": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "thisOperationIsNotAllowed": "A művelet nem támogatott.",
+  "@thisOperationIsNotAllowed": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "youWereTryingTooManyTimesPleaseTryAgainSomeTimeLater": "Túl sokszor próbálkozotál, kérjük próbáld meg később.",
+  "@youWereTryingTooManyTimesPleaseTryAgainSomeTimeLater": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideAValidEmailAddress": "Kérjük, adj meg egy érvényes e-mail címet",
+  "@pleaseProvideAValidEmailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseWriteIdenticalPasswords": "Kérjük, egyező jelszavakat írj",
+  "@pleaseWriteIdenticalPasswords": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "shortPasswordMessage": "Kérjük, adj meg legalább {minLength} karaktert",
+  "@shortPasswordMessage": {
+    "type": "text",
+    "placeholders": {
+      "minLength": {}
+    }
+  },
+  "passwordAgain": "Jelszó ismét",
+  "@passwordAgain": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "signup": "Regisztráció",
+  "@signup": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ifYouHaveAnAccount": "Ha már van fiókod, ",
+  "@ifYouHaveAnAccount": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "logIn": "jelentkezz be",
+  "@logIn": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "successfulRegistration": "Sikeres regisztráció!",
+  "@successfulRegistration": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "nowYouCanLoginHere": "Most be tudsz lépni itt",
+  "@nowYouCanLoginHere": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "addABook": "Könyv hozzáadása",
+  "@addABook": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "anErrorOccuredCouldntLoadBooks": "Hiba történt nem tudjuk be tölteni a könyveket",
+  "@anErrorOccuredCouldntLoadBooks": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "searchAbook": "Keress egy könyvet",
+  "@Search a book": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noBooksFound": "Nem található könyv",
+  "@No Books Found": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "isbn": "ISBN: ",
+  "@isbm": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "publicationYear": "Kiadás éve: ",
+  "@publicationYear": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "comment": "Megjegyzés",
+  "@comment": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "reading": "Olvasás",
+  "@reading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "save": "Mentés",
+  "@save": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "currentPage": "Jelenlegi oldal",
+  "@currentPage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "books": "Könyvek",
+  "@books": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "currentlyReading": "Jelenleg olvasom",
+  "@currentlyReading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "wantToRead": "El akarom olvasni",
+  "@wantToRead": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "alreadyRead": "Már olvastam",
+  "@alreadyRead": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "loading": "Töltés",
+  "@loading": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "logout": "Kilépés",
+  "@logout": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "add": "Hozzáad",
+  "@add": {
+    "type": "text",
+    "placeholders": {}
+  }
+}

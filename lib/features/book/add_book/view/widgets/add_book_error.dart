@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
 class AddBookError extends StatelessWidget {
@@ -8,7 +8,7 @@ class AddBookError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      Intl.message('An error occured, couldn\'t load books'),
+      AppLocalizations.of(context)!.anErrorOccuredCouldntLoadBooks,
       style: const TextStyle(color: AppColors.primaryColor, fontSize: 20),
       textAlign: TextAlign.center,
     );

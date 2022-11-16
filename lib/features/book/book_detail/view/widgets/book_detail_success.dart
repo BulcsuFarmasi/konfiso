@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_reading_detail_form.dart';
 import 'package:konfiso/features/book/model/book.dart';
 import 'package:konfiso/shared/app_colors.dart';
@@ -59,7 +59,7 @@ class BookDetailSuccess extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              Intl.message('Publication Year: '),
+              AppLocalizations.of(context)!.publicationYear,
               style: const TextStyle(
                   fontSize: 14,
                   color: AppColors.greyDarkestColor,
@@ -75,7 +75,7 @@ class BookDetailSuccess extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              Intl.message('Industry Identifiers: '),
+              AppLocalizations.of(context)!.isbn,
               style: const TextStyle(
                   fontSize: 14,
                   color: AppColors.greyDarkestColor,

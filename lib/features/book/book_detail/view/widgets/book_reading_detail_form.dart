@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:konfiso/features/book/model/book_reading_status.dart';
 import 'package:konfiso/shared/app_colors.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class BookDetailStatusForm extends ConsumerStatefulWidget {
   const BookDetailStatusForm({super.key});
@@ -39,7 +39,7 @@ class _BookDetailStatusFormState extends ConsumerState<BookDetailStatusForm> {
           height: 30,
         ),
         Text(
-          readingMessage(),
+          AppLocalizations.of(context)!.reading,
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
         ),
         const SizedBox(
@@ -49,7 +49,8 @@ class _BookDetailStatusFormState extends ConsumerState<BookDetailStatusForm> {
           items: BookReadingStatus.values
               .map((readingStatus) => DropdownMenuItem(
                     value: readingStatus,
-                    child: Text(getReadingStatusDisplayText(readingStatus)),
+                    child: Text(
+                        getReadingStatusDisplayText(readingStatus, context)),
                   ))
               .toList(),
           value: _readingStatus,
@@ -63,7 +64,8 @@ class _BookDetailStatusFormState extends ConsumerState<BookDetailStatusForm> {
               height: 10,
             ),
             TextFormField(
-              decoration: InputDecoration(hintText: currentPage()),
+              decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.currentPage),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(
@@ -90,21 +92,15 @@ class _BookDetailStatusFormState extends ConsumerState<BookDetailStatusForm> {
         TextFormField(
           maxLines: 3,
           textInputAction: TextInputAction.done,
-          decoration: InputDecoration(hintText: commentMessage()),
+          decoration: InputDecoration(
+              hintText: AppLocalizations.of(context)!.comment),
         ),
         const SizedBox(
           height: 10,
         ),
-        ElevatedButton(onPressed: () {}, child: Text(saveMessage())),
+        ElevatedButton(
+            onPressed: () {}, child: Text(AppLocalizations.of(context)!.save)),
       ],
     ));
   }
-
-  String commentMessage() => Intl.message('Comment');
-
-  String readingMessage() => Intl.message('Reading');
-
-  String saveMessage() => Intl.message('Save');
-
-  String currentPage() => Intl.message('Current Page');
 }

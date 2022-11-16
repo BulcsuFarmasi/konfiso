@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/add_book/view/pages/add_book_page.dart';
 import 'package:konfiso/features/book/book_category/view/pages/book_category_page.dart';
@@ -8,6 +9,7 @@ import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/features/loading/view/pages/loading_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -17,6 +19,18 @@ class App extends StatelessWidget {
     return ProviderScope(
       child: MaterialApp(
         title: 'Konfiso',
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en', ''),
+          Locale('de', ''),
+          Locale('fr', ''),
+          Locale('hu', ''),
+        ],
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.backgroundColor,
           primarySwatch: AppColors.primaryColorSwatch,
@@ -41,7 +55,6 @@ class App extends StatelessWidget {
             elevation: 0,
             foregroundColor: AppColors.greyDarkerColor,
             iconTheme: IconThemeData(color: AppColors.greyDarkerColor),
-
           ),
         ),
         initialRoute: '/',
@@ -54,7 +67,8 @@ class App extends StatelessWidget {
           BookCategoryPage.routeName: (BuildContext context) =>
               const BookCategoryPage(),
           AddBookPage.routeName: (BuildContext context) => const AddBookPage(),
-          BookDetailPage.routeName: (BuildContext context) => const BookDetailPage(),
+          BookDetailPage.routeName: (BuildContext context) =>
+              const BookDetailPage(),
         },
       ),
     );
