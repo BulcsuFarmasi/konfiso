@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BookDetailInProgress extends StatelessWidget {
-  const BookDetailInProgress({Key? key}) : super(key: key);
+  const BookDetailInProgress({super.key});
 
   @override
   Widget build(BuildContext context) {

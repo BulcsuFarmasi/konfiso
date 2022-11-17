@@ -66,6 +66,23 @@ void main() {
       );
     }
 
+    Future<void> loadWidgetAndEnterText(WidgetTester widgetTester) async {
+      await widgetTester.pumpWidget(createWidgetUnderTest());
+
+      final searchField = find.byType(TextField);
+      await widgetTester.enterText(searchField, 'a');
+      await widgetTester.pumpAndSettle();
+      addBookPageStateNotifier.state = const AddBookPageState.inProgress();
+      await widgetTester.pump();
+    }
+
+    Future<void> loadWidgetAndSetStateToSuccessWithBooks(
+        WidgetTester widgetTester) async {
+      await loadWidgetAndEnterText(widgetTester);
+      addBookPageStateNotifier.state = AddBookPageState.successful(books);
+      await widgetTester.pump();
+    }
+
     testWidgets('should AddBookPage be there',
         (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
@@ -82,47 +99,25 @@ void main() {
         (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      //should find add book search and assert is existens;
       expect(find.byType(AddBookSearch), findsOneWidget);
     });
 
     testWidgets('should display loading screen after typing',
         (WidgetTester widgetTester) async {
-      await widgetTester.pumpWidget(createWidgetUnderTest());
-
-      final searchField = find.byType(TextField);
-      await widgetTester.enterText(searchField, 'a');
-      await widgetTester.pumpAndSettle();
-      addBookPageStateNotifier.state = const AddBookPageState.inProgress();
-      await widgetTester.pump();
+      await loadWidgetAndEnterText(widgetTester);
 
       expect(find.byType(AddBookInProgress), findsOneWidget);
     });
 
     testWidgets('should display book tile after typing and loading',
         (WidgetTester widgetTester) async {
-      await widgetTester.pumpWidget(createWidgetUnderTest());
-      final searchField = find.byType(TextField);
-
-      await widgetTester.enterText(searchField, 'a');
-      await widgetTester.pumpAndSettle();
-      addBookPageStateNotifier.state = const AddBookPageState.inProgress();
-      await widgetTester.pump();
-      addBookPageStateNotifier.state = AddBookPageState.successful(books);
-      await widgetTester.pump();
-
+      await loadWidgetAndSetStateToSuccessWithBooks(widgetTester);
       expect(find.byType(BookTile), findsNWidgets(books.length));
     });
 
     testWidgets('should display no books found if no books given',
         (WidgetTester widgetTester) async {
-      await widgetTester.pumpWidget(createWidgetUnderTest());
-      final searchField = find.byType(TextField);
-
-      await widgetTester.enterText(searchField, 'a');
-      await widgetTester.pumpAndSettle();
-      addBookPageStateNotifier.state = const AddBookPageState.inProgress();
-      await widgetTester.pump();
+      await loadWidgetAndEnterText(widgetTester);
       addBookPageStateNotifier.state = const AddBookPageState.successful([]);
       await widgetTester.pump();
 
@@ -131,40 +126,23 @@ void main() {
 
     testWidgets('should redirect to book detail after pressing add button',
         (WidgetTester widgetTester) async {
-      await widgetTester.pumpWidget(createWidgetUnderTest());
-
-      final searchField = find.byType(TextField);
-      await widgetTester.enterText(searchField, 'a');
-      await widgetTester.pumpAndSettle();
-      addBookPageStateNotifier.state = const AddBookPageState.inProgress();
-      await widgetTester.pump();
-      addBookPageStateNotifier.state = AddBookPageState.successful(books);
-      await widgetTester.pump();
-
-      // find button
+      await loadWidgetAndSetStateToSuccessWithBooks(widgetTester);
       final button = find.byType(ElevatedButton).first;
-
-      // tap on it
       await widgetTester.tap(button);
-      // wait for animation
       await widgetTester.pumpAndSettle();
-      // check if we are in the book detail page
+
       expect(find.byType(BookDetailPage), findsOneWidget);
     });
 
-    testWidgets('should display AddBookError if it got an error from stateNotifier',
-            (WidgetTester widgetTester) async {
-          await widgetTester.pumpWidget(createWidgetUnderTest());
-          final searchField = find.byType(TextField);
+    testWidgets(
+        'should display AddBookError if it got an error from stateNotifier',
+        (WidgetTester widgetTester) async {
+      await loadWidgetAndEnterText(widgetTester);
+      addBookPageStateNotifier.state = const AddBookPageState.error();
+      await widgetTester.pump();
 
-          await widgetTester.enterText(searchField, 'a');
-          await widgetTester.pumpAndSettle();
-          addBookPageStateNotifier.state = const AddBookPageState.inProgress();
-          await widgetTester.pump();
-          addBookPageStateNotifier.state = const AddBookPageState.error();
-          await widgetTester.pump();
-
-          expect(find.text('An error occured, couldn\'t load books'), findsOneWidget);
-        });
+      expect(
+          find.text('An error occured, couldn\'t load books'), findsOneWidget);
+    });
   });
 }
