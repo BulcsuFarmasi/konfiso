@@ -35,17 +35,15 @@ void main() {
           bookDetailPageStateNotifierProvider
               .overrideWith((_) => bookDetailPageStateNotifier),
         ],
-        child: MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          onGenerateRoute: (settings) => MaterialPageRoute(
-              settings: RouteSettings(arguments: BookIds(externalId: 'a')),
-              builder: (BuildContext context) => const BookDetailPage()),
-        ),
+        child: const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: BookDetailPage()),
       );
     }
 
-    Future<void> loadWidgetAndSetStateToInProgress(WidgetTester widgetTester) async {
+    Future<void> loadWidgetAndSetStateToInProgress(
+        WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       bookDetailPageStateNotifier.state =
