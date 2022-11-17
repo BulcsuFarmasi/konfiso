@@ -16,7 +16,7 @@ void main() {
   group('LoadingPage', () {
     late LoadingPageController loadingPageController;
 
-    Widget createWidgetUinderTest() {
+    Widget createWidgetUnderTest() {
       return ProviderScope(
           overrides: [
             loadingPageControllerProvider
@@ -42,7 +42,7 @@ void main() {
         (WidgetTester widgetTester) async {
       when(() => loadingPageController.autoSignIn())
           .thenAnswer((_) => Future.value(false));
-      await widgetTester.pumpWidget(createWidgetUinderTest());
+      await widgetTester.pumpWidget(createWidgetUnderTest());
       expect(find.byType(LoadingPage), findsOneWidget);
       await widgetTester.pumpAndSettle();
       expect(find.byType(SignInPage), findsOneWidget);
@@ -53,7 +53,7 @@ void main() {
         (WidgetTester widgetTester) async {
       when(() => loadingPageController.autoSignIn())
           .thenAnswer((_) => Future.value(true));
-      await widgetTester.pumpWidget(createWidgetUinderTest());
+      await widgetTester.pumpWidget(createWidgetUnderTest());
       expect(find.byType(LoadingPage), findsOneWidget);
       await widgetTester.pumpAndSettle();
       expect(find.byType(BookHomePage), findsOneWidget);
