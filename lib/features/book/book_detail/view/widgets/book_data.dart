@@ -41,47 +41,50 @@ class BookData extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
+        Text(
+          book.authors?.join(', ') ?? '',
+          style: const TextStyle(
+              fontSize: 14,
+              color: AppColors.greyDarkestWithHalfOpacity,
+              fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
         Visibility(
-          visible: book.authors != null,
-          child: Text(
-            book.authors?.join(', ') ?? '',
-            style: const TextStyle(
-                fontSize: 14,
-                color: AppColors.greyDarkestWithHalfOpacity,
-                fontWeight: FontWeight.w500),
+          visible: book.publicationYear != null,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.publicationYear,
+                style: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.greyDarkestColor,
+                    fontWeight: FontWeight.w600),
+              ),
+              Text(book.publicationYear ?? ''),
+            ],
           ),
         ),
         const SizedBox(
           height: 10,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              AppLocalizations.of(context)!.publicationYear,
-              style: const TextStyle(
-                  fontSize: 14,
-                  color: AppColors.greyDarkestColor,
-                  fontWeight: FontWeight.w600),
-            ),
-            Text('${book.publicationYear}')
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              AppLocalizations.of(context)!.isbn,
-              style: const TextStyle(
-                  fontSize: 14,
-                  color: AppColors.greyDarkestColor,
-                  fontWeight: FontWeight.w600),
-            ),
-            Text(book.industryIds?.join(', ') ?? ''),
-          ],
+        Visibility(
+          visible: book.industryIds != null,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                AppLocalizations.of(context)!.isbn,
+                style: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.greyDarkestColor,
+                    fontWeight: FontWeight.w600),
+              ),
+              Text(book.industryIds?.join(', ') ?? ''),
+            ],
+          ),
         ),
       ],
     );

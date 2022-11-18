@@ -14,7 +14,7 @@ class BookDetailRepository {
   Future<Book> loadBookByExternalId(String externalId) async {
     final volume = await _bookService.loadBookByExternalId(externalId);
 
-    final publicationYear = int.parse(volume.volumeInfo.publishedDate?.split('-').first ?? '');
+    final publicationYear = volume.volumeInfo.publishedDate?.split('-').first;
 
     return Book(
       title: volume.volumeInfo.title,

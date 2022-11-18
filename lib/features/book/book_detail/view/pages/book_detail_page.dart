@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_in_progress.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_success.dart';
@@ -41,17 +40,16 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(bookDetailPageStateNotifierProvider);
-    print(state == BookDetailPageState.inProgress());
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: state.map(
-              initial: (_) => Container(),
+              initial: (_) => const SizedBox(),
               inProgress: (_) => const BookDetailInProgress(),
               success: (success) => BookDetailSuccess(book: success.book),
-              error: (_) => Container()),
+              error: (_) => const SizedBox()),
         ),
       ),
     );

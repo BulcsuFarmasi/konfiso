@@ -16,7 +16,6 @@ class SignInRepository {
     try {
       await _authService.signIn(email, password);
     } on NetworkException catch (e) {
-      print(e.message);
       throw SignInException(_convertMessageIntoError(e.message));
     }
   }

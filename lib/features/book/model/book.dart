@@ -9,7 +9,8 @@ class Book with _$Book {
     required String title,
     required String externalId,
     List<String>? authors,
-    int? publicationYear,
+    // represented in String to avoid conversions
+    String? publicationYear,
     List<String>? industryIds,
     String? coverImageSmall,
     String? coverImageLarge,

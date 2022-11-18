@@ -74,8 +74,6 @@ class AuthRemote {
         consentUrl: 'privacy-policy');
 
     final data = json.encode(user.toJson());
-    print('code: $data');
-    print(data.hashCode);
 
     await _httpClient.post(
         url: '$dbUrl.json', data: data);
@@ -88,8 +86,6 @@ class AuthRemote {
     final userId = response.data.keys.first;
 
     final updateUrl = '$dbUrl/$userId.json';
-
-    print(updateUrl);
 
     await _httpClient.patch(
         url: updateUrl,
