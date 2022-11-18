@@ -38,22 +38,25 @@ void main() {
         verify(() => signInRepository.signIn(email, password)).called(1);
       });
       test('should emit inProgress and successful states in case of success',
-          () {
+          () async {
         when(() => signInRepository.signIn(email, password))
             .thenAnswer((_) => Future.value(null));
         signInPageStateNotifier.signIn(email, password);
-        emitsInOrder([
-          const SignInPageState.inProgress(),
-          const SignInPageState.successful()
-        ]);
+
+        expect(
+            signInPageStateNotifier.state, const SignInPageState.inProgress());
+
+        await Future.delayed(const Duration(milliseconds: 500));
+
+        expect(
+            signInPageStateNotifier.state, const SignInPageState.successful());
       });
-      test('should emit inProgress and error states in case of error', () {
+      test('should emit error states in case of error', () {
         arrangeRepositoryThrowsException();
         signInPageStateNotifier.signIn(email, password);
-        emitsInOrder([
-          const SignInPageState.inProgress(),
-          const SignInPageState.error(SignInError.other)
-        ]);
+
+        expect(signInPageStateNotifier.state,
+            const SignInPageState.error(SignInError.other));
       });
     });
   });
