@@ -11,8 +11,7 @@ import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/services/flavor_service.dart';
 import 'package:konfiso/shared/services/time_service.dart';
 
-final authRemoteProvider = Provider((Ref ref) =>
-    AuthRemote(
+final authRemoteProvider = Provider((Ref ref) => AuthRemote(
       ref.read(httpClientProvider),
       ref.read(flavorServiceProvider),
       ref.read(timeServiceProvider),
@@ -33,12 +32,7 @@ class AuthRemote {
       : dbUrl = '${_flavorService.currentConfig.values.firebaseDBUrl}users';
 
   Future<AuthResponsePayload> signIn(String email, String password) async {
-    final authRequestPayload = AuthRequestPayload(email, password);
-    final response = await _httpClient.post(
-        url: '${accountUrl}signInWithPassword',
-        data: json.encode(authRequestPayload.toJson()));
-
-    final authResponse = AuthResponsePayload.fromJson(response.data);
+    AuthResponsePayload authResponse = await _signInUser(email, password);
 
     _updateUser(authResponse.localId);
 
@@ -46,12 +40,7 @@ class AuthRemote {
   }
 
   Future<void> signUp(String email, String password) async {
-    final authRequestPayload = AuthRequestPayload(email, password);
-    final response = await _httpClient.post(
-        url: '${accountUrl}signUp',
-        data: json.encode(authRequestPayload.toJson()));
-
-    final authResponse = AuthResponsePayload.fromJson(response.data);
+    AuthResponsePayload authResponse = await _signUpUser(email, password);
 
     _saveUser(authResponse, email);
   }
@@ -64,8 +53,28 @@ class AuthRemote {
     return RefreshTokenResponsePayload.fromJson(response.data);
   }
 
-  Future<void> _saveUser(AuthResponsePayload authResponsePayload,
-      String email) async {
+  Future<AuthResponsePayload> _signInUser(String email, String password) async {
+    final authRequestPayload = AuthRequestPayload(email, password);
+    final response = await _httpClient.post(
+        url: '${accountUrl}signInWithPassword',
+        data: json.encode(authRequestPayload.toJson()));
+
+    final authResponse = AuthResponsePayload.fromJson(response.data);
+    return authResponse;
+  }
+
+  Future<AuthResponsePayload> _signUpUser(String email, String password) async {
+    final authRequestPayload = AuthRequestPayload(email, password);
+    final response = await _httpClient.post(
+        url: '${accountUrl}signUp',
+        data: json.encode(authRequestPayload.toJson()));
+
+    final authResponse = AuthResponsePayload.fromJson(response.data);
+    return authResponse;
+  }
+
+  Future<void> _saveUser(
+      AuthResponsePayload authResponsePayload, String email) async {
     final user = RemoteUser(
         authId: authResponsePayload.localId,
         email: email,
@@ -75,8 +84,7 @@ class AuthRemote {
 
     final data = json.encode(user.toJson());
 
-    await _httpClient.post(
-        url: '$dbUrl.json', data: data);
+    await _httpClient.post(url: '$dbUrl.json', data: data);
   }
 
   Future<void> _updateUser(String authId) async {

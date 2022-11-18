@@ -45,7 +45,7 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
         const SizedBox(
           height: 10,
         ),
-        DropdownButton(
+        DropdownButtonFormField<BookReadingStatus>(
           items: BookReadingStatus.values
               .map((readingStatus) => DropdownMenuItem(
                     value: readingStatus,
@@ -92,8 +92,8 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
         TextFormField(
           maxLines: 3,
           textInputAction: TextInputAction.done,
-          decoration: InputDecoration(
-              hintText: AppLocalizations.of(context)!.comment),
+          decoration:
+              InputDecoration(hintText: AppLocalizations.of(context)!.comment),
         ),
         const SizedBox(
           height: 10,
