@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:konfiso/features/book/model/book.dart';
+import 'package:konfiso/features/book/model/industry_identifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -82,7 +83,11 @@ class BookData extends StatelessWidget {
                     color: AppColors.greyDarkestColor,
                     fontWeight: FontWeight.w600),
               ),
-              Text(book.industryIds?.join(', ') ?? ''),
+              Text(book.industryIds
+                      ?.map((BookIndustryIdentifier industryIdentifier) =>
+                          industryIdentifier.identifier)
+                      .join(', ') ??
+                  ''),
             ],
           ),
         ),

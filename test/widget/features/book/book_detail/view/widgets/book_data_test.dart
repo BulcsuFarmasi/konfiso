@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_data.dart';
 import 'package:konfiso/features/book/model/book.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:konfiso/features/book/model/industry_identifier.dart';
 
 void main() {
   group('BookData', () {
@@ -91,7 +92,33 @@ void main() {
     });
 
     group('industryIds', () {
+      testWidgets('should display multiple industry ids',
+          (WidgetTester widgetTester) async {
+        const book = Book(
+            title: 'Harry Potter and the Charmber of Secrets',
+            externalId: 'a',
+            industryIds: [
+              BookIndustryIdentifier(
+                  IndustryIdentifierType.isbn13, '9876543212345'),
+              BookIndustryIdentifier(
+                  IndustryIdentifierType.isbn13, '6543212345')
+            ]);
+        // create env
+        await createWidgetUnderTest(book);
+        // check if isbn text is present
+        // expect(find.text('ISBN: '), findsOneWidget);
 
+        final industryIdsText = book.industryIds!
+            .map((BookIndustryIdentifier industryIdentifier) =>
+                industryIdentifier.identifier)
+            .join(', ');
+        // check if industry ids are displayed
+        // expect(find.text(industryIdsText), findsOneWidget);
+        final texts = find.byType(Text).allCandidates.toList();
+        texts.forEach((text) {
+          print((text as Text).data);
+        });
+      });
     });
   });
 }

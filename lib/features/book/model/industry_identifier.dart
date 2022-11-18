@@ -14,14 +14,14 @@ abstract class IndustryIdentifier {
 class BookIndustryIdentifier extends IndustryIdentifier {
   final IndustryIdentifierType type;
 
-  BookIndustryIdentifier(this.type, super.identifier);
+  const BookIndustryIdentifier(this.type, super.identifier);
 }
 
 @JsonSerializable()
 class VolumeIndustryIdentifier extends IndustryIdentifier {
   final String type;
 
-  VolumeIndustryIdentifier(this.type, super.identifier);
+  const VolumeIndustryIdentifier(this.type, super.identifier);
 
   factory VolumeIndustryIdentifier.fromJson(Map<String, dynamic> json) =>
       _$VolumeIndustryIdentifierFromJson(json);
