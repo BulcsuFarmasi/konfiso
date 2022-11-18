@@ -91,6 +91,35 @@ void main() {
       });
     });
 
+    group('publicationYear', () {
+      testWidgets('should display publicationYear',
+          (WidgetTester widgetTester) async {
+        const book = Book(
+            title: 'Harry Potter and the Charmber of Secrets',
+            externalId: 'a',
+            publicationYear: '1999');
+        await widgetTester.pumpWidget(createWidgetUnderTest(book));
+
+        expect(find.text('Publication Year: '), findsOneWidget);
+
+
+        expect(find.text(book.publicationYear!), findsOneWidget);
+      });
+      testWidgets('should not throw expection if no publication year',
+          (WidgetTester widgetTester) async {
+        const book = Book(
+            title: 'Harry Potter and the Charmber of Secrets',
+            externalId: 'a');
+        await widgetTester.pumpWidget(createWidgetUnderTest(book));
+
+        expect(find.text('Publication Year: '), findsNothing);
+
+        final exception = await widgetTester.takeException();
+
+        expect(exception, isNull);
+      });
+    });
+
     group('industryIds', () {
       testWidgets('should display multiple industry ids',
           (WidgetTester widgetTester) async {
@@ -103,21 +132,44 @@ void main() {
               BookIndustryIdentifier(
                   IndustryIdentifierType.isbn13, '6543212345')
             ]);
-        // create env
-        await createWidgetUnderTest(book);
-        // check if isbn text is present
-        // expect(find.text('ISBN: '), findsOneWidget);
+        await widgetTester.pumpWidget(createWidgetUnderTest(book));
+
+        expect(find.text('ISBN: '), findsOneWidget);
 
         final industryIdsText = book.industryIds!
             .map((BookIndustryIdentifier industryIdentifier) =>
                 industryIdentifier.identifier)
             .join(', ');
-        // check if industry ids are displayed
-        // expect(find.text(industryIdsText), findsOneWidget);
-        final texts = find.byType(Text).allCandidates.toList();
-        texts.forEach((text) {
-          print((text as Text).data);
-        });
+        expect(find.text(industryIdsText), findsOneWidget);
+      });
+      testWidgets('should display single industry id',
+          (WidgetTester widgetTester) async {
+        const book = Book(
+            title: 'Harry Potter and the Charmber of Secrets',
+            externalId: 'a',
+            industryIds: [
+              BookIndustryIdentifier(
+                  IndustryIdentifierType.isbn13, '9876543212345'),
+            ]);
+        await widgetTester.pumpWidget(createWidgetUnderTest(book));
+
+        expect(find.text('ISBN: '), findsOneWidget);
+
+        expect(find.text(book.industryIds!.first.identifier), findsOneWidget);
+      });
+      testWidgets('should not throw expection if no industry identfier given',
+          (WidgetTester widgetTester) async {
+        const book = Book(
+          title: 'Harry Potter and the Charmber of Secrets',
+          externalId: 'a',
+        );
+        await widgetTester.pumpWidget(createWidgetUnderTest(book));
+
+        final exception = await widgetTester.takeException();
+
+        expect(exception, isNull);
+
+        expect(find.text('ISBN: '), findsNothing);
       });
     });
   });
