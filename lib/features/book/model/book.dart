@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:konfiso/features/book/model/industry_identifier.dart';
 
 part 'book.freezed.dart';
 
@@ -11,7 +12,7 @@ class Book with _$Book {
     List<String>? authors,
     // represented in String to avoid conversions
     String? publicationYear,
-    List<String>? industryIds,
+    List<BookIndustryIdentifier>? industryIds,
     String? coverImageSmall,
     String? coverImageLarge,
   }) = _Book;

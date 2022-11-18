@@ -1,5 +1,6 @@
 // Represents a book in Google Book API
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:konfiso/features/book/model/industry_identifier.dart';
 
 part 'volume.g.dart';
 
@@ -19,7 +20,7 @@ class VolumeInfo {
   final List<String>? authors;
   final ImageLinks? imageLinks;
   final String? publishedDate;
-  final List<IndustryIdentifier>? industryIdentifiers;
+  final List<VolumeIndustryIdentifier>? industryIdentifiers;
 
   const VolumeInfo({
     required this.title,
@@ -44,16 +45,6 @@ class ImageLinks {
       _$ImageLinksFromJson(json);
 }
 
-@JsonSerializable()
-class IndustryIdentifier {
-  final String type;
-  final String identifier;
 
-  const IndustryIdentifier(
-    this.type,
-    this.identifier,
-  );
 
-  factory IndustryIdentifier.fromJson(Map<String, dynamic> json) =>
-      _$IndustryIdentifierFromJson(json);
-}
+

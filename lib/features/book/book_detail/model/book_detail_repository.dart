@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/model/book.dart';
+import 'package:konfiso/features/book/model/industry_identifier.dart';
 import 'package:konfiso/features/book/model/volume.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
 
@@ -23,8 +24,10 @@ class BookDetailRepository {
       publicationYear: publicationYear,
       coverImageLarge: volume.volumeInfo.imageLinks?.small,
       industryIds: volume.volumeInfo.industryIdentifiers
-          ?.map((IndustryIdentifier industryIdentifier) =>
-              industryIdentifier.identifier)
+          ?.map((VolumeIndustryIdentifier industryIdentifier) =>
+              BookIndustryIdentifier(
+                  IndustryIdentifierType.fromString(industryIdentifier.type),
+                  industryIdentifier.identifier))
           .toList(),
     );
   }

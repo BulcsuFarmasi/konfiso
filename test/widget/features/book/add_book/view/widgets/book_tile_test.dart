@@ -21,7 +21,7 @@ void main() {
     });
 
     group('cover', () {
-      testWidgets('should display image if given', (widgetTester) async {
+      testWidgets('should display image if cover is given', (widgetTester) async {
         // create book
         const book = Book(
             title: 'Harry Potter and the Charmber of Secrets',
@@ -50,9 +50,8 @@ void main() {
       testWidgets('should display title', (WidgetTester widgetTester) async {
         const book = Book(
             title: 'Harry Potter and the Charmber of Secrets', externalId: 'a');
-        // create environment with book
         await widgetTester.pumpWidget(createWidgetUnderTest(book));
-        // check if  title is displayed
+
         expect(find.text(book.title), findsOneWidget);
       });
     });
@@ -76,12 +75,11 @@ void main() {
         expect(find.text(book.authors!.first), findsOneWidget);
       });
 
-      testWidgets('should not throw error if no authors give',
+      testWidgets('should not throw error if no authors given',
           (WidgetTester widgetTester) async {
         const book = Book(
             title: 'Harry Potter and the Charmber of Secrets',
-            externalId: 'a',
-            authors: ['JK Rowling']);
+            externalId: 'a');
         await widgetTester.pumpWidget(createWidgetUnderTest(book));
 
         final exception = await widgetTester.takeException();
