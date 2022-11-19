@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
+import 'package:konfiso/features/auth/verify_user/view/pages/verify_user_page.dart';
 import 'package:konfiso/features/book/add_book/view/pages/add_book_page.dart';
 import 'package:konfiso/features/book/book_category/view/pages/book_category_page.dart';
 import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
@@ -51,6 +52,8 @@ class App extends StatelessWidget {
           '/': (BuildContext context) => const LoadingPage(),
           SignInPage.routeName: (BuildContext context) => const SignInPage(),
           SignUpPage.routeName: (BuildContext context) => const SignUpPage(),
+          VerifyUserPage.routeName: (BuildContext context) =>
+              const VerifyUserPage(),
           BookHomePage.routeName: (BuildContext context) =>
               const BookHomePage(),
           BookCategoryPage.routeName: (BuildContext context) =>

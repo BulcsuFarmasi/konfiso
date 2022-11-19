@@ -6,9 +6,13 @@ import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state.dart';
 import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state_notifier.dart';
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
+import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_error.dart';
+import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart'
+    as sign_up_error;
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_form.dart';
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_initial.dart';
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_successful.dart';
+import 'package:konfiso/features/auth/verify_user/view/pages/verify_user_page.dart';
 import 'package:konfiso/shared/widgets/entry_in_progress.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -39,6 +43,7 @@ void main() {
           home: const SignUpPage(),
           routes: {
             SignInPage.routeName: (BuildContext context) => const SignInPage(),
+            VerifyUserPage.routeName: (BuildContext context) => const VerifyUserPage(),
           },
         ),
       );
@@ -81,25 +86,27 @@ void main() {
       expect(find.byType(SignUpInitial), findsOneWidget);
     });
 
-    testWidgets('should reach success state when the sign up is successful',
+    testWidgets(
+        'should redirect to confirm user page when succes state is reached',
         (WidgetTester widgetTester) async {
       await testUntilInProgress(widgetTester);
 
       signUpPageStateNotifier.state = const SignUpPageState.successful();
 
-      await widgetTester.pump();
+      await widgetTester.pumpAndSettle();
 
-      expect(find.byType(SignUpSuccessful), findsOneWidget);
+      expect(find.byType(VerifyUserPage), findsOneWidget);
     });
 
     testWidgets('should reach error state when the sign up is not successful',
         (WidgetTester widgetTester) async {
       await testUntilInProgress(widgetTester);
-      signUpPageStateNotifier.state = const SignUpPageState.successful();
+      signUpPageStateNotifier.state =
+          const SignUpPageState.error(sign_up_error.SignUpError.other);
 
       await widgetTester.pump();
 
-      expect(find.byType(SignUpSuccessful), findsOneWidget);
+      expect(find.byType(SignUpError), findsOneWidget);
     });
 
     testWidgets('should navigate to sign in by clicking the link',
@@ -142,8 +149,8 @@ void main() {
           await widgetTester.tap(button);
           await widgetTester.pumpAndSettle();
 
-          expect(find.text('Please put in a valid email address'),
-              findsOneWidget);
+          expect(
+              find.text('Please put in a valid email address'), findsOneWidget);
         });
         testWidgets(
             'should not display error message if a valid email was put in',
