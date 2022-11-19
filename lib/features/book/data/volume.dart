@@ -2,49 +2,35 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 
+part 'volume.freezed.dart';
+
 part 'volume.g.dart';
 
-@JsonSerializable()
-class Volume {
-  final String id;
-  final VolumeInfo volumeInfo;
+@freezed
+class Volume with _$Volume {
+  const factory Volume(String id, VolumeInfo volumeInfo) = _Volume;
 
-  const Volume(this.id, this.volumeInfo);
-
-  factory Volume.fromJson(Map<String, dynamic> json) => _$VolumeFromJson(json);
+  factory Volume.fromJson(Map<String, Object?> json) => _$VolumeFromJson(json);
 }
 
-@JsonSerializable()
-class VolumeInfo {
-  final String title;
-  final List<String>? authors;
-  final ImageLinks? imageLinks;
-  final String? publishedDate;
-  final List<VolumeIndustryIdentifier>? industryIdentifiers;
+@freezed
+class VolumeInfo with _$VolumeInfo {
+  const factory VolumeInfo({
+    required String title,
+    List<String>? authors,
+    ImageLinks? imageLinks,
+    String? publishedDate,
+    List<VolumeIndustryIdentifier>? industryIdentifiers,
+  }) = _VolumeInfo;
 
-  const VolumeInfo({
-    required this.title,
-    this.authors,
-    this.imageLinks,
-    this.publishedDate,
-    this.industryIdentifiers,
-  });
-
-  factory VolumeInfo.fromJson(Map<String, dynamic> json) =>
+  factory VolumeInfo.fromJson(Map<String, Object?> json) =>
       _$VolumeInfoFromJson(json);
 }
 
-@JsonSerializable()
-class ImageLinks {
-  final String? thumbnail;
-  final String? small;
+@freezed
+class ImageLinks with _$ImageLinks {
+  const factory ImageLinks(String? thumbnail, String? small) = _ImageLinks;
 
-  const ImageLinks(this.thumbnail, this.small);
-
-  factory ImageLinks.fromJson(Map<String, dynamic> json) =>
+  factory ImageLinks.fromJson(Map<String, Object?> json) =>
       _$ImageLinksFromJson(json);
 }
-
-
-
-

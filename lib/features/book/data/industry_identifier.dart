@@ -10,14 +10,11 @@ class BookIndustryIdentifier with _$BookIndustryIdentifier {
       IndustryIdentifierType type, String identifier) = _BookIndustryIdentifier;
 }
 
-@JsonSerializable()
-class VolumeIndustryIdentifier {
-  final String type;
-  final String identifier;
+@freezed
+class VolumeIndustryIdentifier with _$VolumeIndustryIdentifier  {
+  const factory VolumeIndustryIdentifier(String type, String identifier) = _VolumeIndustryIdentifier;
 
-  const VolumeIndustryIdentifier(this.type, this.identifier);
-
-  factory VolumeIndustryIdentifier.fromJson(Map<String, dynamic> json) =>
+  factory VolumeIndustryIdentifier.fromJson(Map<String, Object?> json) =>
       _$VolumeIndustryIdentifierFromJson(json);
 }
 
