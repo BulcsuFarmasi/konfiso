@@ -48,7 +48,7 @@ lib/shared/secret.dart
 lib/firebase_options_**.dart
 
 # generated files
-lib/**/**.freezed.dart
-lib/**/**.g.dart
-lib/coverage/html
-lib/coverage/lcov.info
+/lib/**/**.freezed.dart
+/lib/**/**.g.dart
+/lib/coverage/html
+/lib/coverage/lcov.info
