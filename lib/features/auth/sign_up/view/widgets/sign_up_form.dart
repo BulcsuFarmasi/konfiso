@@ -57,7 +57,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     if (AppValidators.required(email)) {
       errorMessage = AppLocalizations.of(context)!.pleaseProvideAnEmailAddress;
     } else if (AppValidators.email(email!)) {
-      errorMessage = AppLocalizations.of(context)!.pleaseProvideAnEmailAddress;
+      errorMessage = AppLocalizations.of(context)!.pleaseProvideAValidEmailAddress;
     }
     return errorMessage;
   }

@@ -15,6 +15,7 @@ import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_initial.dart'
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/shared/widgets/entry_in_progress.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:mocktail/mocktail.dart';
 
@@ -27,7 +28,7 @@ class MockSignInPageStateNotifier extends StateNotifier<SignInPageState>
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('SignInPageStateNotifier', () {
+  group('SignInPage', () {
     late SignInPageStateNotifier signInPageStateNotifier;
     late String email;
     late String password;
@@ -38,11 +39,16 @@ void main() {
             signInPageNotiferProvider
                 .overrideWith((_) => signInPageStateNotifier),
           ],
-          child: MaterialApp(home: const SignInPage(), routes: {
-            BookHomePage.routeName: (BuildContext context) =>
-                const BookHomePage(),
-            SignUpPage.routeName: (BuildContext context) => const SignUpPage(),
-          }));
+          child: MaterialApp(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              home: const SignInPage(),
+              routes: {
+                BookHomePage.routeName: (BuildContext context) =>
+                    const BookHomePage(),
+                SignUpPage.routeName: (BuildContext context) =>
+                    const SignUpPage(),
+              }));
     }
 
     Future<void> testUntilInProgress(WidgetTester widgetTester) async {
@@ -93,7 +99,7 @@ void main() {
       expect(find.byType(BookHomePage), findsOneWidget);
     });
 
-    testWidgets('should display error and error bannner widgets',
+    testWidgets('should display error and error banner widgets',
         (WidgetTester widgetTester) async {
       await testUntilInProgress(widgetTester);
 
@@ -133,7 +139,7 @@ void main() {
 
           await widgetTester.pumpAndSettle();
 
-          expect(find.text('Please write an email address'), findsOneWidget);
+          expect(find.text('Please provide an Email Address'), findsOneWidget);
         });
         testWidgets(
             'should check if email is put in, validation message is NOT displayed',
@@ -152,7 +158,7 @@ void main() {
 
           await widgetTester.pumpAndSettle();
 
-          expect(find.text('Please write an email address'), findsNothing);
+          expect(find.text('Please provide an email address'), findsNothing);
         });
       });
       group('password', () {
@@ -167,7 +173,7 @@ void main() {
 
           await widgetTester.pumpAndSettle();
 
-          expect(find.text('Please write a password'), findsOneWidget);
+          expect(find.text('Please provide a password'), findsOneWidget);
         });
       });
       testWidgets(
@@ -187,7 +193,7 @@ void main() {
 
         await widgetTester.pumpAndSettle();
 
-        expect(find.text('Please write an password'), findsNothing);
+        expect(find.text('Please provide an password'), findsNothing);
       });
     });
   });

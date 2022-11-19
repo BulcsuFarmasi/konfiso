@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_error_banner.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   group('SignUpErrorBanner', () {
     Widget createWidgetUnderTest(SignUpError signUpError) {
       return MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: SignUpErrorBanner(error: signUpError),
       );
     }

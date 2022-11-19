@@ -6,11 +6,14 @@ import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_error.dart';
 import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_error_banner.dart';
 import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_form.dart';
 import 'package:konfiso/shared/widgets/entry_logo.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   group('SignInError', () {
     Widget createWidgetUnderTest() {
       return const MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(
             body: SingleChildScrollView(
           child: SignInError(

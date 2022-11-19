@@ -7,26 +7,31 @@ import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/features/loading/controller/loading_page_controller.dart';
 import 'package:konfiso/features/loading/view/pages/loading_page.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class MockLoadingPageController extends Mock
-    implements LoadingPageController {}
+class MockLoadingPageController extends Mock implements LoadingPageController {}
 
 void main() {
-
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   group('LoadingPage', () {
     late LoadingPageController loadingPageController;
 
-    Widget createWidgetUinderTest() {
+    Widget createWidgetUnderTest() {
       return ProviderScope(
           overrides: [
-            loadingPageControllerProvider.overrideWith((_) => loadingPageController),
+            loadingPageControllerProvider
+                .overrideWith((_) => loadingPageController),
           ],
-          child: MaterialApp(home: const LoadingPage(), routes: {
-            SignInPage.routeName: (BuildContext context) => const SignInPage(),
-            BookHomePage.routeName: (BuildContext context) =>
-                const BookHomePage(),
-          }));
+          child: MaterialApp(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              home: const LoadingPage(),
+              routes: {
+                SignInPage.routeName: (BuildContext context) =>
+                    const SignInPage(),
+                BookHomePage.routeName: (BuildContext context) =>
+                    const BookHomePage(),
+              }));
     }
 
     setUp(() {
@@ -37,7 +42,7 @@ void main() {
         (WidgetTester widgetTester) async {
       when(() => loadingPageController.autoSignIn())
           .thenAnswer((_) => Future.value(false));
-      await widgetTester.pumpWidget(createWidgetUinderTest());
+      await widgetTester.pumpWidget(createWidgetUnderTest());
       expect(find.byType(LoadingPage), findsOneWidget);
       await widgetTester.pumpAndSettle();
       expect(find.byType(SignInPage), findsOneWidget);
@@ -48,7 +53,7 @@ void main() {
         (WidgetTester widgetTester) async {
       when(() => loadingPageController.autoSignIn())
           .thenAnswer((_) => Future.value(true));
-      await widgetTester.pumpWidget(createWidgetUinderTest());
+      await widgetTester.pumpWidget(createWidgetUnderTest());
       expect(find.byType(LoadingPage), findsOneWidget);
       await widgetTester.pumpAndSettle();
       expect(find.byType(BookHomePage), findsOneWidget);

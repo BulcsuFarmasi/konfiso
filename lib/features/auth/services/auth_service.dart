@@ -4,19 +4,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
-import 'package:konfiso/features/auth/model/stored_user.dart';
+import 'package:konfiso/features/auth/data/stored_user.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
-import 'package:konfiso/shared/services/time_service.dart';
+import 'package:konfiso/shared/utils/time_util.dart';
 
 final authServiceProvider = Provider((Ref ref) => AuthService(
     ref.read(authStorageProvider),
     ref.read(authRemoteProvider),
-    ref.read(timeServiceProvider)));
+    ref.read(timeUtilProvider)));
 
 class AuthService {
   final AuthStorage _authStorage;
   final AuthRemote _authRemote;
-  final TimeService _timeService;
+  final TimeUtil _timeUtil;
   Timer? refreshTimer;
   StoredUser? user;
   static const url = 'https://identitytoolkit.googleapis.com/v1/accounts:';
@@ -24,7 +24,7 @@ class AuthService {
   AuthService(
     this._authStorage,
     this._authRemote,
-    this._timeService,
+    this._timeUtil,
   );
 
   Future<bool> autoSignIn() async {
@@ -44,7 +44,7 @@ class AuthService {
           userId: authResponse.localId,
           token: authResponse.idToken,
           refreshToken: authResponse.refreshToken,
-          validUntil: _timeService
+          validUntil: _timeUtil
               .now()
               .add(Duration(seconds: int.parse(authResponse.expiresIn))));
       _authStorage.saveUser(user!);
@@ -78,7 +78,7 @@ class AuthService {
         userId: responsePayload.user_id,
         token: responsePayload.id_token,
         refreshToken: responsePayload.refresh_token,
-        validUntil: _timeService
+        validUntil: _timeUtil
             .now()
             .add(Duration(seconds: int.parse(responsePayload.expires_in))));
 

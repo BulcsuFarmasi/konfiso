@@ -19,7 +19,7 @@ class AddBookPage extends ConsumerStatefulWidget {
 
 class _AddBookPageState extends ConsumerState<AddBookPage>
     with TickerProviderStateMixin {
-  late AnimationController spaceAnimationController;
+  late AnimationController _spaceAnimationController;
   late Tween<double> spaceTween;
   late Animation<double> spaceAnimation;
   final searchHeight = 64;
@@ -28,16 +28,16 @@ class _AddBookPageState extends ConsumerState<AddBookPage>
   @override
   void initState() {
     super.initState();
-    spaceAnimationController =
+    _spaceAnimationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
     final spaceCurvedAnimation = CurvedAnimation(
-        parent: spaceAnimationController, curve: Curves.easeInOut);
+        parent: _spaceAnimationController, curve: Curves.easeInOut);
     spaceTween = Tween<double>(begin: 0, end: 0);
     spaceAnimation = spaceTween.animate(spaceCurvedAnimation);
   }
 
   void _startSpaceAnimation() {
-    spaceAnimationController.forward();
+    _spaceAnimationController.forward();
   }
 
   void _setBodyHeight(double bodyHeight) {
@@ -49,9 +49,23 @@ class _AddBookPageState extends ConsumerState<AddBookPage>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _spaceAnimationController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(
+          onPressed: () {
+            ref
+                .read(addBookPageStateNotifierProvider.notifier)
+                .restoreToInitial();
+            Navigator.of(context).pop();
+          },
+        ),
         title: Text(AppLocalizations.of(context)!.addABook),
         centerTitle: true,
       ),

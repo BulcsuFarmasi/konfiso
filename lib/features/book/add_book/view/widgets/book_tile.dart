@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
-import 'package:konfiso/features/book/model/book.dart';
-import 'package:konfiso/features/book/model/book_ids.dart';
+import 'package:konfiso/features/book/data/book.dart';
+import 'package:konfiso/features/book/data/book_ids.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -14,8 +14,8 @@ class BookTile extends StatelessWidget {
   final Book book;
 
   void _navigateToDetailPage(BuildContext context, String externalId) {
-    Navigator.of(context).pushNamed(
-        BookDetailPage.routeName, arguments: BookIds(externalId: externalId));
+    Navigator.of(context).pushNamed(BookDetailPage.routeName,
+        arguments: BookIds(externalId: externalId));
   }
 
   @override
@@ -26,9 +26,9 @@ class BookTile extends StatelessWidget {
         child: (book.coverImageSmall != null)
             ? Image.network(book.coverImageSmall!, width: 40)
             : Image.asset(
-          'assets/images/no_book_cover.gif',
-          width: 40,
-        ),
+                'assets/images/no_book_cover.gif',
+                width: 40,
+              ),
       ),
       title: Text(
         book.title,

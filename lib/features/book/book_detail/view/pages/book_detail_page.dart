@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_in_progress.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_success.dart';
-import 'package:konfiso/features/book/model/book_ids.dart';
+import 'package:konfiso/features/book/data/book_ids.dart';
 
 class BookDetailPage extends ConsumerStatefulWidget {
   const BookDetailPage({super.key});
@@ -24,14 +24,16 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
     super.didChangeDependencies();
 
     if (_isInit) {
-      final bookIds = ModalRoute.of(context)!.settings.arguments as BookIds;
-      bookExternalId = bookIds.externalId;
-      _isInit = false;
-      Future(() {
-        final bookDetailStateNotifier =
-            ref.read(bookDetailPageStateNotifierProvider.notifier);
-        bookDetailStateNotifier.loadBookByExternalId(bookExternalId!);
-      });
+      final bookIds = ModalRoute.of(context)!.settings.arguments as BookIds?;
+      if (bookIds != null) {
+        bookExternalId = bookIds.externalId!;
+        _isInit = false;
+        Future(() {
+          final bookDetailStateNotifier =
+              ref.read(bookDetailPageStateNotifierProvider.notifier);
+          bookDetailStateNotifier.loadBookByExternalId(bookExternalId!);
+        });
+      }
     }
   }
 
@@ -44,10 +46,10 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: state.map(
-              initial: (_) => Container(),
+              initial: (_) => const SizedBox(),
               inProgress: (_) => const BookDetailInProgress(),
               success: (success) => BookDetailSuccess(book: success.book),
-              error: (_) => Container()),
+              error: (_) => const SizedBox()),
         ),
       ),
     );

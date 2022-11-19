@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:konfiso/features/book/model/book_reading_status.dart';
+import 'package:konfiso/features/book/data/book_reading_status.dart';
 
 class BookCategoryPage extends StatefulWidget {
   const BookCategoryPage({super.key});

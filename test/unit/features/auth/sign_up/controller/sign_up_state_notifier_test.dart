@@ -42,22 +42,26 @@ void main() {
         signUpPageStateNotifier.signUp(email, password);
         verify(() => signUpRepository.signUp(email, password));
       });
-      test('should emit loading and success state in case of success', () {
+      test('should emit inProgress and successful states in case of success',
+          () async {
         when(() => signUpRepository.signUp(email, password))
             .thenAnswer((_) => Future.value(null));
         signUpPageStateNotifier.signUp(email, password);
-        emitsInOrder([
-          const SignUpPageState.inProgress(),
-          const SignUpPageState.successful(),
-        ]);
+
+        expect(
+            signUpPageStateNotifier.state, const SignUpPageState.inProgress());
+
+        await Future.delayed(const Duration(milliseconds: 500));
+
+        expect(
+            signUpPageStateNotifier.state, const SignUpPageState.successful());
       });
-      test('should emit loading and error state in case of error', () {
+      test('should emit error states in case of error', () {
         arrangeRepositoryThrowsException();
         signUpPageStateNotifier.signUp(email, password);
-        emitsInOrder([
-          const SignUpPageState.inProgress(),
-          const SignUpPageState.error(SignUpError.other),
-        ]);
+
+        expect(signUpPageStateNotifier.state,
+            const SignUpPageState.error(SignUpError.other));
       });
     });
   });

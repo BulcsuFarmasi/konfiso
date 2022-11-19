@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/book/model/book.dart';
-import 'package:konfiso/features/book/model/volume.dart';
+import 'package:konfiso/features/book/data/book.dart';
+import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
 
 final bookDetailRepositoryProvider =
@@ -14,7 +14,7 @@ class BookDetailRepository {
   Future<Book> loadBookByExternalId(String externalId) async {
     final volume = await _bookService.loadBookByExternalId(externalId);
 
-    final publicationYear = int.parse(volume.volumeInfo.publishedDate?.split('-').first ?? '');
+    final publicationYear = volume.volumeInfo.publishedDate?.split('-').first;
 
     return Book(
       title: volume.volumeInfo.title,
@@ -23,8 +23,10 @@ class BookDetailRepository {
       publicationYear: publicationYear,
       coverImageLarge: volume.volumeInfo.imageLinks?.small,
       industryIds: volume.volumeInfo.industryIdentifiers
-          ?.map((IndustryIdentifier industryIdentifier) =>
-              industryIdentifier.identifier)
+          ?.map((VolumeIndustryIdentifier industryIdentifier) =>
+              BookIndustryIdentifier(
+                  IndustryIdentifierType.fromString(industryIdentifier.type),
+                  industryIdentifier.identifier))
           .toList(),
     );
   }

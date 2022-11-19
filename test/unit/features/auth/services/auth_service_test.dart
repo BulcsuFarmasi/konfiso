@@ -1,26 +1,26 @@
 @TestOn('vm')
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:konfiso/features/auth/model/auth_response_payload.dart';
-import 'package:konfiso/features/auth/model/refresh_token_response_payload.dart';
-import 'package:konfiso/features/auth/model/stored_user.dart';
+import 'package:konfiso/features/auth/data/auth_response_payload.dart';
+import 'package:konfiso/features/auth/data/refresh_token_response_payload.dart';
+import 'package:konfiso/features/auth/data/stored_user.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
-import 'package:konfiso/shared/services/time_service.dart';
+import 'package:konfiso/shared/utils/time_util.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAuthRemote extends Mock implements AuthRemote {}
 
 class MockAuthStorage extends Mock implements AuthStorage {}
 
-class MockTimeService extends Mock implements TimeService {}
+class MockTimeUtil extends Mock implements TimeUtil {}
 
 void main() {
   group('AuthService', () {
     late AuthRemote authRemote;
     late AuthStorage authStorage;
-    late TimeService timeService;
+    late TimeUtil timeUtil;
     late AuthService authService;
     late String email;
     late String password;
@@ -28,12 +28,12 @@ void main() {
     setUp(() {
       authRemote = MockAuthRemote();
       authStorage = MockAuthStorage();
-      timeService = MockTimeService();
-      authService = AuthService(authStorage, authRemote, timeService);
+      timeUtil = MockTimeUtil();
+      authService = AuthService(authStorage, authRemote, timeUtil);
       email = 'test@test.com';
       password = '123456';
       now = DateTime.now();
-      when(() => timeService.now()).thenReturn(now);
+      when(() => timeUtil.now()).thenReturn(now);
     });
 
     group('autoSignIn', () {
