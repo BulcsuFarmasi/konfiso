@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:konfiso/features/auth/model/stored_user.dart';
+import 'package:konfiso/features/auth/data/stored_user.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
 import 'package:konfiso/shared/secure_storage.dart';
 import 'package:konfiso/shared/storage_keys.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_reading_detail_form.dart';
-import 'package:konfiso/features/book/model/book_reading_status.dart';
+import 'package:konfiso/features/book/data/book_reading_status.dart';
 
 void main() {
   group('BookReadingDetailForm', () {

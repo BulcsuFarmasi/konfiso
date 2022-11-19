@@ -8,7 +8,7 @@ import 'package:konfiso/features/book/book_detail/controller/book_detail_page_st
 import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_in_progress.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_success.dart';
-import 'package:konfiso/features/book/model/book.dart';
+import 'package:konfiso/features/book/data/book.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockBookDetailPageStateNotifier extends StateNotifier<BookDetailPageState>

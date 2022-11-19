@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:konfiso/features/book/model/industry_identifier.dart';
+import 'package:konfiso/features/book/data/industry_identifier.dart';
 
 part 'book.freezed.dart';
 

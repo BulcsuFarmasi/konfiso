@@ -2,28 +2,28 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:konfiso/features/auth/model/auth_request_payload.dart';
-import 'package:konfiso/features/auth/model/auth_response_payload.dart';
-import 'package:konfiso/features/auth/model/refresh_token_request_payload.dart';
-import 'package:konfiso/features/auth/model/refresh_token_response_payload.dart';
-import 'package:konfiso/features/auth/model/remote_user.dart';
-import 'package:konfiso/features/auth/model/update_user_request_payload.dart';
+import 'package:konfiso/features/auth/data/auth_request_payload.dart';
+import 'package:konfiso/features/auth/data/auth_response_payload.dart';
+import 'package:konfiso/features/auth/data/refresh_token_request_payload.dart';
+import 'package:konfiso/features/auth/data/refresh_token_response_payload.dart';
+import 'package:konfiso/features/auth/data/remote_user.dart';
+import 'package:konfiso/features/auth/data/update_user_request_payload.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/shared/http_client.dart';
-import 'package:konfiso/shared/services/flavor_service.dart';
-import 'package:konfiso/shared/services/time_service.dart';
+import 'package:konfiso/shared/utils/flavor_util.dart';
+import 'package:konfiso/shared/utils/time_util.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockHttpClient extends Mock implements HttpClient {}
 
-class MockTimeService extends Mock implements TimeService {}
+class MockTimeUtil extends Mock implements TimeUtil {}
 
 void main() {
   group('AuthRemote', () {
     late AuthRemote authRemote;
     late HttpClient httpClient;
-    late FlavorService flavorService;
-    late TimeService timeService;
+    late FlavorUtil flavorUtil;
+    late TimeUtil timeUtil;
     late AuthRequestPayload authRequestPayload;
     late String authId;
     late String userId;
@@ -43,9 +43,9 @@ void main() {
 
     setUp(() {
       httpClient = MockHttpClient();
-      flavorService = FlavorService();
-      timeService = MockTimeService();
-      authRemote = AuthRemote(httpClient, flavorService, timeService);
+      flavorUtil = FlavorUtil();
+      timeUtil = MockTimeUtil();
+      authRemote = AuthRemote(httpClient, flavorUtil, timeUtil);
       email = 'test@test.com';
       password = '123456';
       authRequestPayload = AuthRequestPayload(email, password);
@@ -82,9 +82,6 @@ void main() {
     }
 
     void arrangeSaveUserReturnsWithUserId() {
-      print(saveUserUrl);
-      print('test: ${json.encode(remoteUser!.toJson())}');
-      print(json.encode(remoteUser!.toJson()).hashCode);
       when(() => httpClient.post(
               url: saveUserUrl, data: jsonEncode(remoteUser!.toJson())))
           .thenAnswer((_) => Future.value(Response(
@@ -108,7 +105,6 @@ void main() {
 
     void arrangeUpdateUserReturnsWithUpdatedFiled(String userId) {
       final url = '${authRemote.dbUrl}/$userId.json';
-      print(url);
       when(() => httpClient.patch(
               url: url,
               data: jsonEncode(UpdateUserRequestPayload(now).toJson())))
@@ -118,15 +114,15 @@ void main() {
               })));
     }
 
-    void arrangeTimeServiceReturnsWithNow() {
-      when(() => timeService.now()).thenReturn(now);
+    void arrangeTimeUtilReturnsWithNow() {
+      when(() => timeUtil.now()).thenReturn(now);
     }
 
     group('signIn', () {
       test(
           'should call http client\'s post method with the appropriate parameters',
           () {
-        arrangeTimeServiceReturnsWithNow();
+        arrangeTimeUtilReturnsWithNow();
         arrangeAuthReturnsWithAuthResponsePayload(signInUrl);
         arrangeQueryUserReturnsWithUsers(authId);
         arrangeUpdateUserReturnsWithUpdatedFiled(userId);
@@ -139,7 +135,7 @@ void main() {
 
       test('should return the converted data which comes from the http client',
           () async {
-        arrangeTimeServiceReturnsWithNow();
+        arrangeTimeUtilReturnsWithNow();
         arrangeAuthReturnsWithAuthResponsePayload(signInUrl);
         arrangeQueryUserReturnsWithUsers(authId);
         arrangeUpdateUserReturnsWithUpdatedFiled(userId);
@@ -154,7 +150,7 @@ void main() {
           () {
         arrangeAuthReturnsWithAuthResponsePayload(signUpUrl);
         arrangeSaveUserReturnsWithUserId();
-        arrangeTimeServiceReturnsWithNow();
+        arrangeTimeUtilReturnsWithNow();
 
         authRemote.signUp(email, password);
 

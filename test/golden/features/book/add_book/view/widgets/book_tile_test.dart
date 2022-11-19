@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/book_tile.dart';
-import 'package:konfiso/features/book/model/book.dart';
+import 'package:konfiso/features/book/data/book.dart';
 
 void main() {
   group('BookTile', () {

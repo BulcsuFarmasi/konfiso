@@ -17,10 +17,8 @@ class SignInPageStateNotifier extends StateNotifier<SignInPageState> {
     try {
       await _signInRepository.signIn(email, password);
       state = const SignInPageState.successful();
-      print('s');
     } on SignInException catch (e) {
       state = SignInPageState.error(e.error);
-      print('e');
     }
   }
 }

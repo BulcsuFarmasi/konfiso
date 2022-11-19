@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_detail/model/book_detail_repository.dart';
-import 'package:konfiso/features/book/model/book.dart';
+import 'package:konfiso/features/book/data/book.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockBookDetailRepository extends Mock implements BookDetailRepository {}
@@ -35,7 +35,7 @@ void main () {
         bookDetailPageStateNotifier.loadBookByExternalId(externalId);
         // wait
         expect(bookDetailPageStateNotifier.state,
-            BookDetailPageState.inProgress());
+            const BookDetailPageState.inProgress());
         // check if state is successful with book
         await Future.delayed(const Duration(milliseconds: 500));
 

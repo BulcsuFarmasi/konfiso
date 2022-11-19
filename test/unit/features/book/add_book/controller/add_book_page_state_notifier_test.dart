@@ -2,9 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/book/add_book/controller/add_book_page_state_notifier.dart';
 import 'package:konfiso/features/book/add_book/controller/add_book_state.dart';
 import 'package:konfiso/features/book/add_book/model/add_book_resopsitory.dart';
-import 'package:konfiso/features/book/add_book/view/widgets/add_book_error.dart';
-import 'package:konfiso/features/book/model/add_book_exception.dart';
-import 'package:konfiso/features/book/model/book.dart';
+import 'package:konfiso/features/book/data/add_book_exception.dart';
+import 'package:konfiso/features/book/data/book.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAddBookRepository extends Mock implements AddBookRepository {}

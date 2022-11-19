@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/book/model/book_reading_status.dart';
+import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
 class BookReadingDetailForm extends ConsumerStatefulWidget {

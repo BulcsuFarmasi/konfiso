@@ -1,26 +1,26 @@
 import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/auth/model/auth_request_payload.dart';
-import 'package:konfiso/features/auth/model/auth_response_payload.dart';
-import 'package:konfiso/features/auth/model/refresh_token_request_payload.dart';
-import 'package:konfiso/features/auth/model/refresh_token_response_payload.dart';
-import 'package:konfiso/features/auth/model/remote_user.dart';
-import 'package:konfiso/features/auth/model/update_user_request_payload.dart';
+import 'package:konfiso/features/auth/data/auth_request_payload.dart';
+import 'package:konfiso/features/auth/data/auth_response_payload.dart';
+import 'package:konfiso/features/auth/data/refresh_token_request_payload.dart';
+import 'package:konfiso/features/auth/data/refresh_token_response_payload.dart';
+import 'package:konfiso/features/auth/data/remote_user.dart';
+import 'package:konfiso/features/auth/data/update_user_request_payload.dart';
 import 'package:konfiso/shared/http_client.dart';
-import 'package:konfiso/shared/services/flavor_service.dart';
-import 'package:konfiso/shared/services/time_service.dart';
+import 'package:konfiso/shared/utils/flavor_util.dart';
+import 'package:konfiso/shared/utils/time_util.dart';
 
 final authRemoteProvider = Provider((Ref ref) => AuthRemote(
       ref.read(httpClientProvider),
-      ref.read(flavorServiceProvider),
-      ref.read(timeServiceProvider),
+      ref.read(flavorUtilProvider),
+      ref.read(timeUtilProvider),
     ));
 
 class AuthRemote {
   final HttpClient _httpClient;
-  final FlavorService _flavorService;
-  final TimeService _timeService;
+  final FlavorUtil _flavorUtil;
+  final TimeUtil _timeUtil;
 
   static const accountUrl =
       'https://identitytoolkit.googleapis.com/v1/accounts:';
@@ -28,8 +28,8 @@ class AuthRemote {
 
   late String dbUrl;
 
-  AuthRemote(this._httpClient, this._flavorService, this._timeService)
-      : dbUrl = '${_flavorService.currentConfig.values.firebaseDBUrl}users';
+  AuthRemote(this._httpClient, this._flavorUtil, this._timeUtil)
+      : dbUrl = '${_flavorUtil.currentConfig.values.firebaseDBUrl}users';
 
   Future<AuthResponsePayload> signIn(String email, String password) async {
     AuthResponsePayload authResponse = await _signInUser(email, password);
@@ -78,7 +78,7 @@ class AuthRemote {
     final user = RemoteUser(
         authId: authResponsePayload.localId,
         email: email,
-        registrationDate: _timeService.now(),
+        registrationDate: _timeUtil.now(),
         consented: true,
         consentUrl: 'privacy-policy');
 
@@ -97,6 +97,6 @@ class AuthRemote {
 
     await _httpClient.patch(
         url: updateUrl,
-        data: json.encode(UpdateUserRequestPayload(_timeService.now())));
+        data: json.encode(UpdateUserRequestPayload(_timeUtil.now())));
   }
 }

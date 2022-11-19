@@ -1,4 +1,4 @@
-import 'package:konfiso/features/book/model/book_reading_status.dart';
+import 'package:konfiso/features/book/data/book_reading_status.dart';
 
 class BookReadingDetail {
   final BookReadingStatus status;

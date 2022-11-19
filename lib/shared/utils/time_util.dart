@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final timeServiceProvider = Provider((_) => TimeService());
+final timeUtilProvider = Provider((_) => TimeUtil());
 
-class TimeService {
+class TimeUtil {
   DateTime now() => DateTime.now();
 }

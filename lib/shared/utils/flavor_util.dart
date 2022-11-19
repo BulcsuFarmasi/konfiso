@@ -3,9 +3,9 @@ import 'package:konfiso/shared/flavor.dart';
 import 'package:konfiso/shared/flavor_config.dart';
 import 'package:konfiso/shared/secret.dart';
 
-final flavorServiceProvider = Provider((_) => FlavorService());
+final flavorUtilProvider = Provider((_) => FlavorUtil());
 
-class FlavorService {
+class FlavorUtil {
   FlavorConfig get currentConfig {
     switch (flavor) {
       case Flavor.dev:

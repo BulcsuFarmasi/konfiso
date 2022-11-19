@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/book/model/book.dart';
-import 'package:konfiso/features/book/model/industry_identifier.dart';
-import 'package:konfiso/features/book/model/volume.dart';
+import 'package:konfiso/features/book/data/book.dart';
+import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
 
 final bookDetailRepositoryProvider =

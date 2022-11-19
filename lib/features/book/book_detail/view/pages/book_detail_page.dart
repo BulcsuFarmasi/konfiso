@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_in_progress.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_success.dart';
-import 'package:konfiso/features/book/model/book_ids.dart';
+import 'package:konfiso/features/book/data/book_ids.dart';
 
 class BookDetailPage extends ConsumerStatefulWidget {
   const BookDetailPage({super.key});

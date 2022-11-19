@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
-import 'package:konfiso/features/book/model/book.dart';
-import 'package:konfiso/features/book/model/book_ids.dart';
+import 'package:konfiso/features/book/data/book.dart';
+import 'package:konfiso/features/book/data/book_ids.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

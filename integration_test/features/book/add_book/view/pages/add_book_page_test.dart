@@ -12,7 +12,7 @@ import 'package:konfiso/features/book/add_book/view/widgets/book_tile.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
-import 'package:konfiso/features/book/model/book.dart';
+import 'package:konfiso/features/book/data/book.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAddBookStateNotifier extends StateNotifier<AddBookPageState>

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/book/book_detail/model/book_detail_repository.dart';
-import 'package:konfiso/features/book/model/book.dart';
-import 'package:konfiso/features/book/model/industry_identifier.dart';
-import 'package:konfiso/features/book/model/volume.dart';
+import 'package:konfiso/features/book/data/book.dart';
+import 'package:konfiso/features/book/data/industry_identifier.dart';
+import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
 import 'package:mocktail/mocktail.dart';
 

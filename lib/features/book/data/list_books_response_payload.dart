@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:konfiso/features/book/model/volume.dart';
+import 'package:konfiso/features/book/data/volume.dart';
 
 part 'list_books_response_payload.g.dart';
 

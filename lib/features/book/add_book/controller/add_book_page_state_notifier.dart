@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/add_book/controller/add_book_state.dart';
 import 'package:konfiso/features/book/add_book/model/add_book_resopsitory.dart';
-import 'package:konfiso/features/book/model/add_book_exception.dart';
+import 'package:konfiso/features/book/data/add_book_exception.dart';
 
 final addBookPageStateNotifierProvider =
 StateNotifierProvider<AddBookPageStateNotifier, AddBookPageState>(
