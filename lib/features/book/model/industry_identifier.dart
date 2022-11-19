@@ -1,27 +1,21 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:konfiso/features/book/model/book.dart';
+
+part 'industry_identifier.freezed.dart';
 
 part 'industry_identifier.g.dart';
 
-abstract class IndustryIdentifier {
-  final String identifier;
-
-  const IndustryIdentifier(
-    this.identifier,
-  );
-}
-
-class BookIndustryIdentifier extends IndustryIdentifier {
-  final IndustryIdentifierType type;
-
-  const BookIndustryIdentifier(this.type, super.identifier);
+@freezed
+class BookIndustryIdentifier with _$BookIndustryIdentifier {
+  const factory BookIndustryIdentifier(
+      IndustryIdentifierType type, String identifier) = _BookIndustryIdentifier;
 }
 
 @JsonSerializable()
-class VolumeIndustryIdentifier extends IndustryIdentifier {
+class VolumeIndustryIdentifier {
   final String type;
+  final String identifier;
 
-  const VolumeIndustryIdentifier(this.type, super.identifier);
+  const VolumeIndustryIdentifier(this.type, this.identifier);
 
   factory VolumeIndustryIdentifier.fromJson(Map<String, dynamic> json) =>
       _$VolumeIndustryIdentifierFromJson(json);

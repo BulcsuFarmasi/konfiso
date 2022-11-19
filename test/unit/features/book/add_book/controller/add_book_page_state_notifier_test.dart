@@ -3,6 +3,7 @@ import 'package:konfiso/features/book/add_book/controller/add_book_page_state_no
 import 'package:konfiso/features/book/add_book/controller/add_book_state.dart';
 import 'package:konfiso/features/book/add_book/model/add_book_resopsitory.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_error.dart';
+import 'package:konfiso/features/book/model/add_book_exception.dart';
 import 'package:konfiso/features/book/model/book.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -32,7 +33,7 @@ void main() {
 
   void arrangeRepositoryThrowsError(String searchTerm) {
     when(() => addBookRepository.search(searchTerm))
-        .thenThrow(const AddBookError());
+        .thenThrow(AddBookException());
   }
 
   group('AddBookPageStateNotifier', () {
@@ -65,18 +66,10 @@ void main() {
       });
       test(
           'should emit error state with books if error was given from repository',
-          skip: 'Figure out add book error',
           () async {
         arrangeRepositoryThrowsError(searchTerm);
 
         addBookPageStateNotifier.search(searchTerm);
-
-        expect(
-          addBookPageStateNotifier.state,
-          const AddBookPageState.inProgress(),
-        );
-
-        await Future.delayed(const Duration(milliseconds: 500));
 
         expect(addBookPageStateNotifier.state, const AddBookPageState.error());
       });
