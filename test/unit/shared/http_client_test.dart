@@ -14,7 +14,15 @@ void main() {
     late Response response;
     late String path;
 
-    void arrangeDioReturnsWithResponse() {
+    void arrangeDioGetReturnsWithResponse() {
+      when(() => dio.get(path)).thenAnswer((_) => Future.value(response));
+    }
+
+    void arrangeDioPatchReturnsWithResponse() {
+      when(() => dio.patch(path)).thenAnswer((_) => Future.value(response));
+    }
+
+    void arrangeDioPostReturnsWithResponse() {
       when(() => dio.post(path)).thenAnswer((_) => Future.value(response));
     }
 
@@ -25,9 +33,23 @@ void main() {
       response = Response(requestOptions: RequestOptions(path: path));
     });
 
+    group('get', () {
+      test('should return with the provided response', () async {
+        arrangeDioGetReturnsWithResponse();
+        expectLater(await httpClient.get(url: path), response);
+      });
+    });
+
+    group('patch', () {
+      test('should return with the provided response', () async {
+        arrangeDioPatchReturnsWithResponse();
+        expectLater(await httpClient.patch(url: path), response);
+      });
+    });
+
     group('post', () {
       test('should return with the provided response', () async {
-        arrangeDioReturnsWithResponse();
+        arrangeDioPostReturnsWithResponse();
         expectLater(await httpClient.post(url: path), response);
       });
     });

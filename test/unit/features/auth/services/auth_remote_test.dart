@@ -10,6 +10,7 @@ import 'package:konfiso/features/auth/data/remote_user.dart';
 import 'package:konfiso/features/auth/data/update_user_request_payload.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/shared/http_client.dart';
+import 'package:konfiso/shared/services/language_service.dart';
 import 'package:konfiso/shared/utils/flavor_util.dart';
 import 'package:konfiso/shared/utils/time_util.dart';
 import 'package:mocktail/mocktail.dart';
@@ -18,11 +19,14 @@ class MockHttpClient extends Mock implements HttpClient {}
 
 class MockTimeUtil extends Mock implements TimeUtil {}
 
+class MockLanguageService extends Mock implements LanguageService{}
+
 void main() {
   group('AuthRemote', () {
     late AuthRemote authRemote;
     late HttpClient httpClient;
     late FlavorUtil flavorUtil;
+    late LanguageService languageService;
     late TimeUtil timeUtil;
     late AuthRequestPayload authRequestPayload;
     late String authId;
@@ -45,7 +49,8 @@ void main() {
       httpClient = MockHttpClient();
       flavorUtil = FlavorUtil();
       timeUtil = MockTimeUtil();
-      authRemote = AuthRemote(httpClient, flavorUtil, timeUtil);
+      languageService = MockLanguageService();
+      authRemote = AuthRemote(httpClient, flavorUtil, timeUtil, languageService);
       email = 'test@test.com';
       password = '123456';
       authRequestPayload = AuthRequestPayload(email, password);

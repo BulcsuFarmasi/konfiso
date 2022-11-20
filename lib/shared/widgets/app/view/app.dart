@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,14 +12,26 @@ import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.da
 import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/features/loading/view/pages/loading_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
+import 'package:konfiso/shared/widgets/app/controller/app_controller.dart';
 
-class App extends StatelessWidget {
+class App extends ConsumerStatefulWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ProviderScope(
-      child: MaterialApp(
+  ConsumerState<App> createState() => _AppState();
+}
+
+class _AppState extends ConsumerState<App> {
+  @override
+  void initState() {
+    super.initState();
+    Future(() {
+      ref.read(appControllerProvider).setLocale(Platform.localeName);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => MaterialApp(
         title: 'Konfiso',
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
@@ -62,7 +76,5 @@ class App extends StatelessWidget {
           BookDetailPage.routeName: (BuildContext context) =>
               const BookDetailPage(),
         },
-      ),
-    );
-  }
+      );
 }

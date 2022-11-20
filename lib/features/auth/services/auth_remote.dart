@@ -6,8 +6,10 @@ import 'package:konfiso/features/auth/data/auth_response_payload.dart';
 import 'package:konfiso/features/auth/data/refresh_token_request_payload.dart';
 import 'package:konfiso/features/auth/data/refresh_token_response_payload.dart';
 import 'package:konfiso/features/auth/data/remote_user.dart';
+import 'package:konfiso/features/auth/data/send_verification_email_request_payload.dart';
 import 'package:konfiso/features/auth/data/update_user_request_payload.dart';
 import 'package:konfiso/shared/http_client.dart';
+import 'package:konfiso/shared/services/language_service.dart';
 import 'package:konfiso/shared/utils/flavor_util.dart';
 import 'package:konfiso/shared/utils/time_util.dart';
 
@@ -15,12 +17,14 @@ final authRemoteProvider = Provider((Ref ref) => AuthRemote(
       ref.read(httpClientProvider),
       ref.read(flavorUtilProvider),
       ref.read(timeUtilProvider),
+      ref.read(languageServiceProvider),
     ));
 
 class AuthRemote {
   final HttpClient _httpClient;
   final FlavorUtil _flavorUtil;
   final TimeUtil _timeUtil;
+  final LanguageService _languageService;
 
   static const accountUrl =
       'https://identitytoolkit.googleapis.com/v1/accounts:';
@@ -28,7 +32,8 @@ class AuthRemote {
 
   late String dbUrl;
 
-  AuthRemote(this._httpClient, this._flavorUtil, this._timeUtil)
+  AuthRemote(
+      this._httpClient, this._flavorUtil, this._timeUtil, this._languageService)
       : dbUrl = '${_flavorUtil.currentConfig.values.firebaseDBUrl}users';
 
   Future<AuthResponsePayload> signIn(String email, String password) async {
@@ -43,6 +48,8 @@ class AuthRemote {
     AuthResponsePayload authResponse = await _signUpUser(email, password);
 
     _saveUser(authResponse, email);
+
+    _sendVerificationEmail(authResponse.idToken);
   }
 
   Future<RefreshTokenResponsePayload> refreshToken(String refreshToken) async {
@@ -70,6 +77,7 @@ class AuthRemote {
         data: json.encode(authRequestPayload.toJson()));
 
     final authResponse = AuthResponsePayload.fromJson(response.data);
+
     return authResponse;
   }
 
@@ -98,5 +106,13 @@ class AuthRemote {
     await _httpClient.patch(
         url: updateUrl,
         data: json.encode(UpdateUserRequestPayload(_timeUtil.now())));
+  }
+
+  Future<void> _sendVerificationEmail(String token) async {
+    final sendVerificationEmailPayload = SendVerificationEmailPayload(idToken: token);
+
+    const url = '${accountUrl}sendObbCode';
+
+    await _httpClient.post(url: url, data: jsonEncode(sendVerificationEmailPayload.toJson()), headers: {'X-Firebase-Locale': _languageService.locale});
   }
 }
