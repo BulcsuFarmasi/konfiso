@@ -5,27 +5,38 @@ import 'package:konfiso/features/auth/verify_user/view/widgets/verify_user_initi
 import 'package:konfiso/features/auth/verify_user/view/widgets/verify_user_successful.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class VerifyUserPage extends ConsumerWidget {
+class VerifyUserPage extends ConsumerStatefulWidget {
   const VerifyUserPage({super.key});
 
   static const routeName = '/verify-user';
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _VerifyUserPageState();
+}
+
+class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future(() {
+      ref.read(verifyUserPageStateNotifierProvider.notifier)
+          .checkVerification();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(verifyUserPageStateNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.verifyUser),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: Consumer(builder: (_, WidgetRef ref, __) {
-          final state = ref.watch(verifyUserPageStateNotifierProvider);
-          return state.map(
-              initial: (_) => const VerifyUserInitial(),
-              successful: (_) => const VerifyUserSuccessful());
-        }),
-      ),
+      body: state.map(
+          initial: (_) => const VerifyUserInitial(),
+          successful: (_) => const VerifyUserSuccessful()),
     );
   }
 }
