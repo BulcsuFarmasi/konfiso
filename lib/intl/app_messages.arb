@@ -198,18 +198,28 @@
     "type": "text",
     "placeholders": {}
   },
+  "verify": "Verify User",
+  "@verifyUser": {
+    "type": "text",
+    "placeholders": {}
+  },
   "weveSentAnEmailToVerifyYourEmailAddress": "We've sent an email to verify your email address",
   "@weveSentAnEmailToVerifyYourEmailAddress": {
     "type": "text",
     "placeholders": {}
   },
   "pleaseClickOnTheLinkInTheEmailThenReturnHere": "Please click on the link in the email, then return here",
-  "@add": {
+  "@pleaseClickOnTheLinkInTheEmailThenReturnHere": {
     "type": "text",
     "placeholders": {}
   },
-  "verifyUser": "Verify User",
-  "@verifyUser": {
+  "ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow": "If your validation code is expired, you can resend the email with the button below",
+  "@ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resendEmail": "Resend Email",
+  "@resendEmail": {
     "type": "text",
     "placeholders": {}
   }

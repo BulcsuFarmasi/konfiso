@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/data/user_signin_status.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
@@ -97,12 +98,16 @@ class AuthService {
     final completer = Completer();
 
     Timer.periodic(const Duration(seconds: 2), (Timer timer) async {
-      final userInfo =
-          (await _authRemote.loadUserInfo(user!.token)).users.first;
+      try {
+        final userInfo =
+            (await _authRemote.loadUserInfo(user!.token)).users.first;
 
-      if (userInfo.emailVerified) {
-        timer.cancel();
-        completer.complete();
+        if (userInfo.emailVerified) {
+          timer.cancel();
+          completer.complete();
+        }
+      } catch (e) {
+        debugPrint(e.toString());
       }
     });
 

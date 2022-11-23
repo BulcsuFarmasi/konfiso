@@ -198,14 +198,28 @@
     "type": "text",
     "placeholders": {}
   },
+  "verify": "Benutzer überprüfen",
+  "@verifyUser": {
+    "type": "text",
+    "placeholders": {}
+  },
   "weveSentAnEmailToVerifyYourEmailAddress": "Wir haben eine E-Mail gesendet, um deine E-Mail-Adresse zu bestätigen",
   "@weveSentAnEmailToVerifyYourEmailAddress": {
     "type": "text",
     "placeholders": {}
   },
   "pleaseClickOnTheLinkInTheEmailThenReturnHere": "Bitte klicke auf den Link in der E-Mail, dann zurück hierher",
-  "verifyUser": "Benutzer überprüfen",
-  "@verifyUser": {
+  "@pleaseClickOnTheLinkInTheEmailThenReturnHere": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow": "Wenn dein Bestätigungscode abgelaufen ist, kannst du die E-Mail mit der Schaltfläche unten erneut senden",
+  "@ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resendEmail": "E-Mail erneut senden",
+  "@resendEmail": {
     "type": "text",
     "placeholders": {}
   }

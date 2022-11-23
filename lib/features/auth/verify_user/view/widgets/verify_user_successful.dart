@@ -12,6 +12,8 @@ class VerifyUserSuccessful extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const textStyle = TextStyle(color: AppColors.greyColor, fontSize: 20);
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +24,7 @@ class VerifyUserSuccessful extends StatelessWidget {
           ),
           Text(
             AppLocalizations.of(context)!.successfulValidation,
-            style: const TextStyle(color: AppColors.greyColor, fontSize: 20),
+            style: textStyle,
           ),
           const SizedBox(
             height: 10,
@@ -33,10 +35,24 @@ class VerifyUserSuccessful extends StatelessWidget {
             },
             child: Text(
               AppLocalizations.of(context)!.nowYouCanLoginHere,
-              style: const TextStyle(
-                  color: AppColors.greyDarkerColor, fontSize: 20),
+              style: textStyle.copyWith(color: AppColors.greyDarkestColor),
             ),
           ),
+          const SizedBox(
+            height: 40,
+          ),
+          Text(
+            AppLocalizations.of(context)!.ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow,
+            style: textStyle,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text(AppLocalizations.of(context)!.resendEmail),
+          )
         ],
       ),
     );

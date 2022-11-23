@@ -31,12 +31,16 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
     final state = ref.watch(verifyUserPageStateNotifierProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.verifyUser),
+        title: Text(AppLocalizations.of(context)!.verify),
         centerTitle: true,
       ),
-      body: state.map(
-          initial: (_) => const VerifyUserInitial(),
-          successful: (_) => const VerifyUserSuccessful()),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child:
+        state.map(
+            initial: (_) => const VerifyUserInitial(),
+            successful: (_) => const VerifyUserSuccessful()),
+      ),
     );
   }
 }

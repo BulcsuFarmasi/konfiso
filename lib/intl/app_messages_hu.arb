@@ -198,14 +198,28 @@
     "type": "text",
     "placeholders": {}
   },
+  "verify": "Felhasználó megerősítése",
+  "@verifyUser": {
+    "type": "text",
+    "placeholders": {}
+  },
   "weveSentAnEmailToVerifyYourEmailAddress": "Egy e-mailt küldtünk, hogy megerősíthetsd e-mail címedet",
   "@weveSentAnEmailToVerifyYourEmailAddress": {
     "type": "text",
     "placeholders": {}
   },
   "pleaseClickOnTheLinkInTheEmailThenReturnHere": "Kérünk, kattints a linkre az e-mailben majd térj vissza ide",
-  "verifyUser": "Felhasználó megerősítése",
-  "@verifyUser": {
+  "@pleaseClickOnTheLinkInTheEmailThenReturnHere": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow": "Ha lejárt az érvényestiő kódod, újra tudod küldeni az e-mailt a lenti gombbal",
+  "@ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resendEmail": "Email újraküldése",
+  "@resendEmail": {
     "type": "text",
     "placeholders": {}
   }
