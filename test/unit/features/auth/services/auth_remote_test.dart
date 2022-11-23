@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:konfiso/features/auth/data/auth_request_payload.dart';
 import 'package:konfiso/features/auth/data/auth_response_payload.dart';
 import 'package:konfiso/features/auth/data/refresh_token_request_payload.dart';
@@ -9,6 +10,9 @@ import 'package:konfiso/features/auth/data/refresh_token_response_payload.dart';
 import 'package:konfiso/features/auth/data/remote_user.dart';
 import 'package:konfiso/features/auth/data/send_verification_email_request_payload.dart';
 import 'package:konfiso/features/auth/data/update_user_request_payload.dart';
+import 'package:konfiso/features/auth/data/user_info.dart';
+import 'package:konfiso/features/auth/data/user_info_request_payload.dart';
+import 'package:konfiso/features/auth/data/user_info_response_payload.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/services/language_service.dart';
@@ -50,6 +54,8 @@ void main() {
     late SendVerificationEmailPayload sendVerificationEmailRequestPayload;
     late String locale;
     late Map<String, String> sendVerificationEmailHeaders;
+    late String userInfoUrl;
+    late UserInfoResponsePayload userInfoResponsePayload;
 
     setUp(() {
       httpClient = MockHttpClient();
@@ -80,6 +86,9 @@ void main() {
           SendVerificationEmailPayload(idToken: idToken);
       locale = 'en';
       sendVerificationEmailHeaders = {'X-Firebase-Locale': locale};
+      userInfoUrl = '${AuthRemote.accountUrl}lookup';
+      userInfoResponsePayload =
+          const UserInfoResponsePayload(users: [UserInfo(emailVerified: true)]);
     });
 
     void arrangeAuthReturnsWithAuthResponsePayload(String authUrl) {
@@ -153,6 +162,23 @@ void main() {
       );
     }
 
+    void arrangeUserInfoReturnsWithUserInfo(String token) {
+      final payload = jsonEncode(UserInfoRequestPayload(idToken: token));
+
+      when(
+        () => httpClient.post(
+          url: userInfoUrl,
+          data: payload,
+        ),
+      ).thenAnswer(
+        (invocation) => Future.value(
+          Response(
+              requestOptions: RequestOptions(path: userInfoUrl),
+              data: json.encode(userInfoResponsePayload.toJson())),
+        ),
+      );
+    }
+
     void arrangeLanguageServiceReturnsWithLocale() {
       when(() => languageService.locale).thenReturn(locale);
     }
@@ -212,11 +238,9 @@ void main() {
         arrangeSendVerificationEmailReturnsWithEmail();
         final data = jsonEncode(remoteUser!.toJson());
 
-
         authRemote.signUp(email, password);
 
-        verify(() => httpClient.post(
-            url: saveUserUrl, data: data));
+        verify(() => httpClient.post(url: saveUserUrl, data: data));
       });
       test(
           'should call http client\'s post method with the send verification email url and appropriate parameters',
@@ -231,9 +255,6 @@ void main() {
           SendVerificationEmailPayload(idToken: idToken).toJson(),
         );
 
-
-
-
         authRemote.signUp(email, password);
 
         verify(
@@ -243,6 +264,14 @@ void main() {
             headers: any(named: 'headers'),
           ),
         );
+      });
+    });
+    group('checkVerification', () {
+      test('should return with the response which given by http client', () async {
+        const token = 'token';
+        arrangeUserInfoReturnsWithUserInfo(token);
+
+        expectLater(await authRemote.loadUserInfo(token), userInfoResponsePayload);
       });
     });
     group('refreshToken', () {

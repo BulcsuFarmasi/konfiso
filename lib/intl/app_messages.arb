@@ -103,8 +103,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "successfulRegistration": "Successful registration!",
-  "@successfulRegistration": {
+  "successfulValidation": "Successful validation!",
+  "@successfulValidation": {
     "type": "text",
     "placeholders": {}
   },

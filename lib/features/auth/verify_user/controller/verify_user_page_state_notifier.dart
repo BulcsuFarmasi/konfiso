@@ -15,5 +15,7 @@ class VerifyUserPageStateNotifier extends StateNotifier<VerifyUserPageState> {
 
   Future<void> checkVerification() async {
     await _verifyUserRepository.checkVerification();
+
+    state = const VerifyUserPageState.successful();
   }
 }

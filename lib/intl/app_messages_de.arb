@@ -103,8 +103,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "successfulRegistration": "Erfolgreiche Registrierung!",
-  "@successfulRegistration": {
+  "successfulValidation": "Erfolgreiche Bestätigung!",
+  "@successfulValidation": {
     "type": "text",
     "placeholders": {}
   },
@@ -173,7 +173,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "wantToRead": "Will ich lesen",
+  "wantToRead": "Ich möchte lesen",
   "@wantToRead": {
     "type": "text",
     "placeholders": {}

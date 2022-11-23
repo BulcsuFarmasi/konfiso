@@ -8,6 +8,9 @@ import 'package:konfiso/features/auth/data/refresh_token_response_payload.dart';
 import 'package:konfiso/features/auth/data/remote_user.dart';
 import 'package:konfiso/features/auth/data/send_verification_email_request_payload.dart';
 import 'package:konfiso/features/auth/data/update_user_request_payload.dart';
+import 'package:konfiso/features/auth/data/user_info.dart';
+import 'package:konfiso/features/auth/data/user_info_request_payload.dart';
+import 'package:konfiso/features/auth/data/user_info_response_payload.dart';
 import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/services/language_service.dart';
 import 'package:konfiso/shared/utils/flavor_util.dart';
@@ -44,12 +47,14 @@ class AuthRemote {
     return authResponse;
   }
 
-  Future<void> signUp(String email, String password) async {
+  Future<AuthResponsePayload> signUp(String email, String password) async {
     AuthResponsePayload authResponse = await _signUpUser(email, password);
 
     _saveUser(authResponse, email);
 
     _sendVerificationEmail(authResponse.idToken);
+
+    return authResponse;
   }
 
   Future<RefreshTokenResponsePayload> refreshToken(String refreshToken) async {
@@ -58,6 +63,14 @@ class AuthRemote {
         url: tokenUrl, data: json.encode(refreshTokenPayload.toJson()));
 
     return RefreshTokenResponsePayload.fromJson(response.data);
+  }
+
+  Future<UserInfoResponsePayload> loadUserInfo(String token) async {
+    final requestPayload = UserInfoRequestPayload(idToken: token);
+    
+    final response = await _httpClient.post(url: '${accountUrl}lookup', data: jsonEncode(requestPayload.toJson()));
+
+    return UserInfoResponsePayload.fromJson(response.data);
   }
 
   Future<AuthResponsePayload> _signInUser(String email, String password) async {

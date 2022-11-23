@@ -103,8 +103,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "successfulRegistration": "Sikeres regisztráció!",
-  "@successfulRegistration": {
+  "successfulValidation": "Sikeres megerősítés!",
+  "@successfulValidation": {
     "type": "text",
     "placeholders": {}
   },

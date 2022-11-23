@@ -103,8 +103,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "successfulRegistration": "Enregistrement réussi !",
-  "@successfulRegistration": {
+  "successfulValidation": "Validation réussie !",
+  "@successfulValidation": {
     "type": "text",
     "placeholders": {}
   },

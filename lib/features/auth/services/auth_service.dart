@@ -41,16 +41,15 @@ class AuthService {
     try {
       final authResponse = await _authRemote.signIn(email, password);
       user = StoredUser(
-        userId: authResponse.localId,
-        token: authResponse.idToken,
-        refreshToken: authResponse.refreshToken,
-        validUntil: _timeUtil.now().add(
-              Duration(
-                seconds: int.parse(authResponse.expiresIn),
+          userId: authResponse.localId,
+          token: authResponse.idToken,
+          refreshToken: authResponse.refreshToken,
+          validUntil: _timeUtil.now().add(
+                Duration(
+                  seconds: int.parse(authResponse.expiresIn),
+                ),
               ),
-            ),
-     //  verified: false,
-      );
+          verified: true);
       _authStorage.saveUser(user!);
       _startTimer(int.parse(authResponse.expiresIn));
       // TODO: own error
@@ -62,7 +61,19 @@ class AuthService {
 
   Future<void> signUp(String email, String password) async {
     try {
-      _authRemote.signUp(email, password);
+      final authResponse = await _authRemote.signUp(email, password);
+      user = StoredUser(
+          userId: authResponse.localId,
+          token: authResponse.idToken,
+          refreshToken: authResponse.refreshToken,
+          validUntil: _timeUtil.now().add(
+                Duration(
+                  seconds: int.parse(authResponse.expiresIn),
+                ),
+              ),
+          verified: false);
+
+      _authStorage.saveUser(user!);
       // TODO: own error
     } on DioError catch (e) {
       // TODO : deserialize it into a class
@@ -76,6 +87,22 @@ class AuthService {
     user = null;
   }
 
+  Future<void> checkVerification() async {
+    final completer = Completer();
+
+    Timer.periodic(const Duration(seconds: 2), (Timer timer) async {
+      final userInfo =
+          (await _authRemote.loadUserInfo(user!.token)).users.first;
+
+      if (userInfo.emailVerified) {
+        timer.cancel();
+        completer.complete();
+      }
+    });
+
+    return completer.future;
+  }
+
   void _refreshToken() async {
     final responsePayload = await _authRemote.refreshToken(user!.refreshToken);
     user = StoredUser(
@@ -87,6 +114,7 @@ class AuthService {
               seconds: int.parse(responsePayload.expires_in),
             ),
           ),
+      verified: true,
       // verified: false,
     );
 

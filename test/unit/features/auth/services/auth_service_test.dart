@@ -1,9 +1,13 @@
 @TestOn('vm')
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/auth/data/auth_response_payload.dart';
 import 'package:konfiso/features/auth/data/refresh_token_response_payload.dart';
 import 'package:konfiso/features/auth/data/stored_user.dart';
+import 'package:konfiso/features/auth/data/user_info.dart';
+import 'package:konfiso/features/auth/data/user_info_response_payload.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
@@ -36,6 +40,20 @@ void main() {
       when(() => timeUtil.now()).thenReturn(now);
     });
 
+    void arrangeAuthRemoteReturnsWithUserInfoEmailVerifiedTrue(String token) {
+      when(() => authRemote.loadUserInfo(token)).thenAnswer(
+        (invocation) => Future.value(const UserInfoResponsePayload(
+            users: [UserInfo(emailVerified: true)])),
+      );
+    }
+
+    void arrangeAuthRemoteReturnsWithUserInfoEmailVerfiedFalse(String token) {
+      when(() => authRemote.loadUserInfo(token)).thenAnswer(
+        (invocation) => Future.value(const UserInfoResponsePayload(
+            users: [UserInfo(emailVerified: false)])),
+      );
+    }
+
     group('autoSignIn', () {
       test('should return with true if user is stored', () async {
         const refreshToken = '';
@@ -46,7 +64,7 @@ void main() {
               token: '',
               refreshToken: refreshToken,
               validUntil: now,
-              //     verified: true,
+              verified: true,
             ),
           ),
         );
@@ -126,11 +144,60 @@ void main() {
           token: '',
           refreshToken: '',
           validUntil: now,
-         // verified: true,
+          verified: true,
         );
         authService.signOut();
 
         expect(authService.user, isNull);
+      });
+    });
+    group('checkVerification', () {
+      test('should call auth remote loadUserInfo after 2 seconds', () async {
+        authService.user = StoredUser(
+          userId: 'user_id',
+          token: 'id_token',
+          refreshToken: 'a',
+          validUntil: now,
+          verified: true,
+        );
+        arrangeAuthRemoteReturnsWithUserInfoEmailVerifiedTrue('id_token');
+
+        authService.checkVerification();
+
+        await Future.delayed(const Duration(seconds: 2));
+
+        verify(() => authRemote.loadUserInfo('id_token'));
+      });
+      test('should complete the future if email verified is true', () async {
+        authService.user = StoredUser(
+            userId: 'user_id',
+            token: 'id_token',
+            refreshToken: 'a',
+            validUntil: now,
+            verified: true);
+        arrangeAuthRemoteReturnsWithUserInfoEmailVerifiedTrue('id_token');
+
+        final future = authService.checkVerification();
+
+        await Future.delayed(const Duration(seconds: 2));
+
+        expect(future, completes);
+      });
+      test('should not complete the future if email verified is false',
+          () async {
+        authService.user = StoredUser(
+            userId: 'user_id',
+            token: 'id_token',
+            refreshToken: 'a',
+            validUntil: now,
+            verified: true);
+        arrangeAuthRemoteReturnsWithUserInfoEmailVerfiedFalse('id_token');
+
+        final future = authService.checkVerification();
+
+        await Future.delayed(const Duration(seconds: 2));
+
+        expect(future, doesNotComplete);
       });
     });
   });

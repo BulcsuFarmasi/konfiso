@@ -10,7 +10,8 @@ class StoredUser with _$StoredUser {
     required String userId,
     required String token,
     required String refreshToken,
-    required DateTime validUntil
+    required DateTime validUntil,
+    required bool verified,
   }) = _StoredUser;
 
 
