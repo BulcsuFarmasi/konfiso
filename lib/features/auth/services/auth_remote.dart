@@ -90,9 +90,10 @@ class AuthRemote {
         consented: true,
         consentUrl: 'privacy-policy');
 
+    final url = '$dbUrl.json';
     final data = json.encode(user.toJson());
 
-    await _httpClient.post(url: '$dbUrl.json', data: data);
+    await _httpClient.post(url: url, data: data);
   }
 
   Future<void> _updateUser(String authId) async {
@@ -109,10 +110,13 @@ class AuthRemote {
   }
 
   Future<void> _sendVerificationEmail(String token) async {
-    final sendVerificationEmailPayload = SendVerificationEmailPayload(idToken: token);
+    const url = '${accountUrl}sendOobCode';
+    final sendVerificationEmailRequestPayload =
+        jsonEncode(SendVerificationEmailPayload(idToken: token).toJson());
+    final headers = {'X-Firebase-Locale': _languageService.locale};
 
-    const url = '${accountUrl}sendObbCode';
 
-    await _httpClient.post(url: url, data: jsonEncode(sendVerificationEmailPayload.toJson()), headers: {'X-Firebase-Locale': _languageService.locale});
+    await _httpClient.post(
+        url: url, data: sendVerificationEmailRequestPayload, headers: headers);
   }
 }

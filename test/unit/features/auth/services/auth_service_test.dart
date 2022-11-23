@@ -39,12 +39,17 @@ void main() {
     group('autoSignIn', () {
       test('should return with true if user is stored', () async {
         const refreshToken = '';
-        when(() => authStorage.fetchUser()).thenAnswer((_) => Future.value(
+        when(() => authStorage.fetchUser()).thenAnswer(
+          (_) => Future.value(
             StoredUser(
-                userId: '',
-                token: '',
-                refreshToken: refreshToken,
-                validUntil: now)));
+              userId: '',
+              token: '',
+              refreshToken: refreshToken,
+              validUntil: now,
+              //     verified: true,
+            ),
+          ),
+        );
         when(() => authRemote.refreshToken(refreshToken)).thenAnswer(
             (invocation) => Future.value(
                 const RefreshTokenResponsePayload('', '', '', '3600')));
@@ -117,7 +122,12 @@ void main() {
       });
       test('should set user to null', () {
         authService.user = StoredUser(
-            userId: '', token: '', refreshToken: '', validUntil: now);
+          userId: '',
+          token: '',
+          refreshToken: '',
+          validUntil: now,
+         // verified: true,
+        );
         authService.signOut();
 
         expect(authService.user, isNull);

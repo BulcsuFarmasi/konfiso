@@ -197,5 +197,20 @@
   "@add": {
     "type": "text",
     "placeholders": {}
+  },
+  "weveSentAnEmailToVerifyYourEmailAddress": "We've sent an email to verify your email address",
+  "@weveSentAnEmailToVerifyYourEmailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseClickOnTheLinkInTheEmailThenReturnHere": "Please click on the link in the email, then return here",
+  "@add": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "verifyUser": "Verify User",
+  "@verifyUser": {
+    "type": "text",
+    "placeholders": {}
   }
 }

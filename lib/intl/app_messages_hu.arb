@@ -197,5 +197,16 @@
   "@add": {
     "type": "text",
     "placeholders": {}
+  },
+  "weveSentAnEmailToVerifyYourEmailAddress": "Egy e-mailt küldtünk, hogy megerősíthetsd e-mail címedet",
+  "@weveSentAnEmailToVerifyYourEmailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseClickOnTheLinkInTheEmailThenReturnHere": "Kérünk, kattints a linkre az e-mailben majd térj vissza ide",
+  "verifyUser": "Felhasználó megerősítése",
+  "@verifyUser": {
+    "type": "text",
+    "placeholders": {}
   }
 }

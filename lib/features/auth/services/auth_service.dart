@@ -41,12 +41,16 @@ class AuthService {
     try {
       final authResponse = await _authRemote.signIn(email, password);
       user = StoredUser(
-          userId: authResponse.localId,
-          token: authResponse.idToken,
-          refreshToken: authResponse.refreshToken,
-          validUntil: _timeUtil
-              .now()
-              .add(Duration(seconds: int.parse(authResponse.expiresIn))));
+        userId: authResponse.localId,
+        token: authResponse.idToken,
+        refreshToken: authResponse.refreshToken,
+        validUntil: _timeUtil.now().add(
+              Duration(
+                seconds: int.parse(authResponse.expiresIn),
+              ),
+            ),
+     //  verified: false,
+      );
       _authStorage.saveUser(user!);
       _startTimer(int.parse(authResponse.expiresIn));
       // TODO: own error
@@ -75,12 +79,16 @@ class AuthService {
   void _refreshToken() async {
     final responsePayload = await _authRemote.refreshToken(user!.refreshToken);
     user = StoredUser(
-        userId: responsePayload.user_id,
-        token: responsePayload.id_token,
-        refreshToken: responsePayload.refresh_token,
-        validUntil: _timeUtil
-            .now()
-            .add(Duration(seconds: int.parse(responsePayload.expires_in))));
+      userId: responsePayload.user_id,
+      token: responsePayload.id_token,
+      refreshToken: responsePayload.refresh_token,
+      validUntil: _timeUtil.now().add(
+            Duration(
+              seconds: int.parse(responsePayload.expires_in),
+            ),
+          ),
+      // verified: false,
+    );
 
     _authStorage.saveUser(user!);
 

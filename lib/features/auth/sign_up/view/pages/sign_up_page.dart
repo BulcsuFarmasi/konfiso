@@ -17,7 +17,8 @@ class SignUpPage extends ConsumerWidget {
     ref.listen(signUpStateNotifierProvider, (_, SignUpPageState next) {
       next.maybeMap(
           successful: (_) {
-            Navigator.of(context).pushNamed(VerifyUserPage.routeName);
+            Navigator.of(context)
+                .pushReplacementNamed(VerifyUserPage.routeName);
           },
           orElse: () => null);
     });

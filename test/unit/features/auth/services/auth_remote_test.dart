@@ -7,6 +7,7 @@ import 'package:konfiso/features/auth/data/auth_response_payload.dart';
 import 'package:konfiso/features/auth/data/refresh_token_request_payload.dart';
 import 'package:konfiso/features/auth/data/refresh_token_response_payload.dart';
 import 'package:konfiso/features/auth/data/remote_user.dart';
+import 'package:konfiso/features/auth/data/send_verification_email_request_payload.dart';
 import 'package:konfiso/features/auth/data/update_user_request_payload.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/shared/http_client.dart';
@@ -19,7 +20,7 @@ class MockHttpClient extends Mock implements HttpClient {}
 
 class MockTimeUtil extends Mock implements TimeUtil {}
 
-class MockLanguageService extends Mock implements LanguageService{}
+class MockLanguageService extends Mock implements LanguageService {}
 
 void main() {
   group('AuthRemote', () {
@@ -31,6 +32,7 @@ void main() {
     late AuthRequestPayload authRequestPayload;
     late String authId;
     late String userId;
+    late String idToken;
     late AuthResponsePayload authResponsePayload;
     late String email;
     late String password;
@@ -44,29 +46,40 @@ void main() {
     late String queryUserUrl;
     RemoteUser? remoteUser;
     late DateTime now;
+    late String sendVerificationEmailUrl;
+    late SendVerificationEmailPayload sendVerificationEmailRequestPayload;
+    late String locale;
+    late Map<String, String> sendVerificationEmailHeaders;
 
     setUp(() {
       httpClient = MockHttpClient();
       flavorUtil = FlavorUtil();
       timeUtil = MockTimeUtil();
       languageService = MockLanguageService();
-      authRemote = AuthRemote(httpClient, flavorUtil, timeUtil, languageService);
+      authRemote =
+          AuthRemote(httpClient, flavorUtil, timeUtil, languageService);
       email = 'test@test.com';
       password = '123456';
       authRequestPayload = AuthRequestPayload(email, password);
       authId = 'authId';
       userId = 'userId';
-      authResponsePayload = AuthResponsePayload(authId, 'a', 'a', '3600');
+      idToken = 'idToken';
+      authResponsePayload = AuthResponsePayload(authId, idToken, 'a', '3600');
       signInUrl = '${AuthRemote.accountUrl}signInWithPassword';
       signUpUrl = '${AuthRemote.accountUrl}signUp';
-      refreshToken = 'token';
+      refreshToken = 'refreshToken';
       refreshTokenRequestPayload = RefreshTokenRequestPayload(refreshToken);
       refreshTokenResponsePayload =
-          RefreshTokenResponsePayload(refreshToken, 'a', 'a', '3600');
+          RefreshTokenResponsePayload(refreshToken, idToken, 'a', '3600');
       refreshTokenUrl = AuthRemote.tokenUrl;
       saveUserUrl = '${authRemote.dbUrl}.json';
       queryUserUrl = '${authRemote.dbUrl}.json?orderBy="authId"&equalTo=';
       now = DateTime.now();
+      sendVerificationEmailUrl = '${AuthRemote.accountUrl}sendOobCode';
+      sendVerificationEmailRequestPayload =
+          SendVerificationEmailPayload(idToken: idToken);
+      locale = 'en';
+      sendVerificationEmailHeaders = {'X-Firebase-Locale': locale};
     });
 
     void arrangeAuthReturnsWithAuthResponsePayload(String authUrl) {
@@ -87,11 +100,14 @@ void main() {
     }
 
     void arrangeSaveUserReturnsWithUserId() {
-      when(() => httpClient.post(
-              url: saveUserUrl, data: jsonEncode(remoteUser!.toJson())))
-          .thenAnswer((_) => Future.value(Response(
-              requestOptions: RequestOptions(path: saveUserUrl),
-              data: {'name': 'ab'})));
+      when(
+        () => httpClient.post(
+          url: saveUserUrl,
+          data: any(named: 'data'),
+        ),
+      ).thenAnswer((_) => Future.value(Response(
+          requestOptions: RequestOptions(path: saveUserUrl),
+          data: {'name': 'ab'})));
     }
 
     void arrangeQueryUserReturnsWithUsers(String authId) {
@@ -117,6 +133,28 @@ void main() {
                   Response(requestOptions: RequestOptions(path: url), data: {
                 'latestLogin': now.toIso8601String(),
               })));
+    }
+
+    void arrangeSendVerificationEmailReturnsWithEmail() {
+      final payload = jsonEncode(sendVerificationEmailRequestPayload.toJson());
+
+      when(
+        () => httpClient.post(
+          url: sendVerificationEmailUrl,
+          data: payload,
+          headers: any(named: 'headers'),
+        ),
+      ).thenAnswer(
+        (invocation) => Future.value(
+          Response(
+              requestOptions: RequestOptions(path: sendVerificationEmailUrl),
+              data: json.encode({'email': email})),
+        ),
+      );
+    }
+
+    void arrangeLanguageServiceReturnsWithLocale() {
+      when(() => languageService.locale).thenReturn(locale);
     }
 
     void arrangeTimeUtilReturnsWithNow() {
@@ -151,16 +189,60 @@ void main() {
     });
     group('signUp', () {
       test(
-          'should call http client\'s post method with the appropriate parameters',
+          'should call http client\'s post method with the sign up url and appropriate parameters',
           () {
         arrangeAuthReturnsWithAuthResponsePayload(signUpUrl);
         arrangeSaveUserReturnsWithUserId();
         arrangeTimeUtilReturnsWithNow();
+        arrangeLanguageServiceReturnsWithLocale();
+        arrangeSendVerificationEmailReturnsWithEmail();
 
         authRemote.signUp(email, password);
 
         verify(() => httpClient.post(
             url: signUpUrl, data: jsonEncode(authRequestPayload.toJson())));
+      });
+      test(
+          'should call http client\'s post method with the save user url and appropriate parameters',
+          () {
+        arrangeAuthReturnsWithAuthResponsePayload(signUpUrl);
+        arrangeSaveUserReturnsWithUserId();
+        arrangeTimeUtilReturnsWithNow();
+        arrangeLanguageServiceReturnsWithLocale();
+        arrangeSendVerificationEmailReturnsWithEmail();
+        final data = jsonEncode(remoteUser!.toJson());
+
+
+        authRemote.signUp(email, password);
+
+        verify(() => httpClient.post(
+            url: saveUserUrl, data: data));
+      });
+      test(
+          'should call http client\'s post method with the send verification email url and appropriate parameters',
+          () {
+        arrangeAuthReturnsWithAuthResponsePayload(signUpUrl);
+        arrangeSaveUserReturnsWithUserId();
+        arrangeTimeUtilReturnsWithNow();
+        arrangeLanguageServiceReturnsWithLocale();
+        arrangeSendVerificationEmailReturnsWithEmail();
+
+        final data = jsonEncode(
+          SendVerificationEmailPayload(idToken: idToken).toJson(),
+        );
+
+
+
+
+        authRemote.signUp(email, password);
+
+        verify(
+          () => httpClient.post(
+            url: sendVerificationEmailUrl,
+            data: data,
+            headers: any(named: 'headers'),
+          ),
+        );
       });
     });
     group('refreshToken', () {

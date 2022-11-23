@@ -197,5 +197,16 @@
   "@add": {
     "type": "text",
     "placeholders": {}
+  },
+  "weveSentAnEmailToVerifyYourEmailAddress": "Wir haben eine E-Mail gesendet, um deine E-Mail-Adresse zu bestätigen",
+  "@weveSentAnEmailToVerifyYourEmailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseClickOnTheLinkInTheEmailThenReturnHere": "Bitte klicke auf den Link in der E-Mail, dann zurück hierher",
+  "verifyUser": "Benutzer überprüfen",
+  "@verifyUser": {
+    "type": "text",
+    "placeholders": {}
   }
 }

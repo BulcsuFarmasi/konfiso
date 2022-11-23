@@ -11,6 +11,5 @@ class AppRepository {
 
   void setLocale(String locale) {
     _languageService.locale = locale;
-    print(_languageService.locale);
   }
 }

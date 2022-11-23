@@ -23,6 +23,7 @@ void main() {
         token: '',
         refreshToken: '',
         validUntil: DateTime.now(),
+        // verified: true,
       );
     });
 
