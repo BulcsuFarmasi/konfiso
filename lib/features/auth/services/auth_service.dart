@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/auth/data/user_signin_status.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
 import 'package:konfiso/features/auth/data/stored_user.dart';
@@ -27,13 +28,18 @@ class AuthService {
     this._timeUtil,
   );
 
-  Future<bool> autoSignIn() async {
+  Future<UserSignInStatus> autoSignIn() async {
     user = await _authStorage.fetchUser();
-    if (user != null) {
+
+    if (user == null) {
+      return UserSignInStatus.notSignedIn;
+    }
+
+    if (user!.verified) {
       _refreshToken();
-      return true;
+      return UserSignInStatus.signedIn;
     } else {
-      return false;
+      return UserSignInStatus.notVerified;
     }
   }
 

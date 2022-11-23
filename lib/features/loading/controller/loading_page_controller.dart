@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/auth/data/user_signin_status.dart';
 import 'package:konfiso/features/loading/model/loading_repository.dart';
 
 final loadingPageControllerProvider = Provider(
@@ -9,7 +10,7 @@ class LoadingPageController {
 
   LoadingPageController(this._loadingRepository);
 
-  Future<bool> autoSignIn() {
+  Future<UserSignInStatus> autoSignIn() {
     return _loadingRepository.autoSignIn();
   }
 }

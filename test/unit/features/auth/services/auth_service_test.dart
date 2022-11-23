@@ -8,6 +8,7 @@ import 'package:konfiso/features/auth/data/refresh_token_response_payload.dart';
 import 'package:konfiso/features/auth/data/stored_user.dart';
 import 'package:konfiso/features/auth/data/user_info.dart';
 import 'package:konfiso/features/auth/data/user_info_response_payload.dart';
+import 'package:konfiso/features/auth/data/user_signin_status.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
@@ -55,7 +56,7 @@ void main() {
     }
 
     group('autoSignIn', () {
-      test('should return with true if user is stored', () async {
+      test('should return with signed in status if user is stored and is verified', () async {
         const refreshToken = '';
         when(() => authStorage.fetchUser()).thenAnswer(
           (_) => Future.value(
@@ -71,12 +72,27 @@ void main() {
         when(() => authRemote.refreshToken(refreshToken)).thenAnswer(
             (invocation) => Future.value(
                 const RefreshTokenResponsePayload('', '', '', '3600')));
-        expectLater(await authService.autoSignIn(), true);
+        expectLater(await authService.autoSignIn(), UserSignInStatus.signedIn);
+      });
+      test('should return with not verified status if user is stored but is not verified', () async {
+        const refreshToken = '';
+        when(() => authStorage.fetchUser()).thenAnswer(
+              (_) => Future.value(
+            StoredUser(
+              userId: '',
+              token: '',
+              refreshToken: refreshToken,
+              validUntil: now,
+              verified: false,
+            ),
+          ),
+        );
+        expectLater(await authService.autoSignIn(), UserSignInStatus.notVerified);
       });
       test('should return with false if user is not stored', () async {
         when(() => authStorage.fetchUser())
             .thenAnswer((_) => Future.value(null));
-        expectLater(await authService.autoSignIn(), false);
+        expectLater(await authService.autoSignIn(), UserSignInStatus.notSignedIn);
       });
     });
 
