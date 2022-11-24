@@ -18,4 +18,6 @@ class VerifyUserPageStateNotifier extends StateNotifier<VerifyUserPageState> {
 
     state = const VerifyUserPageState.successful();
   }
+
+  Future<void> resendVerificationEmail() async {}
 }

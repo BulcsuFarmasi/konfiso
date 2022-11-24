@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
+import 'package:konfiso/features/auth/verify_user/controller/verify_user_page_state_notifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
-class VerifyUserSuccessful extends StatelessWidget {
+class VerifyUserSuccessful extends ConsumerWidget {
   const VerifyUserSuccessful({super.key});
 
   void _navigateToSignInPage(BuildContext context) {
     Navigator.of(context).pushReplacementNamed(SignInPage.routeName);
   }
 
+  void _resendEmail(WidgetRef ref) {
+    ref.read(verifyUserPageStateNotifierProvider.notifier).resendVerificationEmail();
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const textStyle = TextStyle(color: AppColors.greyColor, fontSize: 20);
 
     return Center(
@@ -50,7 +56,9 @@ class VerifyUserSuccessful extends StatelessWidget {
             height: 10,
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              _resendEmail(ref);
+            },
             child: Text(AppLocalizations.of(context)!.resendEmail),
           )
         ],
