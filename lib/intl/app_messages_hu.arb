@@ -222,5 +222,15 @@
   "@resendEmail": {
     "type": "text",
     "placeholders": {}
+  },
+  "forgotPassword": "Elfelejtetted a jelszavad?",
+  "@forgotPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "forgottenPassword": "Elfelejtett jelszó",
+  "@forgottenPassword": {
+    "type": "text",
+    "placeholders": {}
   }
 }

@@ -19,6 +19,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:mocktail/mocktail.dart';
 
+import '../../../../../../test/unit/features/auth/forgotten_password/view/page/forgotten_password_page.dart';
+
 class MockSignInPageStateNotifier extends StateNotifier<SignInPageState>
     with Mock
     implements SignInPageStateNotifier {
@@ -125,6 +127,19 @@ void main() {
 
       expect(find.byType(SignUpPage), findsOneWidget);
     });
+
+    testWidgets('should navigate to forgotten password by clicking the link',
+            (WidgetTester widgetTester) async {
+          await widgetTester.pumpWidget(createWidgetUnderTest());
+
+          final link = find.text('Forgot password?');
+
+          await widgetTester.tap(link);
+
+          await widgetTester.pumpAndSettle();
+
+          expect(find.byType(ForgottenPasswordPage), findsOneWidget);
+        });
 
     group('validation', () {
       group('email', () {

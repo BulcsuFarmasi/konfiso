@@ -12,12 +12,6 @@ class VerifyUserSuccessful extends ConsumerWidget {
     Navigator.of(context).pushReplacementNamed(SignInPage.routeName);
   }
 
-  void _resendEmail(WidgetRef ref) {
-    ref
-        .read(verifyUserPageStateNotifierProvider.notifier)
-        .resendVerificationEmail();
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     const textStyle = TextStyle(color: AppColors.greyColor, fontSize: 20);

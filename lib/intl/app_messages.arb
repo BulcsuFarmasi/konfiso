@@ -222,5 +222,15 @@
   "@resendEmail": {
     "type": "text",
     "placeholders": {}
+  },
+  "forgotPassword": "Forgot password?",
+  "@forgotPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "forgottenPassword": "Forgotten password",
+  "@forgottenPassword": {
+    "type": "text",
+    "placeholders": {}
   }
 }
