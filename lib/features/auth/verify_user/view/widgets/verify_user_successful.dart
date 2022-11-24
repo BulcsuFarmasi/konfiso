@@ -13,7 +13,9 @@ class VerifyUserSuccessful extends ConsumerWidget {
   }
 
   void _resendEmail(WidgetRef ref) {
-    ref.read(verifyUserPageStateNotifierProvider.notifier).resendVerificationEmail();
+    ref
+        .read(verifyUserPageStateNotifierProvider.notifier)
+        .resendVerificationEmail();
   }
 
   @override
@@ -47,20 +49,6 @@ class VerifyUserSuccessful extends ConsumerWidget {
           const SizedBox(
             height: 40,
           ),
-          Text(
-            AppLocalizations.of(context)!.ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow,
-            style: textStyle,
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              _resendEmail(ref);
-            },
-            child: Text(AppLocalizations.of(context)!.resendEmail),
-          )
         ],
       ),
     );
