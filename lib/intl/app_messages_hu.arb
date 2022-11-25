@@ -232,5 +232,30 @@
   "@forgottenPassword": {
     "type": "text",
     "placeholders": {}
+  },
+  "sendEmail": "Email küldése",
+  "@sendEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideYourEmailAddressBelow": "Kérjük, add meg az e-mail címedet lent, hogy ki tudjuk küldeni az e-mailt, amivel meg tudod változtatni a jelszavadat",
+  "@pleaseProvideYourEmailAddressBelow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "emailIsSentSuccessfully": "E-mail sikeresen elküldve!",
+  "@emailIsSentSuccessfully": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "youCanChangeThePasswordAtThePageLinkedInTheEmail": "A jelszavadat e-mailben linken tudod megváltoztatni",
+  "@youCanChangeThePasswordAtThePageLinkedInTheEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "afterThatYouCanLoginHere": "Azután itt tudsz belépni",
+  "@afterThatYouCanLoginHere": {
+    "type": "text",
+    "placeholders": {}
   }
 }

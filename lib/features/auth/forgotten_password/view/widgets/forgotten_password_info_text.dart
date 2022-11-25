@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgottenPasswordInfoText extends StatelessWidget {
   const ForgottenPasswordInfoText({super.key});
@@ -6,6 +7,8 @@ class ForgottenPasswordInfoText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-        'Please provide your e-mail address below, so we can send the email with which you can set a new password', textAlign: TextAlign.center,);
+      AppLocalizations.of(context)!.pleaseProvideYourEmailAddressBelow,
+      textAlign: TextAlign.center,
+    );
   }
 }

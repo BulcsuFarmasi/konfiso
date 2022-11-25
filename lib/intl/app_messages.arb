@@ -232,5 +232,30 @@
   "@forgottenPassword": {
     "type": "text",
     "placeholders": {}
+  },
+  "sendEmail": "Send Email",
+  "@sendEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideYourEmailAddressBelow": "Please provide your email address below, so we can send the email with which you can set a new password",
+  "@pleaseProvideYourEmailAddressBelow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "emailIsSentSuccessfully": "Email is sent successfully!",
+  "@emailIsSentSuccessfully": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "youCanChangeThePasswordAtThePageLinkedInTheEmail": "You can change the password at the page linked in the email",
+  "@youCanChangeThePasswordAtThePageLinkedInTheEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "afterThatYouCanLoginHere": "After that you can login here",
+  "@afterThatYouCanLoginHere": {
+    "type": "text",
+    "placeholders": {}
   }
 }

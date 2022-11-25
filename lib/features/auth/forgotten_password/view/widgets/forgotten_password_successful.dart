@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:konfiso/shared/widgets/app/view/app.dart';
 
 class ForgottenPasswordSuccessful extends StatelessWidget {
   const ForgottenPasswordSuccessful({super.key});
@@ -9,22 +11,22 @@ class ForgottenPasswordSuccessful extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Email is sent successfully!',
-          style: TextStyle(fontSize: 20),
+          AppLocalizations.of(context)!.emailIsSentSuccessfully,
+          style: const TextStyle(fontSize: 20),
           textAlign: TextAlign.center,
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Text(
-          'You can change the password at the page linked in the email.',
+          AppLocalizations.of(context)!.youCanChangeThePasswordAtThePageLinkedInTheEmail,
           textAlign: TextAlign.center,
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         Text(
-          'After that you can login here',
+          AppLocalizations.of(context)!.afterThatYouCanLoginHere,
           textAlign: TextAlign.center,
         ),
       ],

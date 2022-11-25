@@ -8,12 +8,10 @@ class ForgottenPasswordForm extends ConsumerStatefulWidget {
   const ForgottenPasswordForm({super.key});
 
   @override
-  ConsumerState<ForgottenPasswordForm> createState() =>
-      _ForgottenPasswordFormState();
+  ConsumerState<ForgottenPasswordForm> createState() => _ForgottenPasswordFormState();
 }
 
-class _ForgottenPasswordFormState extends ConsumerState<ForgottenPasswordForm>
-    with EmailValidationCapability {
+class _ForgottenPasswordFormState extends ConsumerState<ForgottenPasswordForm> with EmailValidationCapability {
   final _formKey = GlobalKey<FormState>();
 
   void _submitForm() {
@@ -32,18 +30,17 @@ class _ForgottenPasswordFormState extends ConsumerState<ForgottenPasswordForm>
         child: Column(
           children: [
             TextFormField(
-              decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.emailAddress),
+              decoration: InputDecoration(hintText: AppLocalizations.of(context)!.emailAddress),
               validator: validateEmail,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.done,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             ElevatedButton(
               onPressed: _submitForm,
-              child: Text('Send Email'),
+              child: Text(AppLocalizations.of(context)!.sendEmail),
             ),
           ],
         ));
