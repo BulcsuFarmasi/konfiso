@@ -5,6 +5,7 @@ import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state_notifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/app_validators.dart';
+import 'package:konfiso/shared/capabiliities/email_form_capability.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({super.key});
@@ -17,7 +18,8 @@ class SignUpForm extends ConsumerStatefulWidget {
   ConsumerState<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _SignUpFormState extends ConsumerState<SignUpForm> {
+class _SignUpFormState extends ConsumerState<SignUpForm>
+    with EmailValidationCapability {
   final _formKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
@@ -50,16 +52,6 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     _formKey.currentState!.save();
     final notifier = ref.read(signUpStateNotifierProvider.notifier);
     notifier.signUp(_email!, _password!);
-  }
-
-  String? _validateEmail(String? email) {
-    String? errorMessage;
-    if (AppValidators.required(email)) {
-      errorMessage = AppLocalizations.of(context)!.pleaseProvideAnEmailAddress;
-    } else if (AppValidators.email(email!)) {
-      errorMessage = AppLocalizations.of(context)!.pleaseProvideAValidEmailAddress;
-    }
-    return errorMessage;
   }
 
   String? _validateOtherPassword(String? value) {
@@ -96,7 +88,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
             ),
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
-            validator: _validateEmail,
+            validator: validateEmail,
             onSaved: _saveEmail,
           ),
           const SizedBox(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:konfiso/features/auth/forgotten_password/controller/forgotten_password_page_state_notifier.dart';
+import 'package:konfiso/features/auth/forgotten_password/view/widgets/forgotten_password_initial.dart';
 
 class ForgottenPasswordPage extends ConsumerWidget {
   const ForgottenPasswordPage({super.key});
@@ -9,13 +11,15 @@ class ForgottenPasswordPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(forgottenPasswordPageStateNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.forgotPassword),
         centerTitle: true,
       ),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: state.maybeMap(initial: (_) => ForgottenPasswordInitial(), orElse: () => const SizedBox()),
       ),
     );
   }
