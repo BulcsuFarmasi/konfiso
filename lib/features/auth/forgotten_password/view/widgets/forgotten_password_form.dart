@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:konfiso/features/auth/forgotten_password/controller/forgotten_password_page_state_notifier.dart';
 import 'package:konfiso/shared/capabiliities/email_form_capability.dart';
 
 class ForgottenPasswordForm extends ConsumerStatefulWidget {
@@ -19,6 +20,9 @@ class _ForgottenPasswordFormState extends ConsumerState<ForgottenPasswordForm>
     if (!_formKey.currentState!.validate()) {
       return;
     }
+    _formKey.currentState!.save();
+
+    ref.read(forgottenPasswordPageStateNotifierProvider.notifier).sendEmail();
   }
 
   @override
