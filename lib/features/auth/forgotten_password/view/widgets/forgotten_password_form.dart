@@ -5,7 +5,9 @@ import 'package:konfiso/features/auth/forgotten_password/controller/forgotten_pa
 import 'package:konfiso/shared/capabiliities/email_form_capability.dart';
 
 class ForgottenPasswordForm extends ConsumerStatefulWidget {
-  const ForgottenPasswordForm({super.key});
+  const ForgottenPasswordForm({this.email, super.key});
+
+  final String? email;
 
   @override
   ConsumerState<ForgottenPasswordForm> createState() => _ForgottenPasswordFormState();
@@ -15,6 +17,12 @@ class _ForgottenPasswordFormState extends ConsumerState<ForgottenPasswordForm> w
   final _formKey = GlobalKey<FormState>();
 
   String? _email;
+
+  @override
+  void initState() {
+    super.initState();
+    _email = widget.email;
+  }
 
   void _saveEmail(String? newEmail) {
     _email = newEmail;
@@ -41,6 +49,7 @@ class _ForgottenPasswordFormState extends ConsumerState<ForgottenPasswordForm> w
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.done,
               onSaved: _saveEmail,
+              initialValue: _email,
             ),
             const SizedBox(
               height: 10,

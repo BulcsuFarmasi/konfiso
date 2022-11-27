@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:konfiso/features/auth/data/auth_request_payload.dart';
 import 'package:konfiso/features/auth/data/auth_response_payload.dart';
 import 'package:konfiso/features/auth/data/refresh_token_request_payload.dart';

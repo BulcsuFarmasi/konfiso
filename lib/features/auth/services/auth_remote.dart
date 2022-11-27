@@ -9,7 +9,6 @@ import 'package:konfiso/features/auth/data/remote_user.dart';
 import 'package:konfiso/features/auth/data/send_password_reset_email_request_payload.dart';
 import 'package:konfiso/features/auth/data/send_verification_email_request_payload.dart';
 import 'package:konfiso/features/auth/data/update_user_request_payload.dart';
-import 'package:konfiso/features/auth/data/user_info.dart';
 import 'package:konfiso/features/auth/data/user_info_request_payload.dart';
 import 'package:konfiso/features/auth/data/user_info_response_payload.dart';
 import 'package:konfiso/shared/http_client.dart';
@@ -72,7 +71,7 @@ class AuthRemote {
     return UserInfoResponsePayload.fromJson(response.data);
   }
 
-  Future<void> sendPasswordRequestEmail(String email) async {
+  Future<void> sendPasswordResetEmail(String email) async {
     // create payload
     final requestPayload = SendPasswordResetEmailRequestPayload(email);
     // send request

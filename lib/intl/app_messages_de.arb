@@ -253,8 +253,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "afterThatYouCanLoginHere": "Danach kanst du dich hier anmelden",
+  "afterThatYouCanLoginHere": "Danach kannst du dich hier anmelden",
   "@afterThatYouCanLoginHere": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "theEmailAddressCouldntBeFound": "Die E-Mail-Adresse konnte nicht gefunden werden",
+  "@heEmailAddressCouldntBeFound": {
     "type": "text",
     "placeholders": {}
   }

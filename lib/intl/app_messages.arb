@@ -257,5 +257,10 @@
   "@afterThatYouCanLoginHere": {
     "type": "text",
     "placeholders": {}
+  },
+  "theEmailAddressCouldntBeFound": "The Email address couldn't be found",
+  "@heEmailAddressCouldntBeFound": {
+    "type": "text",
+    "placeholders": {}
   }
 }

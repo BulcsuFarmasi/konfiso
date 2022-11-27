@@ -10,10 +10,8 @@ import 'package:konfiso/features/auth/data/stored_user.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
 import 'package:konfiso/shared/utils/time_util.dart';
 
-final authServiceProvider = Provider((Ref ref) => AuthService(
-    ref.read(authStorageProvider),
-    ref.read(authRemoteProvider),
-    ref.read(timeUtilProvider)));
+final authServiceProvider = Provider(
+    (Ref ref) => AuthService(ref.read(authStorageProvider), ref.read(authRemoteProvider), ref.read(timeUtilProvider)));
 
 class AuthService {
   final AuthStorage _authStorage;
@@ -99,8 +97,7 @@ class AuthService {
 
     Timer.periodic(const Duration(seconds: 2), (Timer timer) async {
       try {
-        final userInfo =
-            (await _authRemote.loadUserInfo(user!.token)).users.first;
+        final userInfo = (await _authRemote.loadUserInfo(user!.token)).users.first;
 
         if (userInfo.emailVerified) {
           timer.cancel();
@@ -115,7 +112,12 @@ class AuthService {
   }
 
   Future<void> sendPasswordResetEmail(String email) async {
-    _authRemote.sendPasswordRequestEmail(email);
+    try {
+      await _authRemote.sendPasswordResetEmail(email);
+    } on DioError catch (e) {
+      print(e);
+      throw NetworkException(e.response!.data['error']['message']);
+    }
   }
 
   void _refreshToken() async {

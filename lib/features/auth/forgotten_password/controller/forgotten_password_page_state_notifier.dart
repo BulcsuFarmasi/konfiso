@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/forgotten_password/controller/forgotten_password_page_state.dart';
+import 'package:konfiso/features/auth/forgotten_password/model/forgotten_password_exception.dart';
 import 'package:konfiso/features/auth/forgotten_password/model/forgotten_password_repository.dart';
 
 final forgottenPasswordPageStateNotifierProvider =
@@ -15,9 +16,13 @@ class ForgottenPasswordPageStateNotifier extends StateNotifier<ForgottenPassword
   Future<void> sendEmail(String email) async {
     state = const ForgottenPasswordPageState.inProgress();
 
-    await _forgottenPasswordRepository.sendEmail(email);
+    try {
+      await _forgottenPasswordRepository.sendEmail(email);
 
-    state = const ForgottenPasswordPageState.successful();
+      state = const ForgottenPasswordPageState.successful();
+    } on ForgottenPasswordException catch (e) {
+      state = ForgottenPasswordPageState.error(error: e.error, email: email);
+    }
   }
 
   void restoreToInitial() {

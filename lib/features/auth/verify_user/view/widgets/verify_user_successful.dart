@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
-import 'package:konfiso/features/auth/verify_user/controller/verify_user_page_state_notifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
 class VerifyUserSuccessful extends ConsumerWidget {

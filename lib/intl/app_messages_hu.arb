@@ -257,5 +257,10 @@
   "@afterThatYouCanLoginHere": {
     "type": "text",
     "placeholders": {}
+  },
+  "theEmailAddressCouldntBeFound": "Az e-mail cím nem található",
+  "@heEmailAddressCouldntBeFound": {
+    "type": "text",
+    "placeholders": {}
   }
 }
