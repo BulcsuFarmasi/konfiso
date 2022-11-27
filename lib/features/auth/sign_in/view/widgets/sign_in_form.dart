@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/auth/forgotten_password/view/pages/forgotten_password_page.dart';
 import 'package:konfiso/features/auth/sign_in/controller/sign_in_page_state_notifier.dart';
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
@@ -23,6 +24,10 @@ class _SignInFormState extends ConsumerState<SignInForm> {
 
   void _navigateToSignUp() {
     Navigator.of(context).pushReplacementNamed(SignUpPage.routeName);
+  }
+
+  void _navigateToForgottenPassword() {
+    Navigator.of(context).pushNamed(ForgottenPasswordPage.routeName);
   }
 
   void _saveEmail(String? email) {
@@ -85,6 +90,21 @@ class _SignInFormState extends ConsumerState<SignInForm> {
             obscureText: true,
             validator: _validatePassword,
             onSaved: _savePassword,
+          ),
+          const SizedBox(
+            height: 34,
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+                onTap: _navigateToForgottenPassword,
+                child: Text(
+                  AppLocalizations.of(context)!.forgotPassword,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.blackColor,
+                  ),
+                )),
           ),
           const SizedBox(
             height: 34,

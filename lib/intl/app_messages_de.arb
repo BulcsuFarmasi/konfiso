@@ -103,8 +103,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "successfulRegistration": "Erfolgreiche Registrierung!",
-  "@successfulRegistration": {
+  "successfulValidation": "Erfolgreiche Bestätigung!",
+  "@successfulValidation": {
     "type": "text",
     "placeholders": {}
   },
@@ -173,7 +173,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "wantToRead": "Will ich lesen",
+  "wantToRead": "Ich möchte lesen",
   "@wantToRead": {
     "type": "text",
     "placeholders": {}
@@ -195,6 +195,71 @@
   },
   "add": "Hinzufügen",
   "@add": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "verify": "Benutzer überprüfen",
+  "@verifyUser": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "weveSentAnEmailToVerifyYourEmailAddress": "Wir haben eine E-Mail gesendet, um deine E-Mail-Adresse zu bestätigen",
+  "@weveSentAnEmailToVerifyYourEmailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseClickOnTheLinkInTheEmailThenReturnHere": "Bitte klicke auf den Link in der E-Mail, dann zurück hierher",
+  "@pleaseClickOnTheLinkInTheEmailThenReturnHere": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow": "Wenn dein Bestätigungscode abgelaufen ist, kannst du die E-Mail mit der Schaltfläche unten erneut senden",
+  "@ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resendEmail": "E-Mail erneut senden",
+  "@resendEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "forgotPassword": "Passwort vergessen?",
+  "@forgotPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "forgottenPassword": "Vergessenes Passwort",
+  "@forgottenPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sendEmail": "E-Mail senden",
+  "@sendEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideYourEmailAddressBelow": "Bitte gib Sie unten Ihre E-Mail-Adresse an, damit wir die E-Mail senden können, mit der du ein neues Passwort festlegen kannst",
+  "@pleaseProvideYourEmailAddressBelow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "emailIsSentSuccessfully": "Email wurde erfolgreich versendet!",
+  "@emailIsSentSuccessfully": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "youCanChangeThePasswordAtThePageLinkedInTheEmail": "Du kannst das Passwort auf der in der E-Mail verlinkten Seite ändern",
+  "@youCanChangeThePasswordAtThePageLinkedInTheEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "afterThatYouCanLoginHere": "Danach kannst du dich hier anmelden",
+  "@afterThatYouCanLoginHere": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "theEmailAddressCouldntBeFound": "Die E-Mail-Adresse konnte nicht gefunden werden",
+  "@heEmailAddressCouldntBeFound": {
     "type": "text",
     "placeholders": {}
   }

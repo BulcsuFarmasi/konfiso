@@ -6,8 +6,10 @@ part 'sing_in_page_state.freezed.dart';
 @freezed
 class SignInPageState with _$SignInPageState {
   const factory SignInPageState.initial() = _Initial;
-  const factory SignInPageState.inProgress() = _InProgress;
-  const factory SignInPageState.successful() = _Successful;
-  const factory SignInPageState.error(SignInError error) = _Error;
 
+  const factory SignInPageState.inProgress() = _InProgress;
+
+  const factory SignInPageState.successful() = _Successful;
+
+  const factory SignInPageState.error(SignInError error) = _Error;
 }

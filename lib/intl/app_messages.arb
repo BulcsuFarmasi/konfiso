@@ -103,8 +103,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "successfulRegistration": "Successful registration!",
-  "@successfulRegistration": {
+  "successfulValidation": "Successful validation!",
+  "@successfulValidation": {
     "type": "text",
     "placeholders": {}
   },
@@ -195,6 +195,71 @@
   },
   "add": "Add",
   "@add": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "verify": "Verify User",
+  "@verifyUser": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "weveSentAnEmailToVerifyYourEmailAddress": "We've sent an email to verify your email address",
+  "@weveSentAnEmailToVerifyYourEmailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseClickOnTheLinkInTheEmailThenReturnHere": "Please click on the link in the email, then return here",
+  "@pleaseClickOnTheLinkInTheEmailThenReturnHere": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow": "If your validation code is expired, you can resend the email with the button below",
+  "@ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resendEmail": "Resend Email",
+  "@resendEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "forgotPassword": "Forgot password?",
+  "@forgotPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "forgottenPassword": "Forgotten password",
+  "@forgottenPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sendEmail": "Send Email",
+  "@sendEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideYourEmailAddressBelow": "Please provide your email address below, so we can send the email with which you can set a new password",
+  "@pleaseProvideYourEmailAddressBelow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "emailIsSentSuccessfully": "Email is sent successfully!",
+  "@emailIsSentSuccessfully": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "youCanChangeThePasswordAtThePageLinkedInTheEmail": "You can change the password at the page linked in the email",
+  "@youCanChangeThePasswordAtThePageLinkedInTheEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "afterThatYouCanLoginHere": "After that you can login here",
+  "@afterThatYouCanLoginHere": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "theEmailAddressCouldntBeFound": "The Email address couldn't be found",
+  "@heEmailAddressCouldntBeFound": {
     "type": "text",
     "placeholders": {}
   }

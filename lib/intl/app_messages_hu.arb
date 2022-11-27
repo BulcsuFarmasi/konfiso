@@ -103,8 +103,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "successfulRegistration": "Sikeres regisztráció!",
-  "@successfulRegistration": {
+  "successfulValidation": "Sikeres megerősítés!",
+  "@successfulValidation": {
     "type": "text",
     "placeholders": {}
   },
@@ -195,6 +195,71 @@
   },
   "add": "Hozzáad",
   "@add": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "verify": "Felhasználó megerősítése",
+  "@verifyUser": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "weveSentAnEmailToVerifyYourEmailAddress": "Egy e-mailt küldtünk, hogy megerősíthetsd e-mail címedet",
+  "@weveSentAnEmailToVerifyYourEmailAddress": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseClickOnTheLinkInTheEmailThenReturnHere": "Kérünk, kattints a linkre az e-mailben majd térj vissza ide",
+  "@pleaseClickOnTheLinkInTheEmailThenReturnHere": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow": "Ha lejárt az érvényestiő kódod, újra tudod küldeni az e-mailt a lenti gombbal",
+  "@ifYourValidationCodeIsExpiredYouCanResendTheEmailWithTheButtonBelow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "resendEmail": "Email újraküldése",
+  "@resendEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "forgotPassword": "Elfelejtetted a jelszavad?",
+  "@forgotPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "forgottenPassword": "Elfelejtett jelszó",
+  "@forgottenPassword": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "sendEmail": "Email küldése",
+  "@sendEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseProvideYourEmailAddressBelow": "Kérjük, add meg az e-mail címedet lent, hogy ki tudjuk küldeni az e-mailt, amivel meg tudod változtatni a jelszavadat",
+  "@pleaseProvideYourEmailAddressBelow": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "emailIsSentSuccessfully": "E-mail sikeresen elküldve!",
+  "@emailIsSentSuccessfully": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "youCanChangeThePasswordAtThePageLinkedInTheEmail": "A jelszavadat e-mailben linken tudod megváltoztatni",
+  "@youCanChangeThePasswordAtThePageLinkedInTheEmail": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "afterThatYouCanLoginHere": "Azután itt tudsz belépni",
+  "@afterThatYouCanLoginHere": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "theEmailAddressCouldntBeFound": "Az e-mail cím nem található",
+  "@heEmailAddressCouldntBeFound": {
     "type": "text",
     "placeholders": {}
   }

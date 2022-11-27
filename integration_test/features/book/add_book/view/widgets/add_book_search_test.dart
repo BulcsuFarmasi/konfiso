@@ -43,7 +43,7 @@ void main() {
 
     testWidgets('should call state notifier search function after typing',
         (WidgetTester widgetTester) async {
-      const testText = 'alma';
+      const testText = 'apple';
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       final textField = find.byType(TextField);
