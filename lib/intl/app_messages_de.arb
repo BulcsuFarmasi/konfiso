@@ -259,7 +259,17 @@
     "placeholders": {}
   },
   "theEmailAddressCouldntBeFound": "Die E-Mail-Adresse konnte nicht gefunden werden",
-  "@heEmailAddressCouldntBeFound": {
+  "@theEmailAddressCouldntBeFound": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noInternetConnection": "Keine Internetverbindung",
+  "@noInternetConnection": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "toUseTheAppPleaseConnectYourDeviceToTheInternet": "Um die App zu verwenden, verbind dein Gerät mit dem Internet",
+  "@toUseTheAppPleaseConnectYourDeviceToTheInternet": {
     "type": "text",
     "placeholders": {}
   }
