@@ -114,6 +114,10 @@ class AuthService {
     return completer.future;
   }
 
+  Future<void> sendPasswordResetEmail(String email) async {
+    _authRemote.sendPasswordRequestEmail(email);
+  }
+
   void _refreshToken() async {
     final responsePayload = await _authRemote.refreshToken(user!.refreshToken);
     user = StoredUser(

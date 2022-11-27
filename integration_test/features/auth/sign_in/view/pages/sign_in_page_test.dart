@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:konfiso/features/auth/forgotten_password/view/pages/forgotten_password_page.dart';
 import 'package:konfiso/features/auth/sign_in/controller/sign_in_page_state_notifier.dart';
 import 'package:konfiso/features/auth/sign_in/controller/sing_in_page_state.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_in_error.dart'
@@ -19,7 +20,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:mocktail/mocktail.dart';
 
-import '../../../../../../test/unit/features/auth/forgotten_password/view/page/forgotten_password_page.dart';
 
 class MockSignInPageStateNotifier extends StateNotifier<SignInPageState>
     with Mock

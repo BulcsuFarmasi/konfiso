@@ -21,7 +21,7 @@ void main() {
     });
 
     void arrangeRepositorySendEmailReturns() {
-      when(() => forgottenPasswordRepository.sendEmail()).thenAnswer((_) => Future.value(null));
+      when(() => forgottenPasswordRepository.sendEmail('a')).thenAnswer((_) => Future.value(null));
     }
 
     test('should emit initiak', () {
@@ -34,9 +34,9 @@ void main() {
        // arrange method returns
         arrangeRepositorySendEmailReturns();
        // call sendEmail
-        forgottenPasswordPageStateNotifier.sendEmail();
+        forgottenPasswordPageStateNotifier.sendEmail('a');
        // verify call
-        verify(() => forgottenPasswordRepository.sendEmail());
+        verify(() => forgottenPasswordRepository.sendEmail('a'));
       });
     });
   });

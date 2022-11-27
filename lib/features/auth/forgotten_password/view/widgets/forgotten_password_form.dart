@@ -14,13 +14,19 @@ class ForgottenPasswordForm extends ConsumerStatefulWidget {
 class _ForgottenPasswordFormState extends ConsumerState<ForgottenPasswordForm> with EmailValidationCapability {
   final _formKey = GlobalKey<FormState>();
 
+  String? _email;
+
+  void _saveEmail(String? newEmail) {
+    _email = newEmail;
+  }
+
   void _submitForm() {
     if (!_formKey.currentState!.validate()) {
       return;
     }
     _formKey.currentState!.save();
 
-    ref.read(forgottenPasswordPageStateNotifierProvider.notifier).sendEmail();
+    ref.read(forgottenPasswordPageStateNotifierProvider.notifier).sendEmail(_email!);
   }
 
   @override
@@ -34,6 +40,7 @@ class _ForgottenPasswordFormState extends ConsumerState<ForgottenPasswordForm> w
               validator: validateEmail,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.done,
+              onSaved: _saveEmail,
             ),
             const SizedBox(
               height: 10,

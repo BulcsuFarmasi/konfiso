@@ -41,7 +41,7 @@ void main() {
     }
 
     void arrangeStateNotifierSendEmailReturns() {
-      when(forgottenPasswordPageStateNotifier.sendEmail).thenAnswer((_) => Future.value(null));
+      when(() => forgottenPasswordPageStateNotifier.sendEmail('a')).thenAnswer((_) => Future.value(null));
     }
 
     testWidgets('should display initial widget initially', (WidgetTester widgetTester) async {

@@ -11,6 +11,12 @@ class ForgottenPasswordPage extends ConsumerWidget {
 
   static const routeName = '/forgotten-password';
 
+  void _navigateBack(BuildContext context, WidgetRef ref) {
+    Navigator.of(context).pop();
+
+    ref.read(forgottenPasswordPageStateNotifierProvider.notifier).restoreToInitial();
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(forgottenPasswordPageStateNotifierProvider);
@@ -18,6 +24,11 @@ class ForgottenPasswordPage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.forgotPassword),
         centerTitle: true,
+        leading: BackButton(
+          onPressed: () {
+            _navigateBack(context, ref);
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),

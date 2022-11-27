@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:konfiso/shared/widgets/app/view/app.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/auth/forgotten_password/controller/forgotten_password_page_state_notifier.dart';
+import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
+import 'package:konfiso/shared/app_colors.dart';
 
-class ForgottenPasswordSuccessful extends StatelessWidget {
+class ForgottenPasswordSuccessful extends ConsumerWidget {
   const ForgottenPasswordSuccessful({super.key});
 
+  void _navigateToSignInPage(BuildContext context, WidgetRef ref) {
+    Navigator.of(context).pushReplacementNamed(SignInPage.routeName);
+
+    ref.read(forgottenPasswordPageStateNotifierProvider.notifier).restoreToInitial();
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -25,9 +34,15 @@ class ForgottenPasswordSuccessful extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        Text(
-          AppLocalizations.of(context)!.afterThatYouCanLoginHere,
-          textAlign: TextAlign.center,
+        GestureDetector(
+          onTap: () {
+            _navigateToSignInPage(context, ref);
+          },
+          child: Text(
+            AppLocalizations.of(context)!.afterThatYouCanLoginHere,
+            style: const TextStyle(fontSize: 18, color: AppColors.primaryColor),
+            textAlign: TextAlign.center,
+          ),
         ),
       ],
     );

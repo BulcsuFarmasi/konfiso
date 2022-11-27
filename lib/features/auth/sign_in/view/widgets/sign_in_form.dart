@@ -27,7 +27,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
   }
 
   void _navigateToForgottenPassword() {
-    Navigator.of(context).pushReplacementNamed(ForgottenPasswordPage.routeName);
+    Navigator.of(context).pushNamed(ForgottenPasswordPage.routeName);
   }
 
   void _saveEmail(String? email) {
