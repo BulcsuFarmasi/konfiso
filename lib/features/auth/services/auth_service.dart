@@ -115,7 +115,6 @@ class AuthService {
     try {
       await _authRemote.sendPasswordResetEmail(email);
     } on DioError catch (e) {
-      print(e);
       throw NetworkException(e.response!.data['error']['message']);
     }
   }

@@ -14,7 +14,8 @@ import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/features/loading/view/pages/loading_page.dart';
 import 'package:konfiso/features/no_connection/view/pages/no_connection_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
-import 'package:konfiso/shared/widgets/app/controller/app_controller.dart';
+import 'package:konfiso/shared/widgets/app/controller/app_state.dart';
+import 'package:konfiso/shared/widgets/app/controller/app_state_notifier.dart';
 
 class App extends ConsumerStatefulWidget {
   const App({super.key});
@@ -24,20 +25,37 @@ class App extends ConsumerStatefulWidget {
 }
 
 class _AppState extends ConsumerState<App> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   void initState() {
     super.initState();
     Future(() {
-      ref.read(appControllerProvider).setLocale(Platform.localeName);
+      final notifier = ref.read(appStateNotifierProvider.notifier);
+      notifier.setLocale(Platform.localeName);
+      notifier.watchConnection();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(appStateNotifierProvider, (AppState? previous, AppState next) {
+      next.maybeMap(
+          connected: (_) {
+            if (previous != const AppState.initial()) {
+              _navigatorKey.currentState!.pop();
+            }
+          },
+          notConnected: (_) {
+            _navigatorKey.currentState!.pushNamed(NoConnectionPage.routeName);
+          },
+          orElse: () => null);
+    });
     return MaterialApp(
       title: 'Konfiso',
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      navigatorKey: _navigatorKey,
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.backgroundColor,
         primarySwatch: AppColors.primaryColorSwatch,
