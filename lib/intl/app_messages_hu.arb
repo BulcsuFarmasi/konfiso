@@ -259,7 +259,17 @@
     "placeholders": {}
   },
   "theEmailAddressCouldntBeFound": "Az e-mail cím nem található",
-  "@heEmailAddressCouldntBeFound": {
+  "@theEmailAddressCouldntBeFound": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "noInternetConnection": "Nincs internet kapcsolat",
+  "@noInternetConnection": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "toUseTheAppPleaseConnectYourDeviceToTheInternet": "Hogy használni tudd az appot, kérjük csatlakoztassd készülékedet az internethez",
+  "@toUseTheAppPleaseConnectYourDeviceToTheInternet": {
     "type": "text",
     "placeholders": {}
   }
