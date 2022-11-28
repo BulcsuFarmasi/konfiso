@@ -24,8 +24,8 @@ class BookHomePage extends StatelessWidget {
         ),
       ),
       drawer: const AppDrawer(),
-      body: SingleChildScrollView(
-        child: Center(
+      body: Center(
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: BookReadingStatus.values

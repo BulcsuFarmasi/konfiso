@@ -18,7 +18,7 @@ class HttpClient {
     return _dio.patch(url, data: data);
   }
 
-  Future<Response> post({required String url, dynamic data}) {
-    return _dio.post(url, data: data);
+  Future<Response> post({required String url, dynamic data, Map<String, String>? headers}) {
+    return _dio.post(url, data: data, options: Options(headers: headers));
   }
 }

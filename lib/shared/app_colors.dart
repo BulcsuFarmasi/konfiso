@@ -29,4 +29,6 @@ class AppColors {
   static const greyDarkestColor = Color(0xFF06070D);
 
   static const greyDarkestWithHalfOpacity = Color(0x7F06070D);
+
+  static const blackColor = Color(0xFF000000);
 }
