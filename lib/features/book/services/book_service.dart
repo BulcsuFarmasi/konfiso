@@ -19,7 +19,7 @@ class BookService {
     List<Volume> volumes = [];
     try {
       final response = await _bookRemote.search(searchTerm);
-      final payload = ListBooksResponsePayload.fromJson(jsonDecode(response.data));
+      final payload = ListBooksResponsePayload.fromJson(response.data);
       if (payload.totalItems != 0) {
         volumes = payload.items!;
       }
@@ -31,6 +31,6 @@ class BookService {
 
   Future<Volume> loadBookByExternalId(String externalId) async {
     final response = await _bookRemote.loadBookByExternalId(externalId);
-    return Volume.fromJson(jsonDecode(response.data));
+    return Volume.fromJson(response.data);
   }
 }
