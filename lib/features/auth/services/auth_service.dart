@@ -46,7 +46,8 @@ class AuthService {
     try {
       final authResponse = await _authRemote.signIn(email, password);
       user = StoredUser(
-          userId: authResponse.localId,
+          userId: authResponse.userId!,
+          authId: authResponse.localId,
           token: authResponse.idToken,
           refreshToken: authResponse.refreshToken,
           validUntil: _timeUtil.now().add(
@@ -68,7 +69,7 @@ class AuthService {
     try {
       final authResponse = await _authRemote.signUp(email, password);
       user = StoredUser(
-          userId: authResponse.localId,
+          authId: authResponse.localId,
           token: authResponse.idToken,
           refreshToken: authResponse.refreshToken,
           validUntil: _timeUtil.now().add(
@@ -122,7 +123,8 @@ class AuthService {
   void _refreshToken() async {
     final responsePayload = await _authRemote.refreshToken(user!.refreshToken);
     user = StoredUser(
-      userId: responsePayload.user_id,
+      userId: user!.userId,
+      authId: responsePayload.user_id,
       token: responsePayload.id_token,
       refreshToken: responsePayload.refresh_token,
       validUntil: _timeUtil.now().add(

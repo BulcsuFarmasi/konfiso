@@ -59,6 +59,7 @@ void main() {
         when(() => authStorage.fetchUser()).thenAnswer(
           (_) => Future.value(
             StoredUser(
+              authId: '',
               userId: '',
               token: '',
               refreshToken: refreshToken,
@@ -78,6 +79,7 @@ void main() {
               (_) => Future.value(
             StoredUser(
               userId: '',
+              authId: '',
               token: '',
               refreshToken: refreshToken,
               validUntil: now,
@@ -154,6 +156,7 @@ void main() {
       });
       test('should set user to null', () {
         authService.user = StoredUser(
+          authId: '',
           userId: '',
           token: '',
           refreshToken: '',
@@ -168,6 +171,7 @@ void main() {
     group('checkVerification', () {
       test('should call auth remote loadUserInfo after 2 seconds', () async {
         authService.user = StoredUser(
+          authId: 'auth_id',
           userId: 'user_id',
           token: 'id_token',
           refreshToken: 'a',
@@ -184,6 +188,7 @@ void main() {
       });
       test('should complete the future if email verified is true', () async {
         authService.user = StoredUser(
+            authId: 'authId',
             userId: 'user_id',
             token: 'id_token',
             refreshToken: 'a',
@@ -200,6 +205,7 @@ void main() {
       test('should not complete the future if email verified is false',
           () async {
         authService.user = StoredUser(
+            authId: 'auth_id',
             userId: 'user_id',
             token: 'id_token',
             refreshToken: 'a',

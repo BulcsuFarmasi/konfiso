@@ -16,7 +16,6 @@ class AppStateNotifier extends StateNotifier<AppState> {
 
   void watchConnection() {
     _appRepository.watchConnection.listen((connection) {
-      print(connection);
       if (connection) {
         state = const AppState.connected();
       } else {

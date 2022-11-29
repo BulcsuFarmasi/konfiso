@@ -54,7 +54,6 @@ void main() {
     books = [
       const Book(
         title: 'Harry Potter and the Chamber of Secrets',
-        externalId: 'ab',
         authors: ['JK Rowling'],
         coverImageSmall:
             'https://upload.wikimedia.org/wikipedia/en/5/5c/Harry_Potter_and_the_Chamber_of_Secrets.jpg',
@@ -64,7 +63,6 @@ void main() {
       ),
       const Book(
         title: 'Harry Potter and the Prisoner of Azkaban',
-        externalId: 'cd',
         authors: ['JK Rowling'],
         coverImageSmall:
             'https://upload.wikimedia.org/wikipedia/en/a/a0/Harry_Potter_and_the_Prisoner_of_Azkaban.jpg',

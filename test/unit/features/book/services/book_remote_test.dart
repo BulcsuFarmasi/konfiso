@@ -2,27 +2,31 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/book/services/book_remote.dart';
 import 'package:konfiso/shared/http_client.dart';
+import 'package:konfiso/shared/utils/flavor_util.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockHttpClient extends Mock implements HttpClient {}
+class MockFlavorUtil extends Mock implements FlavorUtil {}
 
 void main() {
   late BookRemote bookRemote;
   late HttpClient httpClient;
+  late FlavorUtil flavorUtil;
   late String searchUrl;
   late Map<String, String> responseData;
-  late String externalId;
+  late String isbn;
   late String loadUrl;
 
   group('BookRemote', () {
     setUp(() {
       httpClient = MockHttpClient();
-      bookRemote = BookRemote(httpClient);
+      flavorUtil = FlavorUtil();
+      bookRemote = BookRemote(httpClient, flavorUtil);
       searchUrl =
           '${BookRemote.apiUrl}?q="harry+potter"&maxResults=10&startIndex=0';
-      externalId = 'ab';
-      responseData = {'id': externalId};
-      loadUrl = '${BookRemote.apiUrl}/$externalId';
+      isbn = 'isbn';
+      responseData = {'id': isbn};
+      loadUrl = '${BookRemote.apiUrl}/?q=isbn:$isbn';
     });
 
     void arrangeHttpClientReturnsWithResponseForSearch(String url) {
@@ -52,7 +56,7 @@ void main() {
       test('should call http client get with constructed url', () {
         arrangeHttpClientReturnsWithResponseForSearch(loadUrl);
 
-        bookRemote.loadBookByExternalId(externalId);
+        bookRemote.loadBookByIsbn(isbn);
 
         verify(() => httpClient.get(url: loadUrl));
       });
@@ -60,7 +64,7 @@ void main() {
         arrangeHttpClientReturnsWithResponseForSearch(loadUrl);
 
         expectLater(
-          (await bookRemote.loadBookByExternalId(externalId)).data,
+          (await bookRemote.loadBookByIsbn(isbn)).data,
           responseData,
         );
       });

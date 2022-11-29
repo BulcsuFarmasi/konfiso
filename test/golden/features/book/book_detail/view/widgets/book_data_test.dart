@@ -3,14 +3,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_data.dart';
 import 'package:konfiso/features/book/data/book.dart';
+import 'package:konfiso/features/book/data/industry_identifier.dart';
 
 void main() {
   group('BookData', () {
     Widget createWidgetUnderTest() {
-      return const MaterialApp(
+      return  const MaterialApp(
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: BookData(book: Book(title: 'a', externalId: 'b')),
+        home: BookData(book: Book(title: 'a', industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '12234567898765')])),
       );
     }
 

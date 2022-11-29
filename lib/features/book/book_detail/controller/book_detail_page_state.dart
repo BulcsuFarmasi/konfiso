@@ -1,13 +1,17 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:konfiso/features/book/data/book.dart';
+import 'package:konfiso/features/book/data/book_reading_status.dart';
 
 part 'book_detail_page_state.freezed.dart';
 
 @freezed
 class BookDetailPageState with _$BookDetailPageState {
   const factory BookDetailPageState.initial() = _Initial;
-  const factory BookDetailPageState.inProgress() = _InProgress;
-  const factory BookDetailPageState.success(Book book) = _Success;
-  const factory BookDetailPageState.error() = _Error;
+  const factory BookDetailPageState.loadingInProgress() = _LoadingInProgress;
+  const factory BookDetailPageState.loadingSuccess(Book book) = _LoadingSuccess;
+  const factory BookDetailPageState.loadingError() = _LoadingError;
+  const factory BookDetailPageState.savingInProgress() = _SavingInProgress;
+  const factory BookDetailPageState.savingSuccess(BookReadingStatus bookReadingStatus) = _SavingSuccess;
+  const factory BookDetailPageState.savingError() = _SavingError;
 
 }

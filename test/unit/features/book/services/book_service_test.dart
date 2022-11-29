@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/services/book_remote.dart';
@@ -12,22 +13,28 @@ import 'package:mocktail/mocktail.dart';
 
 class MockBookRemote extends Mock implements BookRemote {}
 
+
+
+class MockAuthService extends Mock implements AuthService {}
+
 void main() {
   group('BookService', () {
     late BookService bookService;
     late BookRemote bookRemote;
-    late String externalId;
+    late AuthService authService;
+    late String isbn;
     late Volume volume;
     late String searchTerm;
 
     setUp(() {
+      authService = MockAuthService();
       bookRemote = MockBookRemote();
-      bookService = BookService(bookRemote);
-      externalId = 'ab';
+      bookService = BookService(bookRemote, authService);
+      isbn = 'ab';
       searchTerm = 'harry potter';
-      volume = Volume(
-        externalId,
-        const VolumeInfo(
+      volume = const Volume(
+        'a',
+        VolumeInfo(
           title: 'Harry Potter and the Chamber of Secrets',
           authors: ['JK Rowling'],
           publishedDate: '1998-01-11',
@@ -43,7 +50,7 @@ void main() {
     });
 
     void arrangeRemoteReturnsWithVolumeMap() {
-      when(() => bookRemote.loadBookByExternalId(externalId)).thenAnswer((_) =>
+      when(() => bookRemote.loadBookByIsbn(isbn)).thenAnswer((_) =>
           Future.value(Response<String>(
               requestOptions: RequestOptions(path: 'a'),
               data: jsonEncode(volume.toJson()))));
@@ -106,7 +113,7 @@ void main() {
         // arrange remote return with response
         arrangeRemoteReturnsWithVolumeMap();
         // check if return value equals with volume
-        expectLater(await bookService.loadBookByExternalId(externalId), volume);
+        expectLater(await bookService.loadBookByIsbn(isbn), volume);
       });
     });
   });

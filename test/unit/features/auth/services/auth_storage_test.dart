@@ -19,6 +19,7 @@ void main() {
       secureStorage = MockSecureStorage();
       authStorage = AuthStorage(secureStorage);
       user = StoredUser(
+        authId: '',
         userId: '',
         token: '',
         refreshToken: '',

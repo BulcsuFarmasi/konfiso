@@ -22,23 +22,21 @@ class AddBookRepository {
       List<Volume> volumes = await _bookService.search(searchTerm);
 
       return volumes
+          .where((Volume volume) =>
+              volume.volumeInfo.industryIdentifiers
+                  ?.where((VolumeIndustryIdentifier volumeIndustryIdentifier) =>
+                      volumeIndustryIdentifier.type == 'ISBN_13' || volumeIndustryIdentifier.type == 'ISBN_10')
+                  .isNotEmpty ??
+              false)
           .map((Volume volume) => Book(
                 title: volume.volumeInfo.title,
-                externalId: volume.id,
                 authors: volume.volumeInfo.authors,
                 coverImageSmall: volume.volumeInfo.imageLinks?.thumbnail,
-                industryIds: volume.volumeInfo.industryIdentifiers
-                    ?.map((VolumeIndustryIdentifier industryIdentifier) => BookIndustryIdentifier(
+                industryIds: volume.volumeInfo.industryIdentifiers!
+                    .map((VolumeIndustryIdentifier industryIdentifier) => BookIndustryIdentifier(
                         IndustryIdentifierType.fromString(industryIdentifier.type), industryIdentifier.identifier))
                     .toList(),
               ))
-          .where((Book book) =>
-              book.industryIds
-                  ?.where((BookIndustryIdentifier bookIndustryIdentifier) =>
-                      bookIndustryIdentifier.type == IndustryIdentifierType.isbn13 ||
-                      bookIndustryIdentifier.type == IndustryIdentifierType.isbn10)
-                  .isNotEmpty ??
-              false)
           .toList();
     } on NetworkException {
       throw AddBookException();

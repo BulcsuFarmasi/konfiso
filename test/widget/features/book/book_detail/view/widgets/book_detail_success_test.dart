@@ -5,6 +5,7 @@ import 'package:konfiso/features/book/book_detail/view/widgets/book_data.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_success.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_reading_detail_form.dart';
 import 'package:konfiso/features/book/data/book.dart';
+import 'package:konfiso/features/book/data/industry_identifier.dart';
 
 void main() {
   group('BookDetailSuccess', () {
@@ -15,7 +16,12 @@ void main() {
         home: Scaffold(
           body: SingleChildScrollView(
             child: BookDetailSuccess(
-              book: Book(title: 'a', externalId: 'b'),
+              book: Book(
+                title: 'a',
+                industryIds: [
+                  BookIndustryIdentifier(IndustryIdentifierType.isbn13, '12234567898765'),
+                ],
+              ),
             ),
           ),
         ),
@@ -28,8 +34,7 @@ void main() {
       expect(find.byType(BookData), findsOneWidget);
     });
 
-    testWidgets('should display book reading detail form',
-        (WidgetTester widgetTester) async {
+    testWidgets('should display book reading detail form', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       expect(find.byType(BookReadingDetailForm), findsOneWidget);

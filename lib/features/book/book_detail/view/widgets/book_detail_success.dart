@@ -13,7 +13,7 @@ class BookDetailSuccess extends StatelessWidget {
     return Column(
       children: [
         BookData(book: book),
-        const BookReadingDetailForm(),
+        BookReadingDetailForm(industryIds: book.industryIds),
       ],
     );
   }
