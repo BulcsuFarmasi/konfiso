@@ -4,6 +4,7 @@ import 'package:konfiso/features/book/book_detail/view/widgets/book_reading_deta
 import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/features/book/data/book_reading_detail.dart';
 import 'package:konfiso/shared/app_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookDetailSavingError extends StatelessWidget {
   const BookDetailSavingError({
@@ -23,9 +24,9 @@ class BookDetailSavingError extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        const Text(
-          'Couldn\'t save the reading, please try again',
-          style: TextStyle(color: AppColors.primaryColor, fontSize: 20),
+        Text(
+          AppLocalizations.of(context)!.couldntSaveTheReadingPleaseTryAgain,
+          style: const TextStyle(color: AppColors.primaryColor, fontSize: 20),
           textAlign: TextAlign.center,
         ),
         const SizedBox(
