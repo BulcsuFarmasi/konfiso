@@ -3,9 +3,8 @@ import 'package:konfiso/features/auth/sign_in/controller/sing_in_page_state.dart
 import 'package:konfiso/features/auth/sign_in/model/sign_in_repository.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_up_expection.dart';
 
-final signInPageNotiferProvider =
-    StateNotifierProvider<SignInPageStateNotifier, SignInPageState>((Ref ref) =>
-        SignInPageStateNotifier(ref.read(signInRepositoryProvider)));
+final signInPageNotiferProvider = StateNotifierProvider<SignInPageStateNotifier, SignInPageState>(
+    (Ref ref) => SignInPageStateNotifier(ref.read(signInRepositoryProvider)));
 
 class SignInPageStateNotifier extends StateNotifier<SignInPageState> {
   final SignInRepository _signInRepository;
@@ -22,5 +21,3 @@ class SignInPageStateNotifier extends StateNotifier<SignInPageState> {
     }
   }
 }
-
-

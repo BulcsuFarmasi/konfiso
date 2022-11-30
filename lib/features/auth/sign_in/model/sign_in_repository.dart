@@ -4,8 +4,7 @@ import 'package:konfiso/features/auth/sign_in/model/sign_in_error.dart';
 import 'package:konfiso/features/auth/sign_in/model/sign_up_expection.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
 
-final signInRepositoryProvider =
-    Provider((Ref ref) => SignInRepository(ref.read(authServiceProvider)));
+final signInRepositoryProvider = Provider((Ref ref) => SignInRepository(ref.read(authServiceProvider)));
 
 class SignInRepository {
   final AuthService _authService;

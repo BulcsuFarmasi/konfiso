@@ -23,15 +23,13 @@ void main() {
     late AddBookPageStateNotifier addBookPageStateNotifier;
 
     setUp(() {
-      addBookPageStateNotifier =
-          MockAddBookPageStateNotifier(const AddBookPageState.initial());
+      addBookPageStateNotifier = MockAddBookPageStateNotifier(const AddBookPageState.initial());
     });
 
     Widget createWidgetUnderTest([VoidCallback? callback]) {
       return ProviderScope(
         overrides: [
-          addBookPageStateNotifierProvider
-              .overrideWith((_) => addBookPageStateNotifier),
+          addBookPageStateNotifierProvider.overrideWith((_) => addBookPageStateNotifier),
         ],
         child: MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -41,8 +39,7 @@ void main() {
       );
     }
 
-    testWidgets('should call state notifier search function after typing',
-        (WidgetTester widgetTester) async {
+    testWidgets('should call state notifier search function after typing', (WidgetTester widgetTester) async {
       const testText = 'apple';
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
@@ -53,8 +50,7 @@ void main() {
       verify(() => addBookPageStateNotifier.search(testText));
     });
 
-    testWidgets('should call startedTyping callback after callback',
-        (WidgetTester widgetTester) async {
+    testWidgets('should call startedTyping callback after callback', (WidgetTester widgetTester) async {
       const testText = 'alma';
       final completer = Completer();
 

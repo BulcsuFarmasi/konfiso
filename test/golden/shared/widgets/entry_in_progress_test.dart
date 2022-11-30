@@ -13,8 +13,7 @@ void main() {
     testWidgets('should match golden image', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      expect(find.byType(EntryInProgress),
-          matchesGoldenFile('entry_in_progress_test.png'));
+      expect(find.byType(EntryInProgress), matchesGoldenFile('entry_in_progress_test.png'));
     });
   });
 }

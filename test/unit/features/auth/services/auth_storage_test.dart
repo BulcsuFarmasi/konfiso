@@ -29,23 +29,18 @@ void main() {
     });
 
     group('saveUser', () {
-      test(
-          'should call secure storage write method with transformed user object',
-          () {
-        when(() =>
-                secureStorage.write(storedUserKey, jsonEncode(user.toJson())))
+      test('should call secure storage write method with transformed user object', () {
+        when(() => secureStorage.write(storedUserKey, jsonEncode(user.toJson())))
             .thenAnswer((invocation) => Future.value(null));
 
         authStorage.saveUser(user);
 
-        verify(() =>
-            secureStorage.write(storedUserKey, jsonEncode(user.toJson())));
+        verify(() => secureStorage.write(storedUserKey, jsonEncode(user.toJson())));
       });
     });
     group('deleteUser', () {
       test('should secure storage delete method with approriate params', () {
-        when(() => secureStorage.delete(storedUserKey))
-            .thenAnswer((invocation) => Future.value(null));
+        when(() => secureStorage.delete(storedUserKey)).thenAnswer((invocation) => Future.value(null));
 
         authStorage.deleteUser();
 
@@ -54,14 +49,13 @@ void main() {
     });
     group('fetchUser', () {
       test('should return with storedUser if it is stored', () async {
-        when(() => secureStorage.read(storedUserKey)).thenAnswer(
-            (invocation) => Future.value(jsonEncode(user.toJson())));
+        when(() => secureStorage.read(storedUserKey))
+            .thenAnswer((invocation) => Future.value(jsonEncode(user.toJson())));
 
         expectLater(await authStorage.fetchUser(), user);
       });
       test('should return with null if no user is stored', () async {
-        when(() => secureStorage.read(storedUserKey))
-            .thenAnswer((invocation) => Future.value(null));
+        when(() => secureStorage.read(storedUserKey)).thenAnswer((invocation) => Future.value(null));
 
         expectLater(await authStorage.fetchUser(), isNull);
       });

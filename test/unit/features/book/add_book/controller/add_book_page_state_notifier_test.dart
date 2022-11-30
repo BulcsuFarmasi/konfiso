@@ -18,23 +18,20 @@ void main() {
   setUp(() {
     addBookRepository = MockAddBookRepository();
     addBookPageStateNotifier = AddBookPageStateNotifier(addBookRepository);
-    books =
-    [
-    const Book(title: 'a', industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '12234567898765')]),
-    const Book(title: 'c', industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '12234567898765')]),
-    const Book(title: 'e', industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '12234567898765')]),
+    books = [
+      const Book(title: 'a', industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '12234567898765')]),
+      const Book(title: 'c', industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '12234567898765')]),
+      const Book(title: 'e', industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '12234567898765')]),
     ];
     searchTerm = 'apple';
   });
 
   void arrangeRepositoryReturnsWithBooks(String searchTerm) {
-    when(() => addBookRepository.search(searchTerm))
-        .thenAnswer((_) => Future.value(books));
+    when(() => addBookRepository.search(searchTerm)).thenAnswer((_) => Future.value(books));
   }
 
   void arrangeRepositoryThrowsError(String searchTerm) {
-    when(() => addBookRepository.search(searchTerm))
-        .thenThrow(AddBookException());
+    when(() => addBookRepository.search(searchTerm)).thenThrow(AddBookException());
   }
 
   group('AddBookPageStateNotifier', () {
@@ -46,34 +43,30 @@ void main() {
 
         verify(() => addBookRepository.search(searchTerm));
       });
-      test(
-          'should emit success state with books if that was given from repository',
-              () async {
-            arrangeRepositoryReturnsWithBooks(searchTerm);
+      test('should emit success state with books if that was given from repository', () async {
+        arrangeRepositoryReturnsWithBooks(searchTerm);
 
-            addBookPageStateNotifier.search(searchTerm);
+        addBookPageStateNotifier.search(searchTerm);
 
-            expect(
-              addBookPageStateNotifier.state,
-              const AddBookPageState.inProgress(),
-            );
+        expect(
+          addBookPageStateNotifier.state,
+          const AddBookPageState.inProgress(),
+        );
 
-            await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 500));
 
-            expect(
-              addBookPageStateNotifier.state,
-              AddBookPageState.successful(books),
-            );
-          });
-      test(
-          'should emit error state with books if error was given from repository',
-              () async {
-            arrangeRepositoryThrowsError(searchTerm);
+        expect(
+          addBookPageStateNotifier.state,
+          AddBookPageState.successful(books),
+        );
+      });
+      test('should emit error state with books if error was given from repository', () async {
+        arrangeRepositoryThrowsError(searchTerm);
 
-            addBookPageStateNotifier.search(searchTerm);
+        addBookPageStateNotifier.search(searchTerm);
 
-            expect(addBookPageStateNotifier.state, const AddBookPageState.error());
-          });
+        expect(addBookPageStateNotifier.state, const AddBookPageState.error());
+      });
       group('restoreInitial', () {
         test('should reset the state into initial', () {
           addBookPageStateNotifier.state = const AddBookPageState.inProgress();

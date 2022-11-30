@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:konfiso/features/auth/forgotten_password/model/forgotten_password_error.dart'
+    as forgotten_password_error;
 import 'package:konfiso/features/auth/forgotten_password/view/widgets/forgotten_password_error_banner.dart';
 import 'package:konfiso/features/auth/forgotten_password/view/widgets/forgotten_password_form.dart';
 import 'package:konfiso/features/auth/forgotten_password/view/widgets/forgotten_password_info_text.dart';
-import 'package:konfiso/features/auth/forgotten_password/model/forgotten_password_error.dart'
-    as forgotten_password_error;
 
 class ForgottenPasswordError extends StatelessWidget {
   const ForgottenPasswordError({super.key, required this.error, required this.email});

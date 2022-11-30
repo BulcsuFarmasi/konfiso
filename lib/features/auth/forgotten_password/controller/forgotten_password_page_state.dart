@@ -11,5 +11,6 @@ class ForgottenPasswordPageState with _$ForgottenPasswordPageState {
 
   const factory ForgottenPasswordPageState.successful() = _Successful;
 
-  const factory ForgottenPasswordPageState.error({required ForgottenPasswordError error, required String email}) = _Error;
+  const factory ForgottenPasswordPageState.error({required ForgottenPasswordError error, required String email}) =
+      _Error;
 }

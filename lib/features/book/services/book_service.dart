@@ -32,10 +32,7 @@ class BookService {
   Future<Volume> loadBookByIsbn(String isbn) async {
     try {
       final response = await _bookRemote.loadBookByIsbn(isbn);
-      return ListBooksResponsePayload
-          .fromJson(response.data)
-          .items!
-          .first;
+      return ListBooksResponsePayload.fromJson(response.data).items!.first;
     } on DioError catch (_) {
       throw NetworkException();
     }

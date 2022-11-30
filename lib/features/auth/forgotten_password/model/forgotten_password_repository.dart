@@ -5,7 +5,7 @@ import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
 
 final forgottenPasswordRepositoryProvider =
-Provider((Ref ref) => ForgottenPasswordRepository(ref.read(authServiceProvider)));
+    Provider((Ref ref) => ForgottenPasswordRepository(ref.read(authServiceProvider)));
 
 class ForgottenPasswordRepository {
   const ForgottenPasswordRepository(this._authService);

@@ -44,7 +44,7 @@ class BookRemote {
   }
 
   Future<String> insertBook(String isbn) async {
-    final insertUrl = '$dbBooksUrl';
+    final insertUrl = '$dbBooksUrl.json';
 
     return (await _httpClient.post(url: insertUrl, data: jsonEncode({'isbn': isbn}))).data['name'] as String;
   }

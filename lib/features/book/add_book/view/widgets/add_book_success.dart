@@ -12,9 +12,7 @@ class AddBookSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Expanded(
         child: Container(
-          decoration: BoxDecoration(
-              color: AppColors.inputBackgroundColor,
-              borderRadius: BorderRadius.circular(9)),
+          decoration: BoxDecoration(color: AppColors.inputBackgroundColor, borderRadius: BorderRadius.circular(9)),
           child: books.isNotEmpty
               ? ListView.builder(
                   itemCount: books.length,

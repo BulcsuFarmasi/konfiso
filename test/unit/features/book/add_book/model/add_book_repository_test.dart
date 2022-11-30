@@ -55,27 +55,20 @@ void main() {
       const Book(
         title: 'Harry Potter and the Chamber of Secrets',
         authors: ['JK Rowling'],
-        coverImageSmall:
-            'https://upload.wikimedia.org/wikipedia/en/5/5c/Harry_Potter_and_the_Chamber_of_Secrets.jpg',
-        industryIds: [
-          BookIndustryIdentifier(IndustryIdentifierType.isbn13, '1234567891234')
-        ],
+        coverImageSmall: 'https://upload.wikimedia.org/wikipedia/en/5/5c/Harry_Potter_and_the_Chamber_of_Secrets.jpg',
+        industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '1234567891234')],
       ),
       const Book(
         title: 'Harry Potter and the Prisoner of Azkaban',
         authors: ['JK Rowling'],
-        coverImageSmall:
-            'https://upload.wikimedia.org/wikipedia/en/a/a0/Harry_Potter_and_the_Prisoner_of_Azkaban.jpg',
-        industryIds: [
-          BookIndustryIdentifier(IndustryIdentifierType.isbn13, '9876543212345')
-        ],
+        coverImageSmall: 'https://upload.wikimedia.org/wikipedia/en/a/a0/Harry_Potter_and_the_Prisoner_of_Azkaban.jpg',
+        industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '9876543212345')],
       ),
     ];
   });
 
   void arrangeServiceReturnsWithVolumes(String searchTerm) {
-    when(() => bookService.search(searchTerm))
-        .thenAnswer((_) => Future.value(volumes));
+    when(() => bookService.search(searchTerm)).thenAnswer((_) => Future.value(volumes));
   }
 
   void arrangeServiceThrowsError(String searchTerm) {
@@ -84,12 +77,10 @@ void main() {
 
   group('AddBookRepository', () {
     group('search', () {
-      test('should return with empty list if empty search term given',
-          () async {
+      test('should return with empty list if empty search term given', () async {
         expectLater(await addBookRepository.search(''), []);
       });
-      test('should return with books converted from volumes got from service',
-          () async {
+      test('should return with books converted from volumes got from service', () async {
         const searchTerm = 'apple';
         arrangeServiceReturnsWithVolumes(searchTerm);
 

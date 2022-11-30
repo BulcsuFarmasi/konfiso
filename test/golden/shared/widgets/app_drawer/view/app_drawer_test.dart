@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/shared/widgets/app_drawer/view/app_drawer.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   group('AppDrawer', () {
@@ -16,8 +16,7 @@ void main() {
     testWidgets('should match golden image', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      expect(find.byType(AppDrawer),
-          matchesGoldenFile('app_drawer_test.png'));
+      expect(find.byType(AppDrawer), matchesGoldenFile('app_drawer_test.png'));
     });
   });
 }

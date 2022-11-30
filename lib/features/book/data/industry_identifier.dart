@@ -1,21 +1,18 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'industry_identifier.freezed.dart';
-
 part 'industry_identifier.g.dart';
 
 @freezed
 class BookIndustryIdentifier with _$BookIndustryIdentifier {
-  const factory BookIndustryIdentifier(
-      IndustryIdentifierType type, String identifier) = _BookIndustryIdentifier;
+  const factory BookIndustryIdentifier(IndustryIdentifierType type, String identifier) = _BookIndustryIdentifier;
 }
 
 @freezed
-class VolumeIndustryIdentifier with _$VolumeIndustryIdentifier  {
+class VolumeIndustryIdentifier with _$VolumeIndustryIdentifier {
   const factory VolumeIndustryIdentifier(String type, String identifier) = _VolumeIndustryIdentifier;
 
-  factory VolumeIndustryIdentifier.fromJson(Map<String, Object?> json) =>
-      _$VolumeIndustryIdentifierFromJson(json);
+  factory VolumeIndustryIdentifier.fromJson(Map<String, Object?> json) => _$VolumeIndustryIdentifierFromJson(json);
 }
 
 enum IndustryIdentifierType {

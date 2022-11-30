@@ -12,8 +12,7 @@ class VerifyUserInitial extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            AppLocalizations.of(context)!
-                .weveSentAnEmailToVerifyYourEmailAddress,
+            AppLocalizations.of(context)!.weveSentAnEmailToVerifyYourEmailAddress,
             style: textStyle,
             textAlign: TextAlign.center,
           ),
@@ -21,8 +20,7 @@ class VerifyUserInitial extends StatelessWidget {
             height: 10,
           ),
           Text(
-            AppLocalizations.of(context)!
-                .pleaseClickOnTheLinkInTheEmailThenReturnHere,
+            AppLocalizations.of(context)!.pleaseClickOnTheLinkInTheEmailThenReturnHere,
             style: textStyle,
             textAlign: TextAlign.center,
           ),

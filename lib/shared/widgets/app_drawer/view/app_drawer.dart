@@ -17,10 +17,7 @@ class AppDrawer extends ConsumerWidget {
             child: Text(
               'Konfiso',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primaryColor),
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700, color: AppColors.primaryColor),
             ),
           ),
           ListTile(

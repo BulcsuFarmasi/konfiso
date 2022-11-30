@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:konfiso/features/auth/sign_in/model/sign_in_error.dart' as sign_in_error;
 import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_error_banner.dart';
 import 'package:konfiso/features/auth/sign_in/view/widgets/sign_in_form.dart';
-import 'package:konfiso/features/auth/sign_in/model/sign_in_error.dart' as sign_in_error;
 import 'package:konfiso/shared/widgets/entry_logo.dart';
 
 class SignInError extends StatelessWidget {

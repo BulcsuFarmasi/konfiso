@@ -8,12 +8,9 @@ import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/services/book_remote.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
-
 import 'package:mocktail/mocktail.dart';
 
 class MockBookRemote extends Mock implements BookRemote {}
-
-
 
 class MockAuthService extends Mock implements AuthService {}
 
@@ -51,15 +48,11 @@ void main() {
 
     void arrangeRemoteReturnsWithVolumeMap() {
       when(() => bookRemote.loadBookByIsbn(isbn)).thenAnswer((_) =>
-          Future.value(Response<String>(
-              requestOptions: RequestOptions(path: 'a'),
-              data: jsonEncode(volume.toJson()))));
+          Future.value(Response<String>(requestOptions: RequestOptions(path: 'a'), data: jsonEncode(volume.toJson()))));
     }
 
     group('search', () {
-      test(
-          'should return with volumes if volumes are provided in response from book remote',
-          () async {
+      test('should return with volumes if volumes are provided in response from book remote', () async {
         when(() => bookRemote.search(searchTerm)).thenAnswer(
           (_) => Future.value(
             Response<String>(
@@ -74,9 +67,7 @@ void main() {
 
         expectLater(await bookService.search(searchTerm), [volume]);
       });
-      test(
-          'should return with empty list if volumes are nor provided in response from book remote',
-          () async {
+      test('should return with empty list if volumes are nor provided in response from book remote', () async {
         when(() => bookRemote.search(searchTerm)).thenAnswer(
           (_) => Future.value(
             Response<String>(
@@ -90,8 +81,7 @@ void main() {
 
         expectLater(await bookService.search(searchTerm), []);
       });
-      test('should throw an error if an error was throw by the book remote',
-          () async {
+      test('should throw an error if an error was throw by the book remote', () async {
         when(() => bookRemote.search(searchTerm)).thenThrow(
           DioError(
             requestOptions: RequestOptions(path: 'ab'),
@@ -107,9 +97,7 @@ void main() {
       });
     });
     group('loadByExternalId', () {
-      test(
-          'should return with volume which was converted from authRemote response',
-          () async {
+      test('should return with volume which was converted from authRemote response', () async {
         // arrange remote return with response
         arrangeRemoteReturnsWithVolumeMap();
         // check if return value equals with volume

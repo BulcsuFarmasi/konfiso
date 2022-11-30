@@ -1,3 +1,1 @@
-class BookDetailSavingException {
-
-}
+class BookDetailSavingException {}

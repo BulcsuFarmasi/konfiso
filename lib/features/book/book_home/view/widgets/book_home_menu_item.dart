@@ -9,8 +9,7 @@ class BookHomeMenuItem extends StatelessWidget {
   final BookReadingStatus readingStatus;
 
   void _navigateToCategoryPage(BuildContext context) {
-    Navigator.of(context)
-        .pushNamed(BookCategoryPage.routeName, arguments: readingStatus);
+    Navigator.of(context).pushNamed(BookCategoryPage.routeName, arguments: readingStatus);
   }
 
   @override

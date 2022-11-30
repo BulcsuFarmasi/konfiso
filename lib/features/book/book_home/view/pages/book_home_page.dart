@@ -29,9 +29,8 @@ class BookHomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: BookReadingStatus.values
-                .map((BookReadingStatus readingStatus) => BookHomeMenuItem(
-                    key: ValueKey<BookReadingStatus>(readingStatus),
-                    readingStatus: readingStatus))
+                .map((BookReadingStatus readingStatus) =>
+                    BookHomeMenuItem(key: ValueKey<BookReadingStatus>(readingStatus), readingStatus: readingStatus))
                 .toList(),
           ),
         ),

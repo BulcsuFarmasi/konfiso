@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'stored_user.freezed.dart';
-
 part 'stored_user.g.dart';
 
 @freezed

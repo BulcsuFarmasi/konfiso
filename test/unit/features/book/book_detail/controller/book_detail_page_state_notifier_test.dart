@@ -8,10 +8,10 @@ import 'package:mocktail/mocktail.dart';
 
 class MockBookDetailRepository extends Mock implements BookDetailRepository {}
 
-void main () {
+void main() {
   late BookDetailPageStateNotifier bookDetailPageStateNotifier;
   late BookDetailRepository bookDetailRepository;
-  late Book  book;
+  late Book book;
   late List<BookIndustryIdentifier> industryIds;
 
   setUp(() {
@@ -27,21 +27,17 @@ void main () {
 
   group('BookDetailPageStateNotifier', () {
     group('loadBookByExternalId', () {
-      test(
-          'should emit inProgress and success states if a book was given from the repositrx',
-          () async {
+      test('should emit inProgress and success states if a book was given from the repositrx', () async {
         // arrange repo returns with book
         arrangeRepositoryReturnsWithBook();
         // check if state is inProgress
         bookDetailPageStateNotifier.loadBookByIndustryIds(industryIds);
         // wait
-        expect(bookDetailPageStateNotifier.state,
-            const BookDetailPageState.loadingInProgress());
+        expect(bookDetailPageStateNotifier.state, const BookDetailPageState.loadingInProgress());
         // check if state is successful with book
         await Future.delayed(const Duration(milliseconds: 500));
 
-        expect(bookDetailPageStateNotifier.state,
-            BookDetailPageState.loadingSuccess(book));
+        expect(bookDetailPageStateNotifier.state, BookDetailPageState.loadingSuccess(book));
       });
     });
   });

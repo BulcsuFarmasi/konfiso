@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:konfiso/features/auth/forgotten_password/controller/forgotten_password_page_state.dart';
 import 'package:konfiso/features/auth/forgotten_password/controller/forgotten_password_page_state_notifier.dart';
 import 'package:konfiso/features/auth/forgotten_password/view/pages/forgotten_password_page.dart';
 import 'package:konfiso/features/auth/forgotten_password/view/widgets/forgotten_password_in_progress.dart';
-
 import 'package:mocktail/mocktail.dart';
 
 class MockForgottenPasswordPageStateNotifier extends StateNotifier<ForgottenPasswordPageState>

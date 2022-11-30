@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:konfiso/features/book/data/book_reading_status.dart';
-import 'package:konfiso/features/book/book_home/view/widgets/book_home_menu_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:konfiso/features/book/book_home/view/widgets/book_home_menu_item.dart';
+import 'package:konfiso/features/book/data/book_reading_status.dart';
 
 void main() {
   group('BookHomeMenuItem', () {
@@ -19,8 +19,7 @@ void main() {
     testWidgets('should match golden image', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      expect(find.byType(BookHomeMenuItem),
-          matchesGoldenFile('book_home_menu_item_test.png'));
+      expect(find.byType(BookHomeMenuItem), matchesGoldenFile('book_home_menu_item_test.png'));
     });
   });
 }

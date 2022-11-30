@@ -119,8 +119,6 @@ class AuthRemote {
   }
 
   Future<void> _updateUser(String userId) async {
-
-
     final updateUrl = '$dbUrl/$userId.json';
 
     await _httpClient.patch(url: updateUrl, data: json.encode(UpdateUserRequestPayload(_timeUtil.now())));
@@ -129,7 +127,7 @@ class AuthRemote {
   Future<dynamic> _fetchUserIdByAuthId(String authId) async {
     final queryUrl = '$dbUrl.json?orderBy="authId"&equalTo="$authId"';
     final response = await _httpClient.get(url: queryUrl);
-    
+
     final userId = response.data.keys.first;
     return userId;
   }
@@ -138,6 +136,7 @@ class AuthRemote {
     const url = '${accountUrl}sendOobCode';
     final sendVerificationEmailRequestPayload = jsonEncode(SendVerificationEmailPayload(idToken: token).toJson());
 
-    await _httpClient.post(url: url, data: sendVerificationEmailRequestPayload, headers: {'X-Firebase-Locale': _languageService.locale});
+    await _httpClient.post(
+        url: url, data: sendVerificationEmailRequestPayload, headers: {'X-Firebase-Locale': _languageService.locale});
   }
 }

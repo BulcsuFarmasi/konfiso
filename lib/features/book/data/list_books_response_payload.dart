@@ -10,8 +10,7 @@ class ListBooksResponsePayload {
 
   ListBooksResponsePayload({required this.totalItems, this.items});
 
-  factory ListBooksResponsePayload.fromJson(Map<String, dynamic> json) =>
-      _$ListBooksResponsePayloadFromJson(json);
+  factory ListBooksResponsePayload.fromJson(Map<String, dynamic> json) => _$ListBooksResponsePayloadFromJson(json);
 
   Map<String, dynamic> toJson() => _$ListBooksResponsePayloadToJson(this);
 }

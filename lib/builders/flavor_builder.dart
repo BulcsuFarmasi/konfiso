@@ -6,7 +6,6 @@ import 'package:build/build.dart';
 Builder buildFlavor(BuilderOptions builderOptions) => _FlavorBuilder();
 
 class _FlavorBuilder extends Builder {
-
   final output = 'lib/shared/flavor.dart';
 
   @override
@@ -21,6 +20,7 @@ const flavor = Flavor.$appEnv;
   }
 
   @override
-  Map<String, List<String>> get buildExtensions =>  {'pubspec.yaml': [output]};
-  
+  Map<String, List<String>> get buildExtensions => {
+        'pubspec.yaml': [output]
+      };
 }

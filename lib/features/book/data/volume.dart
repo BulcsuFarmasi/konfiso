@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 
 part 'volume.freezed.dart';
-
 part 'volume.g.dart';
 
 @freezed
@@ -23,14 +22,12 @@ class VolumeInfo with _$VolumeInfo {
     List<VolumeIndustryIdentifier>? industryIdentifiers,
   }) = _VolumeInfo;
 
-  factory VolumeInfo.fromJson(Map<String, Object?> json) =>
-      _$VolumeInfoFromJson(json);
+  factory VolumeInfo.fromJson(Map<String, Object?> json) => _$VolumeInfoFromJson(json);
 }
 
 @freezed
 class ImageLinks with _$ImageLinks {
   const factory ImageLinks(String? thumbnail, String? small) = _ImageLinks;
 
-  factory ImageLinks.fromJson(Map<String, Object?> json) =>
-      _$ImageLinksFromJson(json);
+  factory ImageLinks.fromJson(Map<String, Object?> json) => _$ImageLinksFromJson(json);
 }

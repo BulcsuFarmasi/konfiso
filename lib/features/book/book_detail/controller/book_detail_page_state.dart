@@ -8,11 +8,16 @@ part 'book_detail_page_state.freezed.dart';
 @freezed
 class BookDetailPageState with _$BookDetailPageState {
   const factory BookDetailPageState.initial() = _Initial;
-  const factory BookDetailPageState.loadingInProgress() = _LoadingInProgress;
-  const factory BookDetailPageState.loadingSuccess(Book book) = _LoadingSuccess;
-  const factory BookDetailPageState.loadingError() = _LoadingError;
-  const factory BookDetailPageState.savingInProgress() = _SavingInProgress;
-  const factory BookDetailPageState.savingSuccess(BookReadingStatus bookReadingStatus) = _SavingSuccess;
-  const factory BookDetailPageState.savingError(Book book, BookReadingDetail bookReadingDetail) = _SavingError;
 
+  const factory BookDetailPageState.loadingInProgress() = _LoadingInProgress;
+
+  const factory BookDetailPageState.loadingSuccess(Book book) = _LoadingSuccess;
+
+  const factory BookDetailPageState.loadingError() = _LoadingError;
+
+  const factory BookDetailPageState.savingInProgress() = _SavingInProgress;
+
+  const factory BookDetailPageState.savingSuccess(BookReadingStatus bookReadingStatus) = _SavingSuccess;
+
+  const factory BookDetailPageState.savingError(Book book, BookReadingDetail bookReadingDetail) = _SavingError;
 }
