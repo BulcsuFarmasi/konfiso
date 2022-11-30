@@ -16,7 +16,7 @@ class ForgottenPasswordRepository {
     try {
       _authService.sendPasswordResetEmail(email);
     } on NetworkException catch (e) {
-      throw ForgottenPasswordException(_convertMessageIntoError(e.message));
+      throw ForgottenPasswordException(_convertMessageIntoError(e.message!));
     }
   }
 

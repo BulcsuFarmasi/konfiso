@@ -24,22 +24,34 @@ class BookService {
         volumes = payload.items!;
       }
       return volumes;
-    } on DioError catch (e) {
-      throw NetworkException(e.message);
+    } on DioError catch (_) {
+      throw NetworkException();
     }
   }
 
   Future<Volume> loadBookByIsbn(String isbn) async {
-    final response = await _bookRemote.loadBookByIsbn(isbn);
-    return ListBooksResponsePayload.fromJson(response.data).items!.first;
+    try {
+      final response = await _bookRemote.loadBookByIsbn(isbn);
+      return ListBooksResponsePayload
+          .fromJson(response.data)
+          .items!
+          .first;
+    } on DioError catch (_) {
+      throw NetworkException();
+    }
   }
 
   Future<void> saveBook(String isbn, BookReadingDetail bookReadingDetail) async {
     String? bookId;
-    bookId = await _bookRemote.loadBookIdbyIsbn(isbn);
 
-    bookId ??= await _bookRemote.insertBook(isbn);
+    try {
+      bookId = await _bookRemote.loadBookIdbyIsbn(isbn);
 
-    await _bookRemote.insertBookReadingDetail(bookId, _authService.user!.userId!, bookReadingDetail);
+      bookId ??= await _bookRemote.insertBook(isbn);
+
+      await _bookRemote.insertBookReadingDetail(bookId, _authService.user!.userId!, bookReadingDetail);
+    } on DioError catch (_) {
+      throw NetworkException();
+    }
   }
 }

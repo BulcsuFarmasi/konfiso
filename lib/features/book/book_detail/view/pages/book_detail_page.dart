@@ -5,6 +5,7 @@ import 'package:konfiso/features/book/book_detail/controller/book_detail_page_st
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_in_progress.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_loading_error.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_loading_success.dart';
+import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_saving_error.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 
 class BookDetailPage extends ConsumerStatefulWidget {
@@ -62,7 +63,8 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
             loadingSuccess: (success) => BookDetailLoadingSuccess(book: success.book),
             loadingError: (_) => const BookDetailLoadingError(),
             savingInProgress: (_) => const BookDetailInProgress(),
-            savingError: (_) => const BookDetailInProgress(),
+            savingError: (savingError) =>
+                BookDetailSavingError(book: savingError.book, bookReadingDetail: savingError.bookReadingDetail),
             orElse: () => const SizedBox(),
           ),
         ),

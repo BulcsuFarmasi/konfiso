@@ -3,16 +3,21 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
+import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/features/book/data/book_reading_detail.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
-import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/app_validators.dart';
 
 class BookReadingDetailForm extends ConsumerStatefulWidget {
-  const BookReadingDetailForm({required this.industryIds, super.key});
+  const BookReadingDetailForm({
+    required this.book,
+    this.bookReadingDetail,
+    super.key,
+  });
 
-  final List<BookIndustryIdentifier> industryIds;
+  final Book book;
+  final BookReadingDetail? bookReadingDetail;
 
   @override
   ConsumerState<BookReadingDetailForm> createState() => _BookReadingDetailFormState();
@@ -20,10 +25,19 @@ class BookReadingDetailForm extends ConsumerStatefulWidget {
 
 class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
   final _formKey = GlobalKey<FormState>();
-  BookReadingStatus _readingStatus = BookReadingStatus.wantToRead;
-  double _rating = 0;
+  late BookReadingStatus _readingStatus;
+  late double _rating;
   int? _currentPage;
   String? _comment;
+
+  @override
+  void initState() {
+    super.initState();
+    _readingStatus = widget.bookReadingDetail?.status ?? BookReadingStatus.wantToRead;
+    _rating = widget.bookReadingDetail?.rating ?? 0;
+    _currentPage = widget.bookReadingDetail?.currentPage;
+    _comment = widget.bookReadingDetail?.comment;
+  }
 
   void _changeRating(double newRating) {
     setState(() {
@@ -67,8 +81,14 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
     }
     _formKey.currentState!.save();
 
-    ref.read(bookDetailPageStateNotifierProvider.notifier).saveBook(widget.industryIds,
-        BookReadingDetail(status: _readingStatus, currentPage: _currentPage, rating: _rating, comment: _comment));
+    ref.read(bookDetailPageStateNotifierProvider.notifier).saveBook(
+        widget.book,
+        BookReadingDetail(
+          status: _readingStatus,
+          currentPage: _currentPage,
+          rating: _rating,
+          comment: _comment,
+        ));
   }
 
   @override
@@ -79,7 +99,7 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(
-              height: 30,
+              height: 10,
             ),
             Text(
               AppLocalizations.of(context)!.reading,

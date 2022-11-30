@@ -13,7 +13,12 @@ class BookDetailLoadingSuccess extends StatelessWidget {
     return Column(
       children: [
         BookData(book: book),
-        BookReadingDetailForm(industryIds: book.industryIds),
+        const SizedBox(
+          height: 20,
+        ),
+        BookReadingDetailForm(
+          book: book,
+        ),
       ],
     );
   }
