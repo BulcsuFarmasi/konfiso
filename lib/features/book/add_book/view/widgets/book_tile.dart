@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
 import 'package:konfiso/features/book/data/book.dart';
-import 'package:konfiso/features/book/data/book_ids.dart';
+import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookTile extends StatelessWidget {
   const BookTile({
@@ -13,9 +13,8 @@ class BookTile extends StatelessWidget {
 
   final Book book;
 
-  void _navigateToDetailPage(BuildContext context, String externalId) {
-    Navigator.of(context).pushNamed(BookDetailPage.routeName,
-        arguments: BookIds(externalId: externalId));
+  void _navigateToDetailPage(BuildContext context, List<BookIndustryIdentifier> industryIds) {
+    Navigator.of(context).pushNamed(BookDetailPage.routeName, arguments: industryIds);
   }
 
   @override
@@ -32,22 +31,16 @@ class BookTile extends StatelessWidget {
       ),
       title: Text(
         book.title,
-        style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.greyDarkestColor),
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.greyDarkestColor),
       ),
       subtitle: Text(
         book.authors?.join(', ') ?? '',
-        style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: AppColors.greyDarkestWithHalfOpacity),
+        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.greyDarkestWithHalfOpacity),
       ),
       trailing: ElevatedButton(
         child: Text(AppLocalizations.of(context)!.add),
         onPressed: () {
-          _navigateToDetailPage(context, book.externalId);
+          _navigateToDetailPage(context, book.industryIds);
         },
       ),
     );

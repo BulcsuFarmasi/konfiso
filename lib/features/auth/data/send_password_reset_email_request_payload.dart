@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'send_password_reset_email_request_payload.freezed.dart';
-
 part 'send_password_reset_email_request_payload.g.dart';
 
 @freezed

@@ -19,8 +19,7 @@ void main() {
     testWidgets('should match golden image', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      expect(find.byType(AddBookPage),
-          matchesGoldenFile('add_book_page_test.png'));
+      expect(find.byType(AddBookPage), matchesGoldenFile('add_book_page_test.png'));
     });
   });
 }

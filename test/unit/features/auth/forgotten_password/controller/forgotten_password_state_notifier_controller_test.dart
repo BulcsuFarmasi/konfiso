@@ -27,11 +27,11 @@ void main() {
 
     group('sendEmail', () {
       test('should call repository\'s sendEmail method', () {
-       // arrange method returns
+        // arrange method returns
         arrangeRepositorySendEmailReturns();
-       // call sendEmail
+        // call sendEmail
         forgottenPasswordPageStateNotifier.sendEmail('a');
-       // verify call
+        // verify call
         verify(() => forgottenPasswordRepository.sendEmail('a'));
       });
     });

@@ -18,8 +18,7 @@ void main() {
       late String password;
 
       void arrangeServiceThrowsException(String message) {
-        when(() => authService.signIn(email, password))
-            .thenThrow(NetworkException(message));
+        when(() => authService.signIn(email, password)).thenThrow(NetworkException(message));
       }
 
       setUp(() {
@@ -29,8 +28,7 @@ void main() {
         password = '123456';
       });
       test('should call authService signIn', () {
-        when(() => authService.signIn(email, password))
-            .thenAnswer((_) => Future.value(null));
+        when(() => authService.signIn(email, password)).thenAnswer((_) => Future.value(null));
         signInRepository.signIn(email, password);
 
         verify(() => authService.signIn(email, password));
@@ -38,36 +36,26 @@ void main() {
       test('should throw invalid email exception if email is invalid', () {
         arrangeServiceThrowsException('INVALID_EMAIL');
 
-        expect(
-            signInRepository.signIn(email, password),
-            throwsA(predicate((e) =>
-                e is SignInException && e.error == SignInError.invalidEmail)));
+        expect(signInRepository.signIn(email, password),
+            throwsA(predicate((e) => e is SignInException && e.error == SignInError.invalidEmail)));
       });
-      test('should throw invalid password exception if password is invalid',
-          () {
+      test('should throw invalid password exception if password is invalid', () {
         arrangeServiceThrowsException('INVALID_PASSWORD');
 
-        expect(
-            signInRepository.signIn(email, password),
-            throwsA(predicate((e) =>
-                e is SignInException &&
-                e.error == SignInError.invalidPassword)));
+        expect(signInRepository.signIn(email, password),
+            throwsA(predicate((e) => e is SignInException && e.error == SignInError.invalidPassword)));
       });
       test('should throw user disabled exception if user is disabled', () {
         arrangeServiceThrowsException('USER_DISABLED');
 
-        expect(
-            signInRepository.signIn(email, password),
-            throwsA(predicate((e) =>
-                e is SignInException && e.error == SignInError.userDisabled)));
+        expect(signInRepository.signIn(email, password),
+            throwsA(predicate((e) => e is SignInException && e.error == SignInError.userDisabled)));
       });
       test('should throw other exception if the error is unkown', () {
         arrangeServiceThrowsException('a');
 
-        expect(
-            signInRepository.signIn(email, password),
-            throwsA(predicate(
-                (e) => e is SignInException && e.error == SignInError.other)));
+        expect(signInRepository.signIn(email, password),
+            throwsA(predicate((e) => e is SignInException && e.error == SignInError.other)));
       });
     });
   });

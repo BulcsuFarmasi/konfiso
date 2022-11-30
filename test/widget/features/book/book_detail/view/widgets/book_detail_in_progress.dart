@@ -12,8 +12,7 @@ void main() {
           home: BookDetailInProgress());
     }
 
-    testWidgets('should display loading indicator',
-        (WidgetTester widgetTester) async {
+    testWidgets('should display loading indicator', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       // check for loading indicator

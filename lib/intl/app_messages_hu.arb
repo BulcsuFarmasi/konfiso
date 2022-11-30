@@ -272,5 +272,15 @@
   "@toUseTheAppPleaseConnectYourDeviceToTheInternet": {
     "type": "text",
     "placeholders": {}
+  },
+  "couldntLoadTheBookPleaseTryAgain": "Nem tölthető be a könyv. Kérünk, próbáld meg újra",
+  "@couldntLoadTheBookPleaseTryAgain": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "couldntSaveTheReadingPleaseTryAgain": "Az olvasás nem menthető, kérünk, próbáld meg újra",
+  "@couldntSaveTheReadingPleaseTryAgain": {
+    "type": "text",
+    "placeholders": {}
   }
 }

@@ -20,11 +20,8 @@ class _AddBookInputSearch extends ConsumerState<AddBookSearch> {
   @override
   void initState() {
     super.initState();
-    final addBookStateNotifier =
-        ref.read(addBookPageStateNotifierProvider.notifier);
-    searchSubject
-        .debounceTime(const Duration(milliseconds: 250))
-        .listen((String searchTerm) {
+    final addBookStateNotifier = ref.read(addBookPageStateNotifierProvider.notifier);
+    searchSubject.debounceTime(const Duration(milliseconds: 250)).listen((String searchTerm) {
       addBookStateNotifier.search(searchTerm);
     });
   }
@@ -40,9 +37,8 @@ class _AddBookInputSearch extends ConsumerState<AddBookSearch> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      decoration: InputDecoration(
-          hintText: AppLocalizations.of(context)!.searchAbook,
-          suffixIcon: const Icon(Icons.search)),
+      decoration:
+          InputDecoration(hintText: AppLocalizations.of(context)!.searchAbook, suffixIcon: const Icon(Icons.search)),
       onChanged: _addToSubject,
       textInputAction: TextInputAction.done,
     );

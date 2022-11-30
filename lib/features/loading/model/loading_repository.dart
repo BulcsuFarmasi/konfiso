@@ -5,12 +5,11 @@ import 'package:konfiso/features/auth/services/auth_service.dart';
 final loadingRepositoryProvider = Provider((Ref ref) => LoadingRepository(ref.read(authServiceProvider)));
 
 class LoadingRepository {
-
   final AuthService _authService;
 
   LoadingRepository(this._authService);
 
-  Future<UserSignInStatus> autoSignIn()  {
+  Future<UserSignInStatus> autoSignIn() {
     return _authService.autoSignIn();
   }
 }

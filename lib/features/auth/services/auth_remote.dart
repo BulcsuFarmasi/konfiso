@@ -41,7 +41,11 @@ class AuthRemote {
   Future<AuthResponsePayload> signIn(String email, String password) async {
     AuthResponsePayload authResponse = await _signInUser(email, password);
 
-    _updateUser(authResponse.localId);
+    var userId = await _fetchUserIdByAuthId(authResponse.localId);
+
+    _updateUser(userId);
+
+    authResponse = authResponse.copyWith(userId: userId);
 
     return authResponse;
   }
@@ -114,21 +118,25 @@ class AuthRemote {
     await _httpClient.post(url: url, data: data);
   }
 
-  Future<void> _updateUser(String authId) async {
+  Future<void> _updateUser(String userId) async {
+    final updateUrl = '$dbUrl/$userId.json';
+
+    await _httpClient.patch(url: updateUrl, data: json.encode(UpdateUserRequestPayload(_timeUtil.now())));
+  }
+
+  Future<dynamic> _fetchUserIdByAuthId(String authId) async {
     final queryUrl = '$dbUrl.json?orderBy="authId"&equalTo="$authId"';
     final response = await _httpClient.get(url: queryUrl);
 
     final userId = response.data.keys.first;
-
-    final updateUrl = '$dbUrl/$userId.json';
-
-    await _httpClient.patch(url: updateUrl, data: json.encode(UpdateUserRequestPayload(_timeUtil.now())));
+    return userId;
   }
 
   Future<void> _sendVerificationEmail(String token) async {
     const url = '${accountUrl}sendOobCode';
     final sendVerificationEmailRequestPayload = jsonEncode(SendVerificationEmailPayload(idToken: token).toJson());
 
-    await _httpClient.post(url: url, data: sendVerificationEmailRequestPayload, headers: {'X-Firebase-Locale': _languageService.locale});
+    await _httpClient.post(
+        url: url, data: sendVerificationEmailRequestPayload, headers: {'X-Firebase-Locale': _languageService.locale});
   }
 }

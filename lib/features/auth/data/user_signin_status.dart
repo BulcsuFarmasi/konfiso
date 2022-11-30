@@ -1,1 +1,1 @@
-enum UserSignInStatus { signedIn, notSignedIn, notVerified  }
+enum UserSignInStatus { signedIn, notSignedIn, notVerified }

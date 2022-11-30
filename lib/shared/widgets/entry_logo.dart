@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
-
 class EntryLogo extends StatelessWidget {
   const EntryLogo({
     super.key,
@@ -12,10 +11,7 @@ class EntryLogo extends StatelessWidget {
     return const Text(
       'K',
       style: TextStyle(
-          fontSize: 100,
-          fontFamily: 'Arial MT Rounded',
-          color: AppColors.primaryColor,
-          fontWeight: FontWeight.w700),
+          fontSize: 100, fontFamily: 'Arial MT Rounded', color: AppColors.primaryColor, fontWeight: FontWeight.w700),
     );
   }
 }

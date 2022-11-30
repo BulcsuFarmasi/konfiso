@@ -272,5 +272,15 @@
   "@toUseTheAppPleaseConnectYourDeviceToTheInternet": {
     "type": "text",
     "placeholders": {}
+  },
+  "couldntLoadTheBookPleaseTryAgain": "Das Buch konnte nicht geladen werden, bitte versuche es erneut",
+  "@couldntLoadTheBookPleaseTryAgain": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "couldntSaveTheReadingPleaseTryAgain": "Lesen konnte nicht gespeichert werden, bitte versuche es erneut",
+  "@couldntSaveTheReadingPleaseTryAgain": {
+    "type": "text",
+    "placeholders": {}
   }
 }

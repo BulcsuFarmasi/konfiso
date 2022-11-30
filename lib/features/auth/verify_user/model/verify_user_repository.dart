@@ -8,7 +8,6 @@ class VerifyUserRepository {
 
   final AuthService _authService;
 
-
   Future<void> checkVerification() async {
     await _authService.checkVerification();
   }

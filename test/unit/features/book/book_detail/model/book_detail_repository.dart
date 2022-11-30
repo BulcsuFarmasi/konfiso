@@ -13,27 +13,24 @@ void main() {
   late BookService bookService;
   late Book book;
   late Volume volume;
-  late String externalId;
+  late List<BookIndustryIdentifier> industryIds;
+  late String isbn;
 
   setUp(() {
     bookService = MockBookService();
     bookDetailRepository = BookDetailRepository(bookService);
-    externalId = 'ab';
+    isbn = '1234567891234';
+    industryIds = [BookIndustryIdentifier(IndustryIdentifierType.isbn13, isbn)];
     book = Book(
       title: 'Harry Potter and the Chamber of Secrets',
-      externalId: externalId,
       authors: ['JK Rowling'],
       publicationYear: '1998',
-      coverImageLarge:
-          'https://upload.wikimedia.org/wikipedia/en/5/5c/Harry_Potter_and_the_Chamber_of_Secrets.jpg',
-      industryIds: [
-        const BookIndustryIdentifier(
-            IndustryIdentifierType.isbn13, '1234567891234'),
-      ],
+      coverImageLarge: 'https://upload.wikimedia.org/wikipedia/en/5/5c/Harry_Potter_and_the_Chamber_of_Secrets.jpg',
+      industryIds: industryIds,
     );
-    volume = Volume(
-      externalId,
-      const VolumeInfo(
+    volume = const Volume(
+      'ab',
+      VolumeInfo(
         title: 'Harry Potter and the Chamber of Secrets',
         authors: ['JK Rowling'],
         publishedDate: '1998-01-11',
@@ -49,19 +46,15 @@ void main() {
   });
 
   void arrangeServiceReturnsWithBook() {
-    when(() => bookService.loadBookByExternalId(externalId))
-        .thenAnswer((_) => Future.value(volume));
+    when(() => bookService.loadBookByIsbn(isbn)).thenAnswer((_) => Future.value(volume));
   }
 
   group('BookDetailRepository', () {
     group('loadBookByExternalId', () {
-      test(
-          'should return the book instance converted from volume which got from service',
-          () async {
+      test('should return the book instance converted from volume which got from service', () async {
         arrangeServiceReturnsWithBook();
 
-        expectLater(
-            await bookDetailRepository.loadBookByExternalId(externalId), book);
+        expectLater(await bookDetailRepository.loadBookByIndustryIds(industryIds), book);
       });
     });
   });

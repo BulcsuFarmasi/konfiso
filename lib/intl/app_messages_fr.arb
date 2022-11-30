@@ -272,5 +272,15 @@
   "@toUseTheAppPleaseConnectYourDeviceToTheInternet": {
     "type": "text",
     "placeholders": {}
+  },
+  "couldntLoadTheBookPleaseTryAgain": "Impossible de charger le livre, veuillez réessayer",
+  "@couldntLoadTheBookPleaseTryAgain": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "couldntSaveTheReadingPleaseTryAgain": "Échec de l'enregistrement de la lecture, veuillez réessayer",
+  "@couldntSaveTheReadingPleaseTryAgain": {
+    "type": "text",
+    "placeholders": {}
   }
 }

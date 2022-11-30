@@ -17,25 +17,21 @@ void main() {
 
     group('autoSignIn', () {
       test('should call repository\'s autoSignIn', () {
-        when(() => loadingRepository.autoSignIn())
-            .thenAnswer((_) => Future.value(UserSignInStatus.signedIn));
+        when(() => loadingRepository.autoSignIn()).thenAnswer((_) => Future.value(UserSignInStatus.signedIn));
         loadingPageController.autoSignIn();
         verify(() => loadingRepository.autoSignIn());
       });
       test('should return with signed if repository returns with signed in', () async {
-        when(() => loadingRepository.autoSignIn())
-            .thenAnswer((_) => Future.value(UserSignInStatus.signedIn));
+        when(() => loadingRepository.autoSignIn()).thenAnswer((_) => Future.value(UserSignInStatus.signedIn));
         expect(await loadingPageController.autoSignIn(), UserSignInStatus.signedIn);
       });
       test('should return with not signed in if repository returns with not signed in', () async {
-        when(() => loadingRepository.autoSignIn())
-            .thenAnswer((_) => Future.value(UserSignInStatus.notSignedIn));
+        when(() => loadingRepository.autoSignIn()).thenAnswer((_) => Future.value(UserSignInStatus.notSignedIn));
         loadingPageController.autoSignIn();
         expect(await loadingPageController.autoSignIn(), UserSignInStatus.notSignedIn);
       });
       test('should return with not verified in if repository returns with not verified', () async {
-        when(() => loadingRepository.autoSignIn())
-            .thenAnswer((_) => Future.value(UserSignInStatus.notSignedIn));
+        when(() => loadingRepository.autoSignIn()).thenAnswer((_) => Future.value(UserSignInStatus.notSignedIn));
         loadingPageController.autoSignIn();
         expect(await loadingPageController.autoSignIn(), UserSignInStatus.notSignedIn);
       });

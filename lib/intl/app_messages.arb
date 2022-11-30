@@ -272,5 +272,15 @@
   "@toUseTheAppPleaseConnectYourDeviceToTheInternet": {
     "type": "text",
     "placeholders": {}
+  },
+  "couldntLoadTheBookPleaseTryAgain": "Couldn't load the book, please try again",
+  "@couldntLoadTheBookPleaseTryAgain": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "couldntSaveTheReadingPleaseTryAgain": "Couldn't save the reading, please try again",
+  "@couldntSaveTheReadingPleaseTryAgain": {
+    "type": "text",
+    "placeholders": {}
   }
 }

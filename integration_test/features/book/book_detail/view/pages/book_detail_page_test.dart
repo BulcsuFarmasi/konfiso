@@ -7,8 +7,9 @@ import 'package:konfiso/features/book/book_detail/controller/book_detail_page_st
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_in_progress.dart';
-import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_success.dart';
+import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_loading_success.dart';
 import 'package:konfiso/features/book/data/book.dart';
+import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockBookDetailPageStateNotifier extends StateNotifier<BookDetailPageState>
@@ -24,15 +25,13 @@ void main() {
     late BookDetailPageStateNotifier bookDetailPageStateNotifier;
 
     setUp(() {
-      bookDetailPageStateNotifier =
-          MockBookDetailPageStateNotifier(const BookDetailPageState.initial());
+      bookDetailPageStateNotifier = MockBookDetailPageStateNotifier(const BookDetailPageState.initial());
     });
 
     Widget createWidgetUnderTest() {
       return ProviderScope(
         overrides: [
-          bookDetailPageStateNotifierProvider
-              .overrideWith((_) => bookDetailPageStateNotifier),
+          bookDetailPageStateNotifierProvider.overrideWith((_) => bookDetailPageStateNotifier),
         ],
         child: const MaterialApp(
             localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -41,32 +40,28 @@ void main() {
       );
     }
 
-    Future<void> loadWidgetAndSetStateToInProgress(
-        WidgetTester widgetTester) async {
+    Future<void> loadWidgetAndSetStateToInProgress(WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
-      bookDetailPageStateNotifier.state =
-          const BookDetailPageState.inProgress();
+      bookDetailPageStateNotifier.state = const BookDetailPageState.loadingInProgress();
       await widgetTester.pump();
     }
 
-    testWidgets(
-        'should display in Progress if in Progress was emitted by state notifier',
+    testWidgets('should display in Progress if in Progress was emitted by state notifier',
         (WidgetTester widgetTester) async {
       await loadWidgetAndSetStateToInProgress(widgetTester);
 
       expect(find.byType(BookDetailInProgress), findsOneWidget);
     });
 
-    testWidgets(
-        'should display successful if successful was emitted by state notifier',
+    testWidgets('should display successful if successful was emitted by state notifier',
         (WidgetTester widgetTester) async {
       await loadWidgetAndSetStateToInProgress(widgetTester);
-      bookDetailPageStateNotifier.state =
-          const BookDetailPageState.success(Book(title: 'a', externalId: 'b'));
+      bookDetailPageStateNotifier.state = const BookDetailPageState.loadingSuccess(
+          Book(title: 'a', industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '1234567898765')]));
       await widgetTester.pump();
 
-      expect(find.byType(BookDetailSuccess), findsOneWidget);
+      expect(find.byType(BookDetailLoadingSuccess), findsOneWidget);
     });
   });
 }

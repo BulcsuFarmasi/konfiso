@@ -7,8 +7,7 @@ enum BookReadingStatus {
   alreadyRead;
 }
 
-String getReadingStatusDisplayText(
-    BookReadingStatus readingStatus, BuildContext context) {
+String getReadingStatusDisplayText(BookReadingStatus readingStatus, BuildContext context) {
   switch (readingStatus) {
     case BookReadingStatus.currentlyReading:
       return AppLocalizations.of(context)!.currentlyReading;

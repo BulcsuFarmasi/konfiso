@@ -19,15 +19,13 @@ void main() {
     late VerifyUserPageStateNotifier verifyUserPageStateNotifier;
 
     setUp(() {
-      verifyUserPageStateNotifier =
-          MockVerifyUserPageStateNotifier(const VerifyUserPageState.initial());
+      verifyUserPageStateNotifier = MockVerifyUserPageStateNotifier(const VerifyUserPageState.initial());
     });
 
     Widget createWidgetUnderTest() {
       return ProviderScope(
         overrides: [
-          verifyUserPageStateNotifierProvider
-              .overrideWith((ref) => verifyUserPageStateNotifier),
+          verifyUserPageStateNotifierProvider.overrideWith((ref) => verifyUserPageStateNotifier),
         ],
         child: const MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -37,15 +35,13 @@ void main() {
       );
     }
 
-    testWidgets('should contain verify user text',
-            (WidgetTester widgetTester) async {
-          await widgetTester.pumpWidget(createWidgetUnderTest());
+    testWidgets('should contain verify user text', (WidgetTester widgetTester) async {
+      await widgetTester.pumpWidget(createWidgetUnderTest());
 
-          expect(find.text('Verify User'), findsOneWidget);
-        });
+      expect(find.text('Verify User'), findsOneWidget);
+    });
 
-    testWidgets('should display initial widget if state is initial',
-        (WidgetTester widgetTester) async {
+    testWidgets('should display initial widget if state is initial', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       expect(find.byType(VerifyUserInitial), findsOneWidget);

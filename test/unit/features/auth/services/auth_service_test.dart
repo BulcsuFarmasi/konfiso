@@ -41,15 +41,13 @@ void main() {
 
     void arrangeAuthRemoteReturnsWithUserInfoEmailVerifiedTrue(String token) {
       when(() => authRemote.loadUserInfo(token)).thenAnswer(
-        (invocation) => Future.value(const UserInfoResponsePayload(
-            users: [UserInfo(emailVerified: true)])),
+        (invocation) => Future.value(const UserInfoResponsePayload(users: [UserInfo(emailVerified: true)])),
       );
     }
 
     void arrangeAuthRemoteReturnsWithUserInfoEmailVerfiedFalse(String token) {
       when(() => authRemote.loadUserInfo(token)).thenAnswer(
-        (invocation) => Future.value(const UserInfoResponsePayload(
-            users: [UserInfo(emailVerified: false)])),
+        (invocation) => Future.value(const UserInfoResponsePayload(users: [UserInfo(emailVerified: false)])),
       );
     }
 
@@ -59,6 +57,7 @@ void main() {
         when(() => authStorage.fetchUser()).thenAnswer(
           (_) => Future.value(
             StoredUser(
+              authId: '',
               userId: '',
               token: '',
               refreshToken: refreshToken,
@@ -67,17 +66,17 @@ void main() {
             ),
           ),
         );
-        when(() => authRemote.refreshToken(refreshToken)).thenAnswer(
-            (invocation) => Future.value(
-                const RefreshTokenResponsePayload('', '', '', '3600')));
+        when(() => authRemote.refreshToken(refreshToken))
+            .thenAnswer((invocation) => Future.value(const RefreshTokenResponsePayload('', '', '', '3600')));
         expectLater(await authService.autoSignIn(), UserSignInStatus.signedIn);
       });
       test('should return with not verified status if user is stored but is not verified', () async {
         const refreshToken = '';
         when(() => authStorage.fetchUser()).thenAnswer(
-              (_) => Future.value(
+          (_) => Future.value(
             StoredUser(
               userId: '',
+              authId: '',
               token: '',
               refreshToken: refreshToken,
               validUntil: now,
@@ -88,8 +87,7 @@ void main() {
         expectLater(await authService.autoSignIn(), UserSignInStatus.notVerified);
       });
       test('should return with false if user is not stored', () async {
-        when(() => authStorage.fetchUser())
-            .thenAnswer((_) => Future.value(null));
+        when(() => authStorage.fetchUser()).thenAnswer((_) => Future.value(null));
         expectLater(await authService.autoSignIn(), UserSignInStatus.notSignedIn);
       });
     });
@@ -98,9 +96,8 @@ void main() {
       test('should call auth remote sign in method', () {
         const expiresIn = 3600;
 
-        when(() => authRemote.signIn(email, password)).thenAnswer((_) =>
-            Future.value(
-                AuthResponsePayload('', '', '', expiresIn.toString())));
+        when(() => authRemote.signIn(email, password))
+            .thenAnswer((_) => Future.value(AuthResponsePayload('', '', '', expiresIn.toString())));
 
         authService.signIn(email, password);
 
@@ -116,16 +113,15 @@ void main() {
           'error': {'message': 'INVALID_EMAIL'}
         });
 
-        when(() => authRemote.signIn(email, password)).thenThrow(
-            DioError(requestOptions: requestOptions, response: response));
+        when(() => authRemote.signIn(email, password))
+            .thenThrow(DioError(requestOptions: requestOptions, response: response));
 
         expect(authService.signIn(email, password), throwsException);
       });
     });
     group('sign up', () {
       test('should call auth remote sign up method', () {
-        when(() => authRemote.signUp(email, password))
-            .thenAnswer((_) => Future.value(null));
+        when(() => authRemote.signUp(email, password)).thenAnswer((_) => Future.value(null));
 
         authService.signUp(email, password);
 
@@ -139,21 +135,21 @@ void main() {
           'error': {'message': 'EMAIL_EXISTS'}
         });
 
-        when(() => authRemote.signUp(email, password)).thenThrow(
-            DioError(requestOptions: requestOptions, response: response));
+        when(() => authRemote.signUp(email, password))
+            .thenThrow(DioError(requestOptions: requestOptions, response: response));
 
         expect(authService.signUp(email, password), throwsException);
       });
     });
     group('signOut', () {
       test('should call auth remote delete user', () {
-        when(() => authStorage.deleteUser())
-            .thenAnswer((_) => Future.value(null));
+        when(() => authStorage.deleteUser()).thenAnswer((_) => Future.value(null));
         authService.signOut();
         verify(() => authStorage.deleteUser());
       });
       test('should set user to null', () {
         authService.user = StoredUser(
+          authId: '',
           userId: '',
           token: '',
           refreshToken: '',
@@ -168,6 +164,7 @@ void main() {
     group('checkVerification', () {
       test('should call auth remote loadUserInfo after 2 seconds', () async {
         authService.user = StoredUser(
+          authId: 'auth_id',
           userId: 'user_id',
           token: 'id_token',
           refreshToken: 'a',
@@ -184,11 +181,7 @@ void main() {
       });
       test('should complete the future if email verified is true', () async {
         authService.user = StoredUser(
-            userId: 'user_id',
-            token: 'id_token',
-            refreshToken: 'a',
-            validUntil: now,
-            verified: true);
+            authId: 'authId', userId: 'user_id', token: 'id_token', refreshToken: 'a', validUntil: now, verified: true);
         arrangeAuthRemoteReturnsWithUserInfoEmailVerifiedTrue('id_token');
 
         final future = authService.checkVerification();
@@ -197,9 +190,9 @@ void main() {
 
         expect(future, completes);
       });
-      test('should not complete the future if email verified is false',
-          () async {
+      test('should not complete the future if email verified is false', () async {
         authService.user = StoredUser(
+            authId: 'auth_id',
             userId: 'user_id',
             token: 'id_token',
             refreshToken: 'a',

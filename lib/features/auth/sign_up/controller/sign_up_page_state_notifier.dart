@@ -14,9 +14,9 @@ class SignUpPageStateNotifier extends StateNotifier<SignUpPageState> {
   void signUp(String email, String password) async {
     state = const SignUpPageState.inProgress();
     try {
-    await _signUpRepository.signUp(email, password);
-    state = const SignUpPageState.successful();
-    } on SignUpException catch(e) {
+      await _signUpRepository.signUp(email, password);
+      state = const SignUpPageState.successful();
+    } on SignUpException catch (e) {
       state = SignUpPageState.error(e.error);
     }
   }

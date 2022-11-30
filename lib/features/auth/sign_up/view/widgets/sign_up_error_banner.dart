@@ -10,16 +10,13 @@ class SignUpErrorBanner extends ErrorBanner<SignUpError> {
   String convertErrorToText(BuildContext context) {
     switch (error) {
       case SignUpError.emailExists:
-        return AppLocalizations.of(context)!
-            .thisEmailAddressIsAlreadyRegisteredPleaseTryAnAnother;
+        return AppLocalizations.of(context)!.thisEmailAddressIsAlreadyRegisteredPleaseTryAnAnother;
       case SignUpError.operationNotAllowed:
         return AppLocalizations.of(context)!.thisOperationIsNotAllowed;
       case SignUpError.tooManyAttempts:
-        return AppLocalizations.of(context)!
-            .youWereTryingTooManyTimesPleaseTryAgainSomeTimeLater;
+        return AppLocalizations.of(context)!.youWereTryingTooManyTimesPleaseTryAgainSomeTimeLater;
       case SignUpError.other:
-        return AppLocalizations.of(context)!
-            .somethingWentWrongPleaseTryAgainLater;
+        return AppLocalizations.of(context)!.somethingWentWrongPleaseTryAgainLater;
     }
   }
 }

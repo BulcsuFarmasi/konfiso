@@ -7,6 +7,7 @@ void main() {
     Widget createWidgetUnderTest() {
       return const MaterialApp(home: AddBookInProgress());
     }
+
     testWidgets('should display a loading indicator', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
@@ -14,5 +15,4 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
   });
-
 }

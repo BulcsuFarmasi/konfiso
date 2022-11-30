@@ -6,8 +6,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state.dart';
 import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state_notifier.dart';
-import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart'
-    as sign_up_error;
+import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart' as sign_up_error;
 import 'package:konfiso/features/auth/sign_up/view/pages/sign_up_page.dart';
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_error.dart';
 import 'package:konfiso/features/auth/sign_up/view/widgets/sign_up_form.dart';
@@ -16,9 +15,7 @@ import 'package:konfiso/features/auth/verify_user/view/pages/verify_user_page.da
 import 'package:konfiso/shared/widgets/entry_in_progress.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockSignUpPageStateNotifier extends StateNotifier<SignUpPageState>
-    with Mock
-    implements SignUpPageStateNotifier {
+class MockSignUpPageStateNotifier extends StateNotifier<SignUpPageState> with Mock implements SignUpPageStateNotifier {
   MockSignUpPageStateNotifier(super.state);
 }
 
@@ -33,8 +30,7 @@ void main() {
     Widget createWidgetUnderTest() {
       return ProviderScope(
         overrides: [
-          signUpStateNotifierProvider
-              .overrideWith((_) => signUpPageStateNotifier),
+          signUpStateNotifierProvider.overrideWith((_) => signUpPageStateNotifier),
         ],
         child: MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -72,22 +68,18 @@ void main() {
     }
 
     setUp(() {
-      signUpPageStateNotifier =
-          MockSignUpPageStateNotifier(const SignUpPageState.initial());
+      signUpPageStateNotifier = MockSignUpPageStateNotifier(const SignUpPageState.initial());
       email = 'test@test.com';
       password = '123456';
     });
 
-    testWidgets('initially should be in initial state',
-        (WidgetTester widgetTester) async {
+    testWidgets('initially should be in initial state', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       expect(find.byType(SignUpInitial), findsOneWidget);
     });
 
-    testWidgets(
-        'should redirect to confirm user page when succes state is reached',
-        (WidgetTester widgetTester) async {
+    testWidgets('should redirect to confirm user page when succes state is reached', (WidgetTester widgetTester) async {
       await testUntilInProgress(widgetTester);
 
       signUpPageStateNotifier.state = const SignUpPageState.successful();
@@ -97,19 +89,16 @@ void main() {
       expect(find.byType(VerifyUserPage), findsOneWidget);
     });
 
-    testWidgets('should reach error state when the sign up is not successful',
-        (WidgetTester widgetTester) async {
+    testWidgets('should reach error state when the sign up is not successful', (WidgetTester widgetTester) async {
       await testUntilInProgress(widgetTester);
-      signUpPageStateNotifier.state =
-          const SignUpPageState.error(sign_up_error.SignUpError.other);
+      signUpPageStateNotifier.state = const SignUpPageState.error(sign_up_error.SignUpError.other);
 
       await widgetTester.pump();
 
       expect(find.byType(SignUpError), findsOneWidget);
     });
 
-    testWidgets('should navigate to sign in by clicking the link',
-        (WidgetTester widgetTester) async {
+    testWidgets('should navigate to sign in by clicking the link', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       final link = find.text('log in');
@@ -123,8 +112,7 @@ void main() {
 
     group('validation', () {
       group('email', () {
-        testWidgets('should display error message if email was not put in',
-            (WidgetTester widgetTester) async {
+        testWidgets('should display error message if email was not put in', (WidgetTester widgetTester) async {
           await widgetTester.pumpWidget(createWidgetUnderTest());
 
           final button = find.byType(ElevatedButton);
@@ -135,9 +123,7 @@ void main() {
 
           expect(find.text('Please provide an Email Address'), findsOneWidget);
         });
-        testWidgets(
-            'should display error message if an invalid email was put in',
-            (WidgetTester widgetTester) async {
+        testWidgets('should display error message if an invalid email was put in', (WidgetTester widgetTester) async {
           await widgetTester.pumpWidget(createWidgetUnderTest());
 
           final emailField = find.byKey(SignUpForm.emailKey);
@@ -148,12 +134,9 @@ void main() {
           await widgetTester.tap(button);
           await widgetTester.pumpAndSettle();
 
-          expect(
-              find.text('Please put in a valid email address'), findsOneWidget);
+          expect(find.text('Please put in a valid email address'), findsOneWidget);
         });
-        testWidgets(
-            'should not display error message if a valid email was put in',
-            (WidgetTester widgetTester) async {
+        testWidgets('should not display error message if a valid email was put in', (WidgetTester widgetTester) async {
           await widgetTester.pumpWidget(createWidgetUnderTest());
 
           final emailField = find.byKey(SignUpForm.emailKey);
@@ -165,13 +148,11 @@ void main() {
           await widgetTester.pumpAndSettle();
 
           expect(find.text('Please provide an Email Address'), findsNothing);
-          expect(
-              find.text('Please provide a valid email address'), findsNothing);
+          expect(find.text('Please provide a valid email address'), findsNothing);
         });
       });
       group('password', () {
-        testWidgets('should display error message if password was not put in',
-            (WidgetTester widgetTester) async {
+        testWidgets('should display error message if password was not put in', (WidgetTester widgetTester) async {
           await widgetTester.pumpWidget(createWidgetUnderTest());
 
           final button = find.byType(ElevatedButton);
@@ -183,9 +164,7 @@ void main() {
           expect(find.text('Please provide a password'), findsOneWidget);
         });
       });
-      testWidgets(
-          'should display error message if a too short password was put in',
-          (WidgetTester widgetTester) async {
+      testWidgets('should display error message if a too short password was put in', (WidgetTester widgetTester) async {
         await widgetTester.pumpWidget(createWidgetUnderTest());
 
         final passwordField = find.byKey(SignUpForm.passwordKey);
@@ -198,9 +177,7 @@ void main() {
 
         expect(find.text('Please write at least 6 characters'), findsOneWidget);
       });
-      testWidgets(
-          'should not display error message if a valid password was put in',
-          (WidgetTester widgetTester) async {
+      testWidgets('should not display error message if a valid password was put in', (WidgetTester widgetTester) async {
         await widgetTester.pumpWidget(createWidgetUnderTest());
 
         final passwordField = find.byKey(SignUpForm.passwordKey);
@@ -216,9 +193,7 @@ void main() {
       });
     });
     group('other password', () {
-      testWidgets(
-          'should display an error message if the passwords don\'t match',
-          (WidgetTester widgetTester) async {
+      testWidgets('should display an error message if the passwords don\'t match', (WidgetTester widgetTester) async {
         await widgetTester.pumpWidget(createWidgetUnderTest());
 
         final passwordField = find.byKey(SignUpForm.passwordKey);
@@ -237,9 +212,7 @@ void main() {
         expect(find.text('Please write identical passwords'), findsOneWidget);
       });
 
-      testWidgets(
-          'should display an error message if the passwords don\'t match',
-          (WidgetTester widgetTester) async {
+      testWidgets('should display an error message if the passwords don\'t match', (WidgetTester widgetTester) async {
         await widgetTester.pumpWidget(createWidgetUnderTest());
 
         final passwordField = find.byKey(SignUpForm.passwordKey);

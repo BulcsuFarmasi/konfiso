@@ -14,4 +14,8 @@ class AppValidators {
   static bool passwordMatch(String? value, String? otherValue) {
     return value != otherValue;
   }
+
+  static bool integer(String value) {
+    return int.tryParse(value) == null;
+  }
 }

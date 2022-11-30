@@ -24,10 +24,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isInit) {
-      ref
-          .read(loadingPageControllerProvider)
-          .autoSignIn()
-          .then((UserSignInStatus userSignInStatus) {
+      ref.read(loadingPageControllerProvider).autoSignIn().then((UserSignInStatus userSignInStatus) {
         final navigator = Navigator.of(context);
         switch (userSignInStatus) {
           case UserSignInStatus.signedIn:
@@ -58,10 +55,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
             ),
             Text(
               AppLocalizations.of(context)!.loading,
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primaryColor),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.primaryColor),
             ),
           ],
         ),

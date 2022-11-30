@@ -72,8 +72,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
         children: [
           TextFormField(
             key: SignInForm.emailKey,
-            decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.emailAddress),
+            decoration: InputDecoration(hintText: AppLocalizations.of(context)!.emailAddress),
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
             validator: _validateEmail,
@@ -84,8 +83,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
           ),
           TextFormField(
             key: SignInForm.passwordKey,
-            decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.password),
+            decoration: InputDecoration(hintText: AppLocalizations.of(context)!.password),
             textInputAction: TextInputAction.done,
             obscureText: true,
             validator: _validatePassword,
@@ -126,8 +124,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
             children: [
               Text(
                 AppLocalizations.of(context)!.ifYouDontHaveAnAccount,
-                style:
-                    const TextStyle(color: AppColors.greyColor, fontSize: 14),
+                style: const TextStyle(color: AppColors.greyColor, fontSize: 14),
               ),
               GestureDetector(
                 onTap: _navigateToSignUp,

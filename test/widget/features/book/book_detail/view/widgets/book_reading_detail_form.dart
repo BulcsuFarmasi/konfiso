@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_reading_detail_form.dart';
+import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
+import 'package:konfiso/features/book/data/industry_identifier.dart';
 
 void main() {
   group('BookReadingDetailForm', () {
@@ -12,13 +14,16 @@ void main() {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(
-          body: BookReadingDetailForm(),
-        ),
+            body: BookReadingDetailForm(
+          book: Book(
+            title: 'a',
+            industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '9876543212345')],
+          ),
+        )),
       );
     }
 
-    testWidgets('should contain reading text',
-        (WidgetTester widgetTester) async {
+    testWidgets('should contain reading text', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       expect(find.text('Reading'), findsOneWidget);
@@ -42,8 +47,7 @@ void main() {
       expect(find.byType(RatingBar), findsOneWidget);
     });
 
-    testWidgets('should text field for comment',
-        (WidgetTester widgetTester) async {
+    testWidgets('should text field for comment', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       expect(find.byType(TextFormField), findsOneWidget);

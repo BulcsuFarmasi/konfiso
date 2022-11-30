@@ -9,14 +9,11 @@ class FlavorUtil {
   FlavorConfig get currentConfig {
     switch (flavor) {
       case Flavor.dev:
-        return FlavorConfig(
-            Flavor.dev, FlavorValues(devGoogleApiKey, devFirebaseDBUrl));
+        return FlavorConfig(Flavor.dev, FlavorValues(devGoogleApiKey, devFirebaseDBUrl));
       case Flavor.staging:
-        return FlavorConfig(Flavor.staging,
-            FlavorValues(prodGoogleApiKey, prodFirebaseDBUrl));
+        return FlavorConfig(Flavor.staging, FlavorValues(prodGoogleApiKey, prodFirebaseDBUrl));
       case Flavor.prod:
-        return FlavorConfig(
-            Flavor.prod, FlavorValues(prodGoogleApiKey, prodFirebaseDBUrl));
+        return FlavorConfig(Flavor.prod, FlavorValues(prodGoogleApiKey, prodFirebaseDBUrl));
     }
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/shared/widgets/app/controller/app_state_notifier.dart';
 import 'package:konfiso/shared/widgets/app/model/app_repository.dart';
-
 import 'package:mocktail/mocktail.dart';
 
 class MockAppRepository extends Mock implements AppRepository {}

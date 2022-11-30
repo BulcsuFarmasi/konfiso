@@ -61,8 +61,7 @@ void main() {
       flavorUtil = FlavorUtil();
       timeUtil = MockTimeUtil();
       languageService = MockLanguageService();
-      authRemote =
-          AuthRemote(httpClient, flavorUtil, timeUtil, languageService);
+      authRemote = AuthRemote(httpClient, flavorUtil, timeUtil, languageService);
       email = 'test@test.com';
       password = '123456';
       authRequestPayload = AuthRequestPayload(email, password);
@@ -74,37 +73,28 @@ void main() {
       signUpUrl = '${AuthRemote.accountUrl}signUp';
       refreshToken = 'refreshToken';
       refreshTokenRequestPayload = RefreshTokenRequestPayload(refreshToken);
-      refreshTokenResponsePayload =
-          RefreshTokenResponsePayload(refreshToken, idToken, 'a', '3600');
+      refreshTokenResponsePayload = RefreshTokenResponsePayload(refreshToken, idToken, 'a', '3600');
       refreshTokenUrl = AuthRemote.tokenUrl;
       saveUserUrl = '${authRemote.dbUrl}.json';
       queryUserUrl = '${authRemote.dbUrl}.json?orderBy="authId"&equalTo=';
       now = DateTime.now();
       sendVerificationEmailUrl = '${AuthRemote.accountUrl}sendOobCode';
-      sendVerificationEmailRequestPayload =
-          SendVerificationEmailPayload(idToken: idToken);
+      sendVerificationEmailRequestPayload = SendVerificationEmailPayload(idToken: idToken);
       locale = 'en';
       sendVerificationEmailHeaders = {'X-Firebase-Locale': locale};
       userInfoUrl = '${AuthRemote.accountUrl}lookup';
-      userInfoResponsePayload =
-          const UserInfoResponsePayload(users: [UserInfo(emailVerified: true)]);
+      userInfoResponsePayload = const UserInfoResponsePayload(users: [UserInfo(emailVerified: true)]);
     });
 
     void arrangeAuthReturnsWithAuthResponsePayload(String authUrl) {
-      when(() => httpClient.post(
-              url: authUrl, data: jsonEncode(authRequestPayload.toJson())))
-          .thenAnswer((_) => Future.value(Response(
-              requestOptions: RequestOptions(path: authUrl),
-              data: authResponsePayload.toJson())));
+      when(() => httpClient.post(url: authUrl, data: jsonEncode(authRequestPayload.toJson()))).thenAnswer((_) =>
+          Future.value(Response(requestOptions: RequestOptions(path: authUrl), data: authResponsePayload.toJson())));
     }
 
     void arrangeRefreshTokenReturnsWithRefreshTokenResponsePayload() {
-      when(() => httpClient.post(
-              url: refreshTokenUrl,
-              data: jsonEncode(refreshTokenRequestPayload.toJson())))
+      when(() => httpClient.post(url: refreshTokenUrl, data: jsonEncode(refreshTokenRequestPayload.toJson())))
           .thenAnswer((_) => Future.value(Response(
-              requestOptions: RequestOptions(path: refreshTokenUrl),
-              data: refreshTokenResponsePayload.toJson())));
+              requestOptions: RequestOptions(path: refreshTokenUrl), data: refreshTokenResponsePayload.toJson())));
     }
 
     void arrangeSaveUserReturnsWithUserId() {
@@ -113,32 +103,24 @@ void main() {
           url: saveUserUrl,
           data: any(named: 'data'),
         ),
-      ).thenAnswer((_) => Future.value(Response(
-          requestOptions: RequestOptions(path: saveUserUrl),
-          data: {'name': 'ab'})));
+      ).thenAnswer(
+          (_) => Future.value(Response(requestOptions: RequestOptions(path: saveUserUrl), data: {'name': 'ab'})));
     }
 
     void arrangeQueryUserReturnsWithUsers(String authId) {
       remoteUser = RemoteUser(
-          authId: authId,
-          email: email,
-          registrationDate: now,
-          consented: true,
-          consentUrl: 'privacy-policy');
+          authId: authId, email: email, registrationDate: now, consented: true, consentUrl: 'privacy-policy');
       final url = '$queryUserUrl"$authId"';
-      when(() => httpClient.get(url: url)).thenAnswer((_) => Future.value(
-              Response(requestOptions: RequestOptions(path: url), data: {
-            userId: remoteUser!.toJson(),
-          })));
+      when(() => httpClient.get(url: url))
+          .thenAnswer((_) => Future.value(Response(requestOptions: RequestOptions(path: url), data: {
+                userId: remoteUser!.toJson(),
+              })));
     }
 
     void arrangeUpdateUserReturnsWithUpdatedFiled(String userId) {
       final url = '${authRemote.dbUrl}/$userId.json';
-      when(() => httpClient.patch(
-              url: url,
-              data: jsonEncode(UpdateUserRequestPayload(now).toJson())))
-          .thenAnswer((_) => Future.value(
-                  Response(requestOptions: RequestOptions(path: url), data: {
+      when(() => httpClient.patch(url: url, data: jsonEncode(UpdateUserRequestPayload(now).toJson())))
+          .thenAnswer((_) => Future.value(Response(requestOptions: RequestOptions(path: url), data: {
                 'latestLogin': now.toIso8601String(),
               })));
     }
@@ -154,9 +136,7 @@ void main() {
         ),
       ).thenAnswer(
         (invocation) => Future.value(
-          Response(
-              requestOptions: RequestOptions(path: sendVerificationEmailUrl),
-              data: json.encode({'email': email})),
+          Response(requestOptions: RequestOptions(path: sendVerificationEmailUrl), data: json.encode({'email': email})),
         ),
       );
     }
@@ -172,8 +152,7 @@ void main() {
       ).thenAnswer(
         (invocation) => Future.value(
           Response(
-              requestOptions: RequestOptions(path: userInfoUrl),
-              data: json.encode(userInfoResponsePayload.toJson())),
+              requestOptions: RequestOptions(path: userInfoUrl), data: json.encode(userInfoResponsePayload.toJson())),
         ),
       );
     }
@@ -187,9 +166,7 @@ void main() {
     }
 
     group('signIn', () {
-      test(
-          'should call http client\'s post method with the appropriate parameters',
-          () {
+      test('should call http client\'s post method with the appropriate parameters', () {
         arrangeTimeUtilReturnsWithNow();
         arrangeAuthReturnsWithAuthResponsePayload(signInUrl);
         arrangeQueryUserReturnsWithUsers(authId);
@@ -197,25 +174,20 @@ void main() {
 
         authRemote.signIn(email, password);
 
-        verify(() => httpClient.post(
-            url: signInUrl, data: jsonEncode(authRequestPayload.toJson())));
+        verify(() => httpClient.post(url: signInUrl, data: jsonEncode(authRequestPayload.toJson())));
       });
 
-      test('should return the converted data which comes from the http client',
-          () async {
+      test('should return the converted data which comes from the http client', () async {
         arrangeTimeUtilReturnsWithNow();
         arrangeAuthReturnsWithAuthResponsePayload(signInUrl);
         arrangeQueryUserReturnsWithUsers(authId);
         arrangeUpdateUserReturnsWithUpdatedFiled(userId);
 
-        expectLater(
-            await authRemote.signIn(email, password), authResponsePayload);
+        expectLater(await authRemote.signIn(email, password), authResponsePayload);
       });
     });
     group('signUp', () {
-      test(
-          'should call http client\'s post method with the sign up url and appropriate parameters',
-          () {
+      test('should call http client\'s post method with the sign up url and appropriate parameters', () {
         arrangeAuthReturnsWithAuthResponsePayload(signUpUrl);
         arrangeSaveUserReturnsWithUserId();
         arrangeTimeUtilReturnsWithNow();
@@ -224,12 +196,9 @@ void main() {
 
         authRemote.signUp(email, password);
 
-        verify(() => httpClient.post(
-            url: signUpUrl, data: jsonEncode(authRequestPayload.toJson())));
+        verify(() => httpClient.post(url: signUpUrl, data: jsonEncode(authRequestPayload.toJson())));
       });
-      test(
-          'should call http client\'s post method with the save user url and appropriate parameters',
-          () {
+      test('should call http client\'s post method with the save user url and appropriate parameters', () {
         arrangeAuthReturnsWithAuthResponsePayload(signUpUrl);
         arrangeSaveUserReturnsWithUserId();
         arrangeTimeUtilReturnsWithNow();
@@ -241,8 +210,7 @@ void main() {
 
         verify(() => httpClient.post(url: saveUserUrl, data: data));
       });
-      test(
-          'should call http client\'s post method with the send verification email url and appropriate parameters',
+      test('should call http client\'s post method with the send verification email url and appropriate parameters',
           () {
         arrangeAuthReturnsWithAuthResponsePayload(signUpUrl);
         arrangeSaveUserReturnsWithUserId();
@@ -274,22 +242,17 @@ void main() {
       });
     });
     group('refreshToken', () {
-      test('should call http client post method with appropriate parameters',
-          () {
+      test('should call http client post method with appropriate parameters', () {
         arrangeRefreshTokenReturnsWithRefreshTokenResponsePayload();
 
         authRemote.refreshToken(refreshToken);
 
-        verify(() => httpClient.post(
-            url: refreshTokenUrl,
-            data: jsonEncode(refreshTokenRequestPayload.toJson())));
+        verify(() => httpClient.post(url: refreshTokenUrl, data: jsonEncode(refreshTokenRequestPayload.toJson())));
       });
-      test('should return the converted data which comes from the http client',
-          () async {
+      test('should return the converted data which comes from the http client', () async {
         arrangeRefreshTokenReturnsWithRefreshTokenResponsePayload();
 
-        expectLater(await authRemote.refreshToken(refreshToken),
-            refreshTokenResponsePayload);
+        expectLater(await authRemote.refreshToken(refreshToken), refreshTokenResponsePayload);
       });
     });
   });

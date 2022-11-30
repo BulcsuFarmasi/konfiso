@@ -10,8 +10,7 @@ class SignInErrorBanner extends ErrorBanner<SignInError> {
   String convertErrorToText(BuildContext context) {
     switch (error) {
       case SignInError.other:
-        return AppLocalizations.of(context)!
-            .somethingWentWrongPleaseTryAgainLater;
+        return AppLocalizations.of(context)!.somethingWentWrongPleaseTryAgainLater;
       case SignInError.invalidEmail:
       case SignInError.invalidPassword:
         return AppLocalizations.of(context)!.wrongEmailOrPassword;

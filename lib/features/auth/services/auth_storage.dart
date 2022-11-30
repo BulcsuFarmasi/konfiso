@@ -5,8 +5,7 @@ import 'package:konfiso/features/auth/data/stored_user.dart';
 import 'package:konfiso/shared/secure_storage.dart';
 import 'package:konfiso/shared/storage_keys.dart';
 
-final authStorageProvider =
-    Provider((Ref ref) => AuthStorage(ref.read(secureStorageProvider)));
+final authStorageProvider = Provider((Ref ref) => AuthStorage(ref.read(secureStorageProvider)));
 
 class AuthStorage {
   final SecureStorage _secureStorage;

@@ -19,8 +19,7 @@ class _BookCategoryPageState extends State<BookCategoryPage> {
     super.didChangeDependencies();
 
     if (_isInit) {
-      readingStatus =
-          ModalRoute.of(context)!.settings.arguments as BookReadingStatus;
+      readingStatus = ModalRoute.of(context)!.settings.arguments as BookReadingStatus;
       _isInit = false;
     }
   }

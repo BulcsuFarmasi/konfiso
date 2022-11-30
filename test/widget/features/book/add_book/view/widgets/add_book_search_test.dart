@@ -18,8 +18,7 @@ void main() {
       );
     }
 
-    testWidgets('should contain a text field',
-        (WidgetTester widgetTester) async {
+    testWidgets('should contain a text field', (WidgetTester widgetTester) async {
       await widgetTester.pumpWidget(createWidgetUnderTest());
 
       // assert if contains a text field

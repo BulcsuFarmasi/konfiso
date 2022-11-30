@@ -17,8 +17,7 @@ class AddBookPage extends ConsumerStatefulWidget {
   ConsumerState<AddBookPage> createState() => _AddBookPageState();
 }
 
-class _AddBookPageState extends ConsumerState<AddBookPage>
-    with TickerProviderStateMixin {
+class _AddBookPageState extends ConsumerState<AddBookPage> with TickerProviderStateMixin {
   late AnimationController _spaceAnimationController;
   late Tween<double> spaceTween;
   late Animation<double> spaceAnimation;
@@ -28,10 +27,8 @@ class _AddBookPageState extends ConsumerState<AddBookPage>
   @override
   void initState() {
     super.initState();
-    _spaceAnimationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    final spaceCurvedAnimation = CurvedAnimation(
-        parent: _spaceAnimationController, curve: Curves.easeInOut);
+    _spaceAnimationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    final spaceCurvedAnimation = CurvedAnimation(parent: _spaceAnimationController, curve: Curves.easeInOut);
     spaceTween = Tween<double>(begin: 0, end: 0);
     spaceAnimation = spaceTween.animate(spaceCurvedAnimation);
   }
@@ -60,9 +57,7 @@ class _AddBookPageState extends ConsumerState<AddBookPage>
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            ref
-                .read(addBookPageStateNotifierProvider.notifier)
-                .restoreToInitial();
+            ref.read(addBookPageStateNotifierProvider.notifier).restoreToInitial();
             Navigator.of(context).pop();
           },
         ),
@@ -78,8 +73,7 @@ class _AddBookPageState extends ConsumerState<AddBookPage>
               children: [
                 AnimatedBuilder(
                     animation: spaceAnimation,
-                    builder: (BuildContext context, _) =>
-                        SizedBox(height: spaceAnimation.value)),
+                    builder: (BuildContext context, _) => SizedBox(height: spaceAnimation.value)),
                 AddBookSearch(
                   startedTyping: _startSpaceAnimation,
                 ),

@@ -18,8 +18,7 @@ class SignUpForm extends ConsumerStatefulWidget {
   ConsumerState<SignUpForm> createState() => _SignUpFormState();
 }
 
-class _SignUpFormState extends ConsumerState<SignUpForm>
-    with EmailValidationCapability {
+class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCapability {
   final _formKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
@@ -57,8 +56,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm>
   String? _validateOtherPassword(String? value) {
     String? errorMessage;
     if (AppValidators.passwordMatch(passwordController.text, value)) {
-      errorMessage =
-          AppLocalizations.of(context)!.pleaseWriteIdenticalPasswords;
+      errorMessage = AppLocalizations.of(context)!.pleaseWriteIdenticalPasswords;
     }
     return errorMessage;
   }
@@ -69,8 +67,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm>
     if (AppValidators.required(password)) {
       errorMessage = AppLocalizations.of(context)!.pleaseProvideAPassword;
     } else if (AppValidators.minLength(password!, minLength)) {
-      errorMessage =
-          AppLocalizations.of(context)!.shortPasswordMessage(minLength);
+      errorMessage = AppLocalizations.of(context)!.shortPasswordMessage(minLength);
     }
     return errorMessage;
   }
@@ -96,8 +93,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm>
           ),
           TextFormField(
             key: SignUpForm.passwordKey,
-            decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.password),
+            decoration: InputDecoration(hintText: AppLocalizations.of(context)!.password),
             controller: passwordController,
             textInputAction: TextInputAction.next,
             obscureText: true,
@@ -109,8 +105,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm>
           ),
           TextFormField(
               key: SignUpForm.otherPasswordKey,
-              decoration: InputDecoration(
-                  hintText: AppLocalizations.of(context)!.passwordAgain),
+              decoration: InputDecoration(hintText: AppLocalizations.of(context)!.passwordAgain),
               obscureText: true,
               textInputAction: TextInputAction.done,
               validator: _validateOtherPassword),
@@ -131,12 +126,11 @@ class _SignUpFormState extends ConsumerState<SignUpForm>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(AppLocalizations.of(context)!.ifYouHaveAnAccount,
-                  style: const TextStyle(
-                      color: AppColors.greyColor, fontSize: 14)),
+                  style: const TextStyle(color: AppColors.greyColor, fontSize: 14)),
               GestureDetector(
                 onTap: _navigateToSignIn,
-                child: Text(AppLocalizations.of(context)!.logIn,
-                    style: const TextStyle(color: AppColors.greyDarkerColor)),
+                child:
+                    Text(AppLocalizations.of(context)!.logIn, style: const TextStyle(color: AppColors.greyDarkerColor)),
               ),
             ],
           ),

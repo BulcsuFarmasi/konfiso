@@ -12,7 +12,6 @@ class Callback extends StatefulWidget {
 }
 
 class _CallbackState extends State<Callback> {
-
   @override
   void initState() {
     super.initState();

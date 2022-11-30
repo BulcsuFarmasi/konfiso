@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/auth/verify_user/controller/verify_user_page_state_notifier.dart';
 import 'package:konfiso/features/auth/verify_user/model/verify_user_repository.dart';
-
 import 'package:mocktail/mocktail.dart';
 
 class MockVerifyUserRepository extends Mock implements VerifyUserRepository {}
@@ -13,13 +12,11 @@ void main() {
 
     setUp(() {
       verifyUserRepository = MockVerifyUserRepository();
-      verifyUserPageStateNotifier =
-          VerifyUserPageStateNotifier(verifyUserRepository);
+      verifyUserPageStateNotifier = VerifyUserPageStateNotifier(verifyUserRepository);
     });
 
     void arrangeRepositoryCheckVerificationReturns() {
-      when(() => verifyUserRepository.checkVerification())
-          .thenAnswer((_) => Future.value(null));
+      when(() => verifyUserRepository.checkVerification()).thenAnswer((_) => Future.value(null));
     }
 
     group('checkVerification', () {

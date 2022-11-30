@@ -20,8 +20,7 @@ void main() {
     late String password;
 
     void arrangeRepositoryThrowsException() {
-      when(() => signUpRepository.signUp(email, password))
-          .thenThrow(SignUpException(SignUpError.other));
+      when(() => signUpRepository.signUp(email, password)).thenThrow(SignUpException(SignUpError.other));
     }
 
     setUp(() {
@@ -37,31 +36,25 @@ void main() {
 
     group('signUp', () {
       test('should call repository\'s signUp method', () {
-        when(() => signUpRepository.signUp(email, password))
-            .thenAnswer((_) => Future.value(null));
+        when(() => signUpRepository.signUp(email, password)).thenAnswer((_) => Future.value(null));
         signUpPageStateNotifier.signUp(email, password);
         verify(() => signUpRepository.signUp(email, password));
       });
-      test('should emit inProgress and successful states in case of success',
-          () async {
-        when(() => signUpRepository.signUp(email, password))
-            .thenAnswer((_) => Future.value(null));
+      test('should emit inProgress and successful states in case of success', () async {
+        when(() => signUpRepository.signUp(email, password)).thenAnswer((_) => Future.value(null));
         signUpPageStateNotifier.signUp(email, password);
 
-        expect(
-            signUpPageStateNotifier.state, const SignUpPageState.inProgress());
+        expect(signUpPageStateNotifier.state, const SignUpPageState.inProgress());
 
         await Future.delayed(const Duration(milliseconds: 500));
 
-        expect(
-            signUpPageStateNotifier.state, const SignUpPageState.successful());
+        expect(signUpPageStateNotifier.state, const SignUpPageState.successful());
       });
       test('should emit error states in case of error', () {
         arrangeRepositoryThrowsException();
         signUpPageStateNotifier.signUp(email, password);
 
-        expect(signUpPageStateNotifier.state,
-            const SignUpPageState.error(SignUpError.other));
+        expect(signUpPageStateNotifier.state, const SignUpPageState.error(SignUpError.other));
       });
     });
   });
