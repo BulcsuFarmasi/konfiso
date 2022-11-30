@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/book_category/view/pages/book_category_page.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_in_progress.dart';
-import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_success.dart';
+import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_loading_error.dart';
+import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_loading_success.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 
 class BookDetailPage extends ConsumerStatefulWidget {
@@ -40,6 +41,11 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
       next.maybeMap(
           savingSuccess: (savingSuccess) {
             ref.read(bookDetailPageStateNotifierProvider.notifier).restoreToInitial();
+
+            final navigator = Navigator.of(context);
+            // pop twice to reach book category page
+            navigator.pop();
+            navigator.pop();
             Navigator.of(context).pushNamed(BookCategoryPage.routeName, arguments: savingSuccess.bookReadingStatus);
           },
           orElse: () => null);
@@ -53,11 +59,10 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
           child: state.maybeMap(
             initial: (_) => const SizedBox(),
             loadingInProgress: (_) => const BookDetailInProgress(),
-            loadingSuccess: (success) => BookDetailSuccess(book: success.book),
-            loadingError: (_) => const SizedBox(),
-            savingInProgress: (_) => const SizedBox(),
-            savingSuccess: (_) => const SizedBox(),
-            savingError: (_) => const SizedBox(),
+            loadingSuccess: (success) => BookDetailLoadingSuccess(book: success.book),
+            loadingError: (_) => const BookDetailLoadingError(),
+            savingInProgress: (_) => const BookDetailInProgress(),
+            savingError: (_) => const BookDetailInProgress(),
             orElse: () => const SizedBox(),
           ),
         ),

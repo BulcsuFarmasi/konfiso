@@ -7,7 +7,7 @@ import 'package:konfiso/features/book/book_detail/controller/book_detail_page_st
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_in_progress.dart';
-import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_success.dart';
+import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_loading_success.dart';
 import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:mocktail/mocktail.dart';
@@ -61,7 +61,7 @@ void main() {
           Book(title: 'a', industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '1234567898765')]));
       await widgetTester.pump();
 
-      expect(find.byType(BookDetailSuccess), findsOneWidget);
+      expect(find.byType(BookDetailLoadingSuccess), findsOneWidget);
     });
   });
 }
