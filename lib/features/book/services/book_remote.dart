@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/data/book_reading_detail.dart';
+import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/utils/flavor_util.dart';
 
@@ -50,8 +51,20 @@ class BookRemote {
   }
 
   Future<void> insertBookReadingDetail(String bookId, String userId, BookReadingDetail bookReadingDetail) async {
-    final insertUrl = '$dbBookReadingDetailsUrl/$userId/$bookId.json';
+    final insertUrl = '$dbBookReadingDetailsUrl/$userId/${bookReadingDetail.status}/$bookId.json';
 
     await _httpClient.put(url: insertUrl, data: jsonEncode(bookReadingDetail.toJson()));
+  }
+
+  Future<List<String>> loadIdsByReadingStatus(BookReadingStatus bookReadingStatus, String userId) async {
+    final response = await _httpClient.get(url: '$dbBookReadingDetailsUrl/$userId/$bookReadingStatus');
+
+    return response.data.keys;
+  }
+
+  Future<String> loadIsbnById(String bookId) async {
+    final response = await _httpClient.get(url: ' $dbBooksUrl/$bookId');
+
+    return response.data.isbn;
   }
 }

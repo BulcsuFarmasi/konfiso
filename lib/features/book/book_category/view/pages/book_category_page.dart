@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/book/book_category/controller/book_category_page_state_notifier.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
 
 class BookCategoryPage extends StatefulWidget {
@@ -31,6 +33,10 @@ class _BookCategoryPageState extends State<BookCategoryPage> {
         title: Text(getReadingStatusDisplayText(readingStatus, context)),
         centerTitle: true,
       ),
+      body: Padding(padding: EdgeInsets.symmetric(horizontal: 25), child: Consumer(builder: (_, WidgetRef ref, __) {
+        final state = ref.watch(bookCategoryPageStateNotifierProvider);
+        return state.map(initial: (_) => SizedBox(), inProgress: (_) => SizedBox(), successful: (_) => SizedBox(), error: (_) => SizedBox());
+      },)),
     );
   }
 }
