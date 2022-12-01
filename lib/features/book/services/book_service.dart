@@ -64,12 +64,16 @@ class BookService {
     for (; currentBookNumber <= totalBookNumber; currentBookNumber++) {
       final isbn = await _bookRemote.loadIsbnById(bookIds[currentBookNumber - 1]);
 
-      final volumeResponse = await _bookRemote.loadBookByIsbn(isbn);
-      final volume = Volume.fromJson(volumeResponse.data);
+      final response = await _bookRemote.loadBookByIsbn(isbn);
+      final volume = ListBooksResponsePayload.fromJson(response.data).items?.first;
+
+      if (volume != null) {
 
       volumeCategoryLoading = volumeCategoryLoading
           .copyWith(currentVolumeNumber: currentBookNumber, volumes: [...volumeCategoryLoading.volumes, volume]);
-      yield volumeCategoryLoading;
+        yield volumeCategoryLoading;
+      }
+
     }
   }
 }

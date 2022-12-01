@@ -57,14 +57,16 @@ class BookRemote {
   }
 
   Future<List<String>> loadIdsByReadingStatus(BookReadingStatus bookReadingStatus, String userId) async {
-    final response = await _httpClient.get(url: '$dbBookReadingDetailsUrl/$userId/$bookReadingStatus');
+    final response = await _httpClient.get(url: '$dbBookReadingDetailsUrl/$userId/$bookReadingStatus.json');
 
-    return response.data.keys;
+    print(response.data.keys);
+
+    return response.data.keys.toList();
   }
 
   Future<String> loadIsbnById(String bookId) async {
-    final response = await _httpClient.get(url: ' $dbBooksUrl/$bookId');
+    final response = await _httpClient.get(url: '$dbBooksUrl/$bookId.json');
 
-    return response.data.isbn;
+    return response.data['isbn'];
   }
 }
