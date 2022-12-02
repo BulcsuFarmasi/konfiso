@@ -3,6 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_reading_detail_form.dart';
 import 'package:konfiso/features/book/data/book.dart';
+import 'package:konfiso/features/book/data/book_reading_detail.dart';
+import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 
 void main() {
@@ -13,9 +15,14 @@ void main() {
         supportedLocales: AppLocalizations.supportedLocales,
         home: Scaffold(
           body: BookReadingDetailForm(
-            book: Book(
-              title: 'a',
-              industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '9876543212345')],
+            bookReadingDetail: BookReadingDetail(
+              book: Book(
+                title: '',
+                industryIds: [
+                  BookIndustryIdentifier(IndustryIdentifierType.isbn13, '12234567898765'),
+                ],
+              ),
+              status: BookReadingStatus.wantToRead,
             ),
           ),
         ),

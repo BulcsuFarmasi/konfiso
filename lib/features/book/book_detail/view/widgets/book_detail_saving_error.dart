@@ -8,19 +8,17 @@ import 'package:konfiso/shared/app_colors.dart';
 
 class BookDetailSavingError extends StatelessWidget {
   const BookDetailSavingError({
-    required this.book,
     required this.bookReadingDetail,
     super.key,
   });
 
-  final Book book;
   final BookReadingDetail bookReadingDetail;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        BookData(book: book),
+        BookData(book: bookReadingDetail.book!),
         const SizedBox(
           height: 20,
         ),
@@ -32,7 +30,7 @@ class BookDetailSavingError extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        BookReadingDetailForm(book: book, bookReadingDetail: bookReadingDetail),
+        BookReadingDetailForm(bookReadingDetail: bookReadingDetail),
       ],
     );
   }

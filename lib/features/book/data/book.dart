@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 
 part 'book.freezed.dart';
+part 'book.g.dart';
 
 @freezed
 class Book with _$Book {
@@ -14,4 +15,6 @@ class Book with _$Book {
     String? coverImageSmall,
     String? coverImageLarge,
   }) = _Book;
+
+  factory Book.fromJson(Map<String, Object?> json) => _$BookFromJson(json);
 }

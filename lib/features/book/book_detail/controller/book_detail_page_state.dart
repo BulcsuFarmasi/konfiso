@@ -11,7 +11,7 @@ class BookDetailPageState with _$BookDetailPageState {
 
   const factory BookDetailPageState.loadingInProgress() = _LoadingInProgress;
 
-  const factory BookDetailPageState.loadingSuccess(Book book) = _LoadingSuccess;
+  const factory BookDetailPageState.loadingSuccess(BookReadingDetail bookReadingDetail) = _LoadingSuccess;
 
   const factory BookDetailPageState.loadingError() = _LoadingError;
 
@@ -19,5 +19,5 @@ class BookDetailPageState with _$BookDetailPageState {
 
   const factory BookDetailPageState.savingSuccess(BookReadingStatus bookReadingStatus) = _SavingSuccess;
 
-  const factory BookDetailPageState.savingError(Book book, BookReadingDetail bookReadingDetail) = _SavingError;
+  const factory BookDetailPageState.savingError(BookReadingDetail bookReadingDetail) = _SavingError;
 }

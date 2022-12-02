@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
-import 'package:konfiso/features/book/data/book_reading_detail.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/list_books_response_payload.dart';
+import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/data/volume_category_loading.dart';
 import 'package:konfiso/features/book/services/book_remote.dart';
@@ -40,11 +40,25 @@ class BookService {
     }
   }
 
-  Future<void> saveBook(String isbn, BookReadingDetail bookReadingDetail) async {
+  Future<RemoteBookReadingDetail?> loadBookReadingDetailByIsbn(String isbn) async {
+    final bookId = await _bookRemote.loadBookIdbyIsbn(isbn);
+
+    if (bookId == null) {
+      return null;
+    }
+
+    final response = await _bookRemote.loadBookReadingDetailById(bookId, _authService.user!.userId!);
+
+    return (response != null) ? RemoteBookReadingDetail.fromJson(response.data) : null;
+  }
+
+  Future<void> saveBook(String isbn, RemoteBookReadingDetail bookReadingDetail) async {
     try {
       String? bookId = await _bookRemote.loadBookIdbyIsbn(isbn);
 
       bookId ??= await _bookRemote.insertBook(isbn);
+
+      await _bookRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
 
       await _bookRemote.insertBookReadingDetail(bookId, _authService.user!.userId!, bookReadingDetail);
     } on DioError catch (_) {
@@ -55,25 +69,24 @@ class BookService {
   Stream<VolumeCategoryLoading> loadBooksByReadingStatus(BookReadingStatus bookReadingStatus) async* {
     final bookIds = await _bookRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
 
-    final totalBookNumber = bookIds.length;
+    final totalBookNumber = bookIds?.length ?? 0;
     int currentBookNumber = 0;
     VolumeCategoryLoading volumeCategoryLoading = VolumeCategoryLoading([], currentBookNumber, totalBookNumber);
     yield volumeCategoryLoading;
+    if (totalBookNumber != 0) {
+      currentBookNumber = 1;
+      for (; currentBookNumber <= totalBookNumber; currentBookNumber++) {
+        final isbn = await _bookRemote.loadIsbnById(bookIds![currentBookNumber - 1]);
 
-    currentBookNumber = 1;
-    for (; currentBookNumber <= totalBookNumber; currentBookNumber++) {
-      final isbn = await _bookRemote.loadIsbnById(bookIds[currentBookNumber - 1]);
+        final response = await _bookRemote.loadBookByIsbn(isbn);
+        final volume = ListBooksResponsePayload.fromJson(response.data).items?.first;
 
-      final response = await _bookRemote.loadBookByIsbn(isbn);
-      final volume = ListBooksResponsePayload.fromJson(response.data).items?.first;
-
-      if (volume != null) {
-
-      volumeCategoryLoading = volumeCategoryLoading
-          .copyWith(currentVolumeNumber: currentBookNumber, volumes: [...volumeCategoryLoading.volumes, volume]);
-        yield volumeCategoryLoading;
+        if (volume != null) {
+          volumeCategoryLoading = volumeCategoryLoading
+              .copyWith(currentVolumeNumber: currentBookNumber, volumes: [...volumeCategoryLoading.volumes, volume]);
+          yield volumeCategoryLoading;
+        }
       }
-
     }
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
-import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/features/book/data/book_reading_detail.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/shared/app_colors.dart';
@@ -11,13 +10,11 @@ import 'package:konfiso/shared/app_validators.dart';
 
 class BookReadingDetailForm extends ConsumerStatefulWidget {
   const BookReadingDetailForm({
-    required this.book,
-    this.bookReadingDetail,
+    required this.bookReadingDetail,
     super.key,
   });
 
-  final Book book;
-  final BookReadingDetail? bookReadingDetail;
+  final BookReadingDetail bookReadingDetail;
 
   @override
   ConsumerState<BookReadingDetailForm> createState() => _BookReadingDetailFormState();
@@ -33,10 +30,10 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
   @override
   void initState() {
     super.initState();
-    _readingStatus = widget.bookReadingDetail?.status ?? BookReadingStatus.wantToRead;
-    _rating = widget.bookReadingDetail?.rating ?? 0;
-    _currentPage = widget.bookReadingDetail?.currentPage;
-    _comment = widget.bookReadingDetail?.comment;
+    _readingStatus = widget.bookReadingDetail.status;
+    _rating = widget.bookReadingDetail.rating ?? 0;
+    _currentPage = widget.bookReadingDetail.currentPage;
+    _comment = widget.bookReadingDetail.comment;
   }
 
   void _changeRating(double newRating) {
@@ -59,7 +56,7 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
 
   String? _validateCurrentPage(String? value) {
     String? errorMessage;
-    if (value != null && AppValidators.integer(value)) {
+    if (value != null && value.isNotEmpty && AppValidators.integer(value)) {
       errorMessage = 'Please provide a number';
     }
     return errorMessage;
@@ -81,9 +78,8 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
     }
     _formKey.currentState!.save();
 
-    ref.read(bookDetailPageStateNotifierProvider.notifier).saveBook(
-        widget.book,
-        BookReadingDetail(
+    ref.read(bookDetailPageStateNotifierProvider.notifier).saveBook(BookReadingDetail(
+          book: widget.bookReadingDetail.book,
           status: _readingStatus,
           currentPage: _currentPage,
           rating: _rating,
@@ -156,6 +152,7 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(hintText: AppLocalizations.of(context)!.comment),
               onSaved: _saveComment,
+              initialValue: _comment,
             ),
             const SizedBox(
               height: 10,
