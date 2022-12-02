@@ -6,6 +6,7 @@ import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/verify_user/view/pages/verify_user_page.dart';
 import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/features/loading/controller/loading_page_controller.dart';
+import 'package:konfiso/features/no_connection/view/pages/no_connection_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
 class LoadingPage extends ConsumerStatefulWidget {
@@ -24,21 +25,31 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isInit) {
-      ref.read(loadingPageControllerProvider).autoSignIn().then((UserSignInStatus userSignInStatus) {
-        final navigator = Navigator.of(context);
-        switch (userSignInStatus) {
-          case UserSignInStatus.signedIn:
-            navigator.pushReplacementNamed(BookHomePage.routeName);
-            break;
-          case UserSignInStatus.notSignedIn:
-            navigator.pushReplacementNamed(SignInPage.routeName);
-            break;
-          case UserSignInStatus.notVerified:
-            navigator.pushReplacementNamed(VerifyUserPage.routeName);
-            break;
-        }
-        _isInit = true;
-      });
+      _makeInitialNavigations();
+      _isInit = true;
+    }
+  }
+
+  void _makeInitialNavigations() async {
+    final controller = ref.read(loadingPageControllerProvider);
+    final navigator = Navigator.of(context);
+    final userSignInStatus = await controller.autoSignIn();
+
+    switch (userSignInStatus) {
+      case UserSignInStatus.signedIn:
+        navigator.pushReplacementNamed(BookHomePage.routeName);
+        break;
+      case UserSignInStatus.notSignedIn:
+        navigator.pushReplacementNamed(SignInPage.routeName);
+        break;
+      case UserSignInStatus.notVerified:
+        navigator.pushReplacementNamed(VerifyUserPage.routeName);
+        break;
+    }
+
+    final connection = await controller.checkInitialConnection();
+    if (!connection) {
+      navigator.pushNamed(NoConnectionPage.routeName);
     }
   }
 

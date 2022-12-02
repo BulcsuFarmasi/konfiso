@@ -12,4 +12,8 @@ class LoadingPageController {
   Future<UserSignInStatus> autoSignIn() {
     return _loadingRepository.autoSignIn();
   }
+
+  Future<bool> checkInitialConnection() async {
+    return _loadingRepository.checkInitialConnection();
+  }
 }
