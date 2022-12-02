@@ -9,7 +9,6 @@ final connectionWatcherProvider = Provider((Ref ref) => ConnectionWatcher(ref.re
 
 class ConnectionWatcher {
   ConnectionWatcher(this._internetConnectionChecker) {
-    _checkInitialConnection();
     _watchConnection();
   }
 
@@ -18,8 +17,8 @@ class ConnectionWatcher {
   final InternetConnectionChecker _internetConnectionChecker;
   final _watchConnectionController = ReplaySubject<bool>();
 
-  void _checkInitialConnection() async {
-    _watchConnectionController.add(await _internetConnectionChecker.hasConnection);
+  Future<bool> checkInitialConnection() async {
+    return _internetConnectionChecker.hasConnection;
   }
 
   void _watchConnection() {

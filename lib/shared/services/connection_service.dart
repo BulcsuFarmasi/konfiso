@@ -6,19 +6,13 @@ import 'package:konfiso/shared/connection_watcher.dart';
 final connectionServiceProvider = Provider((Ref ref) => ConnectionService(ref.read(connectionWatcherProvider)));
 
 class ConnectionService {
-  ConnectionService(this._connectionWatcher) {
-    _watchConnection();
-  }
-
-  Stream<bool> get watchConnection => _watchConnectionController.stream;
+  ConnectionService(this._connectionWatcher);
 
   final ConnectionWatcher _connectionWatcher;
 
-  final _watchConnectionController = StreamController<bool>();
+  Stream<bool> get watchConnection => _connectionWatcher.watchConnection;
 
-  void _watchConnection() {
-    _connectionWatcher.watchConnection.listen((bool connection) {
-      _watchConnectionController.add(connection);
-    });
+  Future<bool> checkInitialConnection() async {
+    return _connectionWatcher.checkInitialConnection();
   }
 }
