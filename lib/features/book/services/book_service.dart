@@ -67,26 +67,30 @@ class BookService {
   }
 
   Stream<VolumeCategoryLoading> loadBooksByReadingStatus(BookReadingStatus bookReadingStatus) async* {
-    final bookIds = await _bookRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
+    try {
+      final bookIds = await _bookRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
 
-    final totalBookNumber = bookIds?.length ?? 0;
-    int currentBookNumber = 0;
-    VolumeCategoryLoading volumeCategoryLoading = VolumeCategoryLoading([], currentBookNumber, totalBookNumber);
-    yield volumeCategoryLoading;
-    if (totalBookNumber != 0) {
-      currentBookNumber = 1;
-      for (; currentBookNumber <= totalBookNumber; currentBookNumber++) {
-        final isbn = await _bookRemote.loadIsbnById(bookIds![currentBookNumber - 1]);
+      final totalBookNumber = bookIds?.length ?? 0;
+      int currentBookNumber = 0;
+      VolumeCategoryLoading volumeCategoryLoading = VolumeCategoryLoading([], currentBookNumber, totalBookNumber);
+      yield volumeCategoryLoading;
+      if (totalBookNumber != 0) {
+        currentBookNumber = 1;
+        for (; currentBookNumber <= totalBookNumber; currentBookNumber++) {
+          final isbn = await _bookRemote.loadIsbnById(bookIds![currentBookNumber - 1]);
 
-        final response = await _bookRemote.loadBookByIsbn(isbn);
-        final volume = ListBooksResponsePayload.fromJson(response.data).items?.first;
+          final response = await _bookRemote.loadBookByIsbn(isbn);
+          final volume = ListBooksResponsePayload.fromJson(response.data).items?.first;
 
-        if (volume != null) {
-          volumeCategoryLoading = volumeCategoryLoading
-              .copyWith(currentVolumeNumber: currentBookNumber, volumes: [...volumeCategoryLoading.volumes, volume]);
-          yield volumeCategoryLoading;
+          if (volume != null) {
+            volumeCategoryLoading = volumeCategoryLoading
+                .copyWith(currentVolumeNumber: currentBookNumber, volumes: [...volumeCategoryLoading.volumes, volume]);
+            yield volumeCategoryLoading;
+          }
         }
       }
+    } catch (_) {
+      throw NetworkException();
     }
   }
 }

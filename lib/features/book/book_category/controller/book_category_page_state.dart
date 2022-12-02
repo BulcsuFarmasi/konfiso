@@ -12,5 +12,5 @@ class BookCategoryPageState with _$BookCategoryPageState {
 
   const factory BookCategoryPageState.successful(List<Book> books) = _Succesful;
 
-  const factory BookCategoryPageState.error(List<Book> books) = _Error;
+  const factory BookCategoryPageState.error() = _Error;
 }
