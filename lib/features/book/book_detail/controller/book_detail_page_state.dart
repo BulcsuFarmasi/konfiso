@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/features/book/data/book_reading_detail.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
 
