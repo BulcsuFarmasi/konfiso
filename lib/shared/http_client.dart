@@ -9,6 +9,10 @@ class HttpClient {
 
   HttpClient(this._dio);
 
+  Future<Response> delete({required String url}) {
+    return _dio.delete(url);
+  }
+
   Future<Response> get({required String url}) {
     return _dio.get(url);
   }

@@ -19,23 +19,23 @@ class BookDetailPageStateNotifier extends StateNotifier<BookDetailPageState> {
     state = const BookDetailPageState.loadingInProgress();
 
     try {
-      final book = await _bookDetailRepository.loadBookByIndustryIds(industryIds);
+      final bookReadingDetail = await _bookDetailRepository.loadBookByIndustryIds(industryIds);
 
-      state = BookDetailPageState.loadingSuccess(book);
+      state = BookDetailPageState.loadingSuccess(bookReadingDetail);
     } on BookDetailLoadingException catch (_) {
       state = const BookDetailPageState.loadingError();
     }
   }
 
-  void saveBook(Book book, BookReadingDetail bookReadingDetail) async {
+  void saveBook(BookReadingDetail bookReadingDetail) async {
     try {
       state = const BookDetailPageState.savingInProgress();
 
-      await _bookDetailRepository.saveBook(book.industryIds, bookReadingDetail);
+      await _bookDetailRepository.saveBook(bookReadingDetail);
 
       state = BookDetailPageState.savingSuccess(bookReadingDetail.status);
     } on BookDetailSavingException catch (_) {
-      state = BookDetailPageState.savingError(book, bookReadingDetail);
+      state = BookDetailPageState.savingError(bookReadingDetail);
     }
   }
 

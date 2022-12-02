@@ -6,6 +6,8 @@ part 'industry_identifier.g.dart';
 @freezed
 class BookIndustryIdentifier with _$BookIndustryIdentifier {
   const factory BookIndustryIdentifier(IndustryIdentifierType type, String identifier) = _BookIndustryIdentifier;
+
+  factory BookIndustryIdentifier.fromJson(Map<String, Object?> json) => _$BookIndustryIdentifierFromJson(json);
 }
 
 @freezed

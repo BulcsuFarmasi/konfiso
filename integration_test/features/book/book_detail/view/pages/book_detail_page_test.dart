@@ -9,6 +9,8 @@ import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.da
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_in_progress.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_loading_success.dart';
 import 'package:konfiso/features/book/data/book.dart';
+import 'package:konfiso/features/book/data/book_reading_detail.dart';
+import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -57,8 +59,7 @@ void main() {
     testWidgets('should display successful if successful was emitted by state notifier',
         (WidgetTester widgetTester) async {
       await loadWidgetAndSetStateToInProgress(widgetTester);
-      bookDetailPageStateNotifier.state = const BookDetailPageState.loadingSuccess(
-          Book(title: 'a', industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '1234567898765')]));
+      bookDetailPageStateNotifier.state = const BookDetailPageState.loadingSuccess(BookReadingDetail(book: Book(title: 'a', industryIds: [BookIndustryIdentifier(IndustryIdentifierType.isbn13, '1234567898765')]), status: BookReadingStatus.wantToRead));
       await widgetTester.pump();
 
       expect(find.byType(BookDetailLoadingSuccess), findsOneWidget);

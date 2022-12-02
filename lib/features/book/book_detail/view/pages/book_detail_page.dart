@@ -60,11 +60,12 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
           child: state.maybeMap(
             initial: (_) => const SizedBox(),
             loadingInProgress: (_) => const BookDetailInProgress(),
-            loadingSuccess: (success) => BookDetailLoadingSuccess(book: success.book),
+            loadingSuccess: (success) => BookDetailLoadingSuccess(
+              bookReadingDetail: success.bookReadingDetail,
+            ),
             loadingError: (_) => const BookDetailLoadingError(),
             savingInProgress: (_) => const BookDetailInProgress(),
-            savingError: (savingError) =>
-                BookDetailSavingError(book: savingError.book, bookReadingDetail: savingError.bookReadingDetail),
+            savingError: (savingError) => BookDetailSavingError(bookReadingDetail: savingError.bookReadingDetail),
             orElse: () => const SizedBox(),
           ),
         ),
