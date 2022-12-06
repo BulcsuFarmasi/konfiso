@@ -41,18 +41,18 @@ class _BookCategoryPageState extends ConsumerState<BookCategoryPage> {
         centerTitle: true,
       ),
       body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Consumer(
-            builder: (_, WidgetRef ref, __) {
-              final state = ref.watch(bookCategoryPageStateNotifierProvider);
-              return state.map(
-                  initial: (_) => const BookCategoryInitial(),
-                  inProgress: (inProgress) =>
-                      BookCategoryInProgress(bookCategoryLoading: inProgress.bookCategoryLoading),
-                  successful: (successful) => BookCategorySuccessful(books: successful.books),
-                  error: (_) => const BookCategoryError());
-            },
-          )),
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Consumer(
+          builder: (_, WidgetRef ref, __) {
+            final state = ref.watch(bookCategoryPageStateNotifierProvider);
+            return state.map(
+                initial: (_) => const BookCategoryInitial(),
+                inProgress: (inProgress) => BookCategoryInProgress(bookCategoryLoading: inProgress.bookCategoryLoading),
+                successful: (successful) => BookCategorySuccessful(books: successful.books),
+                error: (_) => const BookCategoryError());
+          },
+        ),
+      ),
     );
   }
 }

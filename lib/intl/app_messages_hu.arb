@@ -282,5 +282,20 @@
   "@couldntSaveTheReadingPleaseTryAgain": {
     "type": "text",
     "placeholders": {}
+  },
+  "couldntLoadTheBooksForThisCategory": "Nem lehet betölteni a könyveket ehhez a kategóriához",
+  "@couldntLoadTheBooksForThisCategory": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "thereAreNoBooksInThisCategoryCurrentlyAddSome": "Jelenleg nincsenek könyvek ebben a kategóriában, addj hozzá néhányat",
+  "@thereAreNoBooksInThisCategoryCurrentlyAddSome": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "details": "Részletek",
+  "@details": {
+    "type": "text",
+    "placeholders": {}
   }
 }
