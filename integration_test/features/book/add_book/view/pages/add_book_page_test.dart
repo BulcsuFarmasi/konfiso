@@ -8,7 +8,7 @@ import 'package:konfiso/features/book/add_book/controller/add_book_state.dart';
 import 'package:konfiso/features/book/add_book/view/pages/add_book_page.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_in_progress.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_search.dart';
-import 'package:konfiso/features/book/add_book/view/widgets/book_tile.dart';
+import 'package:konfiso/features/book/add_book/view/widgets/book_list_tile.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
@@ -101,7 +101,7 @@ void main() {
 
     testWidgets('should display book tile after typing and loading', (WidgetTester widgetTester) async {
       await loadWidgetAndSetStateToSuccessWithBooks(widgetTester);
-      expect(find.byType(BookTile), findsNWidgets(books.length));
+      expect(find.byType(BookListTile), findsNWidgets(books.length));
     });
 
     testWidgets('should display no books found if no books given', (WidgetTester widgetTester) async {

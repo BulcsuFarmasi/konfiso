@@ -5,11 +5,11 @@ import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
-class BookTile extends StatelessWidget {
-  const BookTile({
-    Key? key,
+class BookListTile extends StatelessWidget {
+  const BookListTile({
+    super.key,
     required this.book,
-  }) : super(key: key);
+  });
 
   final Book book;
 

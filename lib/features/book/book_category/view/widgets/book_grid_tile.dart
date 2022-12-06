@@ -37,10 +37,14 @@ class BookGridTile extends StatelessWidget {
           style: const TextStyle(fontSize: 18, color: AppColors.greyDarkestColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
-        Text(
-          book.authors?.join(', ') ?? '',
-          style:
-              const TextStyle(fontSize: 14, color: AppColors.greyDarkestWithHalfOpacity, fontWeight: FontWeight.w500),
+        Visibility(
+          visible: book.authors != null,
+          child: Text(
+            book.authors?.join(', ') ?? '',
+            style:
+                const TextStyle(fontSize: 14, color: AppColors.greyDarkestWithHalfOpacity, fontWeight: FontWeight.w500),
+            textAlign: TextAlign.center,
+          ),
         ),
         ElevatedButton(
             onPressed: () {
