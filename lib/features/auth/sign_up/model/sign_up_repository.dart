@@ -3,13 +3,15 @@ import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
 import 'package:konfiso/features/auth/sign_up/model/sign_up_exception.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
+import 'package:konfiso/shared/services/privacy_poilcy_service.dart';
 
-final signUpRepositoryProvider = Provider((Ref ref) => SignUpRepository(ref.read(authServiceProvider)));
+final signUpRepositoryProvider = Provider((Ref ref) => SignUpRepository(ref.read(authServiceProvider), ref.read(privacyPolicyServiceProvider)));
 
 class SignUpRepository {
   final AuthService _authService;
+  final PrivacyPolicyService _privacyPolicyService;
 
-  SignUpRepository(this._authService);
+  SignUpRepository(this._authService, this._privacyPolicyService);
 
   Future<void> signUp(String email, String password) async {
     try {
@@ -17,6 +19,10 @@ class SignUpRepository {
     } on NetworkException catch (e) {
       throw SignUpException(_convertMessageIntoError(e.message!));
     }
+  }
+
+  String getPrivacyPolicy() {
+    return _privacyPolicyService.privacyPolicyUrl;
   }
 
   SignUpError _convertMessageIntoError(String message) {

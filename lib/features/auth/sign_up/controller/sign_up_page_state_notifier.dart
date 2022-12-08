@@ -9,7 +9,7 @@ final signUpStateNotifierProvider = StateNotifierProvider<SignUpPageStateNotifie
 class SignUpPageStateNotifier extends StateNotifier<SignUpPageState> {
   final SignUpRepository _signUpRepository;
 
-  SignUpPageStateNotifier(this._signUpRepository) : super(const SignUpPageState.initial());
+  SignUpPageStateNotifier(this._signUpRepository) : super(SignUpPageState.initial(_signUpRepository.getPrivacyPolicy()));
 
   void signUp(String email, String password) async {
     state = const SignUpPageState.inProgress();
@@ -17,11 +17,11 @@ class SignUpPageStateNotifier extends StateNotifier<SignUpPageState> {
       await _signUpRepository.signUp(email, password);
       state = const SignUpPageState.successful();
     } on SignUpException catch (e) {
-      state = SignUpPageState.error(e.error);
+      state = SignUpPageState.error(e.error, _signUpRepository.getPrivacyPolicy());
     }
   }
 
   void goBackToInitial() {
-    state = const SignUpPageState.initial();
+    state = SignUpPageState.initial(_signUpRepository.getPrivacyPolicy());
   }
 }

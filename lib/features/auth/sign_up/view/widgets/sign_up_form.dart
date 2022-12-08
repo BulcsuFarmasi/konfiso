@@ -8,7 +8,9 @@ import 'package:konfiso/shared/app_validators.dart';
 import 'package:konfiso/shared/capabiliities/email_form_capability.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {
-  const SignUpForm({super.key});
+  const SignUpForm({required this.privacyPolicyUrl, super.key});
+
+  final String privacyPolicyUrl;
 
   static const emailKey = Key('signUpEmail');
   static const passwordKey = Key('signUpPassword');

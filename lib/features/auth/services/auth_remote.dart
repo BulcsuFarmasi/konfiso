@@ -50,10 +50,10 @@ class AuthRemote {
     return authResponse;
   }
 
-  Future<AuthResponsePayload> signUp(String email, String password) async {
+  Future<AuthResponsePayload> signUp(String email, String password, String privacyPolicy) async {
     AuthResponsePayload authResponse = await _signUpUser(email, password);
 
-    _saveUser(authResponse, email);
+    _saveUser(authResponse.localId, email, privacyPolicy);
 
     _sendVerificationEmail(authResponse.idToken);
 
@@ -104,13 +104,11 @@ class AuthRemote {
     return authResponse;
   }
 
-  Future<void> _saveUser(AuthResponsePayload authResponsePayload, String email) async {
+  Future<void> _saveUser(String authId, String email, String privacyPolicy) async {
     final user = RemoteUser(
-        authId: authResponsePayload.localId,
-        email: email,
-        registrationDate: _timeUtil.now(),
+        authId: authId,
         consented: true,
-        consentUrl: 'privacy-policy');
+        consentUrl: privacyPolicy);
 
     final url = '$dbUrl.json';
     final data = json.encode(user.toJson());

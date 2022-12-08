@@ -8,14 +8,22 @@ import 'package:konfiso/features/auth/data/user_signin_status.dart';
 import 'package:konfiso/features/auth/services/auth_remote.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
+import 'package:konfiso/shared/services/privacy_poilcy_service.dart';
 import 'package:konfiso/shared/utils/time_util.dart';
 
 final authServiceProvider = Provider(
-    (Ref ref) => AuthService(ref.read(authStorageProvider), ref.read(authRemoteProvider), ref.read(timeUtilProvider)));
+  (Ref ref) => AuthService(
+    ref.read(authStorageProvider),
+    ref.read(authRemoteProvider),
+    ref.read(timeUtilProvider),
+    ref.read(privacyPolicyServiceProvider),
+  ),
+);
 
 class AuthService {
   final AuthStorage _authStorage;
   final AuthRemote _authRemote;
+  final PrivacyPolicyService _privacyPolicyService;
   final TimeUtil _timeUtil;
   Timer? refreshTimer;
   StoredUser? user;
@@ -25,6 +33,7 @@ class AuthService {
     this._authStorage,
     this._authRemote,
     this._timeUtil,
+    this._privacyPolicyService,
   );
 
   Future<UserSignInStatus> autoSignIn() async {
@@ -67,7 +76,7 @@ class AuthService {
 
   Future<void> signUp(String email, String password) async {
     try {
-      final authResponse = await _authRemote.signUp(email, password);
+      final authResponse = await _authRemote.signUp(email, password, _privacyPolicyService.privacyPolicyUrl);
       user = StoredUser(
           authId: authResponse.localId,
           token: authResponse.idToken,

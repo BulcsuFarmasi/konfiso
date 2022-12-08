@@ -6,8 +6,9 @@ import 'package:konfiso/shared/widgets/entry_logo.dart';
 
 class SignUpError extends StatelessWidget {
   final sign_up_error.SignUpError error;
+  final String privacyPolicyUrl;
 
-  const SignUpError({super.key, required this.error});
+  const SignUpError({super.key, required this.error, required this.privacyPolicyUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class SignUpError extends StatelessWidget {
         const SizedBox(
           height: 32,
         ),
-        const SignUpForm(),
+        SignUpForm(privacyPolicyUrl: privacyPolicyUrl,),
       ],
     );
   }

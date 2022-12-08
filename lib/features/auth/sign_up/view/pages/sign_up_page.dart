@@ -29,9 +29,9 @@ class SignUpPage extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 42),
           child: state.maybeMap(
-              initial: (_) => const SignUpInitial(),
+              initial: (initial) => SignUpInitial(privacyPolicyUrl: initial.privacyPolicyUrl),
               inProgress: (_) => const EntryInProgress(),
-              error: (error) => SignUpError(error: error.error),
+              error: (error) => SignUpError(error: error.error, privacyPolicyUrl: error.privacyPolicyUrl),
               orElse: () => const SizedBox()),
         ),
       ),
