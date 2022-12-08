@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +7,7 @@ import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state_noti
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/app_validators.dart';
 import 'package:konfiso/shared/capabiliities/email_form_capability.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({required this.privacyPolicyUrl, super.key});
@@ -24,6 +26,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
   final _formKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
+  bool _privacyPolicyConsented = false;
+  bool _formSubmitted = false;
 
   final passwordController = TextEditingController();
 
@@ -33,8 +37,18 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
     super.dispose();
   }
 
+  void _changePrivacyPolicyConsented(bool? newPrivacyPolicyConsented) {
+    setState(() {
+      _privacyPolicyConsented = newPrivacyPolicyConsented ?? false;
+    });
+  }
+
   void _navigateToSignIn() {
     Navigator.of(context).pushReplacementNamed(SignInPage.routeName);
+  }
+
+  void _openPrivacyPolicy() {
+    launchUrl(Uri.parse(widget.privacyPolicyUrl));
   }
 
   void _saveEmail(String? email) {
@@ -46,7 +60,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
   }
 
   void _submitForm() {
-    final formIsValid = _formKey.currentState!.validate();
+    setState(() {
+      _formSubmitted = true;
+    });
+    final formIsValid = _formKey.currentState!.validate() && _privacyPolicyConsented;
     if (!formIsValid) {
       return;
     }
@@ -130,7 +147,33 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
             ),
           ),
           const SizedBox(
-            height: 34,
+            height: 17,
+          ),
+          CheckboxListTile(
+            value: _privacyPolicyConsented,
+            onChanged: _changePrivacyPolicyConsented,
+            controlAffinity: ListTileControlAffinity.leading,
+            title: RichText(
+              text: TextSpan(
+                text: 'I read and understood ',
+                style: DefaultTextStyle.of(context).style,
+                children: [
+                  TextSpan(
+                      text: 'the privacy policy',
+                      style: const TextStyle(color: AppColors.primaryColor),
+                      recognizer: TapGestureRecognizer()..onTap = _openPrivacyPolicy),
+                ],
+              ),
+            ),
+            subtitle: !_privacyPolicyConsented && _formSubmitted
+                ? Text(
+                    'Please, accept the privacy policy',
+                    style: TextStyle(color: AppColors.primaryColor, fontSize: 12),
+                  )
+                : null,
+          ),
+          const SizedBox(
+            height: 17,
           ),
           ElevatedButton(
             onPressed: _submitForm,
