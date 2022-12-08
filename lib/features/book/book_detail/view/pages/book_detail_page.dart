@@ -6,6 +6,7 @@ import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_in_pr
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_loading_error.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_loading_success.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_saving_error.dart';
+import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 
 class BookDetailPage extends ConsumerStatefulWidget {
@@ -44,10 +45,10 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
             ref.read(bookDetailPageStateNotifierProvider.notifier).restoreToInitial();
 
             final navigator = Navigator.of(context);
-            // pop twice to reach book category page
-            navigator.pop();
-            navigator.pop();
-            Navigator.of(context).pushNamed(BookCategoryPage.routeName, arguments: savingSuccess.bookReadingStatus);
+
+            navigator.popUntil(ModalRoute.withName(BookHomePage.routeName));
+
+            navigator.pushNamed(BookCategoryPage.routeName, arguments: savingSuccess.bookReadingStatus);
           },
           orElse: () => null);
     });

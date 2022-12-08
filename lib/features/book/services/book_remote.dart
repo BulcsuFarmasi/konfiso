@@ -80,7 +80,6 @@ class BookRemote {
 
   Future<void> deleteBookReadingDetail(String bookId, String userId) async {
     for (BookReadingStatus bookReadingStatus in BookReadingStatus.values) {
-      print('$dbBookReadingDetailsUrl/$userId/$bookReadingStatus}/$bookId.json');
       await _httpClient.delete(url: '$dbBookReadingDetailsUrl/$userId/$bookReadingStatus/$bookId.json');
     }
   }

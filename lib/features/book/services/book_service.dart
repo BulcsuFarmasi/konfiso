@@ -37,6 +37,8 @@ class BookService {
       return ListBooksResponsePayload.fromJson(response.data).items!.first;
     } on DioError catch (_) {
       throw NetworkException();
+    } catch (_) {
+      throw NetworkException();
     }
   }
 

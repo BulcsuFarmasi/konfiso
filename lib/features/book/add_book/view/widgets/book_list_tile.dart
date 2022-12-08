@@ -22,8 +22,8 @@ class BookListTile extends StatelessWidget {
     return ListTile(
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(3),
-        child: (book.coverImageSmall != null)
-            ? Image.network(book.coverImageSmall!, width: 40)
+        child: (book.coverImage?.smallest != null)
+            ? Image.network(book.coverImage!.smallest!, width: 40)
             : Image.asset(
                 'assets/images/no_book_cover.gif',
                 width: 40,

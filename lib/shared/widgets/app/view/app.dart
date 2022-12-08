@@ -17,6 +17,8 @@ import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/widgets/app/controller/app_state.dart';
 import 'package:konfiso/shared/widgets/app/controller/app_state_notifier.dart';
 
+final routeObserver = RouteObserver<ModalRoute<void>>();
+
 class App extends ConsumerStatefulWidget {
   const App({super.key});
 
@@ -77,6 +79,7 @@ class _AppState extends ConsumerState<App> {
           iconTheme: IconThemeData(color: AppColors.greyDarkerColor),
         ),
       ),
+      navigatorObservers: [routeObserver],
       initialRoute: '/',
       routes: {
         '/': (BuildContext context) => const LoadingPage(),

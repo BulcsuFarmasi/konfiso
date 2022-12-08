@@ -6,6 +6,7 @@ import 'package:konfiso/features/book/add_book/view/widgets/add_book_error.dart'
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_in_progress.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_search.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_success.dart';
+import 'package:konfiso/shared/widgets/app/view/app.dart';
 import 'package:konfiso/shared/widgets/callback.dart';
 
 class AddBookPage extends ConsumerStatefulWidget {
@@ -17,7 +18,7 @@ class AddBookPage extends ConsumerStatefulWidget {
   ConsumerState<AddBookPage> createState() => _AddBookPageState();
 }
 
-class _AddBookPageState extends ConsumerState<AddBookPage> with TickerProviderStateMixin {
+class _AddBookPageState extends ConsumerState<AddBookPage> with TickerProviderStateMixin, RouteAware {
   late AnimationController _spaceAnimationController;
   late Tween<double> spaceTween;
   late Animation<double> spaceAnimation;
@@ -33,6 +34,27 @@ class _AddBookPageState extends ConsumerState<AddBookPage> with TickerProviderSt
     spaceAnimation = spaceTween.animate(spaceCurvedAnimation);
   }
 
+  @override
+  void dispose() {
+    _spaceAnimationController.dispose();
+    routeObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPush() {
+    super.didPush();
+    Future(() {
+      ref.read(addBookPageStateNotifierProvider.notifier).restoreToInitial();
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
   void _startSpaceAnimation() {
     _spaceAnimationController.forward();
   }
@@ -46,21 +68,9 @@ class _AddBookPageState extends ConsumerState<AddBookPage> with TickerProviderSt
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    _spaceAnimationController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
-          onPressed: () {
-            ref.read(addBookPageStateNotifierProvider.notifier).restoreToInitial();
-            Navigator.of(context).pop();
-          },
-        ),
         title: Text(AppLocalizations.of(context)!.addABook),
         centerTitle: true,
       ),

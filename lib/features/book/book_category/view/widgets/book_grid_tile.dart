@@ -22,9 +22,9 @@ class BookGridTile extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: book.coverImageLarge != null
+          child: book.coverImage?.smaller != null
               ? Image.network(
-                  book.coverImageLarge!,
+                  book.coverImage!.smaller!,
                   width: 140,
                 )
               : Image.asset(

@@ -13,13 +13,19 @@ class AddBookSuccess extends StatelessWidget {
   Widget build(BuildContext context) => Expanded(
         child: Container(
           decoration: BoxDecoration(color: AppColors.inputBackgroundColor, borderRadius: BorderRadius.circular(9)),
+          padding: const EdgeInsets.all(5),
+          width: double.infinity,
           child: books.isNotEmpty
               ? ListView.builder(
                   itemCount: books.length,
                   itemBuilder: (_, int index) {
                     return BookListTile(book: books[index]);
                   })
-              : Text(AppLocalizations.of(context)!.noBooksFound),
+              : Text(
+                  AppLocalizations.of(context)!.noBooksFound,
+                  style: const TextStyle(fontSize: 18),
+                  textAlign: TextAlign.center,
+                ),
         ),
       );
 }
