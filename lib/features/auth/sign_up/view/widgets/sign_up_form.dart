@@ -48,6 +48,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
   }
 
   void _openPrivacyPolicy() {
+    // TODO is the widget is the right place
     launchUrl(Uri.parse(widget.privacyPolicyUrl));
   }
 
@@ -155,11 +156,11 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
             controlAffinity: ListTileControlAffinity.leading,
             title: RichText(
               text: TextSpan(
-                text: 'I read and understood ',
+                text: AppLocalizations.of(context)!.iReadAndUnderstood,
                 style: DefaultTextStyle.of(context).style,
                 children: [
                   TextSpan(
-                      text: 'the privacy policy',
+                      text: AppLocalizations.of(context)!.thePrivacyPolicy,
                       style: const TextStyle(color: AppColors.primaryColor),
                       recognizer: TapGestureRecognizer()..onTap = _openPrivacyPolicy),
                 ],
@@ -167,7 +168,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
             ),
             subtitle: !_privacyPolicyConsented && _formSubmitted
                 ? Text(
-                    'Please, accept the privacy policy',
+                    AppLocalizations.of(context)!.pleaseAcceptThePrivacyPolicy,
                     style: TextStyle(color: AppColors.primaryColor, fontSize: 12),
                   )
                 : null,

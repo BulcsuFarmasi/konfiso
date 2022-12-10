@@ -297,5 +297,20 @@
   "@details": {
     "type": "text",
     "placeholders": {}
+  },
+  "iReadAndUnderstood": "Elolvastam és megértettem ",
+  "@iReadAndUnderstood": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "thePrivacyPolicy": "az adatvédelmi nyilatkoztatot",
+  "@thePrivacyPolicy": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseAcceptThePrivacyPolicy": "Kérünk, fogad el az adatvédelmi nyilatkozatot",
+  "@pleaseAcceptThePrivacyPolicy": {
+    "type": "text",
+    "placeholders": {}
   }
 }

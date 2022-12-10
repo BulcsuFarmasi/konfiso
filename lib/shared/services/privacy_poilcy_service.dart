@@ -10,5 +10,8 @@ class PrivacyPolicyService {
 
   PrivacyPolicyService(this.languageService);
 
-  String get privacyPolicyUrl => 'https://konfiso.com/privacy-policy/${languageService.locale}/v$versionNumber/privacy-policy.pdf';
+  String get privacyPolicyUrl {
+    final languageCode = languageService.locale.split('_').first;
+    return 'https://konfiso.com/privacy-policy/$languageCode/v$versionNumber/privacy-policy.pdf';
+  }
 }

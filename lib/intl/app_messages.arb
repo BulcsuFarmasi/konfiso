@@ -297,5 +297,20 @@
   "@details": {
     "type": "text",
     "placeholders": {}
+  },
+  "iReadAndUnderstood": "I read and understood ",
+  "@iReadAndUnderstood": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "thePrivacyPolicy": "the privacy policy",
+  "@thePrivacyPolicy": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseAcceptThePrivacyPolicy": "Please, accept the privacy policy",
+  "@pleaseAcceptThePrivacyPolicy": {
+    "type": "text",
+    "placeholders": {}
   }
 }
