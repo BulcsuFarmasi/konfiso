@@ -39,10 +39,13 @@ class BookData extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Text(
-          book.authors?.join(', ') ?? '',
-          style:
-              const TextStyle(fontSize: 14, color: AppColors.greyDarkestWithHalfOpacity, fontWeight: FontWeight.w500),
+        Visibility(
+          visible: book.authors != null,
+          child: Text(
+            book.authors?.join(', ') ?? '',
+            style:
+                const TextStyle(fontSize: 14, color: AppColors.greyDarkestWithHalfOpacity, fontWeight: FontWeight.w500),
+          ),
         ),
         const SizedBox(
           height: 10,
