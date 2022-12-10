@@ -3,17 +3,22 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/auth/data/user_signin_status.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/loading/model/loading_repository.dart';
+import 'package:konfiso/shared/services/connection_service.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAuthService extends Mock implements AuthService {}
+
+class MockConnectionService extends Mock implements ConnectionService {}
 
 void main() {
   group('LoadingRepository', () {
     late LoadingRepository loadingRepository;
     late AuthService authService;
+    late ConnectionService connectionService;
     setUp(() {
       authService = MockAuthService();
-      loadingRepository = LoadingRepository(authService);
+      connectionService = MockConnectionService();
+      loadingRepository = LoadingRepository(authService, connectionService);
     });
     group('autoSignIn', () {
       test('should call auth service\'s autoSignUp', () {

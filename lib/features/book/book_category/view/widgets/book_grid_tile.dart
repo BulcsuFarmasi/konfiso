@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
 import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/shared/app_colors.dart';
@@ -21,9 +22,9 @@ class BookGridTile extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: book.coverImageLarge != null
+          child: book.coverImage?.smaller != null
               ? Image.network(
-                  book.coverImageLarge!,
+                  book.coverImage!.smaller!,
                   width: 140,
                 )
               : Image.asset(
@@ -36,16 +37,20 @@ class BookGridTile extends StatelessWidget {
           style: const TextStyle(fontSize: 18, color: AppColors.greyDarkestColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
-        Text(
-          book.authors?.join(', ') ?? '',
-          style:
-              const TextStyle(fontSize: 14, color: AppColors.greyDarkestWithHalfOpacity, fontWeight: FontWeight.w500),
+        Visibility(
+          visible: book.authors != null,
+          child: Text(
+            book.authors?.join(', ') ?? '',
+            style:
+                const TextStyle(fontSize: 14, color: AppColors.greyDarkestWithHalfOpacity, fontWeight: FontWeight.w500),
+            textAlign: TextAlign.center,
+          ),
         ),
         ElevatedButton(
             onPressed: () {
               _navigateToDetailPage(context);
             },
-            child: Text('Details'))
+            child: Text(AppLocalizations.of(context)!.details))
       ],
     );
   }

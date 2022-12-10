@@ -5,11 +5,11 @@ part 'sign_up_page_state.freezed.dart';
 
 @freezed
 class SignUpPageState with _$SignUpPageState {
-  const factory SignUpPageState.initial() = _Initial;
+  const factory SignUpPageState.initial(String privacyPolicyUrl) = _Initial;
 
   const factory SignUpPageState.inProgress() = _InProgress;
 
   const factory SignUpPageState.successful() = _Succesful;
 
-  const factory SignUpPageState.error(SignUpError error) = _Error;
+  const factory SignUpPageState.error(SignUpError error, String privacyPolicyUrl) = _Error;
 }

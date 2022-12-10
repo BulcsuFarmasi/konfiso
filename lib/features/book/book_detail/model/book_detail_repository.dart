@@ -34,7 +34,7 @@ class BookDetailRepository {
               title: volume.volumeInfo.title,
               authors: volume.volumeInfo.authors,
               publicationYear: publicationYear,
-              coverImageLarge: volume.volumeInfo.imageLinks?.small,
+              coverImage: CoverImage(small: volume.volumeInfo.imageLinks?.small),
               industryIds: volume.volumeInfo.industryIdentifiers!
                   .map((VolumeIndustryIdentifier industryIdentifier) => BookIndustryIdentifier(
                       IndustryIdentifierType.fromString(industryIdentifier.type), industryIdentifier.identifier))

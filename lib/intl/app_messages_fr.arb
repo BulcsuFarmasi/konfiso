@@ -282,5 +282,35 @@
   "@couldntSaveTheReadingPleaseTryAgain": {
     "type": "text",
     "placeholders": {}
+  },
+  "couldntLoadTheBooksForThisCategory": "Impossible de charger les livres pour cette catégorie",
+  "@couldntLoadTheBooksForThisCategory": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "thereAreNoBooksInThisCategoryCurrentlyAddSome": "Il n'y a pas de livres dans cette catégorie pour le moment, ajoute-en",
+  "@thereAreNoBooksInThisCategoryCurrentlyAddSome": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "details": "Détails",
+  "@details": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "iReadAndUnderstood": "J'ai lu et compris ",
+  "@iReadAndUnderstood": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "thePrivacyPolicy": "la politique de confidentialité",
+  "@thePrivacyPolicy": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "pleaseAcceptThePrivacyPolicy": "Veuillez accepter la politque de confidentialité",
+  "@pleaseAcceptThePrivacyPolicy": {
+    "type": "text",
+    "placeholders": {}
   }
 }

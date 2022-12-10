@@ -126,6 +126,7 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
                   keyboardType: TextInputType.number,
                   validator: _validateCurrentPage,
                   onSaved: _saveCurrentPage,
+                  initialValue: _currentPage != null ? '$_currentPage' : '',
                 ),
                 const SizedBox(
                   height: 10,

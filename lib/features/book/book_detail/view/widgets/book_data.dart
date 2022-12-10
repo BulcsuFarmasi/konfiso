@@ -18,9 +18,9 @@ class BookData extends StatelessWidget {
         ),
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: book.coverImageLarge != null
+          child: book.coverImage?.small != null
               ? Image.network(
-                  book.coverImageLarge!,
+                  book.coverImage!.small!,
                   width: 215,
                 )
               : Image.asset(

@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 
 part 'volume.freezed.dart';
+
 part 'volume.g.dart';
 
 @freezed
@@ -27,7 +28,14 @@ class VolumeInfo with _$VolumeInfo {
 
 @freezed
 class ImageLinks with _$ImageLinks {
-  const factory ImageLinks(String? thumbnail, String? small) = _ImageLinks;
+  const factory ImageLinks({
+    String? smallThumbnail,
+    String? thumbnail,
+    String? small,
+    String? medium,
+    String? large,
+    String? extraLarge,
+  }) = _ImageLinks;
 
   factory ImageLinks.fromJson(Map<String, Object?> json) => _$ImageLinksFromJson(json);
 }

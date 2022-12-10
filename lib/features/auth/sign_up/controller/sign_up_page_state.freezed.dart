@@ -18,26 +18,26 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SignUpPageState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(String privacyPolicyUrl) initial,
     required TResult Function() inProgress,
     required TResult Function() successful,
-    required TResult Function(SignUpError error) error,
+    required TResult Function(SignUpError error, String privacyPolicyUrl) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(String privacyPolicyUrl)? initial,
     TResult? Function()? inProgress,
     TResult? Function()? successful,
-    TResult? Function(SignUpError error)? error,
+    TResult? Function(SignUpError error, String privacyPolicyUrl)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(String privacyPolicyUrl)? initial,
     TResult Function()? inProgress,
     TResult Function()? successful,
-    TResult Function(SignUpError error)? error,
+    TResult Function(SignUpError error, String privacyPolicyUrl)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -91,6 +91,8 @@ abstract class _$$_InitialCopyWith<$Res> {
   factory _$$_InitialCopyWith(
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String privacyPolicyUrl});
 }
 
 /// @nodoc
@@ -99,60 +101,85 @@ class __$$_InitialCopyWithImpl<$Res>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? privacyPolicyUrl = null,
+  }) {
+    return _then(_$_Initial(
+      null == privacyPolicyUrl
+          ? _value.privacyPolicyUrl
+          : privacyPolicyUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Initial implements _Initial {
-  const _$_Initial();
+  const _$_Initial(this.privacyPolicyUrl);
+
+  @override
+  final String privacyPolicyUrl;
 
   @override
   String toString() {
-    return 'SignUpPageState.initial()';
+    return 'SignUpPageState.initial(privacyPolicyUrl: $privacyPolicyUrl)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType &&
+            other is _$_Initial &&
+            (identical(other.privacyPolicyUrl, privacyPolicyUrl) ||
+                other.privacyPolicyUrl == privacyPolicyUrl));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, privacyPolicyUrl);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(String privacyPolicyUrl) initial,
     required TResult Function() inProgress,
     required TResult Function() successful,
-    required TResult Function(SignUpError error) error,
+    required TResult Function(SignUpError error, String privacyPolicyUrl) error,
   }) {
-    return initial();
+    return initial(privacyPolicyUrl);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(String privacyPolicyUrl)? initial,
     TResult? Function()? inProgress,
     TResult? Function()? successful,
-    TResult? Function(SignUpError error)? error,
+    TResult? Function(SignUpError error, String privacyPolicyUrl)? error,
   }) {
-    return initial?.call();
+    return initial?.call(privacyPolicyUrl);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(String privacyPolicyUrl)? initial,
     TResult Function()? inProgress,
     TResult Function()? successful,
-    TResult Function(SignUpError error)? error,
+    TResult Function(SignUpError error, String privacyPolicyUrl)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(privacyPolicyUrl);
     }
     return orElse();
   }
@@ -196,7 +223,12 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements SignUpPageState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial(final String privacyPolicyUrl) = _$_Initial;
+
+  String get privacyPolicyUrl;
+  @JsonKey(ignore: true)
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -237,10 +269,10 @@ class _$_InProgress implements _InProgress {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(String privacyPolicyUrl) initial,
     required TResult Function() inProgress,
     required TResult Function() successful,
-    required TResult Function(SignUpError error) error,
+    required TResult Function(SignUpError error, String privacyPolicyUrl) error,
   }) {
     return inProgress();
   }
@@ -248,10 +280,10 @@ class _$_InProgress implements _InProgress {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(String privacyPolicyUrl)? initial,
     TResult? Function()? inProgress,
     TResult? Function()? successful,
-    TResult? Function(SignUpError error)? error,
+    TResult? Function(SignUpError error, String privacyPolicyUrl)? error,
   }) {
     return inProgress?.call();
   }
@@ -259,10 +291,10 @@ class _$_InProgress implements _InProgress {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(String privacyPolicyUrl)? initial,
     TResult Function()? inProgress,
     TResult Function()? successful,
-    TResult Function(SignUpError error)? error,
+    TResult Function(SignUpError error, String privacyPolicyUrl)? error,
     required TResult orElse(),
   }) {
     if (inProgress != null) {
@@ -351,10 +383,10 @@ class _$_Succesful implements _Succesful {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(String privacyPolicyUrl) initial,
     required TResult Function() inProgress,
     required TResult Function() successful,
-    required TResult Function(SignUpError error) error,
+    required TResult Function(SignUpError error, String privacyPolicyUrl) error,
   }) {
     return successful();
   }
@@ -362,10 +394,10 @@ class _$_Succesful implements _Succesful {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(String privacyPolicyUrl)? initial,
     TResult? Function()? inProgress,
     TResult? Function()? successful,
-    TResult? Function(SignUpError error)? error,
+    TResult? Function(SignUpError error, String privacyPolicyUrl)? error,
   }) {
     return successful?.call();
   }
@@ -373,10 +405,10 @@ class _$_Succesful implements _Succesful {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(String privacyPolicyUrl)? initial,
     TResult Function()? inProgress,
     TResult Function()? successful,
-    TResult Function(SignUpError error)? error,
+    TResult Function(SignUpError error, String privacyPolicyUrl)? error,
     required TResult orElse(),
   }) {
     if (successful != null) {
@@ -432,7 +464,7 @@ abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
   @useResult
-  $Res call({SignUpError error});
+  $Res call({SignUpError error, String privacyPolicyUrl});
 }
 
 /// @nodoc
@@ -446,12 +478,17 @@ class __$$_ErrorCopyWithImpl<$Res>
   @override
   $Res call({
     Object? error = null,
+    Object? privacyPolicyUrl = null,
   }) {
     return _then(_$_Error(
       null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as SignUpError,
+      null == privacyPolicyUrl
+          ? _value.privacyPolicyUrl
+          : privacyPolicyUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -459,14 +496,16 @@ class __$$_ErrorCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error(this.error);
+  const _$_Error(this.error, this.privacyPolicyUrl);
 
   @override
   final SignUpError error;
+  @override
+  final String privacyPolicyUrl;
 
   @override
   String toString() {
-    return 'SignUpPageState.error(error: $error)';
+    return 'SignUpPageState.error(error: $error, privacyPolicyUrl: $privacyPolicyUrl)';
   }
 
   @override
@@ -474,11 +513,13 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
-            (identical(other.error, error) || other.error == error));
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.privacyPolicyUrl, privacyPolicyUrl) ||
+                other.privacyPolicyUrl == privacyPolicyUrl));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode => Object.hash(runtimeType, error, privacyPolicyUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -489,36 +530,36 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(String privacyPolicyUrl) initial,
     required TResult Function() inProgress,
     required TResult Function() successful,
-    required TResult Function(SignUpError error) error,
+    required TResult Function(SignUpError error, String privacyPolicyUrl) error,
   }) {
-    return error(this.error);
+    return error(this.error, privacyPolicyUrl);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(String privacyPolicyUrl)? initial,
     TResult? Function()? inProgress,
     TResult? Function()? successful,
-    TResult? Function(SignUpError error)? error,
+    TResult? Function(SignUpError error, String privacyPolicyUrl)? error,
   }) {
-    return error?.call(this.error);
+    return error?.call(this.error, privacyPolicyUrl);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(String privacyPolicyUrl)? initial,
     TResult Function()? inProgress,
     TResult Function()? successful,
-    TResult Function(SignUpError error)? error,
+    TResult Function(SignUpError error, String privacyPolicyUrl)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(this.error);
+      return error(this.error, privacyPolicyUrl);
     }
     return orElse();
   }
@@ -562,9 +603,11 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements SignUpPageState {
-  const factory _Error(final SignUpError error) = _$_Error;
+  const factory _Error(final SignUpError error, final String privacyPolicyUrl) =
+      _$_Error;
 
   SignUpError get error;
+  String get privacyPolicyUrl;
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       throw _privateConstructorUsedError;

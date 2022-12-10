@@ -5,11 +5,11 @@ import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
-class BookTile extends StatelessWidget {
-  const BookTile({
-    Key? key,
+class BookListTile extends StatelessWidget {
+  const BookListTile({
+    super.key,
     required this.book,
-  }) : super(key: key);
+  });
 
   final Book book;
 
@@ -22,8 +22,8 @@ class BookTile extends StatelessWidget {
     return ListTile(
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(3),
-        child: (book.coverImageSmall != null)
-            ? Image.network(book.coverImageSmall!, width: 40)
+        child: (book.coverImage?.smallest != null)
+            ? Image.network(book.coverImage!.smallest!, width: 40)
             : Image.asset(
                 'assets/images/no_book_cover.gif',
                 width: 40,

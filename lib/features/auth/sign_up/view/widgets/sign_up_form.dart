@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,9 +7,12 @@ import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state_noti
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/app_validators.dart';
 import 'package:konfiso/shared/capabiliities/email_form_capability.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {
-  const SignUpForm({super.key});
+  const SignUpForm({required this.privacyPolicyUrl, super.key});
+
+  final String privacyPolicyUrl;
 
   static const emailKey = Key('signUpEmail');
   static const passwordKey = Key('signUpPassword');
@@ -22,6 +26,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
   final _formKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
+  bool _privacyPolicyConsented = false;
+  bool _formSubmitted = false;
 
   final passwordController = TextEditingController();
 
@@ -31,8 +37,19 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
     super.dispose();
   }
 
+  void _changePrivacyPolicyConsented(bool? newPrivacyPolicyConsented) {
+    setState(() {
+      _privacyPolicyConsented = newPrivacyPolicyConsented ?? false;
+    });
+  }
+
   void _navigateToSignIn() {
     Navigator.of(context).pushReplacementNamed(SignInPage.routeName);
+  }
+
+  void _openPrivacyPolicy() {
+    // TODO is the widget is the right place
+    launchUrl(Uri.parse(widget.privacyPolicyUrl));
   }
 
   void _saveEmail(String? email) {
@@ -44,7 +61,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
   }
 
   void _submitForm() {
-    final formIsValid = _formKey.currentState!.validate();
+    setState(() {
+      _formSubmitted = true;
+    });
+    final formIsValid = _formKey.currentState!.validate() && _privacyPolicyConsented;
     if (!formIsValid) {
       return;
     }
@@ -87,30 +107,74 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
             textInputAction: TextInputAction.next,
             validator: validateEmail,
             onSaved: _saveEmail,
+            toolbarOptions: const ToolbarOptions(
+              copy: true,
+              cut: true,
+              paste: true,
+              selectAll: true,
+            ),
           ),
           const SizedBox(
             height: 20,
           ),
           TextFormField(
-            key: SignUpForm.passwordKey,
-            decoration: InputDecoration(hintText: AppLocalizations.of(context)!.password),
-            controller: passwordController,
-            textInputAction: TextInputAction.next,
-            obscureText: true,
-            validator: _validatePassword,
-            onSaved: _savePassword,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          TextFormField(
-              key: SignUpForm.otherPasswordKey,
-              decoration: InputDecoration(hintText: AppLocalizations.of(context)!.passwordAgain),
+              key: SignUpForm.passwordKey,
+              decoration: InputDecoration(hintText: AppLocalizations.of(context)!.password),
+              controller: passwordController,
+              textInputAction: TextInputAction.next,
               obscureText: true,
-              textInputAction: TextInputAction.done,
-              validator: _validateOtherPassword),
+              validator: _validatePassword,
+              onSaved: _savePassword,
+              toolbarOptions: const ToolbarOptions(
+                copy: true,
+                cut: true,
+                paste: true,
+                selectAll: true,
+              )),
           const SizedBox(
-            height: 34,
+            height: 20,
+          ),
+          TextFormField(
+            key: SignUpForm.otherPasswordKey,
+            decoration: InputDecoration(hintText: AppLocalizations.of(context)!.passwordAgain),
+            obscureText: true,
+            textInputAction: TextInputAction.done,
+            validator: _validateOtherPassword,
+            toolbarOptions: const ToolbarOptions(
+              copy: true,
+              cut: true,
+              paste: true,
+              selectAll: true,
+            ),
+          ),
+          const SizedBox(
+            height: 17,
+          ),
+          CheckboxListTile(
+            value: _privacyPolicyConsented,
+            onChanged: _changePrivacyPolicyConsented,
+            controlAffinity: ListTileControlAffinity.leading,
+            title: RichText(
+              text: TextSpan(
+                text: AppLocalizations.of(context)!.iReadAndUnderstood,
+                style: DefaultTextStyle.of(context).style,
+                children: [
+                  TextSpan(
+                      text: AppLocalizations.of(context)!.thePrivacyPolicy,
+                      style: const TextStyle(color: AppColors.primaryColor),
+                      recognizer: TapGestureRecognizer()..onTap = _openPrivacyPolicy),
+                ],
+              ),
+            ),
+            subtitle: !_privacyPolicyConsented && _formSubmitted
+                ? Text(
+                    AppLocalizations.of(context)!.pleaseAcceptThePrivacyPolicy,
+                    style: TextStyle(color: AppColors.primaryColor, fontSize: 12),
+                  )
+                : null,
+          ),
+          const SizedBox(
+            height: 17,
           ),
           ElevatedButton(
             onPressed: _submitForm,

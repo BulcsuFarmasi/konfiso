@@ -28,7 +28,7 @@ class BookCategoryRepository {
                       volumeIndustryIdentifier.identifier))
                   .toList(),
               authors: volume.volumeInfo.authors,
-              coverImageLarge: volume.volumeInfo.imageLinks?.small))
+              coverImage: CoverImage(smaller: volume.volumeInfo.imageLinks?.thumbnail)))
           .toList();
 
       return BookCategoryLoading(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/book/add_book/view/pages/add_book_page.dart';
 import 'package:konfiso/features/book/book_category/controller/book_category_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_category/view/widgets/book_category_error.dart';
 import 'package:konfiso/features/book/book_category/view/widgets/book_category_in_progress.dart';
@@ -33,6 +34,10 @@ class _BookCategoryPageState extends ConsumerState<BookCategoryPage> {
     }
   }
 
+  void _navigateToAddBookPage(BuildContext context) {
+    Navigator.of(context).pushNamed(AddBookPage.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,18 +46,25 @@ class _BookCategoryPageState extends ConsumerState<BookCategoryPage> {
         centerTitle: true,
       ),
       body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: Consumer(
-            builder: (_, WidgetRef ref, __) {
-              final state = ref.watch(bookCategoryPageStateNotifierProvider);
-              return state.map(
-                  initial: (_) => const BookCategoryInitial(),
-                  inProgress: (inProgress) =>
-                      BookCategoryInProgress(bookCategoryLoading: inProgress.bookCategoryLoading),
-                  successful: (successful) => BookCategorySuccessful(books: successful.books),
-                  error: (_) => const BookCategoryError());
-            },
-          )),
+        padding: const EdgeInsets.symmetric(horizontal: 25),
+        child: Consumer(
+          builder: (_, WidgetRef ref, __) {
+            final state = ref.watch(bookCategoryPageStateNotifierProvider);
+            return state.map(
+                initial: (_) => const BookCategoryInitial(),
+                inProgress: (inProgress) => BookCategoryInProgress(bookCategoryLoading: inProgress.bookCategoryLoading),
+                successful: (successful) => BookCategorySuccessful(books: successful.books),
+                error: (_) => const BookCategoryError());
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _navigateToAddBookPage(context);
+        },
+        elevation: 0,
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
