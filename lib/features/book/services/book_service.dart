@@ -6,21 +6,21 @@ import 'package:konfiso/features/book/data/list_books_response_payload.dart';
 import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/data/volume_category_loading.dart';
-import 'package:konfiso/features/book/services/book_remote.dart';
+import 'package:konfiso/features/book/services/book_google_remote.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
 
-final bookServiceProvider = Provider((ref) => BookService(ref.read(bookRemoteProvider), ref.read(authServiceProvider)));
+final bookServiceProvider = Provider((ref) => BookService(ref.read(bookGoogleRemoteProvider), ref.read(authServiceProvider)));
 
 class BookService {
-  final BookRemote _bookRemote;
+  BookGoogleRemote _bookGoogleRemote;
   final AuthService _authService;
 
-  BookService(this._bookRemote, this._authService);
+  BookService(this._bookGoogleRemote, this._authService);
 
   Future<List<Volume>> search(String searchTerm) async {
     List<Volume> volumes = [];
     try {
-      final response = await _bookRemote.search(searchTerm);
+      final response = await _bookGoogleRemote.search(searchTerm);
       final payload = ListBooksResponsePayload.fromJson(response.data);
       if (payload.totalItems != 0) {
         volumes = payload.items!;
@@ -33,7 +33,7 @@ class BookService {
 
   Future<Volume> loadBookByIsbn(String isbn) async {
     try {
-      final response = await _bookRemote.loadBookByIsbn(isbn);
+      final response = await _bookGoogleRemote.loadBookByIsbn(isbn);
       return ListBooksResponsePayload.fromJson(response.data).items!.first;
     } on DioError catch (_) {
       throw NetworkException();
@@ -43,26 +43,26 @@ class BookService {
   }
 
   Future<RemoteBookReadingDetail?> loadBookReadingDetailByIsbn(String isbn) async {
-    final bookId = await _bookRemote.loadBookIdbyIsbn(isbn);
+    final bookId = await _bookGoogleRemote.loadBookIdbyIsbn(isbn);
 
     if (bookId == null) {
       return null;
     }
 
-    final response = await _bookRemote.loadBookReadingDetailById(bookId, _authService.user!.userId!);
+    final response = await _bookGoogleRemote.loadBookReadingDetailById(bookId, _authService.user!.userId!);
 
     return (response != null) ? RemoteBookReadingDetail.fromJson(response.data) : null;
   }
 
   Future<void> saveBook(String isbn, RemoteBookReadingDetail bookReadingDetail) async {
     try {
-      String? bookId = await _bookRemote.loadBookIdbyIsbn(isbn);
+      String? bookId = await _bookGoogleRemote.loadBookIdbyIsbn(isbn);
 
-      bookId ??= await _bookRemote.insertBook(isbn);
+      bookId ??= await _bookGoogleRemote.insertBook(isbn);
 
-      await _bookRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
+      await _bookGoogleRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
 
-      await _bookRemote.insertBookReadingDetail(bookId, _authService.user!.userId!, bookReadingDetail);
+      await _bookGoogleRemote.insertBookReadingDetail(bookId, _authService.user!.userId!, bookReadingDetail);
     } on DioError catch (_) {
       throw NetworkException();
     }
@@ -70,7 +70,7 @@ class BookService {
 
   Stream<VolumeCategoryLoading> loadBooksByReadingStatus(BookReadingStatus bookReadingStatus) async* {
     try {
-      final bookIds = await _bookRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
+      final bookIds = await _bookGoogleRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
 
       final totalBookNumber = bookIds?.length ?? 0;
       int currentBookNumber = 0;
@@ -79,9 +79,9 @@ class BookService {
       if (totalBookNumber != 0) {
         currentBookNumber = 1;
         for (; currentBookNumber <= totalBookNumber; currentBookNumber++) {
-          final isbn = await _bookRemote.loadIsbnById(bookIds![currentBookNumber - 1]);
+          final isbn = await _bookGoogleRemote.loadIsbnById(bookIds![currentBookNumber - 1]);
 
-          final response = await _bookRemote.loadBookByIsbn(isbn);
+          final response = await _bookGoogleRemote.loadBookByIsbn(isbn);
           final volume = ListBooksResponsePayload.fromJson(response.data).items?.first;
 
           if (volume != null) {

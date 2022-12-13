@@ -7,10 +7,10 @@ import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
 import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/utils/flavor_util.dart';
 
-final bookRemoteProvider =
-    Provider((Ref ref) => BookRemote(ref.read(httpClientProvider), ref.read(flavorUtilProvider)));
+final bookGoogleRemoteProvider =
+    Provider((Ref ref) => BookGoogleRemote(ref.read(httpClientProvider), ref.read(flavorUtilProvider)));
 
-class BookRemote {
+class BookGoogleRemote {
   final HttpClient _httpClient;
   final FlavorUtil _flavorUtil;
 
@@ -19,7 +19,7 @@ class BookRemote {
   late String dbBooksUrl;
   late String dbBookReadingDetailsUrl;
 
-  BookRemote(this._httpClient, this._flavorUtil) {
+  BookGoogleRemote(this._httpClient, this._flavorUtil) {
     dbBooksUrl = '${_flavorUtil.currentConfig.values.firebaseDBUrl}books';
     dbBookReadingDetailsUrl = '${_flavorUtil.currentConfig.values.firebaseDBUrl}bookReadingDetails';
   }

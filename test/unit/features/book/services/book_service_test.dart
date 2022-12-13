@@ -5,19 +5,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/volume.dart';
-import 'package:konfiso/features/book/services/book_remote.dart';
+import 'package:konfiso/features/book/services/book_google_remote.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockBookRemote extends Mock implements BookRemote {}
+class MockBookRemote extends Mock implements BookGoogleRemote {}
 
 class MockAuthService extends Mock implements AuthService {}
 
 void main() {
   group('BookService', () {
     late BookService bookService;
-    late BookRemote bookRemote;
+    late BookGoogleRemote bookRemote;
     late AuthService authService;
     late String isbn;
     late Volume volume;
