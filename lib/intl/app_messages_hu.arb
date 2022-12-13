@@ -36,6 +36,13 @@
     "type": "text",
     "placeholders": {}
   },
+  "passwordMinCharacters": "Jelszó (Min. {characterCount} karakter)",
+  "@passwordMinCharacters": {
+    "type": "text",
+    "placeholders": {
+      "characterCount": {}
+    }
+  },
   "login": "Belépés",
   "@login": {
     "type": "text",
@@ -108,8 +115,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "nowYouCanLoginHere": "Most be tudsz lépni itt",
-  "@nowYouCanLoginHere": {
+  "byClickingHereYouCanLogin": "Ide kattintva be tudsz lépni",
+  "@byClickingHereYouCanLogin": {
     "type": "text",
     "placeholders": {}
   },

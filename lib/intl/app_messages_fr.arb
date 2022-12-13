@@ -36,6 +36,13 @@
     "type": "text",
     "placeholders": {}
   },
+  "passwordMinCharacters": "Mot de passe (Min. {characterCount} caractères)",
+  "@passwordMinCharacters": {
+    "type": "text",
+    "placeholders": {
+      "characterCount": {}
+    }
+  },
   "login": "Se connecter",
   "@login": {
     "type": "text",
@@ -108,8 +115,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "nowYouCanLoginHere": "Maintenant tu peux te connecter ici",
-  "@nowYouCanLoginHere": {
+  "byClickingHereYouCanLogin": "En cliquant ici tu peux te connecter",
+  "@byClickingHereYouCanLogin": {
     "type": "text",
     "placeholders": {}
   },
