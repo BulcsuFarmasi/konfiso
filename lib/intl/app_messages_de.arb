@@ -36,6 +36,13 @@
     "type": "text",
     "placeholders": {}
   },
+  "passwordMinCharacters": "Passwort ({characterCount} Zeichen)",
+  "@passwordMinCharacters": {
+    "type": "text",
+    "placeholders": {
+      "characterCount": {}
+    }
+  },
   "login": "Anmelden",
   "@login": {
     "type": "text",
@@ -108,8 +115,8 @@
     "type": "text",
     "placeholders": {}
   },
-  "nowYouCanLoginHere": "Jetzt kannst du dich hier anmelden",
-  "@nowYouCanLoginHere": {
+  "byClickingHereYouCanLogin": "Durch Klicken kannst du dich einloggen",
+  "@byClickingHereYouCanLogin": {
     "type": "text",
     "placeholders": {}
   },

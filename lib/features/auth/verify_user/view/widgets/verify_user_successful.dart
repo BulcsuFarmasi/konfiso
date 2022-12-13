@@ -35,8 +35,8 @@ class VerifyUserSuccessful extends ConsumerWidget {
               _navigateToSignInPage(context);
             },
             child: Text(
-              AppLocalizations.of(context)!.nowYouCanLoginHere,
-              style: textStyle.copyWith(color: AppColors.greyDarkestColor),
+              AppLocalizations.of(context)!.byClickingHereYouCanLogin,
+              style: textStyle.copyWith(color: AppColors.primaryColor, fontSize: 24),
             ),
           ),
           const SizedBox(

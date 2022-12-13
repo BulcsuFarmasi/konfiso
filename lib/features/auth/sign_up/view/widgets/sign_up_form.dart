@@ -23,6 +23,8 @@ class SignUpForm extends ConsumerStatefulWidget {
 }
 
 class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCapability {
+  static const passwordMinLength = 6;
+
   final _formKey = GlobalKey<FormState>();
   String? _email;
   String? _password;
@@ -83,11 +85,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
 
   String? _validatePassword(String? password) {
     String? errorMessage;
-    const minLength = 6;
     if (AppValidators.required(password)) {
       errorMessage = AppLocalizations.of(context)!.pleaseProvideAPassword;
-    } else if (AppValidators.minLength(password!, minLength)) {
-      errorMessage = AppLocalizations.of(context)!.shortPasswordMessage(minLength);
+    } else if (AppValidators.minLength(password!, passwordMinLength)) {
+      errorMessage = AppLocalizations.of(context)!.shortPasswordMessage(passwordMinLength);
     }
     return errorMessage;
   }
@@ -119,7 +120,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
           ),
           TextFormField(
               key: SignUpForm.passwordKey,
-              decoration: InputDecoration(hintText: AppLocalizations.of(context)!.password),
+              decoration:
+                  InputDecoration(hintText: AppLocalizations.of(context)!.passwordMinCharacters(passwordMinLength)),
               controller: passwordController,
               textInputAction: TextInputAction.next,
               obscureText: true,
