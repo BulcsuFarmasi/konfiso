@@ -13,8 +13,8 @@ class BookListTile extends StatelessWidget {
 
   final Book book;
 
-  void _navigateToDetailPage(BuildContext context, List<BookIndustryIdentifier> industryIds) {
-    Navigator.of(context).pushNamed(BookDetailPage.routeName, arguments: industryIds);
+  void _navigateToDetailPage(BuildContext context, Map<IndustryIdentifierType ,BookIndustryIdentifier> industryIdsByType) {
+    Navigator.of(context).pushNamed(BookDetailPage.routeName, arguments: industryIdsByType);
   }
 
   @override
@@ -40,7 +40,7 @@ class BookListTile extends StatelessWidget {
       trailing: ElevatedButton(
         child: Text(AppLocalizations.of(context)!.add),
         onPressed: () {
-          _navigateToDetailPage(context, book.industryIds);
+          _navigateToDetailPage(context, book.industryIdsByType);
         },
       ),
     );

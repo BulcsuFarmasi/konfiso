@@ -12,7 +12,7 @@ class Book with _$Book {
     List<String>? authors,
     // represented in String to avoid conversions
     String? publicationYear,
-    required List<BookIndustryIdentifier> industryIds,
+    required Map<IndustryIdentifierType,BookIndustryIdentifier> industryIdsByType,
     CoverImage? coverImage
   }) = _Book;
 

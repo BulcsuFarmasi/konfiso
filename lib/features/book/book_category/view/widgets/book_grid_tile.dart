@@ -13,7 +13,7 @@ class BookGridTile extends StatelessWidget {
   final Book book;
 
   void _navigateToDetailPage(BuildContext context) {
-    Navigator.of(context).pushNamed(BookDetailPage.routeName, arguments: book.industryIds);
+    Navigator.of(context).pushNamed(BookDetailPage.routeName, arguments: book.industryIdsByType);
   }
 
   @override

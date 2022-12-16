@@ -22,11 +22,12 @@ class BookCategoryRepository {
       final books = volumeCategoryLoading.volumes
           .map((Volume volume) => Book(
               title: volume.volumeInfo.title,
-              industryIds: volume.volumeInfo.industryIdentifiers!
-                  .map((VolumeIndustryIdentifier volumeIndustryIdentifier) => BookIndustryIdentifier(
-                      IndustryIdentifierType.fromString(volumeIndustryIdentifier.type),
-                      volumeIndustryIdentifier.identifier))
-                  .toList(),
+              industryIdsByType: Map.fromIterable(
+                  volume.volumeInfo.industryIdentifiers!.map((VolumeIndustryIdentifier industryIdentifier) {
+                final industryIdentifierType = IndustryIdentifierType.fromString(industryIdentifier.type);
+                return MapEntry(industryIdentifierType,
+                    BookIndustryIdentifier(industryIdentifierType, industryIdentifier.identifier));
+              })),
               authors: volume.volumeInfo.authors,
               coverImage: CoverImage(smaller: volume.volumeInfo.imageLinks?.thumbnail)))
           .toList();

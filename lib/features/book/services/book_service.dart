@@ -31,13 +31,11 @@ class BookService {
     }
   }
 
-  Future<Volume> loadBookByIsbn(String isbn) async {
+  Future<ListBooksResponsePayload> loadBookByIsbn(String isbn) async {
     try {
       final response = await _bookGoogleRemote.loadBookByIsbn(isbn);
-      return ListBooksResponsePayload.fromJson(response.data).items!.first;
+      return ListBooksResponsePayload.fromJson(response.data);
     } on DioError catch (_) {
-      throw NetworkException();
-    } catch (_) {
       throw NetworkException();
     }
   }
