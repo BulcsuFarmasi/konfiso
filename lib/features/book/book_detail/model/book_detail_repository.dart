@@ -50,13 +50,11 @@ class BookDetailRepository {
           authors: volume.volumeInfo.authors,
           publicationYear: publicationYear,
           coverImage: CoverImage(small: volume.volumeInfo.imageLinks?.small),
-          industryIdsByType: Map.fromIterable(
-            volume.volumeInfo.industryIdentifiers!.map((VolumeIndustryIdentifier industryIdentifier) {
-              final industryIdentifierType = IndustryIdentifierType.fromString(industryIdentifier.type);
-              return MapEntry(industryIdentifierType,
-                  BookIndustryIdentifier(industryIdentifierType, industryIdentifier.identifier));
-            }),
-          ),
+          industryIdsByType: {
+            for (VolumeIndustryIdentifier volumeIndustryIdentifier in volume.volumeInfo.industryIdentifiers!)
+              IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
+                  IndustryIdentifierType.fromString(volumeIndustryIdentifier.type), volumeIndustryIdentifier.identifier)
+          }
         ),
       );
     } on NetworkException catch (_) {

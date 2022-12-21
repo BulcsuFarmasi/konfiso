@@ -32,12 +32,12 @@ class AddBookRepository {
                 title: volume.volumeInfo.title,
                 authors: volume.volumeInfo.authors,
                 coverImage: CoverImage(smallest: volume.volumeInfo.imageLinks?.smallThumbnail),
-                industryIdsByType: Map.fromIterable(
-                    volume.volumeInfo.industryIdentifiers!.map((VolumeIndustryIdentifier industryIdentifier) {
-                  final industryIdentifierType = IndustryIdentifierType.fromString(industryIdentifier.type);
-                  return MapEntry(industryIdentifierType,
-                      BookIndustryIdentifier(industryIdentifierType, industryIdentifier.identifier));
-                })),
+                industryIdsByType: {
+                  for (VolumeIndustryIdentifier volumeIndustryIdentifier in volume.volumeInfo.industryIdentifiers!)
+                    IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
+                        IndustryIdentifierType.fromString(volumeIndustryIdentifier.type),
+                        volumeIndustryIdentifier.identifier)
+                },
               ))
           .toList();
     } on NetworkException {
