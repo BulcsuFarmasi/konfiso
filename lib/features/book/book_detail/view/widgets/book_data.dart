@@ -16,18 +16,15 @@ class BookData extends StatelessWidget {
         const SizedBox(
           height: 25,
         ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: book.coverImage?.small != null
-              ? Image.network(
-                  book.coverImage!.small!,
-                  width: 215,
-                )
-              : Image.asset(
-                  'assets/images/no_book_cover.gif',
-                  width: 215,
-                ),
-        ),
+        book.coverImage?.small != null
+            ? Image.network(
+                book.coverImage!.small!,
+                width: 215,
+              )
+            : Image.asset(
+                'assets/images/no_book_cover.gif',
+                width: 215,
+              ),
         const SizedBox(
           height: 30,
         ),

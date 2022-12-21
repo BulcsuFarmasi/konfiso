@@ -20,18 +20,15 @@ class BookGridTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: book.coverImage?.smaller != null
-              ? Image.network(
-                  book.coverImage!.smaller!,
-                  width: 140,
-                )
-              : Image.asset(
-                  'assets/images/no_book_cover.gif',
-                  width: 140,
-                ),
-        ),
+        book.coverImage?.smaller != null
+            ? Image.network(
+                book.coverImage!.smaller!,
+                width: 140,
+              )
+            : Image.asset(
+                'assets/images/no_book_cover.gif',
+                width: 140,
+              ),
         Text(
           book.title,
           style: const TextStyle(fontSize: 18, color: AppColors.greyDarkestColor, fontWeight: FontWeight.w600),
