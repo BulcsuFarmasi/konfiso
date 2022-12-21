@@ -23,17 +23,18 @@ class BookDetailRepository {
     final isbn = _getIsbnFromIndustryIds(industryIdsByType);
 
     try {
-      late Volume volume;
-      ListBooksResponsePayload listBookResponse =
-          await _bookService.loadBookByIsbn(industryIdsByType[IndustryIdentifierType.isbn13]!.identifier);
-      if (listBookResponse.totalItems != 0) {
-        volume = listBookResponse.items!.first;
-      } else {
-        listBookResponse =
-            await _bookService.loadBookByIsbn(industryIdsByType[IndustryIdentifierType.isbn10]!.identifier);
-        if (listBookResponse.totalItems != 0) {
-          volume = listBookResponse.items!.first;
+      Volume? volume;
+
+      for (BookIndustryIdentifier industryId in industryIdsByType.values) {
+        ListBooksResponsePayload listBooksResponse = await _bookService.loadBookByIsbn(industryId.identifier);
+        if (listBooksResponse.totalItems != 0) {
+          volume = listBooksResponse.items!.first;
+          break;
         }
+      }
+
+      if (volume == null) {
+        throw BookDetailLoadingException();
       }
 
       final bookReadingDetail = await _bookService.loadBookReadingDetailByIsbn(isbn);
