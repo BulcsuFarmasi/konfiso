@@ -45,7 +45,7 @@ app.*.map.json
 
 # secret
 lib/shared/secret.dart
-lib/firebase_options_**.dart
+lib/firebase_options.dart
 
 # generated files
 /lib/**/**.freezed.dart
