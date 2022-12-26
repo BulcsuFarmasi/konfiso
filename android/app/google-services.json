@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:797817979877:android:059f7dee286d93bc78e50c",
+        "mobilesdk_app_id": "1:797817979877:android:a4d359fcf005b6d378e50c",
         "android_client_info": {
-          "package_name": "com.konfiso.konfiso.dev"
+          "package_name": "com.konfiso.konfiso"
         }
       },
       "oauth_client": [
@@ -21,7 +21,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDpfQ7LRhEl5a8HlKj_1K216DBzPYTsLcQ"
+          "current_key": "AIzaSyCxoxNzvFfTw6XB2rHJlLZNvpfzGWkdnV0"
         }
       ],
       "services": {
