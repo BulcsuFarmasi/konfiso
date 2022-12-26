@@ -68,7 +68,7 @@ void main() {
     }
 
     setUp(() {
-      signUpPageStateNotifier = MockSignUpPageStateNotifier(const SignUpPageState.initial());
+      signUpPageStateNotifier = MockSignUpPageStateNotifier(const SignUpPageState.initial('url'));
       email = 'test@test.com';
       password = '123456';
     });
@@ -91,7 +91,7 @@ void main() {
 
     testWidgets('should reach error state when the sign up is not successful', (WidgetTester widgetTester) async {
       await testUntilInProgress(widgetTester);
-      signUpPageStateNotifier.state = const SignUpPageState.error(sign_up_error.SignUpError.other);
+      signUpPageStateNotifier.state = const SignUpPageState.error(sign_up_error.SignUpError.other, 'url');
 
       await widgetTester.pump();
 

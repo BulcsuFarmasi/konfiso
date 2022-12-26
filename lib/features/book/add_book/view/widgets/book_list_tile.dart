@@ -13,22 +13,20 @@ class BookListTile extends StatelessWidget {
 
   final Book book;
 
-  void _navigateToDetailPage(BuildContext context, List<BookIndustryIdentifier> industryIds) {
-    Navigator.of(context).pushNamed(BookDetailPage.routeName, arguments: industryIds);
+  void _navigateToDetailPage(
+      BuildContext context, Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) {
+    Navigator.of(context).pushNamed(BookDetailPage.routeName, arguments: industryIdsByType);
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(3),
-        child: (book.coverImage?.smallest != null)
-            ? Image.network(book.coverImage!.smallest!, width: 40)
-            : Image.asset(
-                'assets/images/no_book_cover.gif',
-                width: 40,
-              ),
-      ),
+      leading: book.coverImage?.smallest != null
+          ? Image.network(book.coverImage!.smallest!, width: 40)
+          : Image.asset(
+              'assets/images/no_book_cover.gif',
+              width: 40,
+            ),
       title: Text(
         book.title,
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.greyDarkestColor),
@@ -40,7 +38,7 @@ class BookListTile extends StatelessWidget {
       trailing: ElevatedButton(
         child: Text(AppLocalizations.of(context)!.add),
         onPressed: () {
-          _navigateToDetailPage(context, book.industryIds);
+          _navigateToDetailPage(context, book.industryIdsByType);
         },
       ),
     );

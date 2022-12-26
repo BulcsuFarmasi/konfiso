@@ -87,6 +87,12 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
         ));
   }
 
+  void _restoreRating() {
+    setState(() {
+      _rating = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -144,6 +150,14 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
               itemCount: 5,
               itemBuilder: (_, __) => const Icon(Icons.star, color: AppColors.primaryColor),
               onRatingUpdate: _changeRating,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton.icon(
+              onPressed: _restoreRating,
+              icon: const Icon(Icons.close),
+              label: Text(AppLocalizations.of(context)!.deleteRating),
             ),
             const SizedBox(
               height: 10,

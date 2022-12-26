@@ -31,11 +31,13 @@ class AddBookRepository {
           .map((Volume volume) => Book(
                 title: volume.volumeInfo.title,
                 authors: volume.volumeInfo.authors,
-                coverImage:  CoverImage(smallest: volume.volumeInfo.imageLinks?.smallThumbnail),
-                industryIds: volume.volumeInfo.industryIdentifiers!
-                    .map((VolumeIndustryIdentifier industryIdentifier) => BookIndustryIdentifier(
-                        IndustryIdentifierType.fromString(industryIdentifier.type), industryIdentifier.identifier))
-                    .toList(),
+                coverImage: CoverImage(smallest: volume.volumeInfo.imageLinks?.smallThumbnail),
+                industryIdsByType: {
+                  for (VolumeIndustryIdentifier volumeIndustryIdentifier in volume.volumeInfo.industryIdentifiers!)
+                    IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
+                        IndustryIdentifierType.fromString(volumeIndustryIdentifier.type),
+                        volumeIndustryIdentifier.identifier)
+                },
               ))
           .toList();
     } on NetworkException {

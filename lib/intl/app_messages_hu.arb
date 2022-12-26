@@ -319,5 +319,25 @@
   "@pleaseAcceptThePrivacyPolicy": {
     "type": "text",
     "placeholders": {}
+  },
+  "deleteRating": "Értékelés törlése",
+  "@deleteRating": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "doYouWantToDeleteThisBook": "Akarod törölni ezt a könyvet?",
+  "@doYouWantToDeleteThisBook": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "delete": "Törlés",
+  "@delete": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "Mégse",
+  "@cancel": {
+    "type": "text",
+    "placeholders": {}
   }
 }

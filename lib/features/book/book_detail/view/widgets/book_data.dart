@@ -16,18 +16,15 @@ class BookData extends StatelessWidget {
         const SizedBox(
           height: 25,
         ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: book.coverImage?.small != null
-              ? Image.network(
-                  book.coverImage!.small!,
-                  width: 215,
-                )
-              : Image.asset(
-                  'assets/images/no_book_cover.gif',
-                  width: 215,
-                ),
-        ),
+        book.coverImage?.small != null
+            ? Image.network(
+                book.coverImage!.small!,
+                width: 215,
+              )
+            : Image.asset(
+                'assets/images/no_book_cover.gif',
+                width: 215,
+              ),
         const SizedBox(
           height: 30,
         ),
@@ -73,7 +70,7 @@ class BookData extends StatelessWidget {
               AppLocalizations.of(context)!.isbn,
               style: const TextStyle(fontSize: 14, color: AppColors.greyDarkestColor, fontWeight: FontWeight.w600),
             ),
-            Text(book.industryIds
+            Text(book.industryIdsByType.values
                 .map((BookIndustryIdentifier industryIdentifier) => industryIdentifier.identifier)
                 .join(', ')),
           ],

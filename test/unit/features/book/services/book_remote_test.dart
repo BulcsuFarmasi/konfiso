@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:konfiso/features/book/services/book_remote.dart';
+import 'package:konfiso/features/book/services/book_google_remote.dart';
 import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/utils/flavor_util.dart';
 import 'package:mocktail/mocktail.dart';
@@ -10,7 +10,7 @@ class MockHttpClient extends Mock implements HttpClient {}
 class MockFlavorUtil extends Mock implements FlavorUtil {}
 
 void main() {
-  late BookRemote bookRemote;
+  late BookGoogleRemote bookRemote;
   late HttpClient httpClient;
   late FlavorUtil flavorUtil;
   late String searchUrl;
@@ -22,11 +22,11 @@ void main() {
     setUp(() {
       httpClient = MockHttpClient();
       flavorUtil = FlavorUtil();
-      bookRemote = BookRemote(httpClient, flavorUtil);
-      searchUrl = '${BookRemote.apiUrl}?q="harry+potter"&maxResults=10&startIndex=0';
+      bookRemote = BookGoogleRemote(httpClient, flavorUtil);
+      searchUrl = '${BookGoogleRemote.apiUrl}?q="harry+potter"&maxResults=10&startIndex=0';
       isbn = 'isbn';
       responseData = {'id': isbn};
-      loadUrl = '${BookRemote.apiUrl}/?q=isbn:$isbn';
+      loadUrl = '${BookGoogleRemote.apiUrl}/?q=isbn:$isbn';
     });
 
     void arrangeHttpClientReturnsWithResponseForSearch(String url) {

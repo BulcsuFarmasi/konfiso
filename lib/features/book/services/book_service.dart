@@ -6,21 +6,29 @@ import 'package:konfiso/features/book/data/list_books_response_payload.dart';
 import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/data/volume_category_loading.dart';
-import 'package:konfiso/features/book/services/book_remote.dart';
+import 'package:konfiso/features/book/services/book_database_remote.dart';
+import 'package:konfiso/features/book/services/book_google_remote.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
 
-final bookServiceProvider = Provider((ref) => BookService(ref.read(bookRemoteProvider), ref.read(authServiceProvider)));
+final bookServiceProvider = Provider(
+  (ref) => BookService(
+    ref.read(bookGoogleRemoteProvider),
+    ref.read(bookDatabaseRemote),
+    ref.read(authServiceProvider),
+  ),
+);
 
 class BookService {
-  final BookRemote _bookRemote;
+  final BookGoogleRemote _bookGoogleRemote;
+  final BookDatabaseRemote _bookDatabaseRemote;
   final AuthService _authService;
 
-  BookService(this._bookRemote, this._authService);
+  BookService(this._bookGoogleRemote, this._bookDatabaseRemote, this._authService);
 
   Future<List<Volume>> search(String searchTerm) async {
     List<Volume> volumes = [];
     try {
-      final response = await _bookRemote.search(searchTerm);
+      final response = await _bookGoogleRemote.search(searchTerm);
       final payload = ListBooksResponsePayload.fromJson(response.data);
       if (payload.totalItems != 0) {
         volumes = payload.items!;
@@ -31,38 +39,36 @@ class BookService {
     }
   }
 
-  Future<Volume> loadBookByIsbn(String isbn) async {
+  Future<ListBooksResponsePayload> loadBookByIsbn(String isbn) async {
     try {
-      final response = await _bookRemote.loadBookByIsbn(isbn);
-      return ListBooksResponsePayload.fromJson(response.data).items!.first;
+      final response = await _bookGoogleRemote.loadBookByIsbn(isbn);
+      return ListBooksResponsePayload.fromJson(response.data);
     } on DioError catch (_) {
-      throw NetworkException();
-    } catch (_) {
       throw NetworkException();
     }
   }
 
   Future<RemoteBookReadingDetail?> loadBookReadingDetailByIsbn(String isbn) async {
-    final bookId = await _bookRemote.loadBookIdbyIsbn(isbn);
+    final bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
 
     if (bookId == null) {
       return null;
     }
 
-    final response = await _bookRemote.loadBookReadingDetailById(bookId, _authService.user!.userId!);
+    final response = await _bookDatabaseRemote.loadBookReadingDetailById(bookId, _authService.user!.userId!);
 
     return (response != null) ? RemoteBookReadingDetail.fromJson(response.data) : null;
   }
 
   Future<void> saveBook(String isbn, RemoteBookReadingDetail bookReadingDetail) async {
     try {
-      String? bookId = await _bookRemote.loadBookIdbyIsbn(isbn);
+      String? bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
 
-      bookId ??= await _bookRemote.insertBook(isbn);
+      bookId ??= await _bookDatabaseRemote.insertBook(isbn);
 
-      await _bookRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
+      await _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
 
-      await _bookRemote.insertBookReadingDetail(bookId, _authService.user!.userId!, bookReadingDetail);
+      await _bookDatabaseRemote.insertBookReadingDetail(bookId, _authService.user!.userId!, bookReadingDetail);
     } on DioError catch (_) {
       throw NetworkException();
     }
@@ -70,7 +76,7 @@ class BookService {
 
   Stream<VolumeCategoryLoading> loadBooksByReadingStatus(BookReadingStatus bookReadingStatus) async* {
     try {
-      final bookIds = await _bookRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
+      final bookIds = await _bookDatabaseRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
 
       final totalBookNumber = bookIds?.length ?? 0;
       int currentBookNumber = 0;
@@ -79,9 +85,9 @@ class BookService {
       if (totalBookNumber != 0) {
         currentBookNumber = 1;
         for (; currentBookNumber <= totalBookNumber; currentBookNumber++) {
-          final isbn = await _bookRemote.loadIsbnById(bookIds![currentBookNumber - 1]);
+          final isbn = await _bookDatabaseRemote.loadIsbnById(bookIds![currentBookNumber - 1]);
 
-          final response = await _bookRemote.loadBookByIsbn(isbn);
+          final response = await _bookGoogleRemote.loadBookByIsbn(isbn);
           final volume = ListBooksResponsePayload.fromJson(response.data).items?.first;
 
           if (volume != null) {
@@ -93,6 +99,14 @@ class BookService {
       }
     } catch (_) {
       throw NetworkException();
+    }
+  }
+
+  void deleteBookByIsbn(String isbn) async {
+    final bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
+
+    if (bookId != null) {
+      _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
     }
   }
 }

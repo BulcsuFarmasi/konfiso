@@ -14,11 +14,11 @@ class BookDetailPageStateNotifier extends StateNotifier<BookDetailPageState> {
 
   final BookDetailRepository _bookDetailRepository;
 
-  void loadBookByIndustryIds(List<BookIndustryIdentifier> industryIds) async {
+  void loadBookByIndustryIds(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) async {
     state = const BookDetailPageState.loadingInProgress();
 
     try {
-      final bookReadingDetail = await _bookDetailRepository.loadBookByIndustryIds(industryIds);
+      final bookReadingDetail = await _bookDetailRepository.loadBookByIndustryIds(industryIdsByType);
 
       state = BookDetailPageState.loadingSuccess(bookReadingDetail);
     } on BookDetailLoadingException catch (_) {
