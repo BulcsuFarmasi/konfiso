@@ -319,5 +319,25 @@
   "@pleaseAcceptThePrivacyPolicy": {
     "type": "text",
     "placeholders": {}
+  },
+  "deleteRating": "Bewertung löschen",
+  "@deleteRating": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "doYouWantToDeleteThisBook": "Möchtest du dieses Buch löschen?",
+  "@doYouWantToDeleteThisBook": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "delete": "Löschen",
+  "@delete": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "cancel": "Abbrechen",
+  "@cancel": {
+    "type": "text",
+    "placeholders": {}
   }
 }

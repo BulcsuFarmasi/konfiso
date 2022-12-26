@@ -72,6 +72,14 @@ class _AppState extends ConsumerState<App> {
           style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)), elevation: 0),
         ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(9),
+            ),
+            side: const BorderSide(color: AppColors.primaryColor),
+          ),
+        ),
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.backgroundColor,
           elevation: 0,

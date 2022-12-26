@@ -157,7 +157,7 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
             ElevatedButton.icon(
               onPressed: _restoreRating,
               icon: const Icon(Icons.close),
-              label: const Text('Delete rating'),
+              label: Text(AppLocalizations.of(context)!.deleteRating),
             ),
             const SizedBox(
               height: 10,

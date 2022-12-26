@@ -6,16 +6,24 @@ import 'package:konfiso/features/book/data/list_books_response_payload.dart';
 import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/data/volume_category_loading.dart';
+import 'package:konfiso/features/book/services/book_database_remote.dart';
 import 'package:konfiso/features/book/services/book_google_remote.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
 
-final bookServiceProvider = Provider((ref) => BookService(ref.read(bookGoogleRemoteProvider), ref.read(authServiceProvider)));
+final bookServiceProvider = Provider(
+  (ref) => BookService(
+    ref.read(bookGoogleRemoteProvider),
+    ref.read(bookDatabaseRemote),
+    ref.read(authServiceProvider),
+  ),
+);
 
 class BookService {
-  BookGoogleRemote _bookGoogleRemote;
+  final BookGoogleRemote _bookGoogleRemote;
+  final BookDatabaseRemote _bookDatabaseRemote;
   final AuthService _authService;
 
-  BookService(this._bookGoogleRemote, this._authService);
+  BookService(this._bookGoogleRemote, this._bookDatabaseRemote, this._authService);
 
   Future<List<Volume>> search(String searchTerm) async {
     List<Volume> volumes = [];
@@ -41,26 +49,26 @@ class BookService {
   }
 
   Future<RemoteBookReadingDetail?> loadBookReadingDetailByIsbn(String isbn) async {
-    final bookId = await _bookGoogleRemote.loadBookIdbyIsbn(isbn);
+    final bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
 
     if (bookId == null) {
       return null;
     }
 
-    final response = await _bookGoogleRemote.loadBookReadingDetailById(bookId, _authService.user!.userId!);
+    final response = await _bookDatabaseRemote.loadBookReadingDetailById(bookId, _authService.user!.userId!);
 
     return (response != null) ? RemoteBookReadingDetail.fromJson(response.data) : null;
   }
 
   Future<void> saveBook(String isbn, RemoteBookReadingDetail bookReadingDetail) async {
     try {
-      String? bookId = await _bookGoogleRemote.loadBookIdbyIsbn(isbn);
+      String? bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
 
-      bookId ??= await _bookGoogleRemote.insertBook(isbn);
+      bookId ??= await _bookDatabaseRemote.insertBook(isbn);
 
-      await _bookGoogleRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
+      await _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
 
-      await _bookGoogleRemote.insertBookReadingDetail(bookId, _authService.user!.userId!, bookReadingDetail);
+      await _bookDatabaseRemote.insertBookReadingDetail(bookId, _authService.user!.userId!, bookReadingDetail);
     } on DioError catch (_) {
       throw NetworkException();
     }
@@ -68,7 +76,7 @@ class BookService {
 
   Stream<VolumeCategoryLoading> loadBooksByReadingStatus(BookReadingStatus bookReadingStatus) async* {
     try {
-      final bookIds = await _bookGoogleRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
+      final bookIds = await _bookDatabaseRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
 
       final totalBookNumber = bookIds?.length ?? 0;
       int currentBookNumber = 0;
@@ -77,7 +85,7 @@ class BookService {
       if (totalBookNumber != 0) {
         currentBookNumber = 1;
         for (; currentBookNumber <= totalBookNumber; currentBookNumber++) {
-          final isbn = await _bookGoogleRemote.loadIsbnById(bookIds![currentBookNumber - 1]);
+          final isbn = await _bookDatabaseRemote.loadIsbnById(bookIds![currentBookNumber - 1]);
 
           final response = await _bookGoogleRemote.loadBookByIsbn(isbn);
           final volume = ListBooksResponsePayload.fromJson(response.data).items?.first;
@@ -91,6 +99,14 @@ class BookService {
       }
     } catch (_) {
       throw NetworkException();
+    }
+  }
+
+  void deleteBookByIsbn(String isbn) async {
+    final bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
+
+    if (bookId != null) {
+      _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
     }
   }
 }

@@ -38,7 +38,21 @@ class BookCategoryRepository {
       books.add(book);
 
       return BookCategoryLoading(
-          books, volumeCategoryLoading.currentVolumeNumber, volumeCategoryLoading.totalVolumeNumber);
+          books: books,
+          currentBookNumber: volumeCategoryLoading.currentVolumeNumber,
+          totalBookNumber: volumeCategoryLoading.totalVolumeNumber);
     });
+  }
+
+  void deleteBook(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) {
+    final isbn = _getIsbnFromIndustryIds(industryIdsByType);
+
+    _bookService.deleteBookByIsbn(isbn);
+  }
+
+  String _getIsbnFromIndustryIds(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) {
+    return (industryIdsByType[IndustryIdentifierType.isbn13]?.identifier ??
+            industryIdsByType[IndustryIdentifierType.isbn10]?.identifier) ??
+        '';
   }
 }
