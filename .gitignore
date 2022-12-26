@@ -44,7 +44,8 @@ app.*.map.json
 /android/app/release
 
 # secret
-lib/shared/secret.dart
+lib/.env
+lib/env.g.dart
 lib/firebase_options.dart
 
 # generated files

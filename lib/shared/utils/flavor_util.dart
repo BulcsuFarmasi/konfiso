@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/shared/flavor.dart';
 import 'package:konfiso/shared/flavor_config.dart';
-import 'package:konfiso/shared/secret.dart';
+import 'package:konfiso/env.dart';
 
 final flavorUtilProvider = Provider((_) => FlavorUtil());
 
