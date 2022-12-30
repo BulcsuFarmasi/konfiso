@@ -13,7 +13,7 @@ class Env {
   @EnviedField(varName: 'PROD_GOOGLE_API_KEY', obfuscate: true)
   static final prodGoogleApiKey = _Env.prodGoogleApiKey;
 
-  @EnviedField(varName: 'DEV_FIREBASE_DB_URL', obfuscate: true)
+  @EnviedField(varName: 'PROD_FIREBASE_DB_URL', obfuscate: true)
   static final prodFirebaseDBUrl = _Env.prodFirebaseDBUrl;
 
   @EnviedField(varName: 'MOLY_API_KEY', obfuscate: true)

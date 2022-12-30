@@ -33,7 +33,7 @@ class BookGridTile extends ConsumerWidget {
                   child: Text(AppLocalizations.of(context)!.cancel)),
               TextButton(
                   onPressed: () {
-                    ref.read(bookCategoryPageStateNotifierProvider.notifier).deleteBook(book.industryIdsByType);
+                    ref.read(bookCategoryPageStateNotifierProvider.notifier).deleteBook(book.industryIdsByType!);
                     navigator.pop();
                   },
                   child: Text(AppLocalizations.of(context)!.delete)),

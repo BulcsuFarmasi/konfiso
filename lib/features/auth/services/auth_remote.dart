@@ -91,6 +91,8 @@ class AuthRemote {
     final response =
         await _httpClient.post(url: '${accountUrl}signInWithPassword', data: json.encode(authRequestPayload.toJson()));
 
+    print(response.requestOptions.path);
+
     final authResponse = AuthResponsePayload.fromJson(response.data);
     return authResponse;
   }
