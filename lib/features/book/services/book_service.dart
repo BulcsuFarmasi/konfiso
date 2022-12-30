@@ -8,12 +8,14 @@ import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/data/volume_category_loading.dart';
 import 'package:konfiso/features/book/services/book_database_remote.dart';
 import 'package:konfiso/features/book/services/book_google_remote.dart';
+import 'package:konfiso/features/book/services/book_moly_remote.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
 
 final bookServiceProvider = Provider(
   (ref) => BookService(
     ref.read(bookGoogleRemoteProvider),
     ref.read(bookDatabaseRemote),
+    ref.read(bookMolyRemoteProvider),
     ref.read(authServiceProvider),
   ),
 );
@@ -21,9 +23,10 @@ final bookServiceProvider = Provider(
 class BookService {
   final BookGoogleRemote _bookGoogleRemote;
   final BookDatabaseRemote _bookDatabaseRemote;
+  final BookMolyRemote _bookMolyRemote;
   final AuthService _authService;
 
-  BookService(this._bookGoogleRemote, this._bookDatabaseRemote, this._authService);
+  BookService(this._bookGoogleRemote, this._bookDatabaseRemote, this._bookMolyRemote, this._authService);
 
   Future<List<Volume>> search(String searchTerm) async {
     List<Volume> volumes = [];
