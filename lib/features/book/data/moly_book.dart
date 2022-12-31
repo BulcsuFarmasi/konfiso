@@ -8,11 +8,12 @@ part 'moly_book.g.dart';
 @freezed
 class MolyBook with _$MolyBook implements ApiBook {
   const factory MolyBook(
-      {required String author,
+      {required int id,
+      required String author,
       required String title,
-      required String isbn,
-      required int year,
-      required String cover}) = _MolyBook;
+      String? isbn,
+      int? year,
+      String? cover}) = _MolyBook;
 
   factory MolyBook.fromJson(Map<String, Object?> json) => _$MolyBookFromJson(json);
 }
