@@ -52,7 +52,7 @@ class BookGridTile extends ConsumerWidget {
                 width: 140,
               )
             : Image.asset(
-                'assets/images/no_book_cover.gif',
+                'assets/images/no_book_cover.png',
                 width: 140,
               ),
         Text(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:konfiso/shared/app_colors.dart';
 
 class EntryLogo extends StatelessWidget {
   const EntryLogo({
@@ -8,10 +7,9 @@ class EntryLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'K',
-      style: TextStyle(
-          fontSize: 100, fontFamily: 'Arial MT Rounded', color: AppColors.primaryColor, fontWeight: FontWeight.w700),
+    return Image.asset(
+      'assets/images/entry_logo.png',
+      width: 128,
     );
   }
 }

@@ -22,7 +22,7 @@ class BookData extends StatelessWidget {
                 width: 215,
               )
             : Image.asset(
-                'assets/images/no_book_cover.gif',
+                'assets/images/no_book_cover.png',
                 width: 215,
               ),
         const SizedBox(
