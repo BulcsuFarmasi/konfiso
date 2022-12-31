@@ -24,7 +24,7 @@ class BookListTile extends StatelessWidget {
       leading: book.coverImage?.smallest != null
           ? Image.network(book.coverImage!.smallest!, width: 40)
           : Image.asset(
-              'assets/images/no_book_cover.gif',
+              'assets/images/no_book_cover.png',
               width: 40,
             ),
       title: Text(
