@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>797817979877-1kjh4aqius5ip80ofovpbvoqpi9ijsoe.apps.googleusercontent.com</string>
+	<string>797817979877-am128vkcjo1erhcoe1aeaheqb9sev9l4.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.797817979877-1kjh4aqius5ip80ofovpbvoqpi9ijsoe</string>
+	<string>com.googleusercontent.apps.797817979877-am128vkcjo1erhcoe1aeaheqb9sev9l4</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBU4UTRx5t_kw6rw20ae2SAGQXO3nx0eRk</string>
 	<key>GCM_SENDER_ID</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:797817979877:ios:4f09a3aff28d389178e50c</string>
+	<string>1:797817979877:ios:6ed12c40b84bf8c878e50c</string>
 	<key>DATABASE_URL</key>
 	<string>https://konfiso-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>

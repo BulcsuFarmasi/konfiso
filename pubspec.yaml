@@ -71,6 +71,7 @@ dev_dependencies:
   mocktail: any
   envied_generator: any
   build: ^2.3.1
+  flutter_native_splash: ^2.2.16
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
