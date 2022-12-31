@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>797817979877-1kjh4aqius5ip80ofovpbvoqpi9ijsoe.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.797817979877-1kjh4aqius5ip80ofovpbvoqpi9ijsoe</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBU4UTRx5t_kw6rw20ae2SAGQXO3nx0eRk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>797817979877</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.konfiso.konfiso</string>
+	<key>PROJECT_ID</key>
+	<string>konfiso</string>
+	<key>STORAGE_BUCKET</key>
+	<string>konfiso.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:797817979877:ios:4f09a3aff28d389178e50c</string>
+	<key>DATABASE_URL</key>
+	<string>https://konfiso-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>
