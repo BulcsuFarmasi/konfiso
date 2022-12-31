@@ -255,7 +255,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "youCanChangeThePasswordAtThePageLinkedInTheEmail": "A jelszavadat e-mailben linken tudod megváltoztatni",
+  "youCanChangeThePasswordAtThePageLinkedInTheEmail": "A jelszavadat e-mailben levő linken tudod megváltoztatni",
   "@youCanChangeThePasswordAtThePageLinkedInTheEmail": {
     "type": "text",
     "placeholders": {}
