@@ -50,6 +50,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   url_launcher: ^6.1.7
   firebase_crashlytics: ^3.0.7
+  envied: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -66,9 +67,9 @@ dev_dependencies:
   freezed: ^2.2.0
   json_serializable: ^6.5.4
   build_runner:
-  mocktail: ^0.3.0
+  mocktail: any
+  envied_generator: any
   build: ^2.3.1
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

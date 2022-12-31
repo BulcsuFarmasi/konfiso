@@ -70,7 +70,7 @@ class BookData extends StatelessWidget {
               AppLocalizations.of(context)!.isbn,
               style: const TextStyle(fontSize: 14, color: AppColors.greyDarkestColor, fontWeight: FontWeight.w600),
             ),
-            Text(book.industryIdsByType.values
+            Text(book.industryIdsByType!.values
                 .map((BookIndustryIdentifier industryIdentifier) => industryIdentifier.identifier)
                 .join(', ')),
           ],

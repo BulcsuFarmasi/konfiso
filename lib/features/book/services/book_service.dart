@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
+import 'package:konfiso/features/book/data/api_book.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/list_books_response_payload.dart';
 import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
@@ -8,12 +9,14 @@ import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/data/volume_category_loading.dart';
 import 'package:konfiso/features/book/services/book_database_remote.dart';
 import 'package:konfiso/features/book/services/book_google_remote.dart';
+import 'package:konfiso/features/book/services/book_moly_remote.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
 
 final bookServiceProvider = Provider(
   (ref) => BookService(
     ref.read(bookGoogleRemoteProvider),
     ref.read(bookDatabaseRemote),
+    ref.read(bookMolyRemoteProvider),
     ref.read(authServiceProvider),
   ),
 );
@@ -21,11 +24,13 @@ final bookServiceProvider = Provider(
 class BookService {
   final BookGoogleRemote _bookGoogleRemote;
   final BookDatabaseRemote _bookDatabaseRemote;
+  final BookMolyRemote _bookMolyRemote;
   final AuthService _authService;
 
-  BookService(this._bookGoogleRemote, this._bookDatabaseRemote, this._authService);
+  BookService(this._bookGoogleRemote, this._bookDatabaseRemote, this._bookMolyRemote, this._authService);
 
-  Future<List<Volume>> search(String searchTerm) async {
+  Future<List<ApiBook>> search(String searchTerm) async {
+    print('a');
     List<Volume> volumes = [];
     try {
       final response = await _bookGoogleRemote.search(searchTerm);
@@ -33,7 +38,10 @@ class BookService {
       if (payload.totalItems != 0) {
         volumes = payload.items!;
       }
-      return volumes;
+      print('v');
+      final molyBooks = await _bookMolyRemote.search(searchTerm);
+      print('m');
+      return [...volumes, ...molyBooks];
     } on DioError catch (_) {
       throw NetworkException();
     }

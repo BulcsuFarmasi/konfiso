@@ -65,7 +65,7 @@ class BookDetailRepository {
 
   Future<void> saveBook(BookReadingDetail bookReadingDetail) async {
     try {
-      final isbn = _getIsbnFromIndustryIds(bookReadingDetail.book!.industryIdsByType);
+      final isbn = _getIsbnFromIndustryIds(bookReadingDetail.book!.industryIdsByType!);
 
       final remoteBookReadingDetail = RemoteBookReadingDetail(
         status: bookReadingDetail.status,

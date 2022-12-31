@@ -36,10 +36,10 @@ class BookListTile extends StatelessWidget {
         style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.greyDarkestWithHalfOpacity),
       ),
       trailing: ElevatedButton(
+        onPressed: book.industryIdsByType != null ?  () {
+          _navigateToDetailPage(context, book.industryIdsByType!);
+        } : null,
         child: Text(AppLocalizations.of(context)!.add),
-        onPressed: () {
-          _navigateToDetailPage(context, book.industryIdsByType);
-        },
       ),
     );
   }
