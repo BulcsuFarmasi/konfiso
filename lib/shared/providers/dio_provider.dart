@@ -17,6 +17,7 @@ final dioProvider = Provider((Ref ref) {
       options.path = (options.path.contains('?'))
           ? '${options.path}&key=${Env.molyApiKey}'
           : '${options.path}?key=${Env.molyApiKey}';
+      handler.next(options);
     } else {
       handler.next(options);
     }

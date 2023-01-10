@@ -30,7 +30,6 @@ class BookService {
   BookService(this._bookGoogleRemote, this._bookDatabaseRemote, this._bookMolyRemote, this._authService);
 
   Future<List<ApiBook>> search(String searchTerm) async {
-    print('a');
     List<Volume> volumes = [];
     try {
       final response = await _bookGoogleRemote.search(searchTerm);
@@ -38,9 +37,7 @@ class BookService {
       if (payload.totalItems != 0) {
         volumes = payload.items!;
       }
-      print('v');
       final molyBooks = await _bookMolyRemote.search(searchTerm);
-      print('m');
       return [...volumes, ...molyBooks];
     } on DioError catch (_) {
       throw NetworkException();

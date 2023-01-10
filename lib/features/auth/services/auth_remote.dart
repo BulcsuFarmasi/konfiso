@@ -91,8 +91,6 @@ class AuthRemote {
     final response =
         await _httpClient.post(url: '${accountUrl}signInWithPassword', data: json.encode(authRequestPayload.toJson()));
 
-    print(response.requestOptions.path);
-
     final authResponse = AuthResponsePayload.fromJson(response.data);
     return authResponse;
   }
@@ -107,10 +105,7 @@ class AuthRemote {
   }
 
   Future<void> _saveUser(String authId, String email, String privacyPolicy) async {
-    final user = RemoteUser(
-        authId: authId,
-        consented: true,
-        consentUrl: privacyPolicy);
+    final user = RemoteUser(authId: authId, consented: true, consentUrl: privacyPolicy);
 
     final url = '$dbUrl.json';
     final data = json.encode(user.toJson());
