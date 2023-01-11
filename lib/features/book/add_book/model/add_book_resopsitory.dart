@@ -24,74 +24,134 @@ class AddBookRepository {
     try {
       List<ApiBook> apiBooks = await _bookService.search(searchTerm);
 
-      for (ApiBook apiBook in apiBooks) {
-        print(apiBook.runtimeType);
-      }
-
       //
       // duplikátumok szűrése
-      // rendezáse
 
       final books = apiBooks.map((ApiBook apiBook) {
         if (apiBook is Volume) {
-          return Book(
-            title: apiBook.volumeInfo.title,
-            authors: apiBook.volumeInfo.authors,
-            coverImage: CoverImage(smallest: apiBook.volumeInfo.imageLinks?.smallThumbnail),
-            industryIdsByType: {
-              for (VolumeIndustryIdentifier volumeIndustryIdentifier in apiBook.volumeInfo.industryIdentifiers!)
-                IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
-                    IndustryIdentifierType.fromString(volumeIndustryIdentifier.type),
-                    volumeIndustryIdentifier.identifier)
-            },
-          );
+          return _convertVolumeToBook(apiBook);
         } else {
-          apiBook = apiBook as MolyBook;
-
-          Map<IndustryIdentifierType, BookIndustryIdentifier>? industryIdsByType;
-
-          print(apiBook);
-
-          if (apiBook.isbn == null) {
-            industryIdsByType = null;
-          } else if (apiBook.isbn!.length == 13) {
-            industryIdsByType = {
-              IndustryIdentifierType.isbn13: BookIndustryIdentifier(IndustryIdentifierType.isbn13, apiBook.isbn!)
-            };
-          } else if (apiBook.isbn!.length == 10) {
-            industryIdsByType = {
-              IndustryIdentifierType.isbn13: BookIndustryIdentifier(IndustryIdentifierType.isbn10, apiBook.isbn!)
-            };
-          } else {
-            industryIdsByType = null;
-          }
-
-          return Book(
-              title: apiBook.title,
-              authors: apiBook.author.split(' - '),
-              coverImage: CoverImage(smallest: apiBook.cover),
-              publicationYear: apiBook.year.toString(),
-              industryIdsByType: industryIdsByType);
+          return _convertMolyBookIntoBook(apiBook as MolyBook);
         }
       }).toList();
 
-      books.retainWhere((Book book) {
-        return book.industryIdsByType != null &&
-            (book.industryIdsByType![IndustryIdentifierType.isbn13] != null ||
-                book.industryIdsByType![IndustryIdentifierType.isbn10] != null);
-      });
+      _filterBooks(books);
 
-      books.sort(
-        (Book aBook, Book bBook) => bBook.title.similarityTo(searchTerm).compareTo(
-              aBook.title.similarityTo(searchTerm),
-            ),
-      );
-
-      print(books);
+      _sortBooks(books, searchTerm);
 
       return books;
     } on NetworkException {
       throw AddBookException();
     }
+  }
+
+  Book _convertVolumeToBook(Volume volume) => Book(
+        title: volume.volumeInfo.title,
+        authors: volume.volumeInfo.authors,
+        coverImage: CoverImage(smallest: volume.volumeInfo.imageLinks?.smallThumbnail),
+        industryIdsByType: volume.volumeInfo.industryIdentifiers != null
+            ? {
+                for (VolumeIndustryIdentifier volumeIndustryIdentifier in volume.volumeInfo.industryIdentifiers!)
+                  IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
+                      IndustryIdentifierType.fromString(volumeIndustryIdentifier.type),
+                      volumeIndustryIdentifier.identifier)
+              }
+            : null,
+      );
+
+  Book _convertMolyBookIntoBook(MolyBook molyBook) {
+    Map<IndustryIdentifierType, BookIndustryIdentifier>? industryIdsByType;
+
+    if (molyBook.isbn == null) {
+      industryIdsByType = null;
+    } else if (molyBook.isbn!.length == 13) {
+      industryIdsByType = {
+        IndustryIdentifierType.isbn13: BookIndustryIdentifier(IndustryIdentifierType.isbn13, molyBook.isbn!)
+      };
+    } else if (molyBook.isbn!.length == 10) {
+      industryIdsByType = {
+        IndustryIdentifierType.isbn13: BookIndustryIdentifier(IndustryIdentifierType.isbn10, molyBook.isbn!)
+      };
+    } else {
+      industryIdsByType = null;
+    }
+
+    return Book(
+        title: molyBook.title,
+        authors: molyBook.author.split(' - '),
+        coverImage: CoverImage(smallest: molyBook.cover),
+        publicationYear: molyBook.year.toString(),
+        industryIdsByType: industryIdsByType);
+  }
+
+  void _filterBooks(List<Book> books) {
+    _filterNoIsbns(books);
+    _filterDuplicates(books);
+  }
+
+  void _filterNoIsbns(List<Book> books) {
+    books.retainWhere((Book book) {
+      return book.industryIdsByType != null &&
+          (book.industryIdsByType![IndustryIdentifierType.isbn13] != null ||
+              book.industryIdsByType![IndustryIdentifierType.isbn10] != null);
+    });
+  }
+
+  void _filterDuplicates(List<Book> books) {
+    final industryIdsTypes = books.map((Book book) => book.industryIdsByType).toList();
+
+    List<List<int>> matchingIds = [];
+
+    int i = 0;
+    for (int j = i + 1; i < industryIdsTypes.length; j++) {
+      if (j >= industryIdsTypes.length) {
+        i++;
+        j = i + 1;
+      } else if (_isIndustryIdsTypeMatching(industryIdsTypes[i], industryIdsTypes[j])) {
+        matchingIds.add([i, j]);
+      }
+    }
+
+    for (List<int> matchingId in matchingIds) {
+      books[matchingId.first] = Book(
+        title: books[matchingId.first].title,
+        authors: books[matchingId.first].authors ?? books[matchingId.first].authors,
+        coverImage: books[matchingId.first].coverImage ?? books[matchingId.first].coverImage,
+        industryIdsByType: books[matchingId.first].industryIdsByType ?? books[matchingId.first].industryIdsByType,
+      );
+
+      books.removeAt(matchingId.last);
+    }
+  }
+
+  bool _isIndustryIdsTypeMatching(Map<IndustryIdentifierType, BookIndustryIdentifier>? aIndustryIdsByType,
+      Map<IndustryIdentifierType, BookIndustryIdentifier>? bIndustryIdsType) {
+    if (aIndustryIdsByType == null || bIndustryIdsType == null) {
+      return false;
+    }
+
+    if ((aIndustryIdsByType[IndustryIdentifierType.isbn13] != null &&
+            bIndustryIdsType[IndustryIdentifierType.isbn13] != null) &&
+        (aIndustryIdsByType[IndustryIdentifierType.isbn13]!.identifier ==
+            bIndustryIdsType[IndustryIdentifierType.isbn13]!.identifier)) {
+      return true;
+    }
+
+    if ((aIndustryIdsByType[IndustryIdentifierType.isbn10] != null &&
+            bIndustryIdsType[IndustryIdentifierType.isbn10] != null) &&
+        (aIndustryIdsByType[IndustryIdentifierType.isbn10]!.identifier ==
+            bIndustryIdsType[IndustryIdentifierType.isbn10]!.identifier)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  void _sortBooks(List<Book> books, String searchTerm) {
+    books.sort(
+      (Book aBook, Book bBook) => bBook.title.similarityTo(searchTerm).compareTo(
+            aBook.title.similarityTo(searchTerm),
+          ),
+    );
   }
 }
