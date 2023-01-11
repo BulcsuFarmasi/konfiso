@@ -112,8 +112,8 @@ class AddBookRepository {
       }
     }
 
-    for (Map<int, Book> mathcingBook in matchingBooks) {
-      final matchingBookEntries = mathcingBook.entries;
+    for (Map<int, Book> matchingBook in matchingBooks) {
+      final matchingBookEntries = matchingBook.entries;
       books[matchingBookEntries.first.key] = Book(
         title: matchingBookEntries.first.value.title,
         authors: matchingBookEntries.first.value.authors ?? matchingBookEntries.last.value.authors,
