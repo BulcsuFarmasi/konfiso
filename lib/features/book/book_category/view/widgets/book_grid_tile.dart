@@ -47,8 +47,9 @@ class BookGridTile extends ConsumerWidget {
     return Column(
       children: [
         book.coverImage?.smaller != null
-            ? Image.network(
-                book.coverImage!.smaller!,
+            ? FadeInImage(
+                placeholder: const AssetImage('assets/images/no_book_cover.png'),
+                image: NetworkImage(book.coverImage!.smaller!),
                 width: 140,
               )
             : Image.asset(

@@ -22,7 +22,11 @@ class BookListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: book.coverImage?.smallest != null
-          ? Image.network(book.coverImage!.smallest!, width: 40)
+          ? FadeInImage(
+              placeholder: const AssetImage('assets/images/no_book_cover.png'),
+              image: NetworkImage(book.coverImage!.smallest!),
+              width: 40,
+            )
           : Image.asset(
               'assets/images/no_book_cover.png',
               width: 40,
@@ -36,9 +40,11 @@ class BookListTile extends StatelessWidget {
         style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.greyDarkestWithHalfOpacity),
       ),
       trailing: ElevatedButton(
-        onPressed: book.industryIdsByType != null ?  () {
-          _navigateToDetailPage(context, book.industryIdsByType!);
-        } : null,
+        onPressed: book.industryIdsByType != null
+            ? () {
+                _navigateToDetailPage(context, book.industryIdsByType!);
+              }
+            : null,
         child: Text(AppLocalizations.of(context)!.add),
       ),
     );

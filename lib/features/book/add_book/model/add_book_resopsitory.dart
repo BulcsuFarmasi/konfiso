@@ -100,7 +100,7 @@ class AddBookRepository {
   void _filterDuplicates(List<Book> books) {
     final industryIdsTypes = books.map((Book book) => book.industryIdsByType).toList();
 
-    List<List<int>> matchingIds = [];
+    List<Map<int, Book>> matchingBooks = [];
 
     int i = 0;
     for (int j = i + 1; i < industryIdsTypes.length; j++) {
@@ -108,19 +108,21 @@ class AddBookRepository {
         i++;
         j = i + 1;
       } else if (_isIndustryIdsTypeMatching(industryIdsTypes[i], industryIdsTypes[j])) {
-        matchingIds.add([i, j]);
+        matchingBooks.add({i: books[i], j: books[j]});
       }
     }
 
-    for (List<int> matchingId in matchingIds) {
-      books[matchingId.first] = Book(
-        title: books[matchingId.first].title,
-        authors: books[matchingId.first].authors ?? books[matchingId.first].authors,
-        coverImage: books[matchingId.first].coverImage ?? books[matchingId.first].coverImage,
-        industryIdsByType: books[matchingId.first].industryIdsByType ?? books[matchingId.first].industryIdsByType,
+    for (Map<int, Book> mathcingBook in matchingBooks) {
+      final matchingBookEntries = mathcingBook.entries;
+      books[matchingBookEntries.first.key] = Book(
+        title: matchingBookEntries.first.value.title,
+        authors: matchingBookEntries.first.value.authors ?? matchingBookEntries.last.value.authors,
+        coverImage: matchingBookEntries.first.value.coverImage ?? matchingBookEntries.last.value.coverImage,
+        industryIdsByType:
+            matchingBookEntries.first.value.industryIdsByType ?? matchingBookEntries.last.value.industryIdsByType,
       );
 
-      books.removeAt(matchingId.last);
+      books.remove(matchingBookEntries.last.value);
     }
   }
 

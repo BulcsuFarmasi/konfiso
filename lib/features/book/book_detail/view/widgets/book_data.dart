@@ -17,8 +17,9 @@ class BookData extends StatelessWidget {
           height: 25,
         ),
         book.coverImage?.small != null
-            ? Image.network(
-                book.coverImage!.small!,
+            ? FadeInImage(
+                placeholder: const AssetImage('assets/images/no_book_cover.png'),
+                image: NetworkImage(book.coverImage!.small!),
                 width: 215,
               )
             : Image.asset(
