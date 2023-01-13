@@ -16,9 +16,11 @@ class BookCategoryPageStateNotifier extends StateNotifier<BookCategoryPageState>
   final BookCategoryRepository _bookCategoryRepository;
 
   void loadBooks(BookReadingStatus bookReadingStatus) {
-    _bookCategoryRepository.loadBooksByReadingStatus(bookReadingStatus).handleError((_) {
-      state = const BookCategoryPageState.error();
-    }).listen((BookCategoryLoading bookCategoryLoading) {
+    _bookCategoryRepository.loadBooksByReadingStatus(bookReadingStatus)
+    //     .handleError((_) {
+    //   state = const BookCategoryPageState.error();
+    // })
+        .listen((BookCategoryLoading bookCategoryLoading) {
       state = BookCategoryPageState.inProgress(bookCategoryLoading);
       if (bookCategoryLoading.currentBookNumber == bookCategoryLoading.totalBookNumber) {
         state = BookCategoryPageState.successful(bookCategoryLoading.books);

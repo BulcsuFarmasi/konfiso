@@ -19,23 +19,25 @@ class BookCategoryRepository {
     return _bookService.loadBooksByReadingStatus(bookReadingStatus).handleError((_) {
       throw BookCategoryException();
     }).map((VolumeCategoryLoading volumeCategoryLoading) {
-      final actualVolume = volumeCategoryLoading.volumes.last;
+      if (volumeCategoryLoading.volumes.isNotEmpty) {
+        final actualVolume = volumeCategoryLoading.volumes.last;
 
-      final industryIdsByType = {
-        for (VolumeIndustryIdentifier volumeIndustryIdentifier in actualVolume.volumeInfo.industryIdentifiers!)
-          IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
-              IndustryIdentifierType.fromString(volumeIndustryIdentifier.type), volumeIndustryIdentifier.identifier)
-      };
+        final industryIdsByType = {
+          for (VolumeIndustryIdentifier volumeIndustryIdentifier in actualVolume.volumeInfo.industryIdentifiers!)
+            IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
+                IndustryIdentifierType.fromString(volumeIndustryIdentifier.type), volumeIndustryIdentifier.identifier)
+        };
 
-      final book = Book(
-          title: actualVolume.volumeInfo.title,
-          industryIdsByType: industryIdsByType,
-          authors: actualVolume.volumeInfo.authors,
-          coverImage: CoverImage(
-            smaller: actualVolume.volumeInfo.imageLinks?.thumbnail,
-          ));
+        final book = Book(
+            title: actualVolume.volumeInfo.title,
+            industryIdsByType: industryIdsByType,
+            authors: actualVolume.volumeInfo.authors,
+            coverImage: CoverImage(
+              smaller: actualVolume.volumeInfo.imageLinks?.thumbnail,
+            ));
 
-      books.add(book);
+        books.add(book);
+      }
 
       return BookCategoryLoading(
           books: books,
