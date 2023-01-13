@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state.dart';
 import 'package:konfiso/features/book/book_detail/model/book_detail_repository.dart';
-import 'package:konfiso/features/book/data/book_detail_loading_excpetion.dart';
 import 'package:konfiso/features/book/data/book_detail_saving_exception.dart';
 import 'package:konfiso/features/book/data/book_reading_detail.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
@@ -17,13 +16,13 @@ class BookDetailPageStateNotifier extends StateNotifier<BookDetailPageState> {
   void loadBookByIndustryIds(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) async {
     state = const BookDetailPageState.loadingInProgress();
 
-    try {
-      final bookReadingDetail = await _bookDetailRepository.loadBookByIndustryIds(industryIdsByType);
-
+    _bookDetailRepository.loadBookByIndustryIds(industryIdsByType).listen((BookReadingDetail bookReadingDetail) {
       state = BookDetailPageState.loadingSuccess(bookReadingDetail);
-    } on BookDetailLoadingException catch (_) {
-      state = const BookDetailPageState.loadingError();
-    }
+    }).onError((_) {
+      if (state == const BookDetailPageState.initial()) {
+        state = const BookDetailPageState.loadingError();
+      }
+    });
   }
 
   void saveBook(BookReadingDetail bookReadingDetail) async {

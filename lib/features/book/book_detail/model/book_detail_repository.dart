@@ -5,7 +5,6 @@ import 'package:konfiso/features/book/data/book_detail_saving_exception.dart';
 import 'package:konfiso/features/book/data/book_reading_detail.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
-import 'package:konfiso/features/book/data/list_books_response_payload.dart';
 import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
@@ -18,48 +17,48 @@ class BookDetailRepository {
 
   final BookService _bookService;
 
-  Future<BookReadingDetail> loadBookByIndustryIds(
-      Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) async {
+  Stream<BookReadingDetail> loadBookByIndustryIds(
+      Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) async* {
     final isbn = _getIsbnFromIndustryIds(industryIdsByType);
 
-    try {
-      Volume? volume;
+    _bookService.loadBookByIsbn(_getIsbnFromIndustryIds(industryIdsByType));
 
-      for (BookIndustryIdentifier industryId in industryIdsByType.values) {
-        ListBooksResponsePayload listBooksResponse = await _bookService.loadBookByIsbn(industryId.identifier);
-        if (listBooksResponse.totalItems != 0) {
-          volume = listBooksResponse.items!.first;
-          break;
+    final bookReadingDetail = await _bookService.loadBookReadingDetailByIsbn(isbn);
+
+    final volumes = _bookService.loadBookByIsbn(isbn);
+
+    await for (Volume? volume in volumes) {
+      try {
+        if (volume == null) {
+          throw BookDetailLoadingException();
         }
-      }
 
-      if (volume == null) {
+        final publicationYear = volume.volumeInfo.publishedDate?.split('-').first;
+
+        final bookIndustryIdsByType = volume.volumeInfo.industryIdentifiers != null
+            ? {
+                for (VolumeIndustryIdentifier volumeIndustryIdentifier in volume.volumeInfo.industryIdentifiers!)
+                  IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
+                      IndustryIdentifierType.fromString(volumeIndustryIdentifier.type),
+                      volumeIndustryIdentifier.identifier)
+              }
+            : null;
+
+        yield BookReadingDetail(
+          status: bookReadingDetail?.status ?? BookReadingStatus.wantToRead,
+          currentPage: bookReadingDetail?.currentPage,
+          rating: bookReadingDetail?.rating,
+          comment: bookReadingDetail?.comment,
+          book: Book(
+              title: volume.volumeInfo.title,
+              authors: volume.volumeInfo.authors,
+              publicationYear: publicationYear,
+              coverImage: CoverImage(small: volume.volumeInfo.imageLinks?.small),
+              industryIdsByType: bookIndustryIdsByType),
+        );
+      } on NetworkException catch (_) {
         throw BookDetailLoadingException();
       }
-
-      final bookReadingDetail = await _bookService.loadBookReadingDetailByIsbn(isbn);
-
-      final publicationYear = volume.volumeInfo.publishedDate?.split('-').first;
-
-      return BookReadingDetail(
-        status: bookReadingDetail?.status ?? BookReadingStatus.wantToRead,
-        currentPage: bookReadingDetail?.currentPage,
-        rating: bookReadingDetail?.rating,
-        comment: bookReadingDetail?.comment,
-        book: Book(
-          title: volume.volumeInfo.title,
-          authors: volume.volumeInfo.authors,
-          publicationYear: publicationYear,
-          coverImage: CoverImage(small: volume.volumeInfo.imageLinks?.small),
-          industryIdsByType: {
-            for (VolumeIndustryIdentifier volumeIndustryIdentifier in volume.volumeInfo.industryIdentifiers!)
-              IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
-                  IndustryIdentifierType.fromString(volumeIndustryIdentifier.type), volumeIndustryIdentifier.identifier)
-          }
-        ),
-      );
-    } on NetworkException catch (_) {
-      throw BookDetailLoadingException();
     }
   }
 

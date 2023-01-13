@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
 import 'package:konfiso/features/book/data/api_book.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
+import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/list_books_response_payload.dart';
 import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/volume.dart';
@@ -44,13 +45,56 @@ class BookService {
     }
   }
 
-  Future<ListBooksResponsePayload> loadBookByIsbn(String isbn) async {
-    try {
+  Stream<Volume?> loadBookByIsbn(String isbn) async* {
+    // try {
+      Volume? volume;
       final response = await _bookGoogleRemote.loadBookByIsbn(isbn);
-      return ListBooksResponsePayload.fromJson(response.data);
-    } on DioError catch (_) {
-      throw NetworkException();
-    }
+      final listBookResponse = ListBooksResponsePayload.fromJson(response.data);
+
+      if (listBookResponse.totalItems != 0) {
+        volume = listBookResponse.items?.first;
+        yield volume;
+      }
+
+      if (listBookResponse.totalItems == 0 || !_isVolumeComplete(listBookResponse.items?.first)) {
+
+        print('ma');
+        final molyBook = await _bookMolyRemote.loadBookByIsbn(isbn);
+
+        print('mb');
+
+        List<VolumeIndustryIdentifier>? industryIdentifiers;
+
+        if (molyBook?.isbn == null) {
+          industryIdentifiers = null;
+        } else if (molyBook!.isbn!.length == 13) {
+          industryIdentifiers = [VolumeIndustryIdentifier('ISN_13', molyBook.isbn!)];
+        } else if (molyBook!.isbn!.length == 10) {
+          industryIdentifiers = [VolumeIndustryIdentifier('ISN_10', molyBook.isbn!)];
+        } else {
+          industryIdentifiers = null;
+        }
+
+        volume = Volume(
+          volume?.id ?? '',
+          VolumeInfo(
+            title: volume?.volumeInfo.title ?? molyBook?.title ?? '',
+            authors: volume?.volumeInfo.authors ?? molyBook?.author.split(' - '),
+            publishedDate: volume?.volumeInfo.publishedDate ?? molyBook?.year.toString(),
+            industryIdentifiers: volume?.volumeInfo.industryIdentifiers ?? industryIdentifiers,
+            imageLinks: volume?.volumeInfo.imageLinks?.small != null
+                ? volume?.volumeInfo.imageLinks
+                : ImageLinks(
+                    small: molyBook?.cover?.replaceAll('/normal/', '/big/'),
+                  ),
+          ),
+        );
+      }
+
+      yield volume;
+    // } on DioError catch (_) {
+    //   throw NetworkException();
+    // }
   }
 
   Future<RemoteBookReadingDetail?> loadBookReadingDetailByIsbn(String isbn) async {
@@ -113,5 +157,13 @@ class BookService {
     if (bookId != null) {
       _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
     }
+  }
+
+  bool _isVolumeComplete(Volume? volume) {
+    return volume != null &&
+        volume.volumeInfo.authors != null &&
+        volume.volumeInfo.publishedDate != null &&
+        volume.volumeInfo.industryIdentifiers != null &&
+        volume.volumeInfo.imageLinks?.small != null;
   }
 }
