@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/data/add_book_exception.dart';
-import 'package:konfiso/features/book/data/api_book.dart';
+import 'package:konfiso/features/book/data/model_book.dart';
 import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/moly_book.dart';
@@ -22,9 +22,9 @@ class AddBookRepository {
     }
 
     try {
-      List<ApiBook> apiBooks = await _bookService.search(searchTerm);
+      List<ModelsBook> apiBooks = await _bookService.search(searchTerm);
 
-      final books = apiBooks.map((ApiBook apiBook) {
+      final books = apiBooks.map((ModelsBook apiBook) {
         if (apiBook is Volume) {
           return _convertVolumeToBook(apiBook);
         } else {

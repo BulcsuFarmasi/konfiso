@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
-import 'package:konfiso/features/book/data/api_book.dart';
+import 'package:konfiso/features/book/data/model_book.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/list_books_response_payload.dart';
@@ -38,7 +38,7 @@ class BookService {
 
   BookService(this._bookGoogleRemote, this._bookDatabaseRemote, this._bookMolyRemote, this._authService);
 
-  Future<List<ApiBook>> search(String searchTerm) async {
+  Future<List<ModelsBook>> search(String searchTerm) async {
     List<Volume> volumes = [];
     try {
       final response = await _bookGoogleRemote.search(searchTerm);
