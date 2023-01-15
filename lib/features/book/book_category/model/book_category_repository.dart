@@ -15,28 +15,37 @@ class BookCategoryRepository {
   final BookService _bookService;
 
   Stream<BookCategoryLoading> loadBooksByReadingStatus(BookReadingStatus bookReadingStatus) {
-    final List<Book> books = [];
-    return _bookService.loadBooksByReadingStatus(bookReadingStatus).handleError((_) {
+    List<Book> books = [];
+    BookReadingStatus? currentBookReadingStatus;
+    _bookService.loadBooksByReadingStatus(bookReadingStatus);
+    return _bookService.watchVolumeCategoryLoading.handleError((_) {
       throw BookCategoryException();
     }).map((VolumeCategoryLoading volumeCategoryLoading) {
-      if (volumeCategoryLoading.volumes.isNotEmpty) {
-        final actualVolume = volumeCategoryLoading.volumes.last;
-
+      if (volumeCategoryLoading.currentVolume != null) {
+        if (currentBookReadingStatus == null || bookReadingStatus != currentBookReadingStatus) {
+          books = [];
+          currentBookReadingStatus = bookReadingStatus;
+        }
         final industryIdsByType = {
-          for (VolumeIndustryIdentifier volumeIndustryIdentifier in actualVolume.volumeInfo.industryIdentifiers!)
+          for (VolumeIndustryIdentifier volumeIndustryIdentifier
+              in volumeCategoryLoading.currentVolume!.volumeInfo.industryIdentifiers!)
             IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
                 IndustryIdentifierType.fromString(volumeIndustryIdentifier.type), volumeIndustryIdentifier.identifier)
         };
 
         final book = Book(
-            title: actualVolume.volumeInfo.title,
+            title: volumeCategoryLoading.currentVolume!.volumeInfo.title,
             industryIdsByType: industryIdsByType,
-            authors: actualVolume.volumeInfo.authors,
+            authors: volumeCategoryLoading.currentVolume!.volumeInfo.authors,
             coverImage: CoverImage(
-              smaller: actualVolume.volumeInfo.imageLinks?.thumbnail,
+              smaller: volumeCategoryLoading.currentVolume!.volumeInfo.imageLinks?.thumbnail,
             ));
 
-        books.add(book);
+        if (volumeCategoryLoading.currentVolumeNumber - 1 >= books.length) {
+          books.add(book);
+        } else {
+          books[volumeCategoryLoading.currentVolumeNumber - 1] = book;
+        }
       }
 
       return BookCategoryLoading(

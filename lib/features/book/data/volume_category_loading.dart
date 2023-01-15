@@ -5,6 +5,6 @@ part 'volume_category_loading.freezed.dart';
 
 @freezed
 class VolumeCategoryLoading with _$VolumeCategoryLoading {
-  const factory VolumeCategoryLoading(List<Volume> volumes, int currentVolumeNumber, totalVolumeNumber) =
+  const factory VolumeCategoryLoading(int currentVolumeNumber, totalVolumeNumber, {Volume? currentVolume}) =
       _VolumeCategoryLoading;
 }

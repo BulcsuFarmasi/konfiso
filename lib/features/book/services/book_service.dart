@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/services/auth_service.dart';
@@ -5,6 +7,7 @@ import 'package:konfiso/features/book/data/api_book.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/list_books_response_payload.dart';
+import 'package:konfiso/features/book/data/moly_book.dart';
 import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/data/volume_category_loading.dart';
@@ -28,6 +31,11 @@ class BookService {
   final BookMolyRemote _bookMolyRemote;
   final AuthService _authService;
 
+  final StreamController<VolumeCategoryLoading> _watchVolumeCategoryLoadingController =
+      StreamController<VolumeCategoryLoading>.broadcast();
+
+  Stream<VolumeCategoryLoading> get watchVolumeCategoryLoading => _watchVolumeCategoryLoadingController.stream;
+
   BookService(this._bookGoogleRemote, this._bookDatabaseRemote, this._bookMolyRemote, this._authService);
 
   Future<List<ApiBook>> search(String searchTerm) async {
@@ -46,7 +54,7 @@ class BookService {
   }
 
   Stream<Volume?> loadBookByIsbn(String isbn) async* {
-    // try {
+    try {
       Volume? volume;
       final response = await _bookGoogleRemote.loadBookByIsbn(isbn);
       final listBookResponse = ListBooksResponsePayload.fromJson(response.data);
@@ -57,23 +65,9 @@ class BookService {
       }
 
       if (listBookResponse.totalItems == 0 || !_isVolumeComplete(listBookResponse.items?.first)) {
-
-        print('ma');
         final molyBook = await _bookMolyRemote.loadBookByIsbn(isbn);
 
-        print('mb');
-
-        List<VolumeIndustryIdentifier>? industryIdentifiers;
-
-        if (molyBook?.isbn == null) {
-          industryIdentifiers = null;
-        } else if (molyBook!.isbn!.length == 13) {
-          industryIdentifiers = [VolumeIndustryIdentifier('ISN_13', molyBook.isbn!)];
-        } else if (molyBook!.isbn!.length == 10) {
-          industryIdentifiers = [VolumeIndustryIdentifier('ISN_10', molyBook.isbn!)];
-        } else {
-          industryIdentifiers = null;
-        }
+        final industryIdentifiers = _convertMolyIsbnToIndustryIdentifiers(isbn);
 
         volume = Volume(
           volume?.id ?? '',
@@ -92,9 +86,9 @@ class BookService {
       }
 
       yield volume;
-    // } on DioError catch (_) {
-    //   throw NetworkException();
-    // }
+    } on DioError catch (_) {
+      throw NetworkException();
+    }
   }
 
   Future<RemoteBookReadingDetail?> loadBookReadingDetailByIsbn(String isbn) async {
@@ -123,30 +117,55 @@ class BookService {
     }
   }
 
-  Stream<VolumeCategoryLoading> loadBooksByReadingStatus(BookReadingStatus bookReadingStatus) async* {
+  Future<void> loadBooksByReadingStatus(BookReadingStatus bookReadingStatus) async {
     try {
       final bookIds = await _bookDatabaseRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
 
       final totalBookNumber = bookIds?.length ?? 0;
       int currentBookNumber = 0;
-      VolumeCategoryLoading volumeCategoryLoading = VolumeCategoryLoading([], currentBookNumber, totalBookNumber);
-      yield volumeCategoryLoading;
+      VolumeCategoryLoading volumeCategoryLoading = VolumeCategoryLoading(currentBookNumber, totalBookNumber);
+      _watchVolumeCategoryLoadingController.add(volumeCategoryLoading);
+
       if (totalBookNumber != 0) {
         currentBookNumber = 1;
-        for (; currentBookNumber <= totalBookNumber; currentBookNumber++) {
+        while (currentBookNumber <= totalBookNumber) {
           final isbn = await _bookDatabaseRemote.loadIsbnById(bookIds![currentBookNumber - 1]);
 
           final response = await _bookGoogleRemote.loadBookByIsbn(isbn);
-          final volume = ListBooksResponsePayload.fromJson(response.data).items?.first;
+          Volume? volume = ListBooksResponsePayload.fromJson(response.data).items?.first;
 
           if (volume != null) {
-            volumeCategoryLoading = volumeCategoryLoading
-                .copyWith(currentVolumeNumber: currentBookNumber, volumes: [...volumeCategoryLoading.volumes, volume]);
-            yield volumeCategoryLoading;
+            volumeCategoryLoading =
+                volumeCategoryLoading.copyWith(currentVolumeNumber: currentBookNumber, currentVolume: volume);
+            _watchVolumeCategoryLoadingController.add(volumeCategoryLoading);
           }
+
+          if (volume == null || !_isVolumeComplete(volume)) {
+            _bookMolyRemote.loadBookByIsbn(isbn).then((MolyBook? molyBook) {
+              final industryIdentifiers = _convertMolyIsbnToIndustryIdentifiers(isbn);
+
+              volume = Volume(
+                volume?.id ?? '',
+                VolumeInfo(
+                  title: volume?.volumeInfo.title ?? molyBook?.title ?? '',
+                  authors: volume?.volumeInfo.authors ?? molyBook?.author.split(' - '),
+                  publishedDate: volume?.volumeInfo.publishedDate ?? molyBook?.year.toString(),
+                  industryIdentifiers: volume?.volumeInfo.industryIdentifiers ?? industryIdentifiers,
+                  imageLinks: volume?.volumeInfo.imageLinks?.thumbnail != null
+                      ? volume?.volumeInfo.imageLinks
+                      : ImageLinks(
+                          thumbnail: molyBook?.cover?.replaceAll('/normal/', '/big/'),
+                        ),
+                ),
+              );
+
+              _watchVolumeCategoryLoadingController.add(volumeCategoryLoading.copyWith(currentVolume: volume));
+            });
+          }
+          currentBookNumber++;
         }
       }
-    } catch (_) {
+    } on DioError catch (_) {
       throw NetworkException();
     }
   }
@@ -164,6 +183,19 @@ class BookService {
         volume.volumeInfo.authors != null &&
         volume.volumeInfo.publishedDate != null &&
         volume.volumeInfo.industryIdentifiers != null &&
-        volume.volumeInfo.imageLinks?.small != null;
+        volume.volumeInfo.imageLinks?.small != null &&
+        volume.volumeInfo.imageLinks?.thumbnail == null;
+  }
+
+  List<VolumeIndustryIdentifier>? _convertMolyIsbnToIndustryIdentifiers(String? molyIsbn) {
+    if (molyIsbn == null) {
+      return null;
+    } else if (molyIsbn.length == 13) {
+      return [VolumeIndustryIdentifier('ISN_13', molyIsbn)];
+    } else if (molyIsbn!.length == 10) {
+      return [VolumeIndustryIdentifier('ISN_10', molyIsbn)];
+    } else {
+      return null;
+    }
   }
 }

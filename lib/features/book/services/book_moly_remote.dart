@@ -46,9 +46,7 @@ class BookMolyRemote {
 
   Future<MolyBook?> loadBookByIsbn(String isbn) async {
     final searchUrl = '$apiUrl/book_by_isbn.json?q=$isbn';
-    print('mc');
     Response response = await _httpClient.get(url: searchUrl);
-    print('md');
 
     if (response.data.isEmpty) {
       return null;
@@ -56,11 +54,7 @@ class BookMolyRemote {
 
     final selectedBook = MolyBook.fromJson(response.data);
 
-    print('me');
-
     final editionsUrl = '$apiUrl/book_editions/${selectedBook.id}.json';
-
-    print('mf');
 
     response = await _httpClient.get(url: editionsUrl);
 

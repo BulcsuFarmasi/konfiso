@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/book_category/controller/book_category_page_state.dart';
 import 'package:konfiso/features/book/book_category/model/book_category_repository.dart';
@@ -14,13 +16,12 @@ class BookCategoryPageStateNotifier extends StateNotifier<BookCategoryPageState>
   BookCategoryPageStateNotifier(this._bookCategoryRepository) : super(const BookCategoryPageState.initial());
 
   final BookCategoryRepository _bookCategoryRepository;
+  StreamSubscription? loadBooksSubscription;
 
   void loadBooks(BookReadingStatus bookReadingStatus) {
-    _bookCategoryRepository.loadBooksByReadingStatus(bookReadingStatus)
-    //     .handleError((_) {
-    //   state = const BookCategoryPageState.error();
-    // })
-        .listen((BookCategoryLoading bookCategoryLoading) {
+    loadBooksSubscription = _bookCategoryRepository.loadBooksByReadingStatus(bookReadingStatus).handleError((_) {
+      state = const BookCategoryPageState.error();
+    }).listen((BookCategoryLoading bookCategoryLoading) {
       state = BookCategoryPageState.inProgress(bookCategoryLoading);
       if (bookCategoryLoading.currentBookNumber == bookCategoryLoading.totalBookNumber) {
         state = BookCategoryPageState.successful(bookCategoryLoading.books);
@@ -53,5 +54,10 @@ class BookCategoryPageStateNotifier extends StateNotifier<BookCategoryPageState>
       List<Book> books, Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsType) {
     final bookIndex = books.indexWhere((Book book) => book.industryIdsByType == industryIdsType);
     return [...books.sublist(0, bookIndex), ...books.sublist(bookIndex + 1)];
+  }
+
+  void restoreToInitial() {
+    state = const BookCategoryPageState.initial();
+    loadBooksSubscription?.cancel();
   }
 }
