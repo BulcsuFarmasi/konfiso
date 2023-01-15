@@ -24,9 +24,6 @@ class AddBookRepository {
     try {
       List<ApiBook> apiBooks = await _bookService.search(searchTerm);
 
-      //
-      // duplikátumok szűrése
-
       final books = apiBooks.map((ApiBook apiBook) {
         if (apiBook is Volume) {
           return _convertVolumeToBook(apiBook);
