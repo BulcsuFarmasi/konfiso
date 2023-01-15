@@ -9,7 +9,7 @@ part 'volume.g.dart';
 
 @freezed
 class Volume with _$Volume implements ApiBook {
-  const factory Volume(String id, VolumeInfo volumeInfo) = _Volume;
+  const factory Volume(String id, VolumeInfo volumeInfo, {int? volumeIndex}) = _Volume;
 
   factory Volume.fromJson(Map<String, Object?> json) => _$VolumeFromJson(json);
 }

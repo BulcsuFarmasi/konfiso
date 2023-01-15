@@ -41,10 +41,15 @@ class BookCategoryRepository {
               smaller: volumeCategoryLoading.currentVolume!.volumeInfo.imageLinks?.thumbnail,
             ));
 
-        if (volumeCategoryLoading.currentVolumeNumber - 1 >= books.length) {
+        int bookIndex = (volumeCategoryLoading.currentVolume!.volumeIndex! < 0)
+            ? 0
+            : volumeCategoryLoading.currentVolume!.volumeIndex!;
+        bookIndex = (bookIndex >= volumeCategoryLoading.totalVolumeNumber) ? bookIndex - 1 : bookIndex;
+
+        if (bookIndex >= books.length) {
           books.add(book);
         } else {
-          books[volumeCategoryLoading.currentVolumeNumber - 1] = book;
+          books[bookIndex] = book;
         }
       }
 

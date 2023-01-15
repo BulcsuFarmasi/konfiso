@@ -35,6 +35,7 @@ class BookDetailPageStateNotifier extends StateNotifier<BookDetailPageState> {
     } on BookDetailSavingException catch (_) {
       state = BookDetailPageState.savingError(bookReadingDetail);
     }
+
   }
 
   void restoreToInitial() {

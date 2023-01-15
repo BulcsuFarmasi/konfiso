@@ -135,8 +135,11 @@ class BookService {
           Volume? volume = ListBooksResponsePayload.fromJson(response.data).items?.first;
 
           if (volume != null) {
-            volumeCategoryLoading =
-                volumeCategoryLoading.copyWith(currentVolumeNumber: currentBookNumber, currentVolume: volume);
+            volume = volume.copyWith(volumeIndex: currentBookNumber - 1);
+            volumeCategoryLoading = volumeCategoryLoading.copyWith(
+              currentVolumeNumber: currentBookNumber,
+              currentVolume: volume,
+            );
             _watchVolumeCategoryLoadingController.add(volumeCategoryLoading);
           }
 
@@ -157,15 +160,18 @@ class BookService {
                           thumbnail: molyBook?.cover?.replaceAll('/normal/', '/big/'),
                         ),
                 ),
+                volumeIndex: volume?.volumeIndex ?? currentBookNumber - 1,
               );
 
-              _watchVolumeCategoryLoadingController.add(volumeCategoryLoading.copyWith(currentVolume: volume));
+              _watchVolumeCategoryLoadingController
+                  .add(volumeCategoryLoading.copyWith(currentVolume: volume, currentVolumeNumber: currentBookNumber));
             });
           }
           currentBookNumber++;
         }
       }
     } on DioError catch (_) {
+      print(_);
       throw NetworkException();
     }
   }
@@ -191,9 +197,9 @@ class BookService {
     if (molyIsbn == null) {
       return null;
     } else if (molyIsbn.length == 13) {
-      return [VolumeIndustryIdentifier('ISN_13', molyIsbn)];
-    } else if (molyIsbn!.length == 10) {
-      return [VolumeIndustryIdentifier('ISN_10', molyIsbn)];
+      return [VolumeIndustryIdentifier('ISBN_13', molyIsbn)];
+    } else if (molyIsbn.length == 10) {
+      return [VolumeIndustryIdentifier('ISBN_10', molyIsbn)];
     } else {
       return null;
     }
