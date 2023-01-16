@@ -1,30 +1,34 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/data/add_book_exception.dart';
-import 'package:konfiso/features/book/data/model_book.dart';
 import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
+import 'package:konfiso/features/book/data/model_book.dart';
 import 'package:konfiso/features/book/data/moly_book.dart';
+import 'package:konfiso/features/book/data/stored_book.dart';
 import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
+import 'package:konfiso/shared/capabiliities/isbn_from_industry_ids_capability.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
 import 'package:string_similarity/string_similarity.dart';
 
 final addBookRepositoryProvider = Provider((Ref ref) => AddBookRepository(ref.read(bookServiceProvider)));
 
-class AddBookRepository {
+class AddBookRepository with IsbnFromIndustryIdsCapability {
   final BookService _bookService;
 
   AddBookRepository(this._bookService);
 
   Future<List<Book>> search(String searchTerm) async {
+    _bookService.deleteSearchResult();
+
     if (searchTerm.trim().isEmpty) {
       return [];
     }
 
     try {
-      List<ModelsBook> apiBooks = await _bookService.search(searchTerm);
+      List<ModelBook> apiBooks = await _bookService.search(searchTerm);
 
-      final books = apiBooks.map((ModelsBook apiBook) {
+      final books = apiBooks.map((ModelBook apiBook) {
         if (apiBook is Volume) {
           return _convertVolumeToBook(apiBook);
         } else {
@@ -36,16 +40,29 @@ class AddBookRepository {
 
       _sortBooks(books, searchTerm);
 
+      final storedBooks = _convertBooksIntoStoredBooks(books);
+
+      _bookService.saveSearchResult(storedBooks);
+
       return books;
     } on NetworkException {
       throw AddBookException();
     }
   }
 
+  Future<void> selectBookByIndustryIds(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) async {
+    final isbn = getIsbnFromIndustryIds(industryIdsByType);
+    await _bookService.selectBookByIsbn(isbn);
+  }
+
   Book _convertVolumeToBook(Volume volume) => Book(
         title: volume.volumeInfo.title,
         authors: volume.volumeInfo.authors,
-        coverImage: CoverImage(smallest: volume.volumeInfo.imageLinks?.smallThumbnail),
+        coverImage: CoverImage(
+          smallest: volume.volumeInfo.imageLinks?.smallThumbnail,
+          smaller: volume.volumeInfo.imageLinks?.thumbnail,
+          small: volume.volumeInfo.imageLinks?.thumbnail,
+        ),
         industryIdsByType: volume.volumeInfo.industryIdentifiers != null
             ? {
                 for (VolumeIndustryIdentifier volumeIndustryIdentifier in volume.volumeInfo.industryIdentifiers!)
@@ -73,12 +90,42 @@ class AddBookRepository {
       industryIdsByType = null;
     }
 
+    final smallCover = molyBook.cover;
+    final bigCover = smallCover?.replaceAll('/normal/', '/big/');
+
     return Book(
         title: molyBook.title,
         authors: molyBook.author.split(' - '),
-        coverImage: CoverImage(smallest: molyBook.cover),
+        coverImage: CoverImage(
+          smallest: smallCover,
+          smaller: bigCover,
+          small: bigCover,
+        ),
         publicationYear: molyBook.year.toString(),
         industryIdsByType: industryIdsByType);
+  }
+
+  List<StoredBook> _convertBooksIntoStoredBooks(List<Book> books) {
+    final validUntil = DateTime.now().add(const Duration(days: 3));
+    return books
+        .map(
+          (Book book) => StoredBook(
+            title: book.title,
+            authors: book.authors,
+            publicationYear: book.publicationYear,
+            industryIdsByType: book.industryIdsByType,
+            coverImage: StoredCoverImage(
+              smallest: book.coverImage?.smallest,
+              smaller: book.coverImage?.smaller,
+              small: book.coverImage?.small,
+              large: book.coverImage?.large,
+              larger: book.coverImage?.larger,
+              largest: book.coverImage?.largest,
+            ),
+            validUntil: validUntil,
+          ),
+        )
+        .toList();
   }
 
   void _filterBooks(List<Book> books) {
@@ -153,4 +200,6 @@ class AddBookRepository {
           ),
     );
   }
+
+
 }

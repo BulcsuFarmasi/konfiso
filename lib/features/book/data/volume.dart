@@ -8,7 +8,7 @@ part 'volume.freezed.dart';
 part 'volume.g.dart';
 
 @freezed
-class Volume with _$Volume implements ModelsBook {
+class Volume with _$Volume implements ModelBook {
   const factory Volume(String id, VolumeInfo volumeInfo, {int? volumeIndex}) = _Volume;
 
   factory Volume.fromJson(Map<String, Object?> json) => _$VolumeFromJson(json);

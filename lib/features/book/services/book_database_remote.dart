@@ -7,7 +7,7 @@ import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
 import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/utils/flavor_util.dart';
 
-final bookDatabaseRemote =
+final bookDatabaseRemoteProvider =
     Provider((Ref ref) => BookDatabaseRemote(ref.read(httpClientProvider), ref.read(flavorUtilProvider)));
 
 class BookDatabaseRemote {

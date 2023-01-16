@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive/hive.dart';
 
+part 'book_reading_status.g.dart';
+
+@HiveType(typeId: 6)
 enum BookReadingStatus {
+  @HiveField(0)
   currentlyReading,
+  @HiveField(1)
   wantToRead,
+  @HiveField(2)
   alreadyRead;
 
   @override

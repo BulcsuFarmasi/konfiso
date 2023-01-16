@@ -6,7 +6,7 @@ import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state_notifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/app_validators.dart';
-import 'package:konfiso/shared/capabiliities/email_form_capability.dart';
+import 'package:konfiso/shared/capabiliities/email_validation_capability.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {

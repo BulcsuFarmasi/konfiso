@@ -19,9 +19,11 @@ class BookCategoryPageStateNotifier extends StateNotifier<BookCategoryPageState>
   StreamSubscription? loadBooksSubscription;
 
   void loadBooks(BookReadingStatus bookReadingStatus) {
-    loadBooksSubscription = _bookCategoryRepository.loadBooksByReadingStatus(bookReadingStatus).handleError((_) {
-      state = const BookCategoryPageState.error();
-    }).listen((BookCategoryLoading bookCategoryLoading) {
+    loadBooksSubscription = _bookCategoryRepository.loadBooksByReadingStatus(bookReadingStatus)
+    //     .handleError((_) {
+    //   state = const BookCategoryPageState.error();
+    // })
+        .listen((BookCategoryLoading bookCategoryLoading) {
       state = BookCategoryPageState.inProgress(bookCategoryLoading);
       if (bookCategoryLoading.currentBookNumber >= bookCategoryLoading.totalBookNumber) {
         state = BookCategoryPageState.successful(bookCategoryLoading.books);

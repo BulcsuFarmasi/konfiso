@@ -32,7 +32,7 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
       _isInit = false;
       Future(() {
         final bookDetailStateNotifier = ref.read(bookDetailPageStateNotifierProvider.notifier);
-        bookDetailStateNotifier.loadBookByIndustryIds(industryIdsByType);
+        bookDetailStateNotifier.loadBook(industryIdsByType);
       });
     }
   }

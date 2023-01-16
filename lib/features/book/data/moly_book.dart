@@ -6,7 +6,7 @@ part 'moly_book.freezed.dart';
 part 'moly_book.g.dart';
 
 @freezed
-class MolyBook with _$MolyBook implements ModelsBook {
+class MolyBook with _$MolyBook implements ModelBook {
   const factory MolyBook(
       {required int id,
       required String author,

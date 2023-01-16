@@ -6,10 +6,11 @@ import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/volume_category_loading.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
+import 'package:konfiso/shared/capabiliities/isbn_from_industry_ids_capability.dart';
 
 final bookCategoryRepositoryProvider = Provider((Ref ref) => BookCategoryRepository(ref.read(bookServiceProvider)));
 
-class BookCategoryRepository {
+class BookCategoryRepository with IsbnFromIndustryIdsCapability {
   BookCategoryRepository(this._bookService);
 
   final BookService _bookService;
@@ -61,14 +62,8 @@ class BookCategoryRepository {
   }
 
   void deleteBook(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) {
-    final isbn = _getIsbnFromIndustryIds(industryIdsByType);
+    final isbn = getIsbnFromIndustryIds(industryIdsByType);
 
     _bookService.deleteBookByIsbn(isbn);
-  }
-
-  String _getIsbnFromIndustryIds(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) {
-    return (industryIdsByType[IndustryIdentifierType.isbn13]?.identifier ??
-            industryIdsByType[IndustryIdentifierType.isbn10]?.identifier) ??
-        '';
   }
 }

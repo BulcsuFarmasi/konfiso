@@ -21,7 +21,7 @@ class _AddBookInputSearch extends ConsumerState<AddBookSearch> {
   void initState() {
     super.initState();
     final addBookStateNotifier = ref.read(addBookPageStateNotifierProvider.notifier);
-    searchSubject.debounceTime(const Duration(milliseconds: 250)).listen((String searchTerm) {
+    searchSubject.debounceTime(const Duration(seconds: 1)).listen((String searchTerm) {
       addBookStateNotifier.search(searchTerm);
     });
   }
