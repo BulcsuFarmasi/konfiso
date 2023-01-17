@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/auth/data/stored_user.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
 import 'package:konfiso/shared/http_client.dart';
@@ -43,15 +44,19 @@ class BookDatabaseRemote {
     return response.data['isbn'];
   }
 
-  Future<void> insertBookReadingDetail(String bookId, String userId, RemoteBookReadingDetail bookReadingDetail) async {
-    final insertUrl = '$dbBookReadingDetailsUrl/$userId/${bookReadingDetail.status}/$bookId.json';
+  Future<void> insertBookReadingDetail(
+      String bookId, StoredUser user, RemoteBookReadingDetail bookReadingDetail) async {
+    final insertUrl = '$dbBookReadingDetailsUrl/${user.userId}/${bookReadingDetail.status}/$bookId.json';
+
+    bookReadingDetail = bookReadingDetail.copyWith(authId: user.authId);
 
     await _httpClient.put(url: insertUrl, data: jsonEncode(bookReadingDetail.toJson()));
   }
 
-  Future<Response?> loadBookReadingDetailById(String bookId, String userId) async {
+  Future<Response?> loadBookReadingDetailById(String bookId, StoredUser user) async {
     for (BookReadingStatus readingStatus in BookReadingStatus.values) {
-      final response = await _httpClient.get(url: '$dbBookReadingDetailsUrl/$userId/$readingStatus/$bookId.json');
+      final response =
+          await _httpClient.get(url: '$dbBookReadingDetailsUrl/${user.userId}/$readingStatus/$bookId.json');
       if (response.data != null) {
         return response;
       }
@@ -59,14 +64,14 @@ class BookDatabaseRemote {
     return null;
   }
 
-  Future<void> deleteBookReadingDetail(String bookId, String userId) async {
+  Future<void> deleteBookReadingDetail(String bookId, StoredUser user) async {
     for (BookReadingStatus bookReadingStatus in BookReadingStatus.values) {
-      await _httpClient.delete(url: '$dbBookReadingDetailsUrl/$userId/$bookReadingStatus/$bookId.json');
+      await _httpClient.delete(url: '$dbBookReadingDetailsUrl/${user.userId}/$bookReadingStatus/$bookId.json');
     }
   }
 
-  Future<List<String>?> loadIdsByReadingStatus(BookReadingStatus bookReadingStatus, String userId) async {
-    final response = await _httpClient.get(url: '$dbBookReadingDetailsUrl/$userId/$bookReadingStatus.json');
+  Future<List<String>?> loadIdsByReadingStatus(BookReadingStatus bookReadingStatus, StoredUser user) async {
+    final response = await _httpClient.get(url: '$dbBookReadingDetailsUrl/${user.userId}/$bookReadingStatus.json');
 
     return (response.data != null) ? response.data.keys.toList() : null;
   }

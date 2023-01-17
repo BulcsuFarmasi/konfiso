@@ -70,8 +70,7 @@ class AuthService {
       // TODO: own error
     } on DioError catch (e) {
       // TODO : deserialize it into a class
-      print(e.response!.data);
-      print(e.response!.requestOptions.path);
+      print(e);
       throw NetworkException(e.response!.data['error']['message']);
     }
   }

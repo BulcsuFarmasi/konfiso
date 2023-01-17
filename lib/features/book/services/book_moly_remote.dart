@@ -17,16 +17,13 @@ class BookMolyRemote {
 
     searchTerm = searchTerm.trim().replaceAll(' ', '+');
     final searchResponse = await _httpClient.get(url: '$apiUrl/books.json?q=$searchTerm');
-    print(searchResponse);
     final json = jsonDecode(searchResponse.data);
     List<MolyBook> basicBooks = json['books'].map((Map<String, dynamic> jsonBook) =>
         MolyBook(id: jsonBook['id'], author: jsonBook['author'], title: jsonBook['title']));
 
-    print(basicBooks);
 
     for(MolyBook book in basicBooks) {
       final editionResponse = await _httpClient.get(url: '$apiUrl//book_editions/${book.id}.json');
-      print(jsonDecode(editionResponse.data));
     }
 
 
