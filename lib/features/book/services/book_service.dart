@@ -30,7 +30,6 @@ class BookService {
   BookService(this._bookGoogleRemote, this._bookDatabaseRemote, this._bookMolyRemote, this._authService);
 
   Future<List<ApiBook>> search(String searchTerm) async {
-    print('a');
     List<Volume> volumes = [];
     try {
       final response = await _bookGoogleRemote.search(searchTerm);
@@ -38,9 +37,7 @@ class BookService {
       if (payload.totalItems != 0) {
         volumes = payload.items!;
       }
-      print('v');
       final molyBooks = await _bookMolyRemote.search(searchTerm);
-      print('m');
       return [...volumes, ...molyBooks];
     } on DioError catch (_) {
       throw NetworkException();
@@ -63,7 +60,7 @@ class BookService {
       return null;
     }
 
-    final response = await _bookDatabaseRemote.loadBookReadingDetailById(bookId, _authService.user!.userId!);
+    final response = await _bookDatabaseRemote.loadBookReadingDetailById(bookId, _authService.user!);
 
     return (response != null) ? RemoteBookReadingDetail.fromJson(response.data) : null;
   }
@@ -74,9 +71,9 @@ class BookService {
 
       bookId ??= await _bookDatabaseRemote.insertBook(isbn);
 
-      await _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
+      await _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!);
 
-      await _bookDatabaseRemote.insertBookReadingDetail(bookId, _authService.user!.userId!, bookReadingDetail);
+      await _bookDatabaseRemote.insertBookReadingDetail(bookId, _authService.user!, bookReadingDetail);
     } on DioError catch (_) {
       throw NetworkException();
     }
@@ -84,7 +81,7 @@ class BookService {
 
   Stream<VolumeCategoryLoading> loadBooksByReadingStatus(BookReadingStatus bookReadingStatus) async* {
     try {
-      final bookIds = await _bookDatabaseRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
+      final bookIds = await _bookDatabaseRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!);
 
       final totalBookNumber = bookIds?.length ?? 0;
       int currentBookNumber = 0;
@@ -114,7 +111,7 @@ class BookService {
     final bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
 
     if (bookId != null) {
-      _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
+      _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!);
     }
   }
 }
