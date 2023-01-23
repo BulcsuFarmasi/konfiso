@@ -6,7 +6,7 @@ import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/stored_book.dart';
 import 'package:konfiso/features/book/data/stored_book_reading_detail.dart';
-import 'package:konfiso/firebase_options.dart';
+import 'package:konfiso/firebase_options_dev.dart';
 import 'package:konfiso/shared/widgets/app/view/app.dart';
 import 'package:path_provider/path_provider.dart';
 

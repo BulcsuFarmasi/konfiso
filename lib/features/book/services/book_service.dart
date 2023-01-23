@@ -13,7 +13,6 @@ import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/stored_book.dart';
 import 'package:konfiso/features/book/data/stored_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/volume.dart';
-import 'package:konfiso/features/book/data/volume_category_loading.dart';
 import 'package:konfiso/features/book/services/book_database_remote.dart';
 import 'package:konfiso/features/book/services/book_google_remote.dart';
 import 'package:konfiso/features/book/services/book_moly_remote.dart';
@@ -44,10 +43,10 @@ class BookService with IsbnFromIndustryIdsCapability {
   final BookSelectedStorage _bookSelectedStorage;
   final AuthService _authService;
 
-  final StreamController<VolumeCategoryLoading> _watchVolumeCategoryLoadingController =
-      StreamController<VolumeCategoryLoading>.broadcast();
-
-  Stream<VolumeCategoryLoading> get watchVolumeCategoryLoading => _watchVolumeCategoryLoadingController.stream;
+  // final StreamController<VolumeCategoryLoading> _watchVolumeCategoryLoadingController =
+  //     StreamController<VolumeCategoryLoading>.broadcast();
+  //
+  // Stream<VolumeCategoryLoading> get watchVolumeCategoryLoading => _watchVolumeCategoryLoadingController.stream;
 
   BookService(
     this._bookGoogleRemote,
@@ -76,7 +75,6 @@ class BookService with IsbnFromIndustryIdsCapability {
       final payload = ListBooksResponsePayload.fromJson(response.data);
       if (payload.totalItems != 0) {
         volumes = payload.items!;
-        print(volumes);
       }
     }
 
@@ -170,7 +168,7 @@ class BookService with IsbnFromIndustryIdsCapability {
     final books =
         bookReadingDetails.map((StoredBookReadingDetail storedBookReadingDetail) => storedBookReadingDetail.book);
 
-    _watchVolumeCategoryLoadingController.add(VolumeCategoryLoading(0, 0));
+    //_watchVolumeCategoryLoadingController.add(VolumeCategoryLoading(0, 0));
 
     final volumes = books.map(
       (StoredBook storedBook) => Volume(
@@ -197,10 +195,10 @@ class BookService with IsbnFromIndustryIdsCapability {
       ),
     );
 
-    for (Volume volume in volumes) {
-      _watchVolumeCategoryLoadingController
-          .add(VolumeCategoryLoading(volumes.length, volumes.length, currentVolume: volume));
-    }
+    // for (Volume volume in volumes) {
+    //   _watchVolumeCategoryLoadingController
+    //       .add(VolumeCategoryLoading(volumes.length, volumes.length, currentVolume: volume));
+    // }
 
     // try {
     //   final bookIds = await _bookDatabaseRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);

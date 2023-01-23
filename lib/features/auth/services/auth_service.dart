@@ -5,7 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/auth/data/stored_user.dart';
 import 'package:konfiso/features/auth/data/user_signin_status.dart';
-import 'package:konfiso/features/auth/services/auth_remote.dart';
+import 'package:konfiso/features/auth/services/auth_api_remote.dart';
+import 'package:konfiso/features/auth/services/auth_database_remote.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
 import 'package:konfiso/shared/services/privacy_poilcy_service.dart';
@@ -14,7 +15,8 @@ import 'package:konfiso/shared/utils/time_util.dart';
 final authServiceProvider = Provider(
   (Ref ref) => AuthService(
     ref.read(authStorageProvider),
-    ref.read(authRemoteProvider),
+    ref.read(authApiRemoteProvider),
+    ref.read(authDatabaseRemoteProvider),
     ref.read(timeUtilProvider),
     ref.read(privacyPolicyServiceProvider),
   ),
@@ -22,7 +24,8 @@ final authServiceProvider = Provider(
 
 class AuthService {
   final AuthStorage _authStorage;
-  final AuthRemote _authRemote;
+  final AuthApiRemote _authApiRemote;
+  final AuthDatabaseRemote _authDatabaseRemote;
   final PrivacyPolicyService _privacyPolicyService;
   final TimeUtil _timeUtil;
   Timer? refreshTimer;
@@ -31,7 +34,8 @@ class AuthService {
 
   AuthService(
     this._authStorage,
-    this._authRemote,
+    this._authApiRemote,
+    this._authDatabaseRemote,
     this._timeUtil,
     this._privacyPolicyService,
   );
@@ -53,9 +57,8 @@ class AuthService {
 
   Future<void> signIn(String email, String password) async {
     try {
-      final authResponse = await _authRemote.signIn(email, password);
+      final authResponse = await _authApiRemote.signIn(email, password);
       user = StoredUser(
-          userId: authResponse.userId!,
           authId: authResponse.localId,
           token: authResponse.idToken,
           refreshToken: authResponse.refreshToken,
@@ -65,18 +68,26 @@ class AuthService {
                 ),
               ),
           verified: true);
-      _authStorage.saveUser(user!);
+      await _authStorage.saveUser(user!);
+
+      final userId = await _authDatabaseRemote.fetchUserIdByAuthId(user!.authId);
+
+      user = user!.copyWith(userId: userId);
+
+      await _authStorage.saveUser(user!);
+
       _startTimer(int.parse(authResponse.expiresIn));
-      // TODO: own error
+      // // TODO: own error
     } on DioError catch (e) {
       // TODO : deserialize it into a class
+      print(e.response?.requestOptions.path);
       throw NetworkException(e.response!.data['error']['message']);
     }
   }
 
   Future<void> signUp(String email, String password) async {
     try {
-      final authResponse = await _authRemote.signUp(email, password, _privacyPolicyService.privacyPolicyUrl);
+      final authResponse = await _authApiRemote.signUp(email, password);
       user = StoredUser(
           authId: authResponse.localId,
           token: authResponse.idToken,
@@ -88,7 +99,11 @@ class AuthService {
               ),
           verified: false);
 
-      _authStorage.saveUser(user!);
+      await _authStorage.saveUser(user!);
+
+      _authDatabaseRemote.saveUser(user!.authId, email, _privacyPolicyService.privacyPolicyUrl);
+
+      _authApiRemote.sendPasswordResetEmail(email);
       // TODO: own error
     } on DioError catch (e) {
       // TODO : deserialize it into a class
@@ -107,7 +122,7 @@ class AuthService {
 
     Timer.periodic(const Duration(seconds: 2), (Timer timer) async {
       try {
-        final userInfo = (await _authRemote.loadUserInfo(user!.token)).users.first;
+        final userInfo = (await _authApiRemote.loadUserInfo(user!.token)).users.first;
 
         if (userInfo.emailVerified) {
           timer.cancel();
@@ -123,14 +138,14 @@ class AuthService {
 
   Future<void> sendPasswordResetEmail(String email) async {
     try {
-      await _authRemote.sendPasswordResetEmail(email);
+      await _authApiRemote.sendPasswordResetEmail(email);
     } on DioError catch (e) {
       throw NetworkException(e.response!.data['error']['message']);
     }
   }
 
   void _refreshToken() async {
-    final responsePayload = await _authRemote.refreshToken(user!.refreshToken);
+    final responsePayload = await _authApiRemote.refreshToken(user!.refreshToken);
     user = StoredUser(
       userId: user!.userId,
       authId: responsePayload.user_id,

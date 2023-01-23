@@ -12,7 +12,7 @@ class AuthStorage {
 
   AuthStorage(this._secureStorage);
 
-  void saveUser(StoredUser user) {
+  Future<void> saveUser(StoredUser user) async {
     _secureStorage.write(storedUserKey, json.encode(user.toJson()));
   }
 
