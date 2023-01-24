@@ -25,6 +25,7 @@ class BookDetailRepository with IsbnFromIndustryIdsCapability {
     final bookReadingDetail = await _bookService.loadBookReadingDetailByIsbn(isbn);
 
     if (selectedBook != null && selectedBook.validUntil.isAfter(DateTime.now())) {
+      print(selectedBook);
       yield BookReadingDetail(
         status: bookReadingDetail?.status ?? BookReadingStatus.wantToRead,
         currentPage: bookReadingDetail?.currentPage,
@@ -44,45 +45,46 @@ class BookDetailRepository with IsbnFromIndustryIdsCapability {
             industryIdsByType: selectedBook.industryIdsByType),
       );
     } else {
-      _bookService.selectBookByIsbn(isbn);
+      //
+      //  _bookService.selectBookByIsbn(isbn);
 
       _bookService.loadBookByIsbn(isbn);
 
       final volumes = _bookService.loadBookByIsbn(isbn);
 
       await for (Volume? volume in volumes) {
-        try {
-          if (volume == null) {
-            throw BookDetailLoadingException();
-          }
-
-          final publicationYear = volume.volumeInfo.publishedDate?.split('-').first;
-
-          final bookIndustryIdsByType = volume.volumeInfo.industryIdentifiers != null
-              ? {
-                  for (VolumeIndustryIdentifier volumeIndustryIdentifier in volume.volumeInfo.industryIdentifiers!)
-                    IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
-                        IndustryIdentifierType.fromString(volumeIndustryIdentifier.type),
-                        volumeIndustryIdentifier.identifier)
-                }
-              : null;
-
-          yield BookReadingDetail(
-            status: bookReadingDetail?.status ?? BookReadingStatus.wantToRead,
-            currentPage: bookReadingDetail?.currentPage,
-            rating: bookReadingDetail?.rating,
-            comment: bookReadingDetail?.comment,
-            book: Book(
-                title: volume.volumeInfo.title,
-                authors: volume.volumeInfo.authors,
-                publicationYear: publicationYear,
-                coverImage: CoverImage(small: volume.volumeInfo.imageLinks?.small),
-                industryIdsByType: bookIndustryIdsByType),
-          );
-        } on NetworkException catch (_) {
+        // try {
+        if (volume == null) {
           throw BookDetailLoadingException();
         }
+
+        final publicationYear = volume.volumeInfo.publishedDate?.split('-').first;
+
+        final bookIndustryIdsByType = volume.volumeInfo.industryIdentifiers != null
+            ? {
+                for (VolumeIndustryIdentifier volumeIndustryIdentifier in volume.volumeInfo.industryIdentifiers!)
+                  IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
+                      IndustryIdentifierType.fromString(volumeIndustryIdentifier.type),
+                      volumeIndustryIdentifier.identifier)
+              }
+            : null;
+
+        yield BookReadingDetail(
+          status: bookReadingDetail?.status ?? BookReadingStatus.wantToRead,
+          currentPage: bookReadingDetail?.currentPage,
+          rating: bookReadingDetail?.rating,
+          comment: bookReadingDetail?.comment,
+          book: Book(
+              title: volume.volumeInfo.title,
+              authors: volume.volumeInfo.authors,
+              publicationYear: publicationYear,
+              coverImage: CoverImage(small: volume.volumeInfo.imageLinks?.small),
+              industryIdsByType: bookIndustryIdsByType),
+        );
       }
+      // on NetworkException catch (_) {
+      //   throw BookDetailLoadingException();
+      // }
     }
   }
 

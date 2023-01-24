@@ -37,6 +37,7 @@ class VerifyUserSuccessful extends ConsumerWidget {
             child: Text(
               AppLocalizations.of(context)!.byClickingHereYouCanLogin,
               style: textStyle.copyWith(color: AppColors.primaryColor, fontSize: 24),
+              textAlign: TextAlign.center,
             ),
           ),
           const SizedBox(

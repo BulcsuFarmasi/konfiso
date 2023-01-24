@@ -1,5 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/stored_book.dart';
+import 'package:konfiso/features/book/data/stored_search_result.dart';
+import 'package:konfiso/shared/capabiliities/isbn_from_industry_ids_capability.dart';
 import 'package:konfiso/shared/storage.dart';
 
 final bookSearchStorageProvider = Provider(
@@ -10,19 +13,25 @@ final bookSearchStorageProvider = Provider(
   ),
 );
 
-class BookSearchStorage {
+class BookSearchStorage with IsbnFromIndustryIdsCapability {
   BookSearchStorage(this._storage);
 
   final Storage _storage;
 
-  void saveSearchResult(List<StoredBook> storedBooks) {
-    for (StoredBook storedBook in storedBooks) {
-      _storage.write(storedBook.isbn, storedBook);
-    }
+  void saveSearchResult(StoredSearchResult storedSearchResult) {
+    _storage.write(storedSearchResult.searchTerm, storedSearchResult);
   }
 
-  Future<StoredBook> loadStoredBook(String isbn) async {
-    return (await _storage.read(isbn)) as StoredBook;
+  Future<StoredSearchResult?> loadSearchResult(String searchTerm) async {
+    return (await _storage.read(searchTerm)) as StoredSearchResult?;
+  }
+
+  Future<StoredBook?> loadStoredBook(
+      Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType, String searchTerm) async {
+    final searchResult = await loadSearchResult(searchTerm);
+
+
+    return searchResult?.books.firstWhere((StoredBook storedBook) => storedBook.isbn == getIsbnFromIndustryIds(industryIdsByType));
   }
 
   Future<void> deleteSearchResult() async {

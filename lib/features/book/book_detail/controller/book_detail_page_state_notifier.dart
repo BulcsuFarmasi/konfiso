@@ -18,11 +18,12 @@ class BookDetailPageStateNotifier extends StateNotifier<BookDetailPageState> {
 
     _bookDetailRepository.loadBook(industryIdsByType).listen((BookReadingDetail bookReadingDetail) {
       state = BookDetailPageState.loadingSuccess(bookReadingDetail);
-    }).onError((_) {
-      if (state == const BookDetailPageState.initial()) {
-        state = const BookDetailPageState.loadingError();
-      }
     });
+    //     .onError((_) {
+    //   if (state == const BookDetailPageState.initial()) {
+    //     state = const BookDetailPageState.loadingError();
+    //   }
+    // });
   }
 
   void saveBook(BookReadingDetail bookReadingDetail) async {
@@ -35,7 +36,6 @@ class BookDetailPageStateNotifier extends StateNotifier<BookDetailPageState> {
     } on BookDetailSavingException catch (_) {
       state = BookDetailPageState.savingError(bookReadingDetail);
     }
-
   }
 
   void restoreToInitial() {

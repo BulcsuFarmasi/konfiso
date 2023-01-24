@@ -9,7 +9,7 @@ class AddBookPageState with _$AddBookPageState {
 
   const factory AddBookPageState.inProgress() = _InProgress;
 
-  const factory AddBookPageState.successful(List<Book> books) = _Successful;
+  const factory AddBookPageState.successful(List<Book> books, String searchTerm) = _Successful;
 
   const factory AddBookPageState.error() = _Error;
 }

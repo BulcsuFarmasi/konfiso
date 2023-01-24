@@ -97,6 +97,7 @@ class _AddBookPageState extends ConsumerState<AddBookPage> with TickerProviderSt
                         inProgress: (_) => const AddBookInProgress(),
                         successful: (success) => AddBookSuccess(
                               books: success.books,
+                              searchTerm: success.searchTerm,
                             ),
                         error: (_) => const AddBookError(),
                         orElse: () => Container());

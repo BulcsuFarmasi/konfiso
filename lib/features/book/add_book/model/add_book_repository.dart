@@ -5,6 +5,7 @@ import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/model_book.dart';
 import 'package:konfiso/features/book/data/moly_book.dart';
 import 'package:konfiso/features/book/data/stored_book.dart';
+import 'package:konfiso/features/book/data/stored_search_result.dart';
 import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
 import 'package:konfiso/shared/capabiliities/isbn_from_industry_ids_capability.dart';
@@ -19,40 +20,44 @@ class AddBookRepository with IsbnFromIndustryIdsCapability {
   AddBookRepository(this._bookService);
 
   Future<List<Book>> search(String searchTerm) async {
-    _bookService.deleteSearchResult();
-
     if (searchTerm.trim().isEmpty) {
       return [];
     }
 
-    try {
-      List<ModelBook> apiBooks = await _bookService.search(searchTerm);
+    final searchResult = await _bookService.loadSearchResult(searchTerm);
 
-      final books = apiBooks.map((ModelBook apiBook) {
-        if (apiBook is Volume) {
-          return _convertVolumeToBook(apiBook);
-        } else {
-          return _convertMolyBookIntoBook(apiBook as MolyBook);
-        }
-      }).toList();
+    if (searchResult != null && searchResult.validUntil.isAfter(DateTime.now())) {
+      return searchResult.books.map(_convertStoredBookToBook).toList();
+    } else {
+      try {
+        List<ModelBook> apiBooks = await _bookService.search(searchTerm);
 
-      _filterBooks(books);
+        final books = apiBooks.map((ModelBook apiBook) {
+          if (apiBook is Volume) {
+            return _convertVolumeToBook(apiBook);
+          } else {
+            return _convertMolyBookIntoBook(apiBook as MolyBook);
+          }
+        }).toList();
 
-      _sortBooks(books, searchTerm);
+        _filterBooks(books);
 
-      final storedBooks = _convertBooksIntoStoredBooks(books);
+        _sortBooks(books, searchTerm);
 
-      _bookService.saveSearchResult(storedBooks);
+        final storedSearchResult = _convertBooksIntoStoredSearchResult(books, searchTerm);
 
-      return books;
-    } on NetworkException {
-      throw AddBookException();
+        _bookService.saveSearchResult(storedSearchResult);
+
+        return books;
+      } on NetworkException {
+        throw AddBookException();
+      }
     }
   }
 
-  Future<void> selectBookByIndustryIds(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) async {
-    final isbn = getIsbnFromIndustryIds(industryIdsByType);
-    await _bookService.selectBookByIsbn(isbn);
+  Future<void> selectBook(
+      Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType, String searchTerm) async {
+    await _bookService.selectBook(industryIdsByType, searchTerm);
   }
 
   Book _convertVolumeToBook(Volume volume) => Book(
@@ -105,9 +110,26 @@ class AddBookRepository with IsbnFromIndustryIdsCapability {
         industryIdsByType: industryIdsByType);
   }
 
-  List<StoredBook> _convertBooksIntoStoredBooks(List<Book> books) {
-    final validUntil = DateTime.now().add(const Duration(days: 3));
-    return books
+  Book _convertStoredBookToBook(StoredBook storedBook) {
+    return Book(
+      title: storedBook.title,
+      authors: storedBook.authors,
+      publicationYear: storedBook.publicationYear,
+      industryIdsByType: storedBook.industryIdsByType,
+      coverImage: CoverImage(
+        smallest: storedBook.coverImage?.smallest,
+        smaller: storedBook.coverImage?.smaller,
+        small: storedBook.coverImage?.small,
+        large: storedBook.coverImage?.large,
+        larger: storedBook.coverImage?.larger,
+        largest: storedBook.coverImage?.largest,
+      ),
+    );
+  }
+
+  StoredSearchResult _convertBooksIntoStoredSearchResult(List<Book> books, String searchTerm) {
+    final storageValidUntil = DateTime.now().add(const Duration(days: 3));
+    final storedBooks = books
         .map(
           (Book book) => StoredBook(
             title: book.title,
@@ -122,10 +144,11 @@ class AddBookRepository with IsbnFromIndustryIdsCapability {
               larger: book.coverImage?.larger,
               largest: book.coverImage?.largest,
             ),
-            validUntil: validUntil,
+            validUntil: storageValidUntil,
           ),
         )
         .toList();
+    return StoredSearchResult(storedBooks, storageValidUntil, searchTerm);
   }
 
   void _filterBooks(List<Book> books) {
@@ -200,6 +223,4 @@ class AddBookRepository with IsbnFromIndustryIdsCapability {
           ),
     );
   }
-
-
 }

@@ -5,9 +5,10 @@ import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
 class AddBookSuccess extends StatelessWidget {
-  const AddBookSuccess({super.key, required this.books});
+  const AddBookSuccess({super.key, required this.books, required this.searchTerm});
 
   final List<Book> books;
+  final String searchTerm;
 
   @override
   Widget build(BuildContext context) => Expanded(
@@ -19,7 +20,10 @@ class AddBookSuccess extends StatelessWidget {
               ? ListView.builder(
                   itemCount: books.length,
                   itemBuilder: (_, int index) {
-                    return BookListTile(book: books[index]);
+                    return BookListTile(
+                      book: books[index],
+                      searchTerm: searchTerm,
+                    );
                   })
               : Text(
                   AppLocalizations.of(context)!.noBooksFound,

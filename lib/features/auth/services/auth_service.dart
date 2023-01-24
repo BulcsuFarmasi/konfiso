@@ -13,13 +13,14 @@ import 'package:konfiso/shared/services/privacy_poilcy_service.dart';
 import 'package:konfiso/shared/utils/time_util.dart';
 
 final authServiceProvider = Provider(
-  (Ref ref) => AuthService(
-    ref.read(authStorageProvider),
-    ref.read(authApiRemoteProvider),
-    ref.read(authDatabaseRemoteProvider),
-    ref.read(timeUtilProvider),
-    ref.read(privacyPolicyServiceProvider),
-  ),
+      (Ref ref) =>
+      AuthService(
+        ref.read(authStorageProvider),
+        ref.read(authApiRemoteProvider),
+        ref.read(authDatabaseRemoteProvider),
+        ref.read(timeUtilProvider),
+        ref.read(privacyPolicyServiceProvider),
+      ),
 );
 
 class AuthService {
@@ -32,13 +33,11 @@ class AuthService {
   StoredUser? user;
   static const url = 'https://identitytoolkit.googleapis.com/v1/accounts:';
 
-  AuthService(
-    this._authStorage,
-    this._authApiRemote,
-    this._authDatabaseRemote,
-    this._timeUtil,
-    this._privacyPolicyService,
-  );
+  AuthService(this._authStorage,
+      this._authApiRemote,
+      this._authDatabaseRemote,
+      this._timeUtil,
+      this._privacyPolicyService,);
 
   Future<UserSignInStatus> autoSignIn() async {
     user = await _authStorage.fetchUser();
@@ -63,10 +62,10 @@ class AuthService {
           token: authResponse.idToken,
           refreshToken: authResponse.refreshToken,
           validUntil: _timeUtil.now().add(
-                Duration(
-                  seconds: int.parse(authResponse.expiresIn),
-                ),
-              ),
+            Duration(
+              seconds: int.parse(authResponse.expiresIn),
+            ),
+          ),
           verified: true);
       await _authStorage.saveUser(user!);
 
@@ -80,8 +79,9 @@ class AuthService {
       // // TODO: own error
     } on DioError catch (e) {
       // TODO : deserialize it into a class
-      print(e.response?.requestOptions.path);
-      throw NetworkException(e.response!.data['error']['message']);
+      final errorMessage =
+      e.response!.data['error'] is! String ? e.response!.data['error']['message'] : e.response!.data['error'];
+      throw NetworkException(errorMessage);
     }
   }
 
@@ -93,21 +93,23 @@ class AuthService {
           token: authResponse.idToken,
           refreshToken: authResponse.refreshToken,
           validUntil: _timeUtil.now().add(
-                Duration(
-                  seconds: int.parse(authResponse.expiresIn),
-                ),
-              ),
+            Duration(
+              seconds: int.parse(authResponse.expiresIn),
+            ),
+          ),
           verified: false);
 
       await _authStorage.saveUser(user!);
 
       _authDatabaseRemote.saveUser(user!.authId, email, _privacyPolicyService.privacyPolicyUrl);
 
-      _authApiRemote.sendPasswordResetEmail(email);
+      _authApiRemote.sendVerificationEmail(user!.token);
       // TODO: own error
     } on DioError catch (e) {
       // TODO : deserialize it into a class
-      throw NetworkException(e.response!.data['error']['message']);
+      final errorMessage =
+      e.response!.data['error'] is! String ? e.response!.data['error']['message'] : e.response!.data['error'];
+      throw NetworkException(errorMessage);
     }
   }
 
@@ -140,7 +142,9 @@ class AuthService {
     try {
       await _authApiRemote.sendPasswordResetEmail(email);
     } on DioError catch (e) {
-      throw NetworkException(e.response!.data['error']['message']);
+      final errorMessage =
+      e.response!.data['error'] is! String ? e.response!.data['error']['message'] : e.response!.data['error'];
+      throw NetworkException(errorMessage);
     }
   }
 
@@ -152,10 +156,10 @@ class AuthService {
       token: responsePayload.id_token,
       refreshToken: responsePayload.refresh_token,
       validUntil: _timeUtil.now().add(
-            Duration(
-              seconds: int.parse(responsePayload.expires_in),
-            ),
-          ),
+        Duration(
+          seconds: int.parse(responsePayload.expires_in),
+        ),
+      ),
       verified: true,
       // verified: false,
     );

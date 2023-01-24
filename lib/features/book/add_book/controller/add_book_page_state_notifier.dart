@@ -17,7 +17,7 @@ class AddBookPageStateNotifier extends StateNotifier<AddBookPageState> {
 
     try {
       final books = await _addBookRepository.search(searchTerm);
-      state = AddBookPageState.successful(books);
+      state = AddBookPageState.successful(books, searchTerm);
     } on AddBookException catch (_) {
       state = const AddBookPageState.error();
     }
@@ -27,7 +27,8 @@ class AddBookPageStateNotifier extends StateNotifier<AddBookPageState> {
     state = const AddBookPageState.initial();
   }
 
-  Future<void> selectBookByIndustryIds(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) async {
-    await _addBookRepository.selectBookByIndustryIds(industryIdsByType);
+  Future<void> selectBook(
+      Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType, String searchTerm) async {
+    await _addBookRepository.selectBook(industryIdsByType, searchTerm);
   }
 }

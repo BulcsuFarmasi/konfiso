@@ -12,6 +12,7 @@ import 'package:konfiso/features/book/data/moly_book.dart';
 import 'package:konfiso/features/book/data/remote_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/stored_book.dart';
 import 'package:konfiso/features/book/data/stored_book_reading_detail.dart';
+import 'package:konfiso/features/book/data/stored_search_result.dart';
 import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/services/book_database_remote.dart';
 import 'package:konfiso/features/book/services/book_google_remote.dart';
@@ -90,17 +91,21 @@ class BookService with IsbnFromIndustryIdsCapability {
     return [...volumes, ...molyBooks];
   }
 
-  void saveSearchResult(List<StoredBook> storedBooks) {
-    _bookSearchStorage.saveSearchResult(storedBooks);
+
+  Future<StoredSearchResult?> loadSearchResult(String searchTerm) async {
+   return _bookSearchStorage.loadSearchResult(searchTerm);
   }
 
-  void deleteSearchResult() {
-    _bookSearchStorage.deleteSearchResult();
+  void saveSearchResult(StoredSearchResult storedSearchResult) {
+    _bookSearchStorage.saveSearchResult(storedSearchResult);
   }
 
-  Future<void> selectBookByIsbn(String isbn) async {
-    final selectedBook = await _bookSearchStorage.loadStoredBook(isbn);
-    await _bookSelectedStorage.saveSelectedBook(selectedBook);
+
+  Future<void> selectBook(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType, String searchTerm) async {
+    final selectedBook = await _bookSearchStorage.loadStoredBook(industryIdsByType, searchTerm);
+    if (selectedBook != null) {
+      await _bookSelectedStorage.saveSelectedBook(selectedBook);
+    }
   }
 
   Future<StoredBook?> loadSelectedBook() async {
@@ -152,7 +157,13 @@ class BookService with IsbnFromIndustryIdsCapability {
       return null;
     }
 
-    final response = await _bookDatabaseRemote.loadBookReadingDetailById(bookId, _authService.user!.userId!);
+    Response? response;
+
+    try {
+      response = await _bookDatabaseRemote.loadBookReadingDetailById(bookId, _authService.user!.userId!);
+    } on DioError {
+      throw NetworkException();
+    }
 
     return (response != null) ? RemoteBookReadingDetail.fromJson(response.data) : null;
   }
