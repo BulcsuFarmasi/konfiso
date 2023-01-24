@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
-import 'package:konfiso/features/book/data/stored_book.dart';
+import 'package:konfiso/features/book/data/stored_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/stored_search_result.dart';
 import 'package:konfiso/shared/capabiliities/isbn_from_industry_ids_capability.dart';
 import 'package:konfiso/shared/storage.dart';
@@ -26,12 +26,12 @@ class BookSearchStorage with IsbnFromIndustryIdsCapability {
     return (await _storage.read(searchTerm)) as StoredSearchResult?;
   }
 
-  Future<StoredBook?> loadStoredBook(
+  Future<StoredBookReadingDetail?> loadStoredBook(
       Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType, String searchTerm) async {
     final searchResult = await loadSearchResult(searchTerm);
 
-
-    return searchResult?.books.firstWhere((StoredBook storedBook) => storedBook.isbn == getIsbnFromIndustryIds(industryIdsByType));
+    return searchResult?.bookReadingDetails.firstWhere((StoredBookReadingDetail storedBookReadingDetail) =>
+        storedBookReadingDetail.book.isbn == getIsbnFromIndustryIds(industryIdsByType));
   }
 
   Future<void> deleteSearchResult() async {

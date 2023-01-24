@@ -1,10 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/data/add_book_exception.dart';
 import 'package:konfiso/features/book/data/book.dart';
+import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/model_book.dart';
 import 'package:konfiso/features/book/data/moly_book.dart';
 import 'package:konfiso/features/book/data/stored_book.dart';
+import 'package:konfiso/features/book/data/stored_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/stored_search_result.dart';
 import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
@@ -27,7 +29,10 @@ class AddBookRepository with IsbnFromIndustryIdsCapability {
     final searchResult = await _bookService.loadSearchResult(searchTerm);
 
     if (searchResult != null && searchResult.validUntil.isAfter(DateTime.now())) {
-      return searchResult.books.map(_convertStoredBookToBook).toList();
+      return searchResult.bookReadingDetails
+          .map((StoredBookReadingDetail storedBookReadingDetail) => storedBookReadingDetail.book)
+          .map(_convertStoredBookToBook)
+          .toList();
     } else {
       try {
         List<ModelBook> apiBooks = await _bookService.search(searchTerm);
@@ -57,7 +62,7 @@ class AddBookRepository with IsbnFromIndustryIdsCapability {
 
   Future<void> selectBook(
       Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType, String searchTerm) async {
-    await _bookService.selectBook(industryIdsByType, searchTerm);
+    await _bookService.selectBookFromSearchResult(industryIdsByType, searchTerm);
   }
 
   Book _convertVolumeToBook(Volume volume) => Book(
@@ -129,26 +134,31 @@ class AddBookRepository with IsbnFromIndustryIdsCapability {
 
   StoredSearchResult _convertBooksIntoStoredSearchResult(List<Book> books, String searchTerm) {
     final storageValidUntil = DateTime.now().add(const Duration(days: 3));
-    final storedBooks = books
+    final storedBookReadingDetails = books
         .map(
-          (Book book) => StoredBook(
-            title: book.title,
-            authors: book.authors,
-            publicationYear: book.publicationYear,
-            industryIdsByType: book.industryIdsByType,
-            coverImage: StoredCoverImage(
-              smallest: book.coverImage?.smallest,
-              smaller: book.coverImage?.smaller,
-              small: book.coverImage?.small,
-              large: book.coverImage?.large,
-              larger: book.coverImage?.larger,
-              largest: book.coverImage?.largest,
-            ),
-            validUntil: storageValidUntil,
-          ),
+          (Book book) => StoredBookReadingDetail(
+              StoredBook(
+                title: book.title,
+                authors: book.authors,
+                publicationYear: book.publicationYear,
+                industryIdsByType: book.industryIdsByType,
+                coverImage: StoredCoverImage(
+                  smallest: book.coverImage?.smallest,
+                  smaller: book.coverImage?.smaller,
+                  small: book.coverImage?.small,
+                  large: book.coverImage?.large,
+                  larger: book.coverImage?.larger,
+                  largest: book.coverImage?.largest,
+                ),
+                validUntil: storageValidUntil,
+              ),
+              BookReadingStatus.wantToRead,
+              null,
+              0,
+              ''),
         )
         .toList();
-    return StoredSearchResult(storedBooks, storageValidUntil, searchTerm);
+    return StoredSearchResult(storedBookReadingDetails, storageValidUntil, searchTerm);
   }
 
   void _filterBooks(List<Book> books) {

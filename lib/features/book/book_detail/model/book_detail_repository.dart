@@ -9,6 +9,7 @@ import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
 import 'package:konfiso/shared/capabiliities/isbn_from_industry_ids_capability.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
+import 'package:konfiso/shared/storage.dart';
 
 final bookDetailRepositoryProvider = Provider((Ref ref) => BookDetailRepository(ref.read(bookServiceProvider)));
 
@@ -18,31 +19,30 @@ class BookDetailRepository with IsbnFromIndustryIdsCapability {
   final BookService _bookService;
 
   Stream<BookReadingDetail> loadBook(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) async* {
-    final selectedBook = await _bookService.loadSelectedBook();
+    final selectedBookReadingDetail = await _bookService.loadSelectedBook();
 
     final isbn = getIsbnFromIndustryIds(industryIdsByType);
+    //
+    // final bookReadingDetail = await _bookService.loadBookReadingDetailByIsbn(isbn);
 
-    final bookReadingDetail = await _bookService.loadBookReadingDetailByIsbn(isbn);
-
-    if (selectedBook != null && selectedBook.validUntil.isAfter(DateTime.now())) {
-      print(selectedBook);
+    if (selectedBookReadingDetail != null && selectedBookReadingDetail.book.validUntil.isAfter(DateTime.now())) {
       yield BookReadingDetail(
-        status: bookReadingDetail?.status ?? BookReadingStatus.wantToRead,
-        currentPage: bookReadingDetail?.currentPage,
-        rating: bookReadingDetail?.rating,
-        comment: bookReadingDetail?.comment,
+        status: selectedBookReadingDetail.status,
+        currentPage: selectedBookReadingDetail.currentPage,
+        rating: selectedBookReadingDetail.rating,
+        comment: selectedBookReadingDetail.comment,
         book: Book(
-            title: selectedBook.title,
-            authors: selectedBook.authors,
-            publicationYear: selectedBook.publicationYear,
+            title: selectedBookReadingDetail.book.title,
+            authors: selectedBookReadingDetail.book.authors,
+            publicationYear: selectedBookReadingDetail.book.publicationYear,
             coverImage: CoverImage(
-                smallest: selectedBook.coverImage?.smallest,
-                smaller: selectedBook.coverImage?.smaller,
-                small: selectedBook.coverImage?.small,
-                large: selectedBook.coverImage?.large,
-                larger: selectedBook.coverImage?.larger,
-                largest: selectedBook.coverImage?.largest),
-            industryIdsByType: selectedBook.industryIdsByType),
+                smallest: selectedBookReadingDetail.book.coverImage?.smallest,
+                smaller: selectedBookReadingDetail.book.coverImage?.smaller,
+                small: selectedBookReadingDetail.book.coverImage?.small,
+                large: selectedBookReadingDetail.book.coverImage?.large,
+                larger: selectedBookReadingDetail.book.coverImage?.larger,
+                largest: selectedBookReadingDetail.book.coverImage?.largest),
+            industryIdsByType: selectedBookReadingDetail.book.industryIdsByType),
       );
     } else {
       //
@@ -69,18 +69,18 @@ class BookDetailRepository with IsbnFromIndustryIdsCapability {
               }
             : null;
 
-        yield BookReadingDetail(
-          status: bookReadingDetail?.status ?? BookReadingStatus.wantToRead,
-          currentPage: bookReadingDetail?.currentPage,
-          rating: bookReadingDetail?.rating,
-          comment: bookReadingDetail?.comment,
-          book: Book(
-              title: volume.volumeInfo.title,
-              authors: volume.volumeInfo.authors,
-              publicationYear: publicationYear,
-              coverImage: CoverImage(small: volume.volumeInfo.imageLinks?.small),
-              industryIdsByType: bookIndustryIdsByType),
-        );
+        // yield BookReadingDetail(
+        //   status: selectedBookReadingDetail.status ?? BookReadingStatus.wantToRead,
+        //   currentPage: selectedBookReadingDetailcurrentPage,
+        //   rating: selectedBookReadingDetailrating,
+        //   comment: selectedBookReadingDetailcomment,
+        //   book: Book(
+        //       title: volume.volumeInfo.title,
+        //       authors: volume.volumeInfo.authors,
+        //       publicationYear: publicationYear,
+        //       coverImage: CoverImage(small: volume.volumeInfo.imageLinks?.small),
+        //       industryIdsByType: bookIndustryIdsByType),
+        // );
       }
       // on NetworkException catch (_) {
       //   throw BookDetailLoadingException();

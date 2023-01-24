@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:konfiso/features/book/data/stored_book.dart';
+import 'package:konfiso/features/book/data/stored_book_reading_detail.dart';
 import 'package:konfiso/shared/storage.dart';
 
 final bookSelectedStorageProvider = Provider(
@@ -15,11 +15,11 @@ class BookSelectedStorage {
 
   final Storage _storage;
 
-  Future<void> saveSelectedBook(StoredBook book) async {
+  Future<void> saveSelectedBook(StoredBookReadingDetail book) async {
     await _storage.write(_storage.storageName, book);
   }
 
-  Future<StoredBook?> loadSelectedBook() async {
-    return (await _storage.read(_storage.storageName)) as StoredBook?;
+  Future<StoredBookReadingDetail?> loadSelectedBook() async {
+    return (await _storage.read(_storage.storageName)) as StoredBookReadingDetail?;
   }
 }

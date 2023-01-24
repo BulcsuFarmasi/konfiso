@@ -91,24 +91,28 @@ class BookService with IsbnFromIndustryIdsCapability {
     return [...volumes, ...molyBooks];
   }
 
-
   Future<StoredSearchResult?> loadSearchResult(String searchTerm) async {
-   return _bookSearchStorage.loadSearchResult(searchTerm);
+    return _bookSearchStorage.loadSearchResult(searchTerm);
   }
 
   void saveSearchResult(StoredSearchResult storedSearchResult) {
     _bookSearchStorage.saveSearchResult(storedSearchResult);
   }
 
-
-  Future<void> selectBook(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType, String searchTerm) async {
-    final selectedBook = await _bookSearchStorage.loadStoredBook(industryIdsByType, searchTerm);
-    if (selectedBook != null) {
-      await _bookSelectedStorage.saveSelectedBook(selectedBook);
+  Future<void> selectBookFromSearchResult(
+      Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType, String searchTerm) async {
+    final selectedBookReadingDetail = await _bookSearchStorage.loadStoredBook(industryIdsByType, searchTerm);
+    if (selectedBookReadingDetail != null) {
+      await _bookSelectedStorage.saveSelectedBook(selectedBookReadingDetail);
     }
   }
 
-  Future<StoredBook?> loadSelectedBook() async {
+  Future<void> selectBookFromBookReadings(String isbn) async {
+    final selectedBook = await _bookReadingStorage.loadStoredBook(isbn);
+    await _bookSelectedStorage.saveSelectedBook(selectedBook);
+  }
+
+  Future<StoredBookReadingDetail?> loadSelectedBook() async {
     return _bookSelectedStorage.loadSelectedBook();
   }
 
@@ -151,6 +155,8 @@ class BookService with IsbnFromIndustryIdsCapability {
   }
 
   Future<RemoteBookReadingDetail?> loadBookReadingDetailByIsbn(String isbn) async {
+
+
     final bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
 
     if (bookId == null) {
@@ -181,30 +187,34 @@ class BookService with IsbnFromIndustryIdsCapability {
 
     //_watchVolumeCategoryLoadingController.add(VolumeCategoryLoading(0, 0));
 
-    final volumes = books.map(
-      (StoredBook storedBook) => Volume(
-        '',
-        VolumeInfo(
-          title: storedBook.title,
-          authors: storedBook.authors,
-          industryIdentifiers: storedBook.industryIdsByType?.values
-              .map(
-                (BookIndustryIdentifier industryIdentifier) => VolumeIndustryIdentifier(
-                  industryIdentifier.type.toString(),
-                  industryIdentifier.identifier,
-                ),
-              )
-              .toList(),
-          imageLinks: ImageLinks(
-              smallThumbnail: storedBook.coverImage?.smallest,
-              thumbnail: storedBook.coverImage?.smaller,
-              small: storedBook.coverImage?.small,
-              medium: storedBook.coverImage?.large,
-              large: storedBook.coverImage?.larger,
-              extraLarge: storedBook.coverImage?.largest),
-        ),
-      ),
-    );
+    final volumes = books
+        .map(
+          (StoredBook storedBook) => Volume(
+            '',
+            VolumeInfo(
+              title: storedBook.title,
+              authors: storedBook.authors,
+              industryIdentifiers: storedBook.industryIdsByType?.values
+                  .map(
+                    (BookIndustryIdentifier industryIdentifier) => VolumeIndustryIdentifier(
+                      industryIdentifier.type.toString(),
+                      industryIdentifier.identifier,
+                    ),
+                  )
+                  .toList(),
+              imageLinks: ImageLinks(
+                  smallThumbnail: storedBook.coverImage?.smallest,
+                  thumbnail: storedBook.coverImage?.smaller,
+                  small: storedBook.coverImage?.small,
+                  medium: storedBook.coverImage?.large,
+                  large: storedBook.coverImage?.larger,
+                  extraLarge: storedBook.coverImage?.largest),
+            ),
+          ),
+        )
+        .toList();
+
+    yield volumes;
 
     // for (Volume volume in volumes) {
     //   _watchVolumeCategoryLoadingController
@@ -269,6 +279,8 @@ class BookService with IsbnFromIndustryIdsCapability {
   }
 
   void deleteBookByIsbn(String isbn) async {
+    await _bookReadingStorage.deleteBook(isbn);
+
     final bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
 
     if (bookId != null) {

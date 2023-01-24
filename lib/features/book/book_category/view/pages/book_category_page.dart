@@ -62,7 +62,7 @@ class _BookCategoryPageState extends ConsumerState<BookCategoryPage> {
             final state = ref.watch(bookCategoryPageStateNotifierProvider);
             return state.map(
                 initial: (_) => const BookCategoryInitial(),
-                inProgress: (inProgress) => BookCategoryInProgress(bookCategoryLoading: inProgress.bookCategoryLoading),
+                inProgress: (inProgress) => const BookCategoryInProgress(),
                 successful: (successful) => BookCategorySuccessful(books: successful.books),
                 error: (_) => const BookCategoryError());
           },
