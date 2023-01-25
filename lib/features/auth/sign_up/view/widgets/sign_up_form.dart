@@ -171,7 +171,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
             subtitle: !_privacyPolicyConsented && _formSubmitted
                 ? Text(
                     AppLocalizations.of(context)!.pleaseAcceptThePrivacyPolicy,
-                    style: TextStyle(color: AppColors.primaryColor, fontSize: 12),
+                    style: const TextStyle(color: AppColors.primaryColor, fontSize: 12),
                   )
                 : null,
           ),

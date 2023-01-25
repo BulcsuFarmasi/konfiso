@@ -124,7 +124,7 @@ class BookService with IsbnFromIndustryIdsCapability {
     Response? response;
 
     try {
-      response = await _bookDatabaseRemote.loadBookReadingDetailById(bookId, _authService.user!.userId!);
+      response = await _bookDatabaseRemote.loadBookReadingDetailById(bookId, _authService.user!);
     } on DioError {
       throw NetworkException();
     }
@@ -148,7 +148,7 @@ class BookService with IsbnFromIndustryIdsCapability {
   Future<List<String>> loadIsbnByReadingStatusFromRemote(BookReadingStatus bookReadingStatus) async {
     final isbns = <String>[];
 
-    final bookIds = await _bookDatabaseRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
+    final bookIds = await _bookDatabaseRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!);
 
     if (bookIds == null) {
       return isbns;
@@ -168,7 +168,7 @@ class BookService with IsbnFromIndustryIdsCapability {
     final bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
 
     if (bookId != null) {
-      _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
+      _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!);
     }
   }
 
@@ -188,9 +188,9 @@ class BookService with IsbnFromIndustryIdsCapability {
 
       bookId ??= await _bookDatabaseRemote.insertBook(isbn);
 
-      await _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!.userId!);
+      await _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!);
 
-      await _bookDatabaseRemote.insertBookReadingDetail(bookId, _authService.user!.userId!, remoteBookReadingDetail);
+      await _bookDatabaseRemote.insertBookReadingDetail(bookId, _authService.user!, remoteBookReadingDetail);
     } on DioError catch (_) {
       throw NetworkException();
     }
