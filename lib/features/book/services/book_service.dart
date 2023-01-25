@@ -69,7 +69,6 @@ class BookService with IsbnFromIndustryIdsCapability {
     try {
       response = await _bookGoogleRemote.search(searchTerm);
     } on DioError catch (_) {
-      print(_);
       googleRequestFailed = true;
     }
     if (response != null) {
@@ -82,7 +81,6 @@ class BookService with IsbnFromIndustryIdsCapability {
     try {
       molyBooks = await _bookMolyRemote.search(searchTerm);
     } on DioError catch (_) {
-      print(_);
       molyRequestFailed = true;
     }
     if (googleRequestFailed && molyRequestFailed) {
@@ -116,47 +114,7 @@ class BookService with IsbnFromIndustryIdsCapability {
     return _bookSelectedStorage.loadSelectedBook();
   }
 
-  Stream<Volume?> loadBookByIsbn(String isbn) async* {
-    try {
-      Volume? volume;
-      final response = await _bookGoogleRemote.loadBookByIsbn(isbn);
-      final listBookResponse = ListBooksResponsePayload.fromJson(response.data);
-
-      if (listBookResponse.totalItems != 0) {
-        volume = listBookResponse.items?.first;
-        yield volume;
-      }
-
-      if (listBookResponse.totalItems == 0 || !_isVolumeComplete(listBookResponse.items?.first)) {
-        final molyBook = await _bookMolyRemote.loadBookByIsbn(isbn);
-
-        final industryIdentifiers = _convertMolyIsbnToIndustryIdentifiers(isbn);
-
-        volume = Volume(
-          volume?.id ?? '',
-          VolumeInfo(
-            title: volume?.volumeInfo.title ?? molyBook?.title ?? '',
-            authors: volume?.volumeInfo.authors ?? molyBook?.author.split(' - '),
-            publishedDate: volume?.volumeInfo.publishedDate ?? molyBook?.year.toString(),
-            industryIdentifiers: volume?.volumeInfo.industryIdentifiers ?? industryIdentifiers,
-            imageLinks: volume?.volumeInfo.imageLinks?.small != null
-                ? volume?.volumeInfo.imageLinks
-                : ImageLinks(
-                    small: molyBook?.cover?.replaceAll('/normal/', '/big/'),
-                  ),
-          ),
-        );
-      }
-
-      yield volume;
-    } on DioError catch (_) {
-      throw NetworkException();
-    }
-  }
-
   Future<RemoteBookReadingDetail?> loadBookReadingDetailByIsbn(String isbn) async {
-
-
     final bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
 
     if (bookId == null) {
@@ -179,103 +137,29 @@ class BookService with IsbnFromIndustryIdsCapability {
     _saveBookToStorage(bookReadingDetail);
   }
 
-  Stream<List<Volume>> loadBooksByReadingStatus(BookReadingStatus bookReadingStatus) async* {
+  Future<List<StoredBook>> loadBooksByReadingStatusFromStorage(BookReadingStatus bookReadingStatus) async {
     final bookReadingDetails = await _bookReadingStorage.loadBookReadingDetails(bookReadingStatus);
 
-    final books =
-        bookReadingDetails.map((StoredBookReadingDetail storedBookReadingDetail) => storedBookReadingDetail.book);
-
-    //_watchVolumeCategoryLoadingController.add(VolumeCategoryLoading(0, 0));
-
-    final volumes = books
-        .map(
-          (StoredBook storedBook) => Volume(
-            '',
-            VolumeInfo(
-              title: storedBook.title,
-              authors: storedBook.authors,
-              industryIdentifiers: storedBook.industryIdsByType?.values
-                  .map(
-                    (BookIndustryIdentifier industryIdentifier) => VolumeIndustryIdentifier(
-                      industryIdentifier.type.toString(),
-                      industryIdentifier.identifier,
-                    ),
-                  )
-                  .toList(),
-              imageLinks: ImageLinks(
-                  smallThumbnail: storedBook.coverImage?.smallest,
-                  thumbnail: storedBook.coverImage?.smaller,
-                  small: storedBook.coverImage?.small,
-                  medium: storedBook.coverImage?.large,
-                  large: storedBook.coverImage?.larger,
-                  extraLarge: storedBook.coverImage?.largest),
-            ),
-          ),
-        )
+    return bookReadingDetails
+        .map((StoredBookReadingDetail storedBookReadingDetail) => storedBookReadingDetail.book)
         .toList();
+  }
 
-    yield volumes;
+  Future<List<String>> loadIsbnByReadingStatusFromRemote(BookReadingStatus bookReadingStatus) async {
+    final isbns = <String>[];
 
-    // for (Volume volume in volumes) {
-    //   _watchVolumeCategoryLoadingController
-    //       .add(VolumeCategoryLoading(volumes.length, volumes.length, currentVolume: volume));
-    // }
+    final bookIds = await _bookDatabaseRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
 
-    // try {
-    //   final bookIds = await _bookDatabaseRemote.loadIdsByReadingStatus(bookReadingStatus, _authService.user!.userId!);
-    //
-    //   final totalBookNumber = bookIds?.length ?? 0;
-    //   int currentBookNumber = 0;
-    //   VolumeCategoryLoading volumeCategoryLoading = VolumeCategoryLoading(currentBookNumber, totalBookNumber);
-    //   _watchVolumeCategoryLoadingController.add(volumeCategoryLoading);
-    //
-    //   if (totalBookNumber != 0) {
-    //     currentBookNumber = 1;
-    //     while (currentBookNumber <= totalBookNumber) {
-    //       final isbn = await _bookDatabaseRemote.loadIsbnById(bookIds![currentBookNumber - 1]);
-    //
-    //       final response = await _bookGoogleRemote.loadBookByIsbn(isbn);
-    //       Volume? volume = ListBooksResponsePayload.fromJson(response.data).items?.first;
-    //
-    //       if (volume != null) {
-    //         volume = volume.copyWith(volumeIndex: currentBookNumber - 1);
-    //         volumeCategoryLoading = volumeCategoryLoading.copyWith(
-    //           currentVolumeNumber: currentBookNumber,
-    //           currentVolume: volume,
-    //         );
-    //         _watchVolumeCategoryLoadingController.add(volumeCategoryLoading);
-    //       }
-    //
-    //       if (volume == null || !_isVolumeComplete(volume)) {
-    //         _bookMolyRemote.loadBookByIsbn(isbn).then((MolyBook? molyBook) {
-    //           final industryIdentifiers = _convertMolyIsbnToIndustryIdentifiers(isbn);
-    //
-    //           volume = Volume(
-    //             volume?.id ?? '',
-    //             VolumeInfo(
-    //               title: volume?.volumeInfo.title ?? molyBook?.title ?? '',
-    //               authors: volume?.volumeInfo.authors ?? molyBook?.author.split(' - '),
-    //               publishedDate: volume?.volumeInfo.publishedDate ?? molyBook?.year.toString(),
-    //               industryIdentifiers: volume?.volumeInfo.industryIdentifiers ?? industryIdentifiers,
-    //               imageLinks: volume?.volumeInfo.imageLinks?.thumbnail != null
-    //                   ? volume?.volumeInfo.imageLinks
-    //                   : ImageLinks(
-    //                       thumbnail: molyBook?.cover?.replaceAll('/normal/', '/big/'),
-    //                     ),
-    //             ),
-    //             volumeIndex: volume?.volumeIndex ?? currentBookNumber - 1,
-    //           );
-    //
-    //           _watchVolumeCategoryLoadingController
-    //               .add(volumeCategoryLoading.copyWith(currentVolume: volume, currentVolumeNumber: currentBookNumber));
-    //         });
-    //       }
-    //       currentBookNumber++;
-    //     }
-    //   }
-    // } on DioError catch (_) {
-    //   throw NetworkException();
-    // }
+    if (bookIds == null) {
+      return isbns;
+    }
+
+    for (String bookId in bookIds) {
+      final isbn = await _bookDatabaseRemote.loadIsbnById(bookId);
+      isbns.add(isbn);
+    }
+
+    return isbns;
   }
 
   void deleteBookByIsbn(String isbn) async {
@@ -292,6 +176,7 @@ class BookService with IsbnFromIndustryIdsCapability {
     try {
       final remoteBookReadingDetail = RemoteBookReadingDetail(
         status: bookReadingDetail.status,
+        authId: _authService.user!.authId,
         currentPage: bookReadingDetail.currentPage,
         rating: bookReadingDetail.rating,
         comment: bookReadingDetail.comment,

@@ -7,7 +7,7 @@ part 'remote_book_reading_detail.g.dart';
 @freezed
 class RemoteBookReadingDetail with _$RemoteBookReadingDetail {
   const factory RemoteBookReadingDetail(
-      {required BookReadingStatus status, int? currentPage, double? rating, String? comment}) = _BookReadingDetail;
+      {required BookReadingStatus status, required String authId, int? currentPage, double? rating, String? comment}) = _BookReadingDetail;
 
   factory RemoteBookReadingDetail.fromJson(Map<String, Object?> json) => _$RemoteBookReadingDetailFromJson(json);
 }
