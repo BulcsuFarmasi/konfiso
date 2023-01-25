@@ -14,8 +14,13 @@ class BookGridTile extends ConsumerWidget {
 
   final Book book;
 
-  void _navigateToDetailPage(BuildContext context) {
-    Navigator.of(context).pushNamed(BookDetailPage.routeName, arguments: book.industryIdsByType);
+  void _navigateToDetailPage(
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final navigator = Navigator.of(context);
+    await ref.read(bookCategoryPageStateNotifierProvider.notifier).selectBook(book.industryIdsByType!);
+    navigator.pushNamed(BookDetailPage.routeName, arguments: book.industryIdsByType);
   }
 
   void _deleteBook(BuildContext context, WidgetRef ref) {
@@ -47,8 +52,9 @@ class BookGridTile extends ConsumerWidget {
     return Column(
       children: [
         book.coverImage?.smaller != null
-            ? Image.network(
-                book.coverImage!.smaller!,
+            ? FadeInImage(
+                placeholder: const AssetImage('assets/images/no_book_cover.png'),
+                image: NetworkImage(book.coverImage!.smaller!),
                 width: 140,
               )
             : Image.asset(
@@ -71,7 +77,7 @@ class BookGridTile extends ConsumerWidget {
         ),
         ElevatedButton(
             onPressed: () {
-              _navigateToDetailPage(context);
+              _navigateToDetailPage(context, ref);
             },
             child: Text(AppLocalizations.of(context)!.details)),
         OutlinedButton(

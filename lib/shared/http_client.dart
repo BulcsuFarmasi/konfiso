@@ -26,6 +26,6 @@ class HttpClient {
   }
 
   Future<Response> put({required String url, dynamic data}) {
-    return _dio.patch(url, data: data);
+    return _dio.put(url, data: data);
   }
 }

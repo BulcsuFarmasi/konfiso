@@ -1,58 +1,50 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/data/book.dart';
-import 'package:konfiso/features/book/data/book_category_exception.dart';
-import 'package:konfiso/features/book/data/book_category_loading.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
-import 'package:konfiso/features/book/data/volume_category_loading.dart';
+import 'package:konfiso/features/book/data/stored_book.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
+import 'package:konfiso/shared/capabiliities/isbn_from_industry_ids_capability.dart';
 
 final bookCategoryRepositoryProvider = Provider((Ref ref) => BookCategoryRepository(ref.read(bookServiceProvider)));
 
-class BookCategoryRepository {
+class BookCategoryRepository with IsbnFromIndustryIdsCapability {
   BookCategoryRepository(this._bookService);
 
   final BookService _bookService;
 
-  Stream<BookCategoryLoading> loadBooksByReadingStatus(BookReadingStatus bookReadingStatus) {
-    final List<Book> books = [];
-    return _bookService.loadBooksByReadingStatus(bookReadingStatus).handleError((_) {
-      throw BookCategoryException();
-    }).map((VolumeCategoryLoading volumeCategoryLoading) {
-      final actualVolume = volumeCategoryLoading.volumes.last;
+  Stream<List<Book>> loadBooksByReadingStatus(BookReadingStatus bookReadingStatus) async* {
+    final storedBooks = await _bookService.loadBooksByReadingStatusFromStorage(bookReadingStatus);
+    final books = storedBooks
+        .map(
+          (StoredBook storedBook) => Book(
+            title: storedBook.title,
+            industryIdsByType: storedBook.industryIdsByType,
+            authors: storedBook.authors,
+            coverImage: CoverImage(smaller: storedBook.coverImage?.smaller),
+          ),
+        )
+        .toList();
 
-      final industryIdsByType = {
-        for (VolumeIndustryIdentifier volumeIndustryIdentifier in actualVolume.volumeInfo.industryIdentifiers!)
-          IndustryIdentifierType.fromString(volumeIndustryIdentifier.type): BookIndustryIdentifier(
-              IndustryIdentifierType.fromString(volumeIndustryIdentifier.type), volumeIndustryIdentifier.identifier)
-      };
+    yield books;
 
-      final book = Book(
-          title: actualVolume.volumeInfo.title,
-          industryIdsByType: industryIdsByType,
-          authors: actualVolume.volumeInfo.authors,
-          coverImage: CoverImage(
-            smaller: actualVolume.volumeInfo.imageLinks?.thumbnail,
-          ));
+    final remoteIsbns = await _bookService.loadIsbnByReadingStatusFromRemote(bookReadingStatus);
 
-      books.add(book);
+    print(remoteIsbns);
+    
+    // delete not existing ones
+    // add existing ones
+    // add them to list
+  }
 
-      return BookCategoryLoading(
-          books: books,
-          currentBookNumber: volumeCategoryLoading.currentVolumeNumber,
-          totalBookNumber: volumeCategoryLoading.totalVolumeNumber);
-    });
+  Future<void> selectBook(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) async {
+    final isbn = getIsbnFromIndustryIds(industryIdsByType);
+    await _bookService.selectBookFromBookReadings(isbn);
   }
 
   void deleteBook(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) {
-    final isbn = _getIsbnFromIndustryIds(industryIdsByType);
+    final isbn = getIsbnFromIndustryIds(industryIdsByType);
 
     _bookService.deleteBookByIsbn(isbn);
-  }
-
-  String _getIsbnFromIndustryIds(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) {
-    return (industryIdsByType[IndustryIdentifierType.isbn13]?.identifier ??
-            industryIdsByType[IndustryIdentifierType.isbn10]?.identifier) ??
-        '';
   }
 }

@@ -38,12 +38,22 @@ class _BookCategoryPageState extends ConsumerState<BookCategoryPage> {
     Navigator.of(context).pushNamed(AddBookPage.routeName);
   }
 
+  void _navigateBack() {
+    Navigator.of(context).pop();
+    ref.read(bookCategoryPageStateNotifierProvider.notifier).restoreToInitial();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(getReadingStatusDisplayText(readingStatus, context)),
         centerTitle: true,
+        leading: BackButton(
+          onPressed: () {
+            _navigateBack();
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -52,7 +62,7 @@ class _BookCategoryPageState extends ConsumerState<BookCategoryPage> {
             final state = ref.watch(bookCategoryPageStateNotifierProvider);
             return state.map(
                 initial: (_) => const BookCategoryInitial(),
-                inProgress: (inProgress) => BookCategoryInProgress(bookCategoryLoading: inProgress.bookCategoryLoading),
+                inProgress: (inProgress) => const BookCategoryInProgress(),
                 successful: (successful) => BookCategorySuccessful(books: successful.books),
                 error: (_) => const BookCategoryError());
           },

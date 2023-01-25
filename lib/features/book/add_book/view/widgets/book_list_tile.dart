@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/book/add_book/controller/add_book_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
 import 'package:konfiso/features/book/data/book.dart';
-import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
-class BookListTile extends StatelessWidget {
+class BookListTile extends ConsumerWidget {
   const BookListTile({
     super.key,
     required this.book,
+    required this.searchTerm,
   });
 
   final Book book;
+  final String searchTerm;
 
   void _navigateToDetailPage(
-      BuildContext context, Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType) {
-    Navigator.of(context).pushNamed(BookDetailPage.routeName, arguments: industryIdsByType);
+    BuildContext context,
+    WidgetRef ref,
+  ) async {
+    final navigator = Navigator.of(context);
+    await ref.read(addBookPageStateNotifierProvider.notifier).selectBook(book.industryIdsByType!, searchTerm);
+    navigator.pushNamed(BookDetailPage.routeName, arguments: book.industryIdsByType);
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       leading: book.coverImage?.smallest != null
-          ? Image.network(book.coverImage!.smallest!, width: 40)
+          ? FadeInImage(
+              placeholder: const AssetImage('assets/images/no_book_cover.png'),
+              image: NetworkImage(book.coverImage!.smallest!),
+              width: 40,
+            )
           : Image.asset(
               'assets/images/no_book_cover.png',
               width: 40,
@@ -36,9 +47,11 @@ class BookListTile extends StatelessWidget {
         style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.greyDarkestWithHalfOpacity),
       ),
       trailing: ElevatedButton(
-        onPressed: book.industryIdsByType != null ?  () {
-          _navigateToDetailPage(context, book.industryIdsByType!);
-        } : null,
+        onPressed: book.industryIdsByType != null
+            ? () {
+                _navigateToDetailPage(context, ref);
+              }
+            : null,
         child: Text(AppLocalizations.of(context)!.add),
       ),
     );

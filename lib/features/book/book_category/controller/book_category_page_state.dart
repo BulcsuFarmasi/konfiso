@@ -8,7 +8,7 @@ part 'book_category_page_state.freezed.dart';
 class BookCategoryPageState with _$BookCategoryPageState {
   const factory BookCategoryPageState.initial() = _Initial;
 
-  const factory BookCategoryPageState.inProgress(BookCategoryLoading bookCategoryLoading) = _InProgress;
+  const factory BookCategoryPageState.inProgress() = _InProgress;
 
   const factory BookCategoryPageState.successful(List<Book> books) = _Succesful;
 
