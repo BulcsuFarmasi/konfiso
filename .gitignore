@@ -52,7 +52,7 @@ android/app/**/google-services.json
 android/app/google-services-prod.json
 ios/firebase_app_id_file_dev.json
 ios/firebase_app_id_file_prod.json
-ios/config/**/GoogleService-Info.plist
+ios/config/**/GoogleService-info.plist
 
 # generated files
 /lib/**/**.freezed.dart

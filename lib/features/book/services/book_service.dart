@@ -44,11 +44,6 @@ class BookService with IsbnFromIndustryIdsCapability {
   final BookSelectedStorage _bookSelectedStorage;
   final AuthService _authService;
 
-  // final StreamController<VolumeCategoryLoading> _watchVolumeCategoryLoadingController =
-  //     StreamController<VolumeCategoryLoading>.broadcast();
-  //
-  // Stream<VolumeCategoryLoading> get watchVolumeCategoryLoading => _watchVolumeCategoryLoadingController.stream;
-
   BookService(
     this._bookGoogleRemote,
     this._bookDatabaseRemote,
@@ -97,7 +92,7 @@ class BookService with IsbnFromIndustryIdsCapability {
     _bookSearchStorage.saveSearchResult(storedSearchResult);
   }
 
-  Future<void> selectBookFromSearchResult(
+  Future<void> loadBookFromSearchResult(
       Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType, String searchTerm) async {
     final selectedBookReadingDetail = await _bookSearchStorage.loadStoredBook(industryIdsByType, searchTerm);
     if (selectedBookReadingDetail != null) {
@@ -105,9 +100,53 @@ class BookService with IsbnFromIndustryIdsCapability {
     }
   }
 
-  Future<void> selectBookFromBookReadings(String isbn) async {
+  Future<void> loadBookFromBookReadings(String isbn) async {
     final selectedBook = await _bookReadingStorage.loadStoredBook(isbn);
     await _bookSelectedStorage.saveSelectedBook(selectedBook);
+  }
+
+  Future<Volume?> loadBookByIsbnFromRemote(String isbn) async {
+    try {
+      final listBookResponse = await _bookGoogleRemote.loadBookByIsbn(isbn);
+
+      ListBooksResponsePayload listBooksResponsePayload = ListBooksResponsePayload.fromJson(listBookResponse.data);
+
+      Volume? volume;
+
+      if (listBooksResponsePayload.totalItems != 0) {
+        volume = listBooksResponsePayload.items?.first;
+      }
+
+      if (!_isVolumeComplete(volume)) {
+        final molyBook = await _bookMolyRemote.loadBookByIsbn(isbn);
+
+        volume = Volume(
+            volume?.id ?? '',
+            VolumeInfo(
+              title: volume?.volumeInfo.title ?? molyBook?.title ?? '',
+              authors: volume?.volumeInfo.authors ?? molyBook?.author.split(' - '),
+              publishedDate: volume?.volumeInfo.publishedDate ?? molyBook?.year.toString(),
+              industryIdentifiers: volume?.volumeInfo.industryIdentifiers ??
+                  _convertMolyIsbnToIndustryIdentifiers(molyBook?.isbn),
+              imageLinks: volume?.volumeInfo.imageLinks ??
+                  ImageLinks(thumbnail: molyBook?.cover?.replaceAll('/normal/', '/big/')),
+            ));
+      }
+
+      return volume;
+    } on DioError catch(e) {
+      throw NetworkException();
+    }
+  }
+
+  Future<RemoteBookReadingDetail?> loadBookReadingDetailByIsbnFromRemote(String isbn) async {
+    String? bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
+
+    bookId ??= '';
+
+    final bookReadingDetailResponse = await _bookDatabaseRemote.loadBookReadingDetailById(bookId, _authService.user!);
+
+    return RemoteBookReadingDetail.fromJson(bookReadingDetailResponse?.data ?? {});
   }
 
   Future<StoredBookReadingDetail?> loadSelectedBook() async {
@@ -133,8 +172,34 @@ class BookService with IsbnFromIndustryIdsCapability {
   }
 
   Future<void> saveBook(BookReadingDetail bookReadingDetail) async {
-    _saveBookToDatabase(bookReadingDetail);
-    _saveBookToStorage(bookReadingDetail);
+    await _saveBookToDatabase(bookReadingDetail);
+    await saveBookToStorage(bookReadingDetail);
+  }
+
+  Future<void> saveBookToStorage(BookReadingDetail bookReadingDetail) async {
+    final storedBookReadingDetail = StoredBookReadingDetail(
+      StoredBook(
+        title: bookReadingDetail.book!.title,
+        authors: bookReadingDetail.book!.authors,
+        publicationYear: bookReadingDetail.book!.publicationYear,
+        industryIdsByType: bookReadingDetail.book!.industryIdsByType,
+        coverImage: StoredCoverImage(
+          smallest: bookReadingDetail.book!.coverImage?.smallest,
+          smaller: bookReadingDetail.book!.coverImage?.smaller,
+          small: bookReadingDetail.book!.coverImage?.small,
+          large: bookReadingDetail.book!.coverImage?.large,
+          larger: bookReadingDetail.book!.coverImage?.larger,
+          largest: bookReadingDetail.book!.coverImage?.largest,
+        ),
+        validUntil: DateTime.now().add(const Duration(days: 3)),
+      ),
+      bookReadingDetail.status,
+      bookReadingDetail.currentPage,
+      bookReadingDetail.rating,
+      bookReadingDetail.comment,
+    );
+
+    _bookReadingStorage.saveBookReading(storedBookReadingDetail);
   }
 
   Future<List<StoredBook>> loadBooksByReadingStatusFromStorage(BookReadingStatus bookReadingStatus) async {
@@ -163,7 +228,7 @@ class BookService with IsbnFromIndustryIdsCapability {
   }
 
   void deleteBookByIsbn(String isbn) async {
-    await _bookReadingStorage.deleteBook(isbn);
+    deleteBookByIsbn(isbn);
 
     final bookId = await _bookDatabaseRemote.loadBookIdbyIsbn(isbn);
 
@@ -171,6 +236,11 @@ class BookService with IsbnFromIndustryIdsCapability {
       _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!);
     }
   }
+
+   void deleteBookFromStorage(String isbn) async {
+
+    await _bookReadingStorage.deleteBook(isbn);
+   }
 
   Future<void> _saveBookToDatabase(BookReadingDetail bookReadingDetail) async {
     try {
@@ -194,32 +264,6 @@ class BookService with IsbnFromIndustryIdsCapability {
     } on DioError catch (_) {
       throw NetworkException();
     }
-  }
-
-  Future<void> _saveBookToStorage(BookReadingDetail bookReadingDetail) async {
-    final storedBookReadingDetail = StoredBookReadingDetail(
-      StoredBook(
-        title: bookReadingDetail.book!.title,
-        authors: bookReadingDetail.book!.authors,
-        publicationYear: bookReadingDetail.book!.publicationYear,
-        industryIdsByType: bookReadingDetail.book!.industryIdsByType,
-        coverImage: StoredCoverImage(
-          smallest: bookReadingDetail.book!.coverImage?.smallest,
-          smaller: bookReadingDetail.book!.coverImage?.smaller,
-          small: bookReadingDetail.book!.coverImage?.small,
-          large: bookReadingDetail.book!.coverImage?.large,
-          larger: bookReadingDetail.book!.coverImage?.larger,
-          largest: bookReadingDetail.book!.coverImage?.largest,
-        ),
-        validUntil: DateTime.now().add(const Duration(days: 3)),
-      ),
-      bookReadingDetail.status,
-      bookReadingDetail.currentPage,
-      bookReadingDetail.rating,
-      bookReadingDetail.comment,
-    );
-
-    _bookReadingStorage.saveBookReading(storedBookReadingDetail);
   }
 
   bool _isVolumeComplete(Volume? volume) {

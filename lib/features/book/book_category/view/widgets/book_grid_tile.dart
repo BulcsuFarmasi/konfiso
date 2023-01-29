@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,9 +53,10 @@ class BookGridTile extends ConsumerWidget {
     return Column(
       children: [
         book.coverImage?.smaller != null
-            ? FadeInImage(
-                placeholder: const AssetImage('assets/images/no_book_cover.png'),
-                image: NetworkImage(book.coverImage!.smaller!),
+            ? CachedNetworkImage(
+                imageUrl: book.coverImage!.smaller!,
+                placeholder: (context, url) => Image.asset('assets/images/no_book_cover.png'),
+                errorWidget: (context, url, error) => Image.asset('assets/images/no_book_cover.png'),
                 width: 140,
               )
             : Image.asset(
