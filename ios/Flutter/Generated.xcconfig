@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
 FLUTTER_ROOT=/home/farmasi/snap/flutter/common/flutter
-FLUTTER_APPLICATION_PATH=/media/farmasi/574C75A34777D190/development/projects/work-projects/sajat/2022/konfiso
+FLUTTER_APPLICATION_PATH=/media/farmasi/574C75A34777D190/development/projects/work-projects/sajat/2022/konfiso/app
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_TARGET=lib/main.dart
 FLUTTER_BUILD_DIR=build

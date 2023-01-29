@@ -22,7 +22,7 @@ void main() async {
 }
 
 Future<void> initializeFirebase() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform, name: 'dev');
 }
 
 Future<void> initializeHive() async {

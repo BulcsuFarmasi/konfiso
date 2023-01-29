@@ -1,11 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
+import 'package:konfiso/shared/capabiliities/isbn_from_industry_ids_capability.dart';
 
 part 'book.freezed.dart';
 part 'book.g.dart';
 
 @freezed
-class Book with _$Book {
+class Book with _$Book, IsbnFromIndustryIdsCapability {
+  
+  const Book._();
+  
   const factory Book(
       {required String title,
       List<String>? authors,
@@ -16,6 +20,8 @@ class Book with _$Book {
       CoverImage? coverImage}) = _Book;
 
   factory Book.fromJson(Map<String, Object?> json) => _$BookFromJson(json);
+  
+  String get isbn => getIsbnFromIndustryIds(industryIdsByType ?? {});
 }
 
 @freezed

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,15 +30,22 @@ class BookListTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       leading: book.coverImage?.smallest != null
-          ? FadeInImage(
-              placeholder: const AssetImage('assets/images/no_book_cover.png'),
-              image: NetworkImage(book.coverImage!.smallest!),
+          ? CachedNetworkImage(
+              imageUrl: book.coverImage!.smallest!,
+              placeholder: (context, url) => Image.asset('assets/images/no_book_cover.png'),
+              errorWidget: (context, url, error) => Image.asset('assets/images/no_book_cover.png'),
               width: 40,
             )
           : Image.asset(
               'assets/images/no_book_cover.png',
               width: 40,
             ),
+      //     ? FadeInImage(
+      //         placeholder: const AssetImage('assets/images/no_book_cover.png'),
+      //         image: NetworkImage(book.coverImage!.smallest!),
+      //         width: 40,
+      //       )
+      //     :
       title: Text(
         book.title,
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.greyDarkestColor),

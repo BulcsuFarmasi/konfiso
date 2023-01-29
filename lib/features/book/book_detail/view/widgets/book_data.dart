@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:konfiso/features/book/data/book.dart';
@@ -17,9 +18,10 @@ class BookData extends StatelessWidget {
           height: 25,
         ),
         book.coverImage?.small != null
-            ? FadeInImage(
-                placeholder: const AssetImage('assets/images/no_book_cover.png'),
-                image: NetworkImage(book.coverImage!.small!),
+            ? CachedNetworkImage(
+                imageUrl: book.coverImage!.small!,
+                placeholder: (context, url) => Image.asset('assets/images/no_book_cover.png'),
+                errorWidget: (context, url, error) => Image.asset('assets/images/no_book_cover.png'),
                 width: 215,
               )
             : Image.asset(

@@ -62,7 +62,7 @@ class AddBookRepository with IsbnFromIndustryIdsCapability {
 
   Future<void> selectBook(
       Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsByType, String searchTerm) async {
-    await _bookService.selectBookFromSearchResult(industryIdsByType, searchTerm);
+    await _bookService.loadBookFromSearchResult(industryIdsByType, searchTerm);
   }
 
   Book _convertVolumeToBook(Volume volume) => Book(
