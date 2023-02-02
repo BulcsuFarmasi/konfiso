@@ -9,7 +9,7 @@ import 'package:konfiso/features/auth/services/auth_api_remote.dart';
 import 'package:konfiso/features/auth/services/auth_database_remote.dart';
 import 'package:konfiso/features/auth/services/auth_storage.dart';
 import 'package:konfiso/shared/exceptions/network_execption.dart';
-import 'package:konfiso/shared/services/privacy_poilcy_service.dart';
+import 'package:konfiso/features/privacy_policy/services/privacy_poilcy_service.dart';
 import 'package:konfiso/shared/utils/time_util.dart';
 
 final authServiceProvider = Provider(
