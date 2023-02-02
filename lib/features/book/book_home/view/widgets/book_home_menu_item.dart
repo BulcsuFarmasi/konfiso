@@ -17,7 +17,10 @@ class BookHomeMenuItem extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 50),
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(9),
+        side: const BorderSide(color: AppColors.primaryColor, width: 1),
+      ),
       child: InkWell(
         onTap: () {
           _navigateToCategoryPage(context);
@@ -31,7 +34,7 @@ class BookHomeMenuItem extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
-                color: AppColors.greyDarkerColor,
+                color: AppColors.greyDarkestColor,
               ),
             )),
       ),

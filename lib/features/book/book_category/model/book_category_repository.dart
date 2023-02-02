@@ -107,7 +107,7 @@ class BookCategoryRepository with IsbnFromIndustryIdsCapability {
     Book? book;
 
     if (volume != null) {
-      book = _convertVolumeToBook(volume);
+      final book = _convertVolumeToBook(volume);
 
 
       _bookService.saveBookToStorage(

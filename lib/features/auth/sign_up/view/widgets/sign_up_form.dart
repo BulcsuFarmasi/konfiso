@@ -2,12 +2,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/privacy_policy/privacy_policy/view/pages/privacy_policy_page.dart';
 import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/sign_up/controller/sign_up_page_state_notifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/app_validators.dart';
 import 'package:konfiso/shared/capabiliities/email_validation_capability.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {
   const SignUpForm({required this.privacyPolicyUrl, super.key});
@@ -50,8 +50,12 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
   }
 
   void _openPrivacyPolicy() {
-    // TODO is the widget is the right place
-    launchUrl(Uri.parse(widget.privacyPolicyUrl));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const PrivacyPolicyPage(),
+        fullscreenDialog: true,
+      ),
+    );
   }
 
   void _saveEmail(String? email) {
@@ -95,6 +99,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
 
   @override
   Widget build(BuildContext context) {
+    print(widget.privacyPolicyUrl);
     return Form(
       key: _formKey,
       child: Column(

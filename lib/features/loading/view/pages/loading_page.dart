@@ -6,7 +6,7 @@ import 'package:konfiso/features/auth/sign_in/view/pages/sign_in_page.dart';
 import 'package:konfiso/features/auth/verify_user/view/pages/verify_user_page.dart';
 import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/features/loading/controller/loading_page_controller.dart';
-import 'package:konfiso/features/no_connection/view/pages/no_connection_page.dart';
+import 'package:konfiso/features/no_connection/no_connection/view/pages/no_connection_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
 class LoadingPage extends ConsumerStatefulWidget {
