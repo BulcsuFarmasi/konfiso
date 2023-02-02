@@ -12,7 +12,7 @@ import 'package:konfiso/features/book/book_category/view/pages/book_category_pag
 import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.dart';
 import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/features/loading/view/pages/loading_page.dart';
-import 'package:konfiso/features/no_connection/view/pages/no_connection_page.dart';
+import 'package:konfiso/features/no_connection/no_connection/view/pages/no_connection_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/widgets/app/controller/app_state.dart';
 import 'package:konfiso/shared/widgets/app/controller/app_state_notifier.dart';
@@ -90,16 +90,16 @@ class _AppState extends ConsumerState<App> {
       navigatorObservers: [routeObserver],
       initialRoute: '/',
       routes: {
-        '/': (BuildContext context) => const LoadingPage(),
-        SignInPage.routeName: (BuildContext context) => const SignInPage(),
-        SignUpPage.routeName: (BuildContext context) => const SignUpPage(),
-        VerifyUserPage.routeName: (BuildContext context) => const VerifyUserPage(),
-        ForgottenPasswordPage.routeName: (BuildContext context) => const ForgottenPasswordPage(),
-        BookHomePage.routeName: (BuildContext context) => const BookHomePage(),
-        BookCategoryPage.routeName: (BuildContext context) => const BookCategoryPage(),
-        AddBookPage.routeName: (BuildContext context) => const AddBookPage(),
-        BookDetailPage.routeName: (BuildContext context) => const BookDetailPage(),
-        NoConnectionPage.routeName: (BuildContext context) => const NoConnectionPage(),
+        '/': (_) => const LoadingPage(),
+        SignInPage.routeName: (_) => const SignInPage(),
+        SignUpPage.routeName: (_) => const SignUpPage(),
+        VerifyUserPage.routeName: (_) => const VerifyUserPage(),
+        ForgottenPasswordPage.routeName: (_) => const ForgottenPasswordPage(),
+        BookHomePage.routeName: (_) => const BookHomePage(),
+        BookCategoryPage.routeName: (_) => const BookCategoryPage(),
+        AddBookPage.routeName: (_) => const AddBookPage(),
+        BookDetailPage.routeName: (_) => const BookDetailPage(),
+        NoConnectionPage.routeName: (_) => const NoConnectionPage(),
       },
     );
   }
