@@ -55,7 +55,7 @@ dependencies:
   hive: ^2.2.3
   path_provider: ^2.0.11
   cached_network_image: ^3.2.3
-  flutter_pdfview: ^1.2.5
+  flutter_cached_pdfview: ^0.4.1
 
 dev_dependencies:
   flutter_test:
