@@ -31,7 +31,6 @@ class AuthApiRemote {
     final response =
         await _httpClient.post(url: '${accountUrl}signInWithPassword', data: json.encode(authRequestPayload.toJson()));
 
-
     final authResponse = AuthResponsePayload.fromJson(response.data);
     return authResponse;
   }
@@ -70,7 +69,6 @@ class AuthApiRemote {
       headers: {'X-Firebase-Locale': _languageService.locale},
     );
   }
-
 
   Future<void> sendVerificationEmail(String token) async {
     const url = '${accountUrl}sendOobCode';

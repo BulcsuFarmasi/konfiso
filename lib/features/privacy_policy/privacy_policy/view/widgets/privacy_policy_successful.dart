@@ -3,7 +3,7 @@ import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
 class PrivacyPolicySuccessful extends StatelessWidget {
   const PrivacyPolicySuccessful(this._privacyPolicyUrl, {super.key});
-  
+
   final String _privacyPolicyUrl;
 
   @override

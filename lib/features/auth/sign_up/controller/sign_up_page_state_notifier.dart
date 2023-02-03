@@ -9,7 +9,8 @@ final signUpStateNotifierProvider = StateNotifierProvider<SignUpPageStateNotifie
 class SignUpPageStateNotifier extends StateNotifier<SignUpPageState> {
   final SignUpRepository _signUpRepository;
 
-  SignUpPageStateNotifier(this._signUpRepository) : super(SignUpPageState.initial(_signUpRepository.getPrivacyPolicy()));
+  SignUpPageStateNotifier(this._signUpRepository)
+      : super(SignUpPageState.initial(_signUpRepository.getPrivacyPolicy()));
 
   void signUp(String email, String password) async {
     state = const SignUpPageState.inProgress();

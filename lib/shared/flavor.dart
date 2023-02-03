@@ -1,4 +1,4 @@
 import 'package:konfiso/shared/flavor_config.dart';
     
-const flavor = Flavor.staging; 
+const flavor = Flavor.prod; 
     

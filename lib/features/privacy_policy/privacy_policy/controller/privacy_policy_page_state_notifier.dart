@@ -15,9 +15,8 @@ class PrivacyPolicyPageStateNotifier extends StateNotifier<PrivacyPolicyPageStat
   final PrivacyPolicyRepository _privacyPolicyRepository;
 
   void loadPrivacyPolicyUrl() {
-
     final privacyPolicyUrl = _privacyPolicyRepository.loadPrivacyPolicyUrl();
 
- state = PrivacyPolicyPageState.successful(privacyPolicyUrl);
+    state = PrivacyPolicyPageState.successful(privacyPolicyUrl);
   }
 }

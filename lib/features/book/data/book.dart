@@ -7,9 +7,8 @@ part 'book.g.dart';
 
 @freezed
 class Book with _$Book, IsbnFromIndustryIdsCapability {
-  
   const Book._();
-  
+
   const factory Book(
       {required String title,
       List<String>? authors,
@@ -20,7 +19,7 @@ class Book with _$Book, IsbnFromIndustryIdsCapability {
       CoverImage? coverImage}) = _Book;
 
   factory Book.fromJson(Map<String, Object?> json) => _$BookFromJson(json);
-  
+
   String get isbn => getIsbnFromIndustryIds(industryIdsByType ?? {});
 }
 

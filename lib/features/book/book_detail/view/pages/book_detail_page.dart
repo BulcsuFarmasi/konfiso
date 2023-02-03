@@ -28,7 +28,8 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
     super.didChangeDependencies();
 
     if (_isInit) {
-      final industryIdsByType = ModalRoute.of(context)!.settings.arguments as Map<IndustryIdentifierType ,BookIndustryIdentifier>;
+      final industryIdsByType =
+          ModalRoute.of(context)!.settings.arguments as Map<IndustryIdentifierType, BookIndustryIdentifier>;
       _isInit = false;
       Future(() {
         final bookDetailStateNotifier = ref.read(bookDetailPageStateNotifierProvider.notifier);

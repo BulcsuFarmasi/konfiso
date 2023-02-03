@@ -90,12 +90,6 @@ android {
             resValue "string", "app_name", "[Dev] Konfiso"
         }
 
-        staging {
-            dimension "flavors"
-            applicationIdSuffix ".staging"
-            resValue "string", "app_name", "[Staging] Konfiso"
-        }
-
         prod {
             dimension "flavors"
             resValue "string", "app_name", "Konfiso"

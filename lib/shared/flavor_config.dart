@@ -15,7 +15,5 @@ class FlavorConfig {
 
   bool isDev() => flavor == Flavor.dev;
 
-  bool isStaging() => flavor == Flavor.staging;
-
   bool isProd() => flavor == Flavor.prod;
 }

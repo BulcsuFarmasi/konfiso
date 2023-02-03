@@ -127,15 +127,15 @@ class BookService with IsbnFromIndustryIdsCapability {
               title: volume?.volumeInfo.title ?? molyBook?.title ?? '',
               authors: volume?.volumeInfo.authors ?? molyBook?.author.split(' - '),
               publishedDate: volume?.volumeInfo.publishedDate ?? molyBook?.year.toString(),
-              industryIdentifiers: volume?.volumeInfo.industryIdentifiers ??
-                  _convertMolyIsbnToIndustryIdentifiers(molyBook?.isbn),
+              industryIdentifiers:
+                  volume?.volumeInfo.industryIdentifiers ?? _convertMolyIsbnToIndustryIdentifiers(molyBook?.isbn),
               imageLinks: volume?.volumeInfo.imageLinks ??
                   ImageLinks(thumbnail: molyBook?.cover?.replaceAll('/normal/', '/big/')),
             ));
       }
 
       return volume;
-    } on DioError  {
+    } on DioError {
       throw NetworkException();
     }
   }
@@ -238,10 +238,9 @@ class BookService with IsbnFromIndustryIdsCapability {
     }
   }
 
-   void deleteBookFromStorage(String isbn) async {
-
+  void deleteBookFromStorage(String isbn) async {
     await _bookReadingStorage.deleteBook(isbn);
-   }
+  }
 
   Future<void> _saveBookToDatabase(BookReadingDetail bookReadingDetail) async {
     try {

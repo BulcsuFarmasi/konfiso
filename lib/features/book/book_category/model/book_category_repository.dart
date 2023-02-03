@@ -23,7 +23,6 @@ class BookCategoryRepository with IsbnFromIndustryIdsCapability {
 
     final remoteIsbns = await _bookService.loadIsbnByReadingStatusFromRemote(bookReadingStatus);
 
-
     yield _deleteBooksDeletedFromRemote(books, remoteIsbns);
 
     await for (Book newBook in _loadNewlyAddedBooks(books, remoteIsbns)) {
@@ -87,10 +86,8 @@ class BookCategoryRepository with IsbnFromIndustryIdsCapability {
 
     remoteIsbns.retainWhere((String isbn) => !bookIsbns.contains(isbn));
 
-
     for (String remoteIsbn in remoteIsbns) {
       final book = await _updateBook(remoteIsbn);
-
 
       if (book != null) {
         yield book;
@@ -108,7 +105,6 @@ class BookCategoryRepository with IsbnFromIndustryIdsCapability {
     if (volume != null) {
       book = _convertVolumeToBook(volume);
 
-
       _bookService.saveBookToStorage(
         BookReadingDetail(
           book: book,
@@ -119,8 +115,7 @@ class BookCategoryRepository with IsbnFromIndustryIdsCapability {
       );
     }
 
-
-      return book;
+    return book;
   }
 
   Book _convertVolumeToBook(Volume volume) => Book(

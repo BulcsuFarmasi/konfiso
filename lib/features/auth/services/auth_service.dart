@@ -13,14 +13,13 @@ import 'package:konfiso/features/privacy_policy/services/privacy_poilcy_service.
 import 'package:konfiso/shared/utils/time_util.dart';
 
 final authServiceProvider = Provider(
-      (Ref ref) =>
-      AuthService(
-        ref.read(authStorageProvider),
-        ref.read(authApiRemoteProvider),
-        ref.read(authDatabaseRemoteProvider),
-        ref.read(timeUtilProvider),
-        ref.read(privacyPolicyServiceProvider),
-      ),
+  (Ref ref) => AuthService(
+    ref.read(authStorageProvider),
+    ref.read(authApiRemoteProvider),
+    ref.read(authDatabaseRemoteProvider),
+    ref.read(timeUtilProvider),
+    ref.read(privacyPolicyServiceProvider),
+  ),
 );
 
 class AuthService {
@@ -33,11 +32,13 @@ class AuthService {
   StoredUser? user;
   static const url = 'https://identitytoolkit.googleapis.com/v1/accounts:';
 
-  AuthService(this._authStorage,
-      this._authApiRemote,
-      this._authDatabaseRemote,
-      this._timeUtil,
-      this._privacyPolicyService,);
+  AuthService(
+    this._authStorage,
+    this._authApiRemote,
+    this._authDatabaseRemote,
+    this._timeUtil,
+    this._privacyPolicyService,
+  );
 
   Future<UserSignInStatus> autoSignIn() async {
     user = await _authStorage.fetchUser();
@@ -62,10 +63,10 @@ class AuthService {
           token: authResponse.idToken,
           refreshToken: authResponse.refreshToken,
           validUntil: _timeUtil.now().add(
-            Duration(
-              seconds: int.parse(authResponse.expiresIn),
-            ),
-          ),
+                Duration(
+                  seconds: int.parse(authResponse.expiresIn),
+                ),
+              ),
           verified: true);
       await _authStorage.saveUser(user!);
 
@@ -80,7 +81,7 @@ class AuthService {
     } on DioError catch (e) {
       // TODO : deserialize it into a class
       final errorMessage =
-      e.response!.data['error'] is! String ? e.response!.data['error']['message'] : e.response!.data['error'];
+          e.response!.data['error'] is! String ? e.response!.data['error']['message'] : e.response!.data['error'];
       throw NetworkException(errorMessage);
     }
   }
@@ -93,10 +94,10 @@ class AuthService {
           token: authResponse.idToken,
           refreshToken: authResponse.refreshToken,
           validUntil: _timeUtil.now().add(
-            Duration(
-              seconds: int.parse(authResponse.expiresIn),
-            ),
-          ),
+                Duration(
+                  seconds: int.parse(authResponse.expiresIn),
+                ),
+              ),
           verified: false);
 
       await _authStorage.saveUser(user!);
@@ -108,7 +109,7 @@ class AuthService {
     } on DioError catch (e) {
       // TODO : deserialize it into a class
       final errorMessage =
-      e.response!.data['error'] is! String ? e.response!.data['error']['message'] : e.response!.data['error'];
+          e.response!.data['error'] is! String ? e.response!.data['error']['message'] : e.response!.data['error'];
       throw NetworkException(errorMessage);
     }
   }
@@ -143,7 +144,7 @@ class AuthService {
       await _authApiRemote.sendPasswordResetEmail(email);
     } on DioError catch (e) {
       final errorMessage =
-      e.response!.data['error'] is! String ? e.response!.data['error']['message'] : e.response!.data['error'];
+          e.response!.data['error'] is! String ? e.response!.data['error']['message'] : e.response!.data['error'];
       throw NetworkException(errorMessage);
     }
   }
@@ -156,10 +157,10 @@ class AuthService {
       token: responsePayload.id_token,
       refreshToken: responsePayload.refresh_token,
       validUntil: _timeUtil.now().add(
-        Duration(
-          seconds: int.parse(responsePayload.expires_in),
-        ),
-      ),
+            Duration(
+              seconds: int.parse(responsePayload.expires_in),
+            ),
+          ),
       verified: true,
       // verified: false,
     );

@@ -1,4 +1,3 @@
-
 import 'package:hive/hive.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/stored_book.dart';
