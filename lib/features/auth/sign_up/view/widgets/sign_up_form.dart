@@ -99,7 +99,6 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
 
   @override
   Widget build(BuildContext context) {
-    print(widget.privacyPolicyUrl);
     return Form(
       key: _formKey,
       child: Column(

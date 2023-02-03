@@ -87,21 +87,17 @@ android {
         dev {
             dimension "flavors"
             applicationIdSuffix ".dev"
-            versionNameSuffix "-dev"
             resValue "string", "app_name", "[Dev] Konfiso"
         }
 
         staging {
             dimension "flavors"
             applicationIdSuffix ".staging"
-            versionNameSuffix "-staging"
             resValue "string", "app_name", "[Staging] Konfiso"
         }
 
         prod {
             dimension "flavors"
-            applicationIdSuffix ".prod"
-            versionNameSuffix "-prod"
             resValue "string", "app_name", "Konfiso"
         }
     }
