@@ -22,8 +22,6 @@ class BookMolyRemote {
 
     final searchResponse = MolyBookSearchResponse.fromJson(response.data);
 
-    final Map<int, List<MolyBookEdition>> editionsByBookId = {};
-
     final List<MolyBook> books = [];
 
     // TODO optimize to O(n)

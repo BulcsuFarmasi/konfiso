@@ -78,6 +78,7 @@ class BookService with IsbnFromIndustryIdsCapability {
     } on DioError catch (_) {
       molyRequestFailed = true;
     }
+
     if (googleRequestFailed && molyRequestFailed) {
       throw NetworkException();
     }
@@ -134,7 +135,7 @@ class BookService with IsbnFromIndustryIdsCapability {
       }
 
       return volume;
-    } on DioError catch(e) {
+    } on DioError  {
       throw NetworkException();
     }
   }

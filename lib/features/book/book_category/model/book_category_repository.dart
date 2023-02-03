@@ -4,7 +4,6 @@ import 'package:konfiso/features/book/data/book_reading_detail.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/stored_book.dart';
-import 'package:konfiso/features/book/data/stored_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/volume.dart';
 import 'package:konfiso/features/book/services/book_service.dart';
 import 'package:konfiso/shared/capabiliities/isbn_from_industry_ids_capability.dart';
@@ -107,7 +106,7 @@ class BookCategoryRepository with IsbnFromIndustryIdsCapability {
     Book? book;
 
     if (volume != null) {
-      final book = _convertVolumeToBook(volume);
+      book = _convertVolumeToBook(volume);
 
 
       _bookService.saveBookToStorage(

@@ -11,23 +11,20 @@ import 'package:konfiso/features/auth/data/user_info_request_payload.dart';
 import 'package:konfiso/features/auth/data/user_info_response_payload.dart';
 import 'package:konfiso/shared/http_client.dart';
 import 'package:konfiso/shared/services/language_service.dart';
-import 'package:konfiso/shared/utils/flavor_util.dart';
 
 final authApiRemoteProvider = Provider((Ref ref) => AuthApiRemote(
       ref.read(httpClientProvider),
-      ref.read(flavorUtilProvider),
       ref.read(languageServiceProvider),
     ));
 
 class AuthApiRemote {
   final HttpClient _httpClient;
-  final FlavorUtil _flavorUtil;
   final LanguageService _languageService;
 
   static const accountUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:';
   static const tokenUrl = 'https://securetoken.googleapis.com/v1/token';
 
-  AuthApiRemote(this._httpClient, this._flavorUtil, this._languageService);
+  AuthApiRemote(this._httpClient, this._languageService);
 
   Future<AuthResponsePayload> signIn(String email, String password) async {
     final authRequestPayload = AuthRequestPayload(email, password);

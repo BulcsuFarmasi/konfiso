@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
-import 'package:konfiso/features/book/data/stored_book.dart';
 import 'package:konfiso/features/book/data/stored_book_reading_detail.dart';
 import 'package:konfiso/shared/storage.dart';
 
