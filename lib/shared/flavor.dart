@@ -1,4 +1,4 @@
 import 'package:konfiso/shared/flavor_config.dart';
     
-const flavor = Flavor.prod; 
+const flavor = Flavor.dev; 
     

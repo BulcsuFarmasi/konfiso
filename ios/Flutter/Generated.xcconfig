@@ -1,14 +1,15 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/home/farmasi/snap/flutter/common/flutter
-FLUTTER_APPLICATION_PATH=/media/farmasi/574C75A34777D190/development/projects/work-projects/sajat/2022/konfiso/app
+FLUTTER_ROOT=/Users/user235492/Projects/flutter
+FLUTTER_APPLICATION_PATH=/Users/user235492/Projects/konfiso
 COCOAPODS_PARALLEL_CODE_SIGN=true
-FLUTTER_TARGET=lib/main.dart
+FLUTTER_TARGET=/Users/user235492/Projects/konfiso/lib/main_dev.dart
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=0.2.1
 FLUTTER_BUILD_NUMBER=6
 EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386
 EXCLUDED_ARCHS[sdk=iphoneos*]=armv7
+DART_DEFINES=Zmx1dHRlci5pbnNwZWN0b3Iuc3RydWN0dXJlZEVycm9ycz10cnVl,RkxVVFRFUl9XRUJfQVVUT19ERVRFQ1Q9dHJ1ZQ==
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
-PACKAGE_CONFIG=.dart_tool/package_config.json
+PACKAGE_CONFIG=/Users/user235492/Projects/konfiso/.dart_tool/package_config.json
