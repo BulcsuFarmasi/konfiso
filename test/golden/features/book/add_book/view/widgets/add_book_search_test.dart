@@ -13,7 +13,7 @@ void main() {
           supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(
             body: AddBookSearch(
-              startedTyping: () {},
+              onFocus: () {},
             ),
           ),
         ),
