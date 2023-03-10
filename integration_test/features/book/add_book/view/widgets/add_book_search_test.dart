@@ -34,7 +34,7 @@ void main() {
         child: MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: Scaffold(body: AddBookSearch(startedTyping: callback ?? () {})),
+          home: Scaffold(body: AddBookSearch(onFocus: callback ?? () {})),
         ),
       );
     }

@@ -5,32 +5,38 @@ import 'package:konfiso/features/book/add_book/controller/add_book_page_state_no
 import 'package:rxdart/rxdart.dart';
 
 class AddBookSearch extends ConsumerStatefulWidget {
-  const AddBookSearch({required this.startedTyping, super.key});
+  const AddBookSearch({required this.onFocus, super.key});
 
-  final VoidCallback startedTyping;
+  final VoidCallback onFocus;
 
   @override
   ConsumerState<AddBookSearch> createState() => _AddBookInputSearch();
 }
 
 class _AddBookInputSearch extends ConsumerState<AddBookSearch> {
-  final searchSubject = PublishSubject<String>();
-  bool isTypingYet = false;
+  final _focusNode = FocusNode();
+  final _searchSubject = PublishSubject<String>();
+  bool _focusedYet = false;
 
   @override
   void initState() {
     super.initState();
+    _focusNode.addListener(_focusChange);
     final addBookStateNotifier = ref.read(addBookPageStateNotifierProvider.notifier);
-    searchSubject.debounceTime(const Duration(seconds: 1)).listen((String searchTerm) {
+    _searchSubject.debounceTime(const Duration(seconds: 1)).listen((String searchTerm) {
       addBookStateNotifier.search(searchTerm);
     });
+
   }
 
   void _addToSubject(String searchTerm) {
-    searchSubject.add(searchTerm);
-    if (!isTypingYet) {
-      widget.startedTyping();
-      isTypingYet = true;
+    _searchSubject.add(searchTerm);
+  }
+
+  void _focusChange() {
+    if (_focusNode.hasFocus && !_focusedYet) {
+      widget.onFocus();
+      _focusedYet = true;
     }
   }
 
@@ -41,6 +47,7 @@ class _AddBookInputSearch extends ConsumerState<AddBookSearch> {
           InputDecoration(hintText: AppLocalizations.of(context)!.searchAbook, suffixIcon: const Icon(Icons.search)),
       onChanged: _addToSubject,
       textInputAction: TextInputAction.done,
+      focusNode: _focusNode,
     );
   }
 }

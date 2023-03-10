@@ -85,7 +85,7 @@ class _AddBookPageState extends ConsumerState<AddBookPage> with TickerProviderSt
                     animation: spaceAnimation,
                     builder: (BuildContext context, _) => SizedBox(height: spaceAnimation.value)),
                 AddBookSearch(
-                  startedTyping: _startSpaceAnimation,
+                  onFocus: _startSpaceAnimation,
                 ),
                 SizedBox(
                   height: spacerHeight,
