@@ -15,7 +15,7 @@ class BookGrid extends StatelessWidget {
     return GridView.extent(
       maxCrossAxisExtent: 200,
       crossAxisSpacing: 20,
-      childAspectRatio: 0.35,
+      childAspectRatio: 0.38,
       children: books
           .map(
             (Book book) => BookGridTile(

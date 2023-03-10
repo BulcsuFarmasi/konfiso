@@ -65,6 +65,8 @@ class BookGridTile extends ConsumerWidget {
               ),
         Text(
           book.title,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(fontSize: 18, color: AppColors.greyDarkestColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),

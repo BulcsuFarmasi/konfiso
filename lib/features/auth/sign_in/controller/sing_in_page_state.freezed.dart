@@ -70,14 +70,12 @@ mixin _$SignInPageState {
 
 /// @nodoc
 abstract class $SignInPageStateCopyWith<$Res> {
-  factory $SignInPageStateCopyWith(
-          SignInPageState value, $Res Function(SignInPageState) then) =
+  factory $SignInPageStateCopyWith(SignInPageState value, $Res Function(SignInPageState) then) =
       _$SignInPageStateCopyWithImpl<$Res, SignInPageState>;
 }
 
 /// @nodoc
-class _$SignInPageStateCopyWithImpl<$Res, $Val extends SignInPageState>
-    implements $SignInPageStateCopyWith<$Res> {
+class _$SignInPageStateCopyWithImpl<$Res, $Val extends SignInPageState> implements $SignInPageStateCopyWith<$Res> {
   _$SignInPageStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -88,17 +86,13 @@ class _$SignInPageStateCopyWithImpl<$Res, $Val extends SignInPageState>
 
 /// @nodoc
 abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+  factory _$$_InitialCopyWith(_$_Initial value, $Res Function(_$_Initial) then) = __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$SignInPageStateCopyWithImpl<$Res, _$_Initial>
+class __$$_InitialCopyWithImpl<$Res> extends _$SignInPageStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, _then);
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then) : super(_value, _then);
 }
 
 /// @nodoc
@@ -113,8 +107,7 @@ class _$_Initial implements _Initial {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -201,18 +194,14 @@ abstract class _Initial implements SignInPageState {
 
 /// @nodoc
 abstract class _$$_InProgressCopyWith<$Res> {
-  factory _$$_InProgressCopyWith(
-          _$_InProgress value, $Res Function(_$_InProgress) then) =
+  factory _$$_InProgressCopyWith(_$_InProgress value, $Res Function(_$_InProgress) then) =
       __$$_InProgressCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InProgressCopyWithImpl<$Res>
-    extends _$SignInPageStateCopyWithImpl<$Res, _$_InProgress>
+class __$$_InProgressCopyWithImpl<$Res> extends _$SignInPageStateCopyWithImpl<$Res, _$_InProgress>
     implements _$$_InProgressCopyWith<$Res> {
-  __$$_InProgressCopyWithImpl(
-      _$_InProgress _value, $Res Function(_$_InProgress) _then)
-      : super(_value, _then);
+  __$$_InProgressCopyWithImpl(_$_InProgress _value, $Res Function(_$_InProgress) _then) : super(_value, _then);
 }
 
 /// @nodoc
@@ -227,8 +216,7 @@ class _$_InProgress implements _InProgress {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_InProgress);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$_InProgress);
   }
 
   @override
@@ -315,18 +303,14 @@ abstract class _InProgress implements SignInPageState {
 
 /// @nodoc
 abstract class _$$_SuccessfulCopyWith<$Res> {
-  factory _$$_SuccessfulCopyWith(
-          _$_Successful value, $Res Function(_$_Successful) then) =
+  factory _$$_SuccessfulCopyWith(_$_Successful value, $Res Function(_$_Successful) then) =
       __$$_SuccessfulCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SuccessfulCopyWithImpl<$Res>
-    extends _$SignInPageStateCopyWithImpl<$Res, _$_Successful>
+class __$$_SuccessfulCopyWithImpl<$Res> extends _$SignInPageStateCopyWithImpl<$Res, _$_Successful>
     implements _$$_SuccessfulCopyWith<$Res> {
-  __$$_SuccessfulCopyWithImpl(
-      _$_Successful _value, $Res Function(_$_Successful) _then)
-      : super(_value, _then);
+  __$$_SuccessfulCopyWithImpl(_$_Successful _value, $Res Function(_$_Successful) _then) : super(_value, _then);
 }
 
 /// @nodoc
@@ -341,8 +325,7 @@ class _$_Successful implements _Successful {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Successful);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$_Successful);
   }
 
   @override
@@ -429,18 +412,15 @@ abstract class _Successful implements SignInPageState {
 
 /// @nodoc
 abstract class _$$_ErrorCopyWith<$Res> {
-  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
-      __$$_ErrorCopyWithImpl<$Res>;
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) = __$$_ErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({SignInError error});
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res>
-    extends _$SignInPageStateCopyWithImpl<$Res, _$_Error>
+class __$$_ErrorCopyWithImpl<$Res> extends _$SignInPageStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
-  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, _then);
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -483,8 +463,7 @@ class _$_Error implements _Error {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ErrorCopyWith<_$_Error> get copyWith =>
-      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
+  _$$_ErrorCopyWith<_$_Error> get copyWith => __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -566,6 +545,5 @@ abstract class _Error implements SignInPageState {
 
   SignInError get error;
   @JsonKey(ignore: true)
-  _$$_ErrorCopyWith<_$_Error> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_ErrorCopyWith<_$_Error> get copyWith => throw _privateConstructorUsedError;
 }
