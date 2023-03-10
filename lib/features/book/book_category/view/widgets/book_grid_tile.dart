@@ -52,17 +52,22 @@ class BookGridTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
-        book.coverImage?.smaller != null
-            ? CachedNetworkImage(
-                imageUrl: book.coverImage!.smaller!,
-                placeholder: (context, url) => Image.asset('assets/images/no_book_cover.png'),
-                errorWidget: (context, url, error) => Image.asset('assets/images/no_book_cover.png'),
-                width: 140,
-              )
-            : Image.asset(
-                'assets/images/no_book_cover.png',
-                width: 140,
-              ),
+        GestureDetector(
+          onTap: () {
+            _navigateToDetailPage(context, ref);
+          },
+          child: book.coverImage?.smaller != null
+              ? CachedNetworkImage(
+                  imageUrl: book.coverImage!.smaller!,
+                  placeholder: (context, url) => Image.asset('assets/images/no_book_cover.png'),
+                  errorWidget: (context, url, error) => Image.asset('assets/images/no_book_cover.png'),
+                  width: 140,
+                )
+              : Image.asset(
+                  'assets/images/no_book_cover.png',
+                  width: 140,
+                ),
+        ),
         Text(
           book.title,
           maxLines: 3,
