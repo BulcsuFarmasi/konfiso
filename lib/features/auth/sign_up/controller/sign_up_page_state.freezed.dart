@@ -70,14 +70,12 @@ mixin _$SignUpPageState {
 
 /// @nodoc
 abstract class $SignUpPageStateCopyWith<$Res> {
-  factory $SignUpPageStateCopyWith(
-          SignUpPageState value, $Res Function(SignUpPageState) then) =
+  factory $SignUpPageStateCopyWith(SignUpPageState value, $Res Function(SignUpPageState) then) =
       _$SignUpPageStateCopyWithImpl<$Res, SignUpPageState>;
 }
 
 /// @nodoc
-class _$SignUpPageStateCopyWithImpl<$Res, $Val extends SignUpPageState>
-    implements $SignUpPageStateCopyWith<$Res> {
+class _$SignUpPageStateCopyWithImpl<$Res, $Val extends SignUpPageState> implements $SignUpPageStateCopyWith<$Res> {
   _$SignUpPageStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -88,19 +86,15 @@ class _$SignUpPageStateCopyWithImpl<$Res, $Val extends SignUpPageState>
 
 /// @nodoc
 abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+  factory _$$_InitialCopyWith(_$_Initial value, $Res Function(_$_Initial) then) = __$$_InitialCopyWithImpl<$Res>;
   @useResult
   $Res call({String privacyPolicyUrl});
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$SignUpPageStateCopyWithImpl<$Res, _$_Initial>
+class __$$_InitialCopyWithImpl<$Res> extends _$SignUpPageStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, _then);
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -134,8 +128,7 @@ class _$_Initial implements _Initial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Initial &&
-            (identical(other.privacyPolicyUrl, privacyPolicyUrl) ||
-                other.privacyPolicyUrl == privacyPolicyUrl));
+            (identical(other.privacyPolicyUrl, privacyPolicyUrl) || other.privacyPolicyUrl == privacyPolicyUrl));
   }
 
   @override
@@ -144,8 +137,7 @@ class _$_Initial implements _Initial {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_InitialCopyWith<_$_Initial> get copyWith =>
-      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
+  _$$_InitialCopyWith<_$_Initial> get copyWith => __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -227,24 +219,19 @@ abstract class _Initial implements SignUpPageState {
 
   String get privacyPolicyUrl;
   @JsonKey(ignore: true)
-  _$$_InitialCopyWith<_$_Initial> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_InitialCopyWith<_$_Initial> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$_InProgressCopyWith<$Res> {
-  factory _$$_InProgressCopyWith(
-          _$_InProgress value, $Res Function(_$_InProgress) then) =
+  factory _$$_InProgressCopyWith(_$_InProgress value, $Res Function(_$_InProgress) then) =
       __$$_InProgressCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InProgressCopyWithImpl<$Res>
-    extends _$SignUpPageStateCopyWithImpl<$Res, _$_InProgress>
+class __$$_InProgressCopyWithImpl<$Res> extends _$SignUpPageStateCopyWithImpl<$Res, _$_InProgress>
     implements _$$_InProgressCopyWith<$Res> {
-  __$$_InProgressCopyWithImpl(
-      _$_InProgress _value, $Res Function(_$_InProgress) _then)
-      : super(_value, _then);
+  __$$_InProgressCopyWithImpl(_$_InProgress _value, $Res Function(_$_InProgress) _then) : super(_value, _then);
 }
 
 /// @nodoc
@@ -259,8 +246,7 @@ class _$_InProgress implements _InProgress {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_InProgress);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$_InProgress);
   }
 
   @override
@@ -347,18 +333,14 @@ abstract class _InProgress implements SignUpPageState {
 
 /// @nodoc
 abstract class _$$_SuccesfulCopyWith<$Res> {
-  factory _$$_SuccesfulCopyWith(
-          _$_Succesful value, $Res Function(_$_Succesful) then) =
+  factory _$$_SuccesfulCopyWith(_$_Succesful value, $Res Function(_$_Succesful) then) =
       __$$_SuccesfulCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_SuccesfulCopyWithImpl<$Res>
-    extends _$SignUpPageStateCopyWithImpl<$Res, _$_Succesful>
+class __$$_SuccesfulCopyWithImpl<$Res> extends _$SignUpPageStateCopyWithImpl<$Res, _$_Succesful>
     implements _$$_SuccesfulCopyWith<$Res> {
-  __$$_SuccesfulCopyWithImpl(
-      _$_Succesful _value, $Res Function(_$_Succesful) _then)
-      : super(_value, _then);
+  __$$_SuccesfulCopyWithImpl(_$_Succesful _value, $Res Function(_$_Succesful) _then) : super(_value, _then);
 }
 
 /// @nodoc
@@ -373,8 +355,7 @@ class _$_Succesful implements _Succesful {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Succesful);
+    return identical(this, other) || (other.runtimeType == runtimeType && other is _$_Succesful);
   }
 
   @override
@@ -461,18 +442,15 @@ abstract class _Succesful implements SignUpPageState {
 
 /// @nodoc
 abstract class _$$_ErrorCopyWith<$Res> {
-  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
-      __$$_ErrorCopyWithImpl<$Res>;
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) = __$$_ErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({SignUpError error, String privacyPolicyUrl});
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res>
-    extends _$SignUpPageStateCopyWithImpl<$Res, _$_Error>
+class __$$_ErrorCopyWithImpl<$Res> extends _$SignUpPageStateCopyWithImpl<$Res, _$_Error>
     implements _$$_ErrorCopyWith<$Res> {
-  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
-      : super(_value, _then);
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -514,8 +492,7 @@ class _$_Error implements _Error {
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
             (identical(other.error, error) || other.error == error) &&
-            (identical(other.privacyPolicyUrl, privacyPolicyUrl) ||
-                other.privacyPolicyUrl == privacyPolicyUrl));
+            (identical(other.privacyPolicyUrl, privacyPolicyUrl) || other.privacyPolicyUrl == privacyPolicyUrl));
   }
 
   @override
@@ -524,8 +501,7 @@ class _$_Error implements _Error {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ErrorCopyWith<_$_Error> get copyWith =>
-      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
+  _$$_ErrorCopyWith<_$_Error> get copyWith => __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -603,12 +579,10 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements SignUpPageState {
-  const factory _Error(final SignUpError error, final String privacyPolicyUrl) =
-      _$_Error;
+  const factory _Error(final SignUpError error, final String privacyPolicyUrl) = _$_Error;
 
   SignUpError get error;
   String get privacyPolicyUrl;
   @JsonKey(ignore: true)
-  _$$_ErrorCopyWith<_$_Error> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_ErrorCopyWith<_$_Error> get copyWith => throw _privateConstructorUsedError;
 }
