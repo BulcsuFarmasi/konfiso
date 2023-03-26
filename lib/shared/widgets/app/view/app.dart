@@ -59,6 +59,7 @@ class _AppState extends ConsumerState<App> {
       supportedLocales: AppLocalizations.supportedLocales,
       navigatorKey: _navigatorKey,
       theme: ThemeData(
+        useMaterial3: true,
         scaffoldBackgroundColor: AppColors.backgroundColor,
         primarySwatch: AppColors.primaryColorSwatch,
         fontFamily: 'Poppins',
