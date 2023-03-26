@@ -339,5 +339,10 @@
   "@cancel": {
     "type": "text",
     "placeholders": {}
+  },
+  "settings": "Beállítások",
+  "@settings": {
+    "type": "text",
+    "placeholders": {}
   }
 }

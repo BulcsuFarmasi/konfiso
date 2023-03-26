@@ -13,6 +13,7 @@ import 'package:konfiso/features/book/book_detail/view/pages/book_detail_page.da
 import 'package:konfiso/features/book/book_home/view/pages/book_home_page.dart';
 import 'package:konfiso/features/loading/view/pages/loading_page.dart';
 import 'package:konfiso/features/no_connection/no_connection/view/pages/no_connection_page.dart';
+import 'package:konfiso/features/settings/settings/view/pages/settings_page.dart';
 import 'package:konfiso/shared/app_colors.dart';
 import 'package:konfiso/shared/widgets/app/controller/app_state.dart';
 import 'package:konfiso/shared/widgets/app/controller/app_state_notifier.dart';
@@ -101,6 +102,7 @@ class _AppState extends ConsumerState<App> {
         AddBookPage.routeName: (_) => const AddBookPage(),
         BookDetailPage.routeName: (_) => const BookDetailPage(),
         NoConnectionPage.routeName: (_) => const NoConnectionPage(),
+        SettingsPage.routeName: (_) => const SettingsPage(),
       },
     );
   }
