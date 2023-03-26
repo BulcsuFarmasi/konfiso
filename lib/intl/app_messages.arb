@@ -344,5 +344,10 @@
   "@settings": {
     "type": "text",
     "placeholders": {}
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "type": "text",
+    "placeholders": {}
   }
 }

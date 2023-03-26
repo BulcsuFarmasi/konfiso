@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:konfiso/features/book/add_book/view/pages/add_book_page.dart';
 import 'package:konfiso/features/book/book_home/view/widgets/book_home_menu_item.dart';
 import 'package:konfiso/features/book/data/book_reading_status.dart';
-import 'package:konfiso/shared/widgets/app_drawer/view/app_drawer.dart';
+import 'package:konfiso/shared/widgets/app_drawer/view/pages/app_drawer.dart';
 
 class BookHomePage extends StatelessWidget {
   const BookHomePage({super.key});
