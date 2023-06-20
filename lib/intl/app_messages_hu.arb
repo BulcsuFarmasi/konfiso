@@ -339,5 +339,15 @@
   "@cancel": {
     "type": "text",
     "placeholders": {}
+  },
+  "settings": "Beállítások",
+  "@settings": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "darkMode": "Sötét Mód",
+  "@darkMode": {
+    "type": "text",
+    "placeholders": {}
   }
 }

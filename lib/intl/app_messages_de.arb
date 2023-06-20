@@ -339,5 +339,15 @@
   "@cancel": {
     "type": "text",
     "placeholders": {}
+  },
+  "settings": "Einstellungen",
+  "@settings": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "darkMode": "Dunkler Modus",
+  "@darkMode": {
+    "type": "text",
+    "placeholders": {}
   }
 }

@@ -8,6 +8,7 @@ import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/features/book/data/stored_book.dart';
 import 'package:konfiso/features/book/data/stored_book_reading_detail.dart';
 import 'package:konfiso/features/book/data/stored_search_result.dart';
+import 'package:konfiso/features/settings/data/stored_settings.dart';
 import 'package:konfiso/firebase_options_dev.dart';
 import 'package:konfiso/shared/widgets/app/view/app.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,6 +38,7 @@ Future<void> initializeHive() async {
   Hive.registerAdapter(StoredBookReadingDetailAdapter());
   Hive.registerAdapter(BookReadingStatusAdapter());
   Hive.registerAdapter(StoredSearchResultAdapter());
+  Hive.registerAdapter(StoredSettingsAdapter());
 
   Hive.init(applicationDocumentsDirectory.path);
 }
