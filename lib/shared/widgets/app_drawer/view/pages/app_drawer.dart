@@ -21,10 +21,6 @@ class _AppDrawerState extends State<AppDrawer> {
     super.didChangeDependencies();
 
     listItems ??= [
-      AppDrawerListItem(
-          AppDrawerListItemType.books, Icons.book, AppLocalizations.of(context)!.books, BookHomePage.routeName),
-      AppDrawerListItem(AppDrawerListItemType.settings, Icons.settings, AppLocalizations.of(context)!.settings,
-          SettingsPage.routeName),
       AppDrawerListItem(AppDrawerListItemType.signOut, Icons.exit_to_app, AppLocalizations.of(context)!.logout, '/'),
     ];
   }
