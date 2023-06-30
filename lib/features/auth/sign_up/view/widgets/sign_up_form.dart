@@ -182,9 +182,9 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
           const SizedBox(
             height: 17,
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: _submitForm,
-            style: ElevatedButton.styleFrom(
+            style: FilledButton.styleFrom(
               fixedSize: const Size(150, 41),
             ),
             child: Text(AppLocalizations.of(context)!.signup),

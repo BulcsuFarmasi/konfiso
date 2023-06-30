@@ -107,9 +107,9 @@ class _SignInFormState extends ConsumerState<SignInForm> {
           const SizedBox(
             height: 34,
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: _submitForm,
-            style: ElevatedButton.styleFrom(
+            style: FilledButton.styleFrom(
               fixedSize: const Size(150, 41),
             ),
             child: Text(
