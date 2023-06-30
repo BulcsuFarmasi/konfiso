@@ -44,7 +44,7 @@ class _SettingsFormState extends ConsumerState<SettingsForm> {
           ),
         ),
       ),
-      ElevatedButton(
+      FilledButton(
         onPressed: _saveSettings,
         child: Text(AppLocalizations.of(context)!.save),
       )

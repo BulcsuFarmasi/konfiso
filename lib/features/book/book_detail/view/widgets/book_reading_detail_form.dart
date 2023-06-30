@@ -154,7 +154,7 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton.icon(
+            FilledButton.icon(
               onPressed: _restoreRating,
               icon: const Icon(Icons.close),
               label: Text(AppLocalizations.of(context)!.deleteRating),
@@ -172,7 +172,7 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton(onPressed: _submitForm, child: Text(AppLocalizations.of(context)!.save)),
+            FilledButton(onPressed: _submitForm, child: Text(AppLocalizations.of(context)!.save)),
           ],
         ));
   }

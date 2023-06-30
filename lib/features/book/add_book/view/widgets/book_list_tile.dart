@@ -48,7 +48,7 @@ class BookListTile extends ConsumerWidget {
         book.authors?.join(', ') ?? '',
         style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.greyDarkestWithHalfOpacity),
       ),
-      trailing: ElevatedButton(
+      trailing: FilledButton(
         onPressed: book.industryIdsByType != null
             ? () {
                 _navigateToDetailPage(context, ref);

@@ -84,7 +84,7 @@ class BookGridTile extends ConsumerWidget {
             textAlign: TextAlign.center,
           ),
         ),
-        ElevatedButton(
+        FilledButton(
             onPressed: () {
               _navigateToDetailPage(context, ref);
             },

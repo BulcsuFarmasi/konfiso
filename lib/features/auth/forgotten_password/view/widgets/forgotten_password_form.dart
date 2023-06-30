@@ -54,7 +54,7 @@ class _ForgottenPasswordFormState extends ConsumerState<ForgottenPasswordForm> w
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton(
+            FilledButton(
               onPressed: _submitForm,
               child: Text(AppLocalizations.of(context)!.sendEmail),
             ),

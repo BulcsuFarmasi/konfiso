@@ -62,7 +62,21 @@ class _AppState extends ConsumerState<App> {
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: AppColors.backgroundColor,
-        primarySwatch: AppColors.primaryColorSwatch,
+        canvasColor: AppColors.backgroundColor,
+        colorScheme: const ColorScheme(
+          brightness: Brightness.light,
+          primary: AppColors.primaryColor,
+          onPrimary: AppColors.whiteColor,
+          primaryContainer: AppColors.primaryColor,
+          secondary: AppColors.greyColor,
+          onSecondary: AppColors.whiteColor,
+          background: AppColors.backgroundColor,
+          onBackground: AppColors.primaryColor,
+          surface: AppColors.whiteColor,
+          onSurface: AppColors.greyDarkestColor,
+          error: AppColors.primaryColor,
+          onError: AppColors.whiteColor,
+        ),
         fontFamily: 'Poppins',
         inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(9)),
@@ -70,10 +84,11 @@ class _AppState extends ConsumerState<App> {
             filled: true,
             errorBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.primaryColor)),
             errorStyle: const TextStyle(color: AppColors.primaryColor)),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)), elevation: 0),
-        ),
+        filledButtonTheme: FilledButtonThemeData(
+            style: FilledButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
+          backgroundColor: AppColors.primaryColor,
+        )),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             shape: RoundedRectangleBorder(
