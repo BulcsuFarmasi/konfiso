@@ -7,19 +7,19 @@ part 'book_reading_status.g.dart';
 @HiveType(typeId: 6)
 enum BookReadingStatus {
   @HiveField(0)
-  currentlyReading,
-  @HiveField(1)
   wantToRead,
+  @HiveField(1)
+  currentlyReading,
   @HiveField(2)
   alreadyRead;
 
   @override
   String toString() {
     switch (this) {
-      case BookReadingStatus.currentlyReading:
-        return 'currentlyReading';
       case BookReadingStatus.wantToRead:
         return 'wantToRead';
+      case BookReadingStatus.currentlyReading:
+        return 'currentlyReading';
       case BookReadingStatus.alreadyRead:
         return 'alreadyRead';
     }
@@ -28,10 +28,10 @@ enum BookReadingStatus {
 
 String getReadingStatusDisplayText(BookReadingStatus readingStatus, BuildContext context) {
   switch (readingStatus) {
-    case BookReadingStatus.currentlyReading:
-      return AppLocalizations.of(context)!.currentlyReading;
     case BookReadingStatus.wantToRead:
       return AppLocalizations.of(context)!.wantToRead;
+    case BookReadingStatus.currentlyReading:
+      return AppLocalizations.of(context)!.currentlyReading;
     case BookReadingStatus.alreadyRead:
       return AppLocalizations.of(context)!.alreadyRead;
   }
