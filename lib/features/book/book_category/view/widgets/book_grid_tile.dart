@@ -50,6 +50,7 @@ class BookGridTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    AppColors appColors = ref.read(appColorsProvider);
     return Column(
       children: [
         GestureDetector(
@@ -72,7 +73,7 @@ class BookGridTile extends ConsumerWidget {
           book.title,
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 18, color: AppColors.greyDarkestColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 18, color: appColors.greyDarkestColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
         Visibility(
@@ -80,7 +81,7 @@ class BookGridTile extends ConsumerWidget {
           child: Text(
             book.authors?.join(', ') ?? '',
             style:
-                const TextStyle(fontSize: 14, color: AppColors.greyDarkestWithHalfOpacity, fontWeight: FontWeight.w500),
+                TextStyle(fontSize: 14, color: appColors.greyDarkestWithHalfOpacity, fontWeight: FontWeight.w500),
             textAlign: TextAlign.center,
           ),
         ),

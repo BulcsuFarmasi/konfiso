@@ -16,6 +16,7 @@ class ForgottenPasswordSuccessful extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final AppColors appColors = ref.read(appColorsProvider);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -40,7 +41,7 @@ class ForgottenPasswordSuccessful extends ConsumerWidget {
           },
           child: Text(
             AppLocalizations.of(context)!.afterThatYouCanLoginHere,
-            style: const TextStyle(fontSize: 18, color: AppColors.primaryColor),
+            style: TextStyle(fontSize: 18, color: appColors.primaryColor),
             textAlign: TextAlign.center,
           ),
         ),

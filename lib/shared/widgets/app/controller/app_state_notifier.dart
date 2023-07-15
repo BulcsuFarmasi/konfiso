@@ -26,7 +26,6 @@ class AppStateNotifier extends StateNotifier<AppState> {
 
   void watchDarkMode() {
     _appRepository.watchDarkMode.listen((bool darkMode) {
-      print('darkMode: $darkMode');
       if (darkMode) {
         state = const AppState.darkMode();
       } else {

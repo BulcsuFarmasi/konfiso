@@ -95,6 +95,7 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
 
   @override
   Widget build(BuildContext context) {
+    final AppColors appColors = ref.read(appColorsProvider);
     return Form(
         key: _formKey,
         child: Column(
@@ -119,7 +120,7 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
                   .toList(),
               value: _readingStatus,
               onChanged: _changeReadingStatus,
-              iconEnabledColor: AppColors.primaryColor,
+              iconEnabledColor: appColors.primaryColor,
             ),
             Visibility(
               visible: _readingStatus == BookReadingStatus.currentlyReading,
@@ -148,7 +149,7 @@ class _BookReadingDetailFormState extends ConsumerState<BookReadingDetailForm> {
               direction: Axis.horizontal,
               allowHalfRating: true,
               itemCount: 5,
-              itemBuilder: (_, __) => const Icon(Icons.star, color: AppColors.primaryColor),
+              itemBuilder: (_, __) => Icon(Icons.star, color: appColors.primaryColor),
               onRatingUpdate: _changeRating,
             ),
             const SizedBox(

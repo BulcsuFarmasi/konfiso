@@ -99,6 +99,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
 
   @override
   Widget build(BuildContext context) {
+    final AppColors appColors = ref.read(appColorsProvider);
     return Form(
       key: _formKey,
       child: Column(
@@ -167,7 +168,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
                 children: [
                   TextSpan(
                       text: AppLocalizations.of(context)!.thePrivacyPolicy,
-                      style: const TextStyle(color: AppColors.primaryColor),
+                      style: TextStyle(color: appColors.primaryColor),
                       recognizer: TapGestureRecognizer()..onTap = _openPrivacyPolicy),
                 ],
               ),
@@ -175,7 +176,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
             subtitle: !_privacyPolicyConsented && _formSubmitted
                 ? Text(
                     AppLocalizations.of(context)!.pleaseAcceptThePrivacyPolicy,
-                    style: const TextStyle(color: AppColors.primaryColor, fontSize: 12),
+                    style: TextStyle(color: appColors.primaryColor, fontSize: 12),
                   )
                 : null,
           ),
@@ -196,11 +197,11 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(AppLocalizations.of(context)!.ifYouHaveAnAccount,
-                  style: const TextStyle(color: AppColors.greyColor, fontSize: 14)),
+                  style: TextStyle(color: appColors.greyColor, fontSize: 14)),
               GestureDetector(
                 onTap: _navigateToSignIn,
                 child:
-                    Text(AppLocalizations.of(context)!.logIn, style: const TextStyle(color: AppColors.greyDarkerColor)),
+                    Text(AppLocalizations.of(context)!.logIn, style: TextStyle(color: appColors.greyDarkerColor)),
               ),
             ],
           ),

@@ -32,7 +32,6 @@ class SettingsService {
 
   Future<void> _initializeDarkMode() async {
     StoredSettings? storedSettings = await loadSettings();
-    print(storedSettings?.darkMode);
     _watchDarkModeController.add(storedSettings?.darkMode ?? false);
   }
 }

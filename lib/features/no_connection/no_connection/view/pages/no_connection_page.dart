@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
-class NoConnectionPage extends StatelessWidget {
+class NoConnectionPage extends ConsumerWidget {
   const NoConnectionPage({super.key});
 
   static const routeName = '/no-connection';
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AppColors appColors = ref.read(appColorsProvider);
     return WillPopScope(
         child: Scaffold(
           body: Padding(
@@ -16,10 +18,10 @@ class NoConnectionPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
+                Icon(
                   Icons.signal_wifi_connected_no_internet_4,
                   size: 60,
-                  color: AppColors.primaryColor,
+                  color: appColors.primaryColor,
                 ),
                 const SizedBox(
                   height: 20,
@@ -27,7 +29,7 @@ class NoConnectionPage extends StatelessWidget {
                 Text(
                   AppLocalizations.of(context)!.noInternetConnection,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 25, color: AppColors.primaryColor),
+                  style: TextStyle(fontSize: 25, color: appColors.primaryColor),
                 ),
                 const SizedBox(
                   height: 15,

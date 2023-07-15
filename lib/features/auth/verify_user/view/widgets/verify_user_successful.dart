@@ -13,7 +13,8 @@ class VerifyUserSuccessful extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const textStyle = TextStyle(color: AppColors.greyColor, fontSize: 20);
+    final AppColors appColors = ref.read(appColorsProvider);
+    final TextStyle textStyle = TextStyle(color: appColors.greyColor, fontSize: 20);
 
     return Center(
       child: Column(
@@ -36,7 +37,7 @@ class VerifyUserSuccessful extends ConsumerWidget {
             },
             child: Text(
               AppLocalizations.of(context)!.byClickingHereYouCanLogin,
-              style: textStyle.copyWith(color: AppColors.primaryColor, fontSize: 24),
+              style: textStyle.copyWith(color: appColors.primaryColor, fontSize: 24),
               textAlign: TextAlign.center,
             ),
           ),

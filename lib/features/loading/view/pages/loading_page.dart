@@ -55,6 +55,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final AppColors appColors = ref.read(appColorsProvider);
     return Scaffold(
       body: Center(
         child: Column(
@@ -66,7 +67,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
             ),
             Text(
               AppLocalizations.of(context)!.loading,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.primaryColor),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: appColors.primaryColor),
             ),
           ],
         ),
