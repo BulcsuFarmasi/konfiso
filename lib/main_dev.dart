@@ -17,9 +17,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  initializeFirebase();
+  await initializeFirebase();
 
-  initializeHive();
+  await initializeHive();
 
   runApp(const ProviderScope(child: App()));
 }

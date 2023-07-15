@@ -9,4 +9,8 @@ class AppState with _$AppState {
   const factory AppState.connected() = _Connected;
 
   const factory AppState.notConnected() = _NotConnected;
+
+  const factory AppState.lightMode() = _LightMode;
+
+  const factory AppState.darkMode() = _DarkMode;
 }

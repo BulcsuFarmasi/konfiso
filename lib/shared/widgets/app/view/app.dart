@@ -29,6 +29,7 @@ class App extends ConsumerStatefulWidget {
 
 class _AppState extends ConsumerState<App> {
   final _navigatorKey = GlobalKey<NavigatorState>();
+  ThemeMode _themeMode = ThemeMode.light;
 
   @override
   void initState() {
@@ -37,6 +38,7 @@ class _AppState extends ConsumerState<App> {
       final notifier = ref.read(appStateNotifierProvider.notifier);
       notifier.setLocale(Platform.localeName);
       notifier.watchConnection();
+      notifier.watchDarkMode();
     });
   }
 
@@ -54,16 +56,29 @@ class _AppState extends ConsumerState<App> {
           },
           orElse: () => null);
     });
+
+    _themeMode = ref.watch(appStateNotifierProvider).maybeMap(
+        lightMode: (_) {
+          return ThemeMode.light;
+        },
+        darkMode: (_) {
+          return ThemeMode.dark;
+        },
+        orElse: () => _themeMode);
+
+    print('themeMode: $_themeMode');
+
     return MaterialApp(
       title: 'Konfiso',
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       navigatorKey: _navigatorKey,
       debugShowCheckedModeBanner: false,
+      themeMode: _themeMode,
       theme: ThemeData(
         useMaterial3: true,
         scaffoldBackgroundColor: AppColors.backgroundColor,
-        canvasColor: AppColors.backgroundColor,
+        brightness: Brightness.light,
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
           primary: AppColors.primaryColor,
@@ -90,6 +105,36 @@ class _AppState extends ConsumerState<App> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
           backgroundColor: AppColors.primaryColor,
         )),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(9),
+            ),
+            side: const BorderSide(color: AppColors.primaryColor),
+          ),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppColors.backgroundColor,
+          elevation: 0,
+          foregroundColor: AppColors.greyDarkerColor,
+          iconTheme: IconThemeData(color: AppColors.greyDarkerColor),
+        ),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        useMaterial3: true,
+        fontFamily: 'Poppins',
+        inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(9)),
+            fillColor: AppColors.inputBackgroundColor,
+            filled: true,
+            errorBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.primaryColor)),
+            errorStyle: const TextStyle(color: AppColors.primaryColor)),
+        filledButtonTheme: FilledButtonThemeData(
+            style: FilledButton.styleFrom(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
+              backgroundColor: AppColors.primaryColor,
+            )),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             shape: RoundedRectangleBorder(

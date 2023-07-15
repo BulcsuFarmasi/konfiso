@@ -15,11 +15,22 @@ class AppStateNotifier extends StateNotifier<AppState> {
   }
 
   void watchConnection() {
-    _appRepository.watchConnection.listen((connection) {
+    _appRepository.watchConnection.listen((bool connection) {
       if (connection) {
         state = const AppState.connected();
       } else {
         state = const AppState.notConnected();
+      }
+    });
+  }
+
+  void watchDarkMode() {
+    _appRepository.watchDarkMode.listen((bool darkMode) {
+      print('darkMode: $darkMode');
+      if (darkMode) {
+        state = const AppState.darkMode();
+      } else {
+        state = const AppState.lightMode();
       }
     });
   }
