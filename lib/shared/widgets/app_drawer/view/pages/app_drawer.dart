@@ -32,7 +32,7 @@ class _AppDrawerState extends ConsumerState<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    AppColors appColors = ref.read(appColorsProvider);
+    final AppColors appColors = ref.read(appColorsProvider);
     return Drawer(
       child: Column(
         children: [

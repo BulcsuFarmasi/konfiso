@@ -13,7 +13,7 @@ class BookData extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AppColors appColors = ref.read(appColorsProvider);
+    final AppColors appColors = ref.read(appColorsProvider);
     return Column(
       children: [
         const SizedBox(

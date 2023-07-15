@@ -15,7 +15,7 @@ class BookHomeMenuItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AppColors appColors = ref.read(appColorsProvider);
+    final AppColors appColors = ref.read(appColorsProvider);
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 50),
       elevation: 0,

@@ -66,7 +66,7 @@ class _AppState extends ConsumerState<App> {
         },
         orElse: () => _themeMode);
 
-    AppColors appColors = ref.read(appColorsProvider);
+    final AppColors appColors = ref.read(appColorsProvider);
     appColors.themeMode = _themeMode;
 
     return MaterialApp(
