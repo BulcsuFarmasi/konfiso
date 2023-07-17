@@ -101,7 +101,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
                   AppLocalizations.of(context)!.forgotPassword,
                   style: TextStyle(
                     fontSize: 12,
-                    color: appColors.blackColor,
+                    color: appColors.higherEmphasisText,
                   ),
                 )),
           ),
@@ -125,12 +125,12 @@ class _SignInFormState extends ConsumerState<SignInForm> {
             children: [
               Text(
                 AppLocalizations.of(context)!.ifYouDontHaveAnAccount,
-                style: TextStyle(color: appColors.greyColor, fontSize: 14),
+                style: TextStyle(color: appColors.smallEmphasisText, fontSize: 14),
               ),
               GestureDetector(
                 onTap: _navigateToSignUp,
                 child: Text(AppLocalizations.of(context)!.signUp,
-                    style: TextStyle(color: appColors.greyDarkerColor)),
+                    style: TextStyle(color: appColors.mediumEmphasisText)),
               ),
             ],
           ),

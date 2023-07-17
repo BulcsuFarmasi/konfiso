@@ -35,7 +35,7 @@ class BookData extends ConsumerWidget {
         ),
         Text(
           book.title,
-          style: TextStyle(fontSize: 24, color: appColors.greyDarkestColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 24, color: appColors.higherEmphasisText, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
         const SizedBox(
@@ -46,7 +46,7 @@ class BookData extends ConsumerWidget {
           child: Text(
             book.authors?.join(', ') ?? '',
             style:
-                TextStyle(fontSize: 14, color: appColors.greyDarkestWithHalfOpacity, fontWeight: FontWeight.w500),
+                TextStyle(fontSize: 14, color: appColors.highEmphasisText, fontWeight: FontWeight.w500),
           ),
         ),
         const SizedBox(
@@ -59,7 +59,7 @@ class BookData extends ConsumerWidget {
             children: [
               Text(
                 AppLocalizations.of(context)!.publicationYear,
-                style: TextStyle(fontSize: 14, color: appColors.greyDarkestColor, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 14, color: appColors.higherEmphasisText, fontWeight: FontWeight.w600),
               ),
               Text(book.publicationYear ?? ''),
             ],
@@ -73,7 +73,7 @@ class BookData extends ConsumerWidget {
           children: [
             Text(
               AppLocalizations.of(context)!.isbn,
-              style: TextStyle(fontSize: 14, color: appColors.greyDarkestColor, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 14, color: appColors.higherEmphasisText, fontWeight: FontWeight.w600),
             ),
             Text(book.industryIdsByType!.values
                 .map((BookIndustryIdentifier industryIdentifier) => industryIdentifier.identifier)

@@ -11,19 +11,20 @@ class AppColors {
 
   Color primaryColor = const Color(_primaryColorValue);
 
-  Color get backgroundColor => themeMode == ThemeMode.light ? const Color(0xFFE5E5E5) :  const Color(0xFF121212);
+  Color get backgroundColor => themeMode == ThemeMode.light ? const Color(0xFFE5E5E5) :  const Color(0xFF363636);
 
-  Color get inputBackgroundColor => themeMode == ThemeMode.light ? const Color(0xFFF7F7F7) :  const Color(0xFF242424);
+  Color get inputBackgroundColor => themeMode == ThemeMode.light ? const Color(0xFFF7F7F7) :  const Color(0xFF484848);
 
-  Color greyColor = const Color(0xFF969696);
+  Color get surfaceColor => themeMode == ThemeMode.light ? const Color(0xFFFFFFFF) : const Color(0xFF606060);
 
-  Color greyDarkerColor = const Color(0xFF323232);
 
-  Color greyDarkestColor = const Color(0xFF06070D);
+  Color get smallEmphasisText => themeMode == ThemeMode.light ? const Color(0xFF969696) :  const Color(0x60FFFFFF);
 
-  Color greyDarkestWithHalfOpacity = const Color(0x7F06070D);
+  Color get mediumEmphasisText => themeMode == ThemeMode.light ? const Color(0xFF323232) :  const Color(0x99FFFFFF);
 
-  Color blackColor = const Color(0xFF000000);
+  Color get highEmphasisText => themeMode == ThemeMode.light ? const Color(0x7F06070D) :  const Color(0xBAFFFFFF);
 
-  Color whiteColor = Colors.white;
+  Color get higherEmphasisText => themeMode == ThemeMode.light ? const Color(0xFF06070D) :  const Color(0xDBFFFFFF);
+
+  Color whiteColor = const Color(0xFFFFFFFF);
 }

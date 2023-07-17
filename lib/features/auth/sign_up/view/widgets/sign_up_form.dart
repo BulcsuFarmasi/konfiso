@@ -197,11 +197,11 @@ class _SignUpFormState extends ConsumerState<SignUpForm> with EmailValidationCap
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(AppLocalizations.of(context)!.ifYouHaveAnAccount,
-                  style: TextStyle(color: appColors.greyColor, fontSize: 14)),
+                  style: TextStyle(color: appColors.smallEmphasisText, fontSize: 14)),
               GestureDetector(
                 onTap: _navigateToSignIn,
                 child:
-                    Text(AppLocalizations.of(context)!.logIn, style: TextStyle(color: appColors.greyDarkerColor)),
+                    Text(AppLocalizations.of(context)!.logIn, style: TextStyle(color: appColors.mediumEmphasisText)),
               ),
             ],
           ),

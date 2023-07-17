@@ -14,7 +14,7 @@ class VerifyUserSuccessful extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AppColors appColors = ref.read(appColorsProvider);
-    final TextStyle textStyle = TextStyle(color: appColors.greyColor, fontSize: 20);
+    final TextStyle textStyle = TextStyle(color: appColors.smallEmphasisText, fontSize: 20);
 
     return Center(
       child: Column(

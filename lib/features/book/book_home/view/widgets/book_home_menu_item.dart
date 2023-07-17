@@ -36,7 +36,7 @@ class BookHomeMenuItem extends ConsumerWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
-                color: appColors.greyDarkestColor,
+                color: appColors.higherEmphasisText,
               ),
             )),
       ),

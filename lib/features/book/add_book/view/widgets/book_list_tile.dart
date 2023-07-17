@@ -43,11 +43,11 @@ class BookListTile extends ConsumerWidget {
             ),
       title: Text(
         book.title,
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: appColors.greyDarkestColor),
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: appColors.higherEmphasisText),
       ),
       subtitle: Text(
         book.authors?.join(', ') ?? '',
-        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: appColors.greyDarkestWithHalfOpacity),
+        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: appColors.highEmphasisText),
       ),
       trailing: FilledButton(
         onPressed: book.industryIdsByType != null
