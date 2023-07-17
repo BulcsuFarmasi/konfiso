@@ -66,6 +66,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
 
   @override
   Widget build(BuildContext context) {
+    final AppColors appColors = ref.read(appColorsProvider);
     return Form(
       key: _formKey,
       child: Column(
@@ -98,9 +99,9 @@ class _SignInFormState extends ConsumerState<SignInForm> {
                 onTap: _navigateToForgottenPassword,
                 child: Text(
                   AppLocalizations.of(context)!.forgotPassword,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.blackColor,
+                    color: appColors.higherEmphasisText,
                   ),
                 )),
           ),
@@ -124,12 +125,12 @@ class _SignInFormState extends ConsumerState<SignInForm> {
             children: [
               Text(
                 AppLocalizations.of(context)!.ifYouDontHaveAnAccount,
-                style: const TextStyle(color: AppColors.greyColor, fontSize: 14),
+                style: TextStyle(color: appColors.smallEmphasisText, fontSize: 14),
               ),
               GestureDetector(
                 onTap: _navigateToSignUp,
                 child: Text(AppLocalizations.of(context)!.signUp,
-                    style: const TextStyle(color: AppColors.greyDarkerColor)),
+                    style: TextStyle(color: appColors.mediumEmphasisText)),
               ),
             ],
           ),

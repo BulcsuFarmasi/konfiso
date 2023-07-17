@@ -28,6 +28,7 @@ class BookListTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final AppColors appColors = ref.read(appColorsProvider);
     return ListTile(
       leading: book.coverImage?.smallest != null
           ? CachedNetworkImage(
@@ -42,11 +43,11 @@ class BookListTile extends ConsumerWidget {
             ),
       title: Text(
         book.title,
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.greyDarkestColor),
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: appColors.higherEmphasisText),
       ),
       subtitle: Text(
         book.authors?.join(', ') ?? '',
-        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.greyDarkestWithHalfOpacity),
+        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: appColors.highEmphasisText),
       ),
       trailing: FilledButton(
         onPressed: book.industryIdsByType != null

@@ -1,17 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/data/book.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 import 'package:konfiso/shared/app_colors.dart';
 
-class BookData extends StatelessWidget {
+class BookData extends ConsumerWidget {
   const BookData({required this.book, super.key});
 
   final Book book;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AppColors appColors = ref.read(appColorsProvider);
     return Column(
       children: [
         const SizedBox(
@@ -33,7 +35,7 @@ class BookData extends StatelessWidget {
         ),
         Text(
           book.title,
-          style: const TextStyle(fontSize: 24, color: AppColors.greyDarkestColor, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 24, color: appColors.higherEmphasisText, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
         const SizedBox(
@@ -44,7 +46,7 @@ class BookData extends StatelessWidget {
           child: Text(
             book.authors?.join(', ') ?? '',
             style:
-                const TextStyle(fontSize: 14, color: AppColors.greyDarkestWithHalfOpacity, fontWeight: FontWeight.w500),
+                TextStyle(fontSize: 14, color: appColors.highEmphasisText, fontWeight: FontWeight.w500),
           ),
         ),
         const SizedBox(
@@ -57,7 +59,7 @@ class BookData extends StatelessWidget {
             children: [
               Text(
                 AppLocalizations.of(context)!.publicationYear,
-                style: const TextStyle(fontSize: 14, color: AppColors.greyDarkestColor, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 14, color: appColors.higherEmphasisText, fontWeight: FontWeight.w600),
               ),
               Text(book.publicationYear ?? ''),
             ],
@@ -71,7 +73,7 @@ class BookData extends StatelessWidget {
           children: [
             Text(
               AppLocalizations.of(context)!.isbn,
-              style: const TextStyle(fontSize: 14, color: AppColors.greyDarkestColor, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 14, color: appColors.higherEmphasisText, fontWeight: FontWeight.w600),
             ),
             Text(book.industryIdsByType!.values
                 .map((BookIndustryIdentifier industryIdentifier) => industryIdentifier.identifier)

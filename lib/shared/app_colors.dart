@@ -1,35 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final Provider<AppColors> appColorsProvider = Provider<AppColors>((Ref ref) => AppColors());
 
 class AppColors {
-  static const MaterialColor primaryColorSwatch = MaterialColor(_primaryColorValue, <int, Color>{
-    50: Color(0xFFFEE8E1),
-    100: Color(0xFFFEC6B4),
-    200: Color(0xFFFDA082),
-    300: Color(0xFFFC7950),
-    400: Color(0xFFFB5D2B),
-    500: Color(_primaryColorValue),
-    600: Color(0xFFF93A04),
-    700: Color(0xFFF93204),
-    800: Color(0xFFF82A03),
-    900: Color(0xFFF61C01),
-  });
+
+  ThemeMode themeMode = ThemeMode.light;
+
   static const int _primaryColorValue = 0xFFFA4005;
 
-  static const Color primaryColor = Color(_primaryColorValue);
+  Color primaryColor = const Color(_primaryColorValue);
 
-  static const backgroundColor = Color(0xFFE5E5E5);
+  Color get backgroundColor => themeMode == ThemeMode.light ? const Color(0xFFE5E5E5) :  const Color(0xFF363636);
 
-  static const inputBackgroundColor = Color(0xFFF7F7F7);
+  Color get inputBackgroundColor => themeMode == ThemeMode.light ? const Color(0xFFF7F7F7) :  const Color(0xFF484848);
 
-  static const greyColor = Color(0xFF969696);
+  Color get surfaceColor => themeMode == ThemeMode.light ? const Color(0xFFFFFFFF) : const Color(0xFF606060);
 
-  static const greyDarkerColor = Color(0xFF323232);
 
-  static const greyDarkestColor = Color(0xFF06070D);
+  Color get smallEmphasisText => themeMode == ThemeMode.light ? const Color(0xFF969696) :  const Color(0x60FFFFFF);
 
-  static const greyDarkestWithHalfOpacity = Color(0x7F06070D);
+  Color get mediumEmphasisText => themeMode == ThemeMode.light ? const Color(0xFF323232) :  const Color(0x99FFFFFF);
 
-  static const blackColor = Color(0xFF000000);
+  Color get highEmphasisText => themeMode == ThemeMode.light ? const Color(0x7F06070D) :  const Color(0xBAFFFFFF);
 
-  static const whiteColor = Colors.white;
+  Color get higherEmphasisText => themeMode == ThemeMode.light ? const Color(0xFF06070D) :  const Color(0xDBFFFFFF);
+
+  Color whiteColor = const Color(0xFFFFFFFF);
 }

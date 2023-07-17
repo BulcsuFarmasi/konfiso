@@ -29,6 +29,7 @@ class App extends ConsumerStatefulWidget {
 
 class _AppState extends ConsumerState<App> {
   final _navigatorKey = GlobalKey<NavigatorState>();
+  ThemeMode _themeMode = ThemeMode.light;
 
   @override
   void initState() {
@@ -37,6 +38,7 @@ class _AppState extends ConsumerState<App> {
       final notifier = ref.read(appStateNotifierProvider.notifier);
       notifier.setLocale(Platform.localeName);
       notifier.watchConnection();
+      notifier.watchDarkMode();
     });
   }
 
@@ -54,55 +56,114 @@ class _AppState extends ConsumerState<App> {
           },
           orElse: () => null);
     });
+
+    _themeMode = ref.watch(appStateNotifierProvider).maybeMap(
+        lightMode: (_) {
+          return ThemeMode.light;
+        },
+        darkMode: (_) {
+          return ThemeMode.dark;
+        },
+        orElse: () => _themeMode);
+
+    final AppColors appColors = ref.read(appColorsProvider);
+    appColors.themeMode = _themeMode;
+
     return MaterialApp(
       title: 'Konfiso',
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       navigatorKey: _navigatorKey,
       debugShowCheckedModeBanner: false,
+      themeMode: _themeMode,
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: AppColors.backgroundColor,
-        canvasColor: AppColors.backgroundColor,
-        colorScheme: const ColorScheme(
+        scaffoldBackgroundColor: appColors.backgroundColor,
+        brightness: Brightness.light,
+        colorScheme: ColorScheme(
           brightness: Brightness.light,
-          primary: AppColors.primaryColor,
-          onPrimary: AppColors.whiteColor,
-          primaryContainer: AppColors.primaryColor,
-          secondary: AppColors.greyColor,
-          onSecondary: AppColors.whiteColor,
-          background: AppColors.backgroundColor,
-          onBackground: AppColors.primaryColor,
-          surface: AppColors.whiteColor,
-          onSurface: AppColors.greyDarkestColor,
-          error: AppColors.primaryColor,
-          onError: AppColors.whiteColor,
+          primary: appColors.primaryColor,
+          onPrimary: appColors.whiteColor,
+          primaryContainer: appColors.primaryColor,
+          secondary: appColors.smallEmphasisText,
+          onSecondary: appColors.whiteColor,
+          background: appColors.backgroundColor,
+          onBackground: appColors.primaryColor,
+          surface: appColors.surfaceColor,
+          onSurface: appColors.higherEmphasisText,
+          error: appColors.primaryColor,
+          onError: appColors.whiteColor,
         ),
         fontFamily: 'Poppins',
         inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(9)),
-            fillColor: AppColors.inputBackgroundColor,
+            fillColor: appColors.inputBackgroundColor,
             filled: true,
-            errorBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.primaryColor)),
-            errorStyle: const TextStyle(color: AppColors.primaryColor)),
+            errorBorder: OutlineInputBorder(borderSide: BorderSide(color: appColors.primaryColor)),
+            errorStyle: TextStyle(color: appColors.primaryColor)),
         filledButtonTheme: FilledButtonThemeData(
             style: FilledButton.styleFrom(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
-          backgroundColor: AppColors.primaryColor,
+          backgroundColor: appColors.primaryColor,
         )),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(9),
             ),
-            side: const BorderSide(color: AppColors.primaryColor),
+            side: BorderSide(color: appColors.primaryColor),
           ),
         ),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: AppColors.backgroundColor,
+        appBarTheme: AppBarTheme(
+          backgroundColor: appColors.backgroundColor,
           elevation: 0,
-          foregroundColor: AppColors.greyDarkerColor,
-          iconTheme: IconThemeData(color: AppColors.greyDarkerColor),
+          foregroundColor: appColors.mediumEmphasisText,
+          iconTheme: IconThemeData(color: appColors.mediumEmphasisText),
+        ),
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        useMaterial3: true,
+        fontFamily: 'Poppins',
+        scaffoldBackgroundColor: appColors.backgroundColor,
+        colorScheme: ColorScheme(
+          brightness: Brightness.dark,
+          primary: appColors.primaryColor,
+          onPrimary: appColors.whiteColor,
+          primaryContainer: appColors.primaryColor,
+          secondary: appColors.smallEmphasisText,
+          onSecondary: appColors.whiteColor,
+          background: appColors.backgroundColor,
+          onBackground: appColors.primaryColor,
+          surface: appColors.surfaceColor,
+          onSurface: appColors.higherEmphasisText,
+          error: appColors.primaryColor,
+          onError: appColors.whiteColor,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(9)),
+            fillColor: appColors.inputBackgroundColor,
+            filled: true,
+            errorBorder: OutlineInputBorder(borderSide: BorderSide(color: appColors.primaryColor)),
+            errorStyle: TextStyle(color: appColors.primaryColor)),
+        filledButtonTheme: FilledButtonThemeData(
+            style: FilledButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
+          backgroundColor: appColors.primaryColor,
+        )),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(9),
+            ),
+            side: BorderSide(color: appColors.primaryColor),
+          ),
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: appColors.backgroundColor,
+          elevation: 0,
+          foregroundColor: appColors.mediumEmphasisText,
+          iconTheme: IconThemeData(color: appColors.mediumEmphasisText),
         ),
       ),
       navigatorObservers: [routeObserver],
