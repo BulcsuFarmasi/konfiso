@@ -30,6 +30,11 @@ class SettingsService {
     return _settingsStorage.saveSettings(storedSettings);
   }
 
+  Future<void> clearSettings() async {
+    await _settingsStorage.clearSettings();
+    _watchDarkModeController.add(false);
+  }
+
   Future<void> _initializeDarkMode() async {
     StoredSettings? storedSettings = await loadSettings();
     _watchDarkModeController.add(storedSettings?.darkMode ?? false);

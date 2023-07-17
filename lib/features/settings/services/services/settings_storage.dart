@@ -16,4 +16,8 @@ class SettingsStorage {
   Future<void> saveSettings(StoredSettings storedSettings) async {
     await _storage.write(_storage.storageName, storedSettings);
   }
+
+  Future<void> clearSettings() async {
+    await _storage.delete(_storage.storageName);
+  }
 }
