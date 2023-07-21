@@ -111,7 +111,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
           FilledButton(
             onPressed: _submitForm,
             style: FilledButton.styleFrom(
-              fixedSize: const Size(150, 41),
+              fixedSize: const Size(160, 41),
             ),
             child: Text(
               AppLocalizations.of(context)!.login,
