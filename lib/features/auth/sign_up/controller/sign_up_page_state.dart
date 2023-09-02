@@ -4,12 +4,12 @@ import 'package:konfiso/features/auth/sign_up/model/sign_up_error.dart';
 part 'sign_up_page_state.freezed.dart';
 
 @freezed
-class SignUpPageState with _$SignUpPageState {
-  const factory SignUpPageState.initial(String privacyPolicyUrl) = _Initial;
+sealed class SignUpPageState with _$SignUpPageState {
+  const factory SignUpPageState.initial(String privacyPolicyUrl) = Initial;
 
-  const factory SignUpPageState.inProgress() = _InProgress;
+  const factory SignUpPageState.inProgress() = InProgress;
 
-  const factory SignUpPageState.successful() = _Succesful;
+  const factory SignUpPageState.successful() = Successful;
 
-  const factory SignUpPageState.error(SignUpError error, String privacyPolicyUrl) = _Error;
+  const factory SignUpPageState.error(SignUpError error, String privacyPolicyUrl) = Error;
 }

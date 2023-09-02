@@ -15,25 +15,30 @@ class SignUpPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(signUpStateNotifierProvider, (_, SignUpPageState next) {
-      next.maybeMap(
-          successful: (_) {
-            ref.read(signUpStateNotifierProvider.notifier).goBackToInitial();
-            Navigator.of(context).pushReplacementNamed(VerifyUserPage.routeName);
-          },
-          orElse: () => null);
+      switch (next) {
+        case Successful():
+          ref.read(signUpStateNotifierProvider.notifier).goBackToInitial();
+          Navigator.of(context).pushReplacementNamed(VerifyUserPage.routeName);
+        default:
+      }
     });
 
     final state = ref.watch(signUpStateNotifierProvider);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 42),
-          child: state.maybeMap(
-              initial: (initial) => SignUpInitial(privacyPolicyUrl: initial.privacyPolicyUrl),
-              inProgress: (_) => const EntryInProgress(),
-              error: (error) => SignUpError(error: error.error, privacyPolicyUrl: error.privacyPolicyUrl),
-              orElse: () => const SizedBox()),
-        ),
+            padding: const EdgeInsets.symmetric(horizontal: 42),
+            child: switch (state) {
+              Initial initial => SignUpInitial(
+                  privacyPolicyUrl: initial.privacyPolicyUrl,
+                ),
+              InProgress() => const EntryInProgress(),
+              Error error => SignUpError(
+                  error: error.error,
+                  privacyPolicyUrl: error.privacyPolicyUrl,
+                ),
+              _ => const SizedBox()
+            }),
       ),
     );
   }
