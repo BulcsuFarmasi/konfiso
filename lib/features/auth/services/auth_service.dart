@@ -142,8 +142,8 @@ class AuthService {
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       await _authApiRemote.sendPasswordResetEmail(email);
-    } on DioError catch (e) {
-      final errorMessage =
+    } on DioException catch (e) {
+      final String errorMessage =
           e.response!.data['error'] is! String ? e.response!.data['error']['message'] : e.response!.data['error'];
       throw NetworkException(errorMessage);
     }
