@@ -4,13 +4,13 @@ import 'package:konfiso/features/auth/forgotten_password/model/forgotten_passwor
 part 'forgotten_password_page_state.freezed.dart';
 
 @freezed
-class ForgottenPasswordPageState with _$ForgottenPasswordPageState {
-  const factory ForgottenPasswordPageState.initial() = _Initial;
+sealed class ForgottenPasswordPageState with _$ForgottenPasswordPageState {
+  const factory ForgottenPasswordPageState.initial() = Initial;
 
-  const factory ForgottenPasswordPageState.inProgress() = _InProgress;
+  const factory ForgottenPasswordPageState.inProgress() = InProgress;
 
-  const factory ForgottenPasswordPageState.successful() = _Successful;
+  const factory ForgottenPasswordPageState.successful() = Successful;
 
   const factory ForgottenPasswordPageState.error({required ForgottenPasswordError error, required String email}) =
-      _Error;
+      Error;
 }

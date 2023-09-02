@@ -45,26 +45,22 @@ class _AppState extends ConsumerState<App> {
   @override
   Widget build(BuildContext context) {
     ref.listen(appStateNotifierProvider, (AppState? previous, AppState next) {
-      next.maybeMap(
-          connected: (_) {
-            if (previous != const AppState.initial()) {
-              _navigatorKey.currentState!.pop();
-            }
-          },
-          notConnected: (_) {
-            _navigatorKey.currentState!.pushNamed(NoConnectionPage.routeName);
-          },
-          orElse: () => null);
+      switch (next) {
+        case Connected():
+          if (previous != const AppState.initial()) {
+            _navigatorKey.currentState!.pop();
+          }
+        case NotConnected():
+          _navigatorKey.currentState!.pushNamed(NoConnectionPage.routeName);
+        default:
+      }
     });
 
-    _themeMode = ref.watch(appStateNotifierProvider).maybeMap(
-        lightMode: (_) {
-          return ThemeMode.light;
-        },
-        darkMode: (_) {
-          return ThemeMode.dark;
-        },
-        orElse: () => _themeMode);
+    _themeMode = switch (ref.watch(appStateNotifierProvider)) {
+      LightMode() => ThemeMode.light,
+      DarkMode() => ThemeMode.dark,
+      _ => _themeMode
+    };
 
     final AppColors appColors = ref.read(appColorsProvider);
     appColors.themeMode = _themeMode;

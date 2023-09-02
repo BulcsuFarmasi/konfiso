@@ -15,11 +15,11 @@ class SignInPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(signInPageNotiferProvider, (_, SignInPageState next) {
-      next.maybeMap(
-          successful: (_) {
-            Navigator.of(context).pushReplacementNamed(BookHomePage.routeName);
-          },
-          orElse: () => null);
+      switch (next) {
+        case Successful():
+          Navigator.of(context).pushReplacementNamed(BookHomePage.routeName);
+        default:
+      }
     });
     return Scaffold(
       body: SingleChildScrollView(
@@ -27,11 +27,12 @@ class SignInPage extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 42),
           child: Consumer(builder: (BuildContext context, WidgetRef ref, Widget? child) {
             final state = ref.watch(signInPageNotiferProvider);
-            return state.map(
-                initial: (_) => const SignInInitial(),
-                inProgress: (_) => const EntryInProgress(),
-                successful: (_) => const SignInInitial(),
-                error: (error) => SignInError(error: error.error));
+            return switch(state) {
+              Initial() => const SignInInitial(),
+              InProgress() => const EntryInProgress(),
+              Successful() => const SignInInitial(),
+              Error error => SignInError(error: error.error),
+            };
           }),
         ),
       ),

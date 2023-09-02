@@ -14,8 +14,9 @@ class ForgottenPasswordRepository {
 
   Future<void> sendEmail(String email) async {
     try {
-      _authService.sendPasswordResetEmail(email);
+      await _authService.sendPasswordResetEmail(email);
     } on NetworkException catch (e) {
+      print(e);
       throw ForgottenPasswordException(_convertMessageIntoError(e.message!));
     }
   }

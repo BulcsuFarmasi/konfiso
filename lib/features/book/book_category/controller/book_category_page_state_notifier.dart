@@ -8,7 +8,7 @@ import 'package:konfiso/features/book/data/book_reading_status.dart';
 import 'package:konfiso/features/book/data/industry_identifier.dart';
 
 final bookCategoryPageStateNotifierProvider =
-    StateNotifierProvider<BookCategoryPageStateNotifier, BookCategoryPageState>(
+StateNotifierProvider<BookCategoryPageStateNotifier, BookCategoryPageState>(
         (Ref ref) => BookCategoryPageStateNotifier(ref.read(bookCategoryRepositoryProvider)));
 
 class BookCategoryPageStateNotifier extends StateNotifier<BookCategoryPageState> {
@@ -20,9 +20,9 @@ class BookCategoryPageStateNotifier extends StateNotifier<BookCategoryPageState>
   void loadBooks(BookReadingStatus bookReadingStatus) {
     state = const BookCategoryPageState.inProgress();
     loadBooksSubscription = _bookCategoryRepository.loadBooksByReadingStatus(bookReadingStatus)
-        //     .handleError((_) {
-        //   state = const BookCategoryPageState.error();
-        // })
+    //     .handleError((_) {
+    //   state = const BookCategoryPageState.error();
+    // })
         .listen((List<Book> books) {
       state = BookCategoryPageState.successful(books);
     });
@@ -35,18 +35,19 @@ class BookCategoryPageStateNotifier extends StateNotifier<BookCategoryPageState>
   void deleteBook(Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdByType) {
     _bookCategoryRepository.deleteBook(industryIdByType);
 
-    state = state.maybeMap(
-      inProgress: (inProgress) => inProgress,
-      successful: (successful) {
+    switch (state) {
+      case InProgress inProgress:
+        state = inProgress;
+      case Succesful successful:
         final books = _deleteBookFromList(successful.books, industryIdByType);
-        return successful.copyWith(books: books);
-      },
-      orElse: () => const BookCategoryPageState.initial(),
-    );
+        state = successful.copyWith(books: books);
+      default:
+        const BookCategoryPageState.initial();
+    }
   }
 
-  List<Book> _deleteBookFromList(
-      List<Book> books, Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsType) {
+  List<Book> _deleteBookFromList(List<Book> books,
+      Map<IndustryIdentifierType, BookIndustryIdentifier> industryIdsType) {
     final bookIndex = books.indexWhere((Book book) => book.industryIdsByType == industryIdsType);
     return [...books.sublist(0, bookIndex), ...books.sublist(bookIndex + 1)];
   }

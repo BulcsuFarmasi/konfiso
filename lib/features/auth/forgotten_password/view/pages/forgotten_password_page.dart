@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/auth/forgotten_password/controller/forgotten_password_page_state.dart';
 import 'package:konfiso/features/auth/forgotten_password/controller/forgotten_password_page_state_notifier.dart';
 import 'package:konfiso/features/auth/forgotten_password/view/widgets/forgotten_password_error.dart';
 import 'package:konfiso/features/auth/forgotten_password/view/widgets/forgotten_password_in_progress.dart';
@@ -33,11 +34,16 @@ class ForgottenPasswordPage extends ConsumerWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: state.map(
-            initial: (_) => const ForgottenPasswordInitial(),
-            inProgress: (_) => const ForgottenPasswordInProgress(),
-            successful: (_) => const ForgottenPasswordSuccessful(),
-            error: (error) => ForgottenPasswordError(error: error.error, email: error.email)),
+        child: switch(state) {
+          Initial() =>
+            const ForgottenPasswordInitial(),
+          InProgress() =>
+            const ForgottenPasswordInProgress(),
+          Successful() =>
+            const ForgottenPasswordSuccessful(),
+          Error error =>
+            ForgottenPasswordError(error: error.error, email: error.email)
+        }
       ),
     );
   }
