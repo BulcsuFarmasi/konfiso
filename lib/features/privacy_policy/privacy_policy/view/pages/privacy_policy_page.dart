@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/privacy_policy/privacy_policy/controller/privacy_policy_page_state.dart';
 import 'package:konfiso/features/privacy_policy/privacy_policy/controller/privacy_policy_page_state_notifier.dart';
 import 'package:konfiso/features/privacy_policy/privacy_policy/view/widgets/privacy_policy_successful.dart';
 
@@ -27,10 +28,10 @@ class _PrivacyPolicyPageState extends ConsumerState<PrivacyPolicyPage> {
         builder: (_, WidgetRef ref, __) {
           final state = ref.watch(privacyPolicyPageStateNotifierProvider);
 
-          return state.maybeMap(
-            successful: (successful) => PrivacyPolicySuccessful(successful.privacyPolicyUrl),
-            orElse: () => const SizedBox(),
-          );
+          return switch (state) {
+            Successful successful => PrivacyPolicySuccessful(successful.privacyPolicyUrl),
+            _ => const SizedBox(),
+          };
         },
       ),
     );
