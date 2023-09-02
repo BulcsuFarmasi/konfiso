@@ -42,7 +42,7 @@ class BookCategoryPageStateNotifier extends StateNotifier<BookCategoryPageState>
         final books = _deleteBookFromList(successful.books, industryIdByType);
         state = successful.copyWith(books: books);
       default:
-        const BookCategoryPageState.initial()
+        const BookCategoryPageState.initial();
     }
   }
 

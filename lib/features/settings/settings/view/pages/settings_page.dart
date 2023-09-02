@@ -21,12 +21,13 @@ class SettingsPage extends ConsumerWidget {
         centerTitle: true,
       ),
       drawer: const AppDrawer(),
-      body: state.map(
-        initial: (_) => const SizedBox(),
-        inProgress: (_) => const SettingsInProgress(),
-        loadSuccess: (loadSuccess) => SettingsSuccess(settings: loadSuccess.settings),
-        saveSuccess: (saveSuccess) => SettingsSuccess(settings: saveSuccess.settings),
-      ),
+
+      body: switch(state) {
+        Initial() => const SizedBox(),
+        InProgress() => const SettingsInProgress(),
+        LoadSuccess loadSuccess => SettingsSuccess(settings: loadSuccess.settings),
+        SaveSuccess saveSuccess => SettingsSuccess(settings: saveSuccess.settings),
+      },
     );
   }
 }
