@@ -5,18 +5,18 @@ import 'package:konfiso/features/book/data/book_reading_status.dart';
 part 'book_detail_page_state.freezed.dart';
 
 @freezed
-class BookDetailPageState with _$BookDetailPageState {
-  const factory BookDetailPageState.initial() = _Initial;
+sealed class BookDetailPageState with _$BookDetailPageState {
+  const factory BookDetailPageState.initial() = Initial;
 
-  const factory BookDetailPageState.loadingInProgress() = _LoadingInProgress;
+  const factory BookDetailPageState.loadingInProgress() = LoadingInProgress;
 
-  const factory BookDetailPageState.loadingSuccess(BookReadingDetail bookReadingDetail) = _LoadingSuccess;
+  const factory BookDetailPageState.loadingSuccess(BookReadingDetail bookReadingDetail) = LoadingSuccess;
 
-  const factory BookDetailPageState.loadingError() = _LoadingError;
+  const factory BookDetailPageState.loadingError() = LoadingError;
 
-  const factory BookDetailPageState.savingInProgress() = _SavingInProgress;
+  const factory BookDetailPageState.savingInProgress() = SavingInProgress;
 
-  const factory BookDetailPageState.savingSuccess(BookReadingStatus bookReadingStatus) = _SavingSuccess;
+  const factory BookDetailPageState.savingSuccess(BookReadingStatus bookReadingStatus) = SavingSuccess;
 
-  const factory BookDetailPageState.savingError(BookReadingDetail bookReadingDetail) = _SavingError;
+  const factory BookDetailPageState.savingError(BookReadingDetail bookReadingDetail) = SavingError;
 }
