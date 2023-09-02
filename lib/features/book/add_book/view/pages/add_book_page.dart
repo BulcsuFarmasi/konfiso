@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/add_book/controller/add_book_page_state_notifier.dart';
+import 'package:konfiso/features/book/add_book/controller/add_book_state.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_error.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_in_progress.dart';
 import 'package:konfiso/features/book/add_book/view/widgets/add_book_search.dart';
@@ -93,14 +94,12 @@ class _AddBookPageState extends ConsumerState<AddBookPage> with TickerProviderSt
                 Consumer(
                   builder: (_, WidgetRef ref, __) {
                     final state = ref.watch(addBookPageStateNotifierProvider);
-                    return state.maybeMap(
-                        inProgress: (_) => const AddBookInProgress(),
-                        successful: (success) => AddBookSuccess(
-                              books: success.books,
-                              searchTerm: success.searchTerm,
-                            ),
-                        error: (_) => const AddBookError(),
-                        orElse: () => Container());
+                    return switch (state) {
+                      InProgress() => const AddBookInProgress(),
+                      Successful successful =>
+                        AddBookSuccess(books: successful.books, searchTerm: successful.searchTerm),
+                      _ => const SizedBox(),
+                    };
                   },
                 ),
               ],
