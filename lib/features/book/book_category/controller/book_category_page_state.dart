@@ -4,12 +4,12 @@ import 'package:konfiso/features/book/data/book.dart';
 part 'book_category_page_state.freezed.dart';
 
 @freezed
-class BookCategoryPageState with _$BookCategoryPageState {
-  const factory BookCategoryPageState.initial() = _Initial;
+sealed class BookCategoryPageState with _$BookCategoryPageState {
+  const factory BookCategoryPageState.initial() = Initial;
 
-  const factory BookCategoryPageState.inProgress() = _InProgress;
+  const factory BookCategoryPageState.inProgress() = InProgress;
 
-  const factory BookCategoryPageState.successful(List<Book> books) = _Succesful;
+  const factory BookCategoryPageState.successful(List<Book> books) = Succesful;
 
-  const factory BookCategoryPageState.error() = _Error;
+  const factory BookCategoryPageState.error() = Error;
 }
