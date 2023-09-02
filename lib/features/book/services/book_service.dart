@@ -63,7 +63,7 @@ class BookService with IsbnFromIndustryIdsCapability {
     Response? response;
     try {
       response = await _bookGoogleRemote.search(searchTerm);
-    } on DioError catch (_) {
+    } on DioException catch (_) {
       googleRequestFailed = true;
     }
     if (response != null) {
@@ -75,7 +75,7 @@ class BookService with IsbnFromIndustryIdsCapability {
 
     try {
       molyBooks = await _bookMolyRemote.search(searchTerm);
-    } on DioError catch (_) {
+    } on DioException catch (_) {
       molyRequestFailed = true;
     }
 
@@ -135,7 +135,7 @@ class BookService with IsbnFromIndustryIdsCapability {
       }
 
       return volume;
-    } on DioError {
+    } on DioException {
       throw NetworkException();
     }
   }
@@ -165,7 +165,7 @@ class BookService with IsbnFromIndustryIdsCapability {
 
     try {
       response = await _bookDatabaseRemote.loadBookReadingDetailById(bookId, _authService.user!);
-    } on DioError {
+    } on DioException {
       throw NetworkException();
     }
 
@@ -261,7 +261,7 @@ class BookService with IsbnFromIndustryIdsCapability {
       await _bookDatabaseRemote.deleteBookReadingDetail(bookId, _authService.user!);
 
       await _bookDatabaseRemote.insertBookReadingDetail(bookId, _authService.user!, remoteBookReadingDetail);
-    } on DioError catch (_) {
+    } on DioException catch (_) {
       throw NetworkException();
     }
   }

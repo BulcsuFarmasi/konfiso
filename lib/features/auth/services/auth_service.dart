@@ -78,7 +78,7 @@ class AuthService {
 
       _startTimer(int.parse(authResponse.expiresIn));
       // // TODO: own error
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       // TODO : deserialize it into a class
       final errorMessage =
           e.response!.data['error'] is! String ? e.response!.data['error']['message'] : e.response!.data['error'];
@@ -106,7 +106,7 @@ class AuthService {
 
       _authApiRemote.sendVerificationEmail(user!.token);
       // TODO: own error
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       // TODO : deserialize it into a class
       final errorMessage =
           e.response!.data['error'] is! String ? e.response!.data['error']['message'] : e.response!.data['error'];
