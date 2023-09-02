@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/add_book/view/pages/add_book_page.dart';
+import 'package:konfiso/features/book/book_category/controller/book_category_page_state.dart';
 import 'package:konfiso/features/book/book_category/controller/book_category_page_state_notifier.dart';
 import 'package:konfiso/features/book/book_category/view/widgets/book_category_error.dart';
 import 'package:konfiso/features/book/book_category/view/widgets/book_category_in_progress.dart';
@@ -60,11 +61,12 @@ class _BookCategoryPageState extends ConsumerState<BookCategoryPage> {
         child: Consumer(
           builder: (_, WidgetRef ref, __) {
             final state = ref.watch(bookCategoryPageStateNotifierProvider);
-            return state.map(
-                initial: (_) => const BookCategoryInitial(),
-                inProgress: (inProgress) => const BookCategoryInProgress(),
-                successful: (successful) => BookCategorySuccessful(books: successful.books),
-                error: (_) => const BookCategoryError());
+            return switch(state) {
+              Initial() => const BookCategoryInitial(),
+              InProgress() => const BookCategoryInProgress(),
+              Succesful successful => BookCategorySuccessful(books: successful.books),
+              Error() => const BookCategoryError(),
+            };
           },
         ),
       ),

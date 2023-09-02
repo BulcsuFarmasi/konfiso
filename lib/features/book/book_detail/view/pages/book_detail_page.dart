@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:konfiso/features/book/book_category/view/pages/book_category_page.dart';
 import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state_notifier.dart';
+import 'package:konfiso/features/book/book_detail/controller/book_detail_page_state.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_in_progress.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_loading_error.dart';
 import 'package:konfiso/features/book/book_detail/view/widgets/book_detail_loading_success.dart';
@@ -41,36 +42,34 @@ class _BookDetailPageState extends ConsumerState<BookDetailPage> {
   @override
   Widget build(BuildContext context) {
     ref.listen(bookDetailPageStateNotifierProvider, (_, next) {
-      next.maybeMap(
-          savingSuccess: (savingSuccess) {
-            ref.read(bookDetailPageStateNotifierProvider.notifier).restoreToInitial();
+      switch (next) {
+        case SavingSuccess savingSuccess:
+          ref.read(bookDetailPageStateNotifierProvider.notifier).restoreToInitial();
 
-            final navigator = Navigator.of(context);
+          final navigator = Navigator.of(context);
 
-            navigator.popUntil(ModalRoute.withName(BookHomePage.routeName));
+          navigator.popUntil(ModalRoute.withName(BookHomePage.routeName));
 
-            navigator.pushNamed(BookCategoryPage.routeName, arguments: savingSuccess.bookReadingStatus);
-          },
-          orElse: () => null);
+          navigator.pushNamed(BookCategoryPage.routeName, arguments: savingSuccess.bookReadingStatus);
+        default:
+      }
     });
     final state = ref.watch(bookDetailPageStateNotifierProvider);
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
-          child: state.maybeMap(
-            initial: (_) => const SizedBox(),
-            loadingInProgress: (_) => const BookDetailInProgress(),
-            loadingSuccess: (success) => BookDetailLoadingSuccess(
-              bookReadingDetail: success.bookReadingDetail,
-            ),
-            loadingError: (_) => const BookDetailLoadingError(),
-            savingInProgress: (_) => const BookDetailInProgress(),
-            savingError: (savingError) => BookDetailSavingError(bookReadingDetail: savingError.bookReadingDetail),
-            orElse: () => const SizedBox(),
-          ),
-        ),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: switch (state) {
+              LoadingInProgress() => const BookDetailInProgress(),
+              LoadingSuccess loadingSuccess => BookDetailLoadingSuccess(
+                  bookReadingDetail: loadingSuccess.bookReadingDetail,
+                ),
+              LoadingError() => const BookDetailLoadingError(),
+              SavingInProgress() => const BookDetailInProgress(),
+              SavingError savingError => BookDetailSavingError(bookReadingDetail: savingError.bookReadingDetail),
+              _ => const SizedBox()
+            }),
       ),
     );
   }
