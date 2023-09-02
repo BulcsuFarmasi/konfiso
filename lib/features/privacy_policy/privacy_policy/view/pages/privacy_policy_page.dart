@@ -26,6 +26,7 @@ class _PrivacyPolicyPageState extends ConsumerState<PrivacyPolicyPage> {
       body: Consumer(
         builder: (_, WidgetRef ref, __) {
           final state = ref.watch(privacyPolicyPageStateNotifierProvider);
+
           return state.maybeMap(
             successful: (successful) => PrivacyPolicySuccessful(successful.privacyPolicyUrl),
             orElse: () => const SizedBox(),
