@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:konfiso/features/auth/verify_user/controller/verify_user_page_state.dart';
 import 'package:konfiso/features/auth/verify_user/controller/verify_user_page_state_notifier.dart';
 import 'package:konfiso/features/auth/verify_user/view/widgets/verify_user_initial.dart';
 import 'package:konfiso/features/auth/verify_user/view/widgets/verify_user_successful.dart';
@@ -33,9 +34,11 @@ class _VerifyUserPageState extends ConsumerState<VerifyUserPage> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: state.map(initial: (_) => const VerifyUserInitial(), successful: (_) => const VerifyUserSuccessful()),
-      ),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: switch (state) {
+            Initial() => const VerifyUserInitial(),
+            Successful() => const VerifyUserSuccessful()
+          }),
     );
   }
 }
